@@ -719,64 +719,75 @@ class SmoothDetails {
 
   shrink() {
     this.isClosing = true;
-    const startHeight = `${this.el.offsetHeight}px`;
-    const endHeight = `${this.summary.offsetHeight}px`;
+    const startHeight = this.el.offsetHeight;
+    const endHeight = this.summary.offsetHeight;
 
     if (this.animation) this.animation.cancel();
 
+    this.el.style.height = `${startHeight}px`;
+
     this.animation = this.el.animate({
-      height: [startHeight, endHeight]
+      height: [`${startHeight}px`, `${endHeight}px`]
     }, {
-      duration: 260,
+      duration: 250,
       easing: 'cubic-bezier(0.16, 1, 0.3, 1)'
     });
 
     if (this.content) {
       this.content.animate({
         opacity: [1, 0],
-        transform: ['translateY(0)', 'translateY(-6px)']
+        transform: ['translateY(0)', 'translateY(-8px)']
       }, {
-        duration: 180,
+        duration: 200,
         easing: 'ease-out'
       });
     }
 
-    this.animation.onfinish = () => this.onAnimationFinish(false);
-    this.animation.oncancel = () => this.isClosing = false;
+    this.animation.onfinish = () => {
+      this.onAnimationFinish(false);
+    };
+    this.animation.oncancel = () => {
+      this.isClosing = false;
+    };
   }
 
   open() {
-    this.el.style.height = `${this.el.offsetHeight}px`;
+    const summaryHeight = this.summary.offsetHeight;
+    this.el.style.height = `${summaryHeight}px`;
     this.el.open = true;
     window.requestAnimationFrame(() => this.expand());
   }
 
   expand() {
     this.isExpanding = true;
-    const startHeight = `${this.el.offsetHeight}px`;
-    const endHeight = `${this.summary.offsetHeight + this.content.offsetHeight}px`;
+    const startHeight = this.summary.offsetHeight;
+    const endHeight = this.summary.offsetHeight + this.content.offsetHeight;
 
     if (this.animation) this.animation.cancel();
 
     this.animation = this.el.animate({
-      height: [startHeight, endHeight]
+      height: [`${startHeight}px`, `${endHeight}px`]
     }, {
-      duration: 300,
+      duration: 280,
       easing: 'cubic-bezier(0.16, 1, 0.3, 1)'
     });
 
     if (this.content) {
       this.content.animate({
         opacity: [0, 1],
-        transform: ['translateY(-6px)', 'translateY(0)']
+        transform: ['translateY(-8px)', 'translateY(0)']
       }, {
-        duration: 280,
+        duration: 260,
         easing: 'cubic-bezier(0.16, 1, 0.3, 1)'
       });
     }
 
-    this.animation.onfinish = () => this.onAnimationFinish(true);
-    this.animation.oncancel = () => this.isExpanding = false;
+    this.animation.onfinish = () => {
+      this.onAnimationFinish(true);
+    };
+    this.animation.oncancel = () => {
+      this.isExpanding = false;
+    };
   }
 
   onAnimationFinish(open) {

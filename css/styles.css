@@ -3757,24 +3757,6 @@ details[open] > summary svg {
   line-height: 1.65;
   color: var(--text-primary);
   background: var(--bg-surface);
-  transition: opacity 0.25s ease;
-}
-
-details[open] > .exercise-solution-panel,
-details[open] > .faq-answer,
-details[open] > .accordion-content {
-  animation: smoothAccordionOpen 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-}
-
-@keyframes smoothAccordionOpen {
-  0% {
-    opacity: 0;
-    transform: translateY(-6px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
 }
 
 .exercise-solution-panel p:last-child {
