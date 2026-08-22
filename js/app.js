@@ -581,7 +581,7 @@ function copyCode(btn){
   });
 }
 
-async function downloadCode(btn){
+function downloadCode(btn){
   var codeBox = btn.closest(".code-box");
   if (!codeBox) return;
   var codeEl = codeBox.querySelector("code") || codeBox.querySelector(".code-content") || codeBox.querySelector("pre");
@@ -590,109 +590,45 @@ async function downloadCode(btn){
   var codeText = codeEl.innerText || codeEl.textContent;
   if (!codeText || !codeText.trim()) return;
 
-  // 1. Extraer nombre de archivo explícito del header
+  // 1. Extraer nombre de archivo exacto del encabezado
   var headerSpan = codeBox.querySelector(".code-header span");
   var explicitTitle = headerSpan ? headerSpan.textContent.trim() : "";
   var filename = "script.py";
-  var extension = "py";
 
-  var fileMatch = explicitTitle.match(/^([a-zA-Z0-9_\-\.]+\.([a-zA-Z0-9]+))$/i);
-  if (fileMatch) {
+  var fileMatch = explicitTitle.match(/([a-zA-Z0-9_\-\.]+\.[a-zA-Z0-9]+)/i);
+  if (fileMatch && fileMatch[1]) {
     filename = fileMatch[1];
-    extension = fileMatch[2].toLowerCase();
   } else {
-    var rawMatch = explicitTitle.match(/([a-zA-Z0-9_\-]+\.[a-zA-Z0-9]+)/);
-    if (rawMatch) {
-      filename = rawMatch[1];
-      extension = rawMatch[1].split('.').pop().toLowerCase();
+    var codeLower = codeText.toLowerCase();
+    if (codeText.trim().startsWith("{") || codeText.trim().startsWith("[")) {
+      filename = "dataset.json";
+    } else if (codeLower.includes("select ") || codeLower.includes("create table")) {
+      filename = "consulta.sql";
+    } else if (codeLower.includes("import ") || codeLower.includes("def ")) {
+      filename = "script.py";
+    } else if (codeLower.includes("#!/bin/bash") || explicitTitle.toLowerCase().includes("terminal")) {
+      filename = "script.sh";
     } else {
-      var codeLower = codeText.toLowerCase();
-      if (codeText.trim().startsWith("{") || codeText.trim().startsWith("[") || explicitTitle.toLowerCase().includes("json")) {
-        filename = "dataset.json";
-        extension = "json";
-      } else if (explicitTitle.toLowerCase().includes("txt") || explicitTitle.toLowerCase().includes("prompt")) {
-        filename = "prompt.txt";
-        extension = "txt";
-      } else if (explicitTitle.toLowerCase().includes("sql") || codeLower.includes("select ") || codeLower.includes("create table")) {
-        filename = "consulta.sql";
-        extension = "sql";
-      } else if (explicitTitle.toLowerCase().includes("sh") || explicitTitle.toLowerCase().includes("bash") || codeText.includes("#!/bin/bash")) {
-        filename = "script.sh";
-        extension = "sh";
-      } else if (explicitTitle.toLowerCase().includes("docker") || explicitTitle.toLowerCase().includes("yml") || explicitTitle.toLowerCase().includes("yaml")) {
-        filename = "docker-compose.yml";
-        extension = "yml";
-      } else if (codeLower.includes("import ") || codeLower.includes("def ") || explicitTitle.toLowerCase().includes("python")) {
-        filename = "script.py";
-        extension = "py";
-      } else {
-        filename = "codigo.txt";
-        extension = "txt";
-      }
+      filename = "codigo.txt";
     }
   }
 
-  // 2. Mapeo formal de MIME Types
-  var mimeMap = {
-    py: "text/x-python;charset=utf-8",
-    json: "application/json;charset=utf-8",
-    jsonl: "application/x-ndjson;charset=utf-8",
-    txt: "text/plain;charset=utf-8",
-    sql: "application/sql;charset=utf-8",
-    sh: "application/x-sh;charset=utf-8",
-    yml: "text/yaml;charset=utf-8",
-    yaml: "text/yaml;charset=utf-8",
-    md: "text/markdown;charset=utf-8",
-    html: "text/html;charset=utf-8",
-    js: "application/javascript;charset=utf-8",
-    env: "text/plain;charset=utf-8",
-    service: "text/plain;charset=utf-8",
-    ini: "text/plain;charset=utf-8"
-  };
-  var mimeType = mimeMap[extension] || "text/plain;charset=utf-8";
-
-  // 3. Diálogo nativo 'Guardar como...' (File System Access API)
-  var savedViaPicker = false;
-  if (window.showSaveFilePicker) {
-    try {
-      var pickerOpts = {
-        suggestedName: filename,
-        types: [{
-          description: "Archivo " + extension.toUpperCase() + " (*." + extension + ")",
-          accept: {}
-        }]
-      };
-      pickerOpts.types[0].accept[mimeType.split(";")[0]] = ["." + extension];
-      var fileHandle = await window.showSaveFilePicker(pickerOpts);
-      var writable = await fileHandle.createWritable();
-      await writable.write(codeText);
-      await writable.close();
-      savedViaPicker = true;
-    } catch (err) {
-      if (err.name === "AbortError") {
-        return; // El usuario canceló la descarga conscientemente
-      }
-      savedViaPicker = false;
-    }
-  }
-
-  // 4. Fallback estándar si el picker no está disponible o falla
-  if (!savedViaPicker) {
-    var blob = new Blob([codeText], { type: mimeType });
-    var url = URL.createObjectURL(blob);
-    var a = document.createElement("a");
-    a.href = url;
-    a.download = filename;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    setTimeout(function(){ URL.revokeObjectURL(url); }, 5000);
-  }
+  // 2. Descarga directa y síncrona
+  var blob = new Blob([codeText], { type: "text/plain;charset=utf-8" });
+  var url = URL.createObjectURL(blob);
+  var a = document.createElement("a");
+  a.style.display = "none";
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  setTimeout(function(){ URL.revokeObjectURL(url); }, 2000);
 
   if (window.SOUND) window.SOUND.playChime();
 
   var oldHtml = btn.innerHTML;
-  btn.innerHTML = '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> <span>¡Descargado!</span>';
+  btn.innerHTML = '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> <span>' + filename + '</span>';
   btn.style.background = "#059669";
   btn.style.color = "#ffffff";
   btn.style.borderColor = "#059669";
@@ -701,5 +637,5 @@ async function downloadCode(btn){
     btn.style.background = "";
     btn.style.color = "";
     btn.style.borderColor = "";
-  }, 2000);
+  }, 2500);
 }
