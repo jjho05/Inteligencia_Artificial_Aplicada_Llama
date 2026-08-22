@@ -878,10 +878,11 @@ a.step-flow-item:hover {
   box-sizing: border-box;
 }
 
-.step-flow-content b {
+.step-flow-content b,
+.step-flow-content strong {
   color: var(--text-primary);
-  display: block;
-  margin-bottom: 0.2rem;
+  display: inline;
+  font-weight: 700;
 }
 
 .step-flow-content p {
