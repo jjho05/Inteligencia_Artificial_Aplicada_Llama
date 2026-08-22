@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="es-MX" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Challenge 2: Asistente de Políticas con RAG | IA Aplicada con Modelos Abiertos</title>
+<meta name="description" content="Manual técnico, laboratorio interactivo y código resuelto del Challenge 2: Asistente de Políticas con RAG (Sentence-Transformers, Similitud Coseno y Cero Alucinaciones) por Ing. Jesús Javier Hernández Olvera.">
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+<!-- KaTeX para Fórmulas Matemáticas -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+
+<!-- Estilos Globales -->
+<link rel="stylesheet" href="css/styles.css">
+
+<!-- Scripts Modulares -->
+<script defer src="js/app.js"></script>
+<script defer src="js/challenge2.js"></script>
+</head>
+
+<body>
+<!-- Canvas de Fondo con Partículas -->
+<canvas id="bg-canvas"></canvas>
+
+<!-- Header Principal Limpio & Unificado -->
+<header class="top-header">
+  <div class="header-inner">
+    <a href="index.html" class="brand-wrapper" title="Volver al Portal Principal">
+      <svg class="meta-logo-svg" viewBox="0 0 36 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M18 13.9C16.2 11.2 13.7 9.4 10.7 9.4C5.9 9.4 2 13.3 2 18.1C2 22.9 5.9 26.8 10.7 26.8C13.7 26.8 16.2 25 18 22.3C19.8 25 22.3 26.8 25.3 26.8C30.1 26.8 34 22.9 34 18.1C34 13.3 30.1 9.4 25.3 9.4C22.3 9.4 19.8 11.2 18 13.9ZM10.7 22.8C8.1 22.8 6 20.7 6 18.1C6 15.5 8.1 13.4 10.7 13.4C12.7 13.4 14.5 14.7 15.8 16.7C15 18.8 13.8 20.7 12.3 22.1C11.8 22.6 11.3 22.8 10.7 22.8ZM25.3 22.8C24.7 22.8 24.2 22.6 23.7 22.1C22.2 20.7 21 18.8 20.2 16.7C21.5 14.7 23.3 13.4 25.3 13.4C27.9 13.4 30 15.5 30 18.1C30 20.7 27.9 22.8 25.3 22.8Z" transform="translate(0, -6)"/>
+      </svg>
+      <span class="brand-text">Meta AI</span>
+    </a>
+
+    <nav class="nav-links">
+      <a href="index.html" class="nav-link-item">← Inicio</a>
+      <a href="modulo1-challenge1.html" class="nav-link-item">← Challenge 1</a>
+      <a href="#teoria" class="nav-link-item">Teoría RAG</a>
+      <a href="#simulador" class="nav-link-item">Simulador RAG</a>
+      <a href="#codigo" class="nav-link-item">Código</a>
+      <a href="#faq" class="nav-link-item">Q&amp;A</a>
+      <a href="modulo2-tema1.html" class="nav-link-item" style="color: var(--accent-easy); font-weight: 700;">Módulo 2 →</a>
+    </nav>
+
+    <div class="header-controls">
+      <button class="btn-icon" id="sound-btn" title="Alternar Audio">
+        <span id="sound-icon-container">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+        </span>
+        <span class="btn-text-label" id="sound-label">Audio ON</span>
+      </button>
+
+      <button class="btn-icon" id="theme-btn" title="Alternar Modo Claro / Oscuro">
+        <span id="theme-icon-container">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58a.996.996 0 00-1.41 0 .996.996 0 000 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37a.996.996 0 00-1.41 0 .996.996 0 000 1.41l1.06 1.06c.39.39 1.03.39 1.41 0a.996.996 0 000-1.41l-1.06-1.06zm1.06-10.96a.996.996 0 000-1.41.996.996 0 000-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36a.996.996 0 000-1.41.996.996 0 000-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"/></svg>
+        </span>
+        <span class="btn-text-label" id="theme-label">Modo Claro</span>
+      </button>
+
+      <button class="btn-menu-toggle" id="menu-toggle-btn" aria-label="Abrir menú">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="3" x2="21" y1="6" y2="6"></line><line x1="3" x2="21" y1="12" y2="12"></line><line x1="3" x2="21" y1="18" y2="18"></line></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile Navigation Drawer -->
+<div class="mobile-backdrop" id="mobile-backdrop" aria-hidden="true"></div>
+<div class="mobile-drawer" id="mobile-drawer" role="dialog" aria-modal="true">
+  <div class="mobile-drawer-header">
+    <div class="mobile-drawer-title">
+      <svg class="meta-logo-svg" viewBox="0 0 36 24" style="width:24px;height:16px;">
+        <path d="M18 13.9C16.2 11.2 13.7 9.4 10.7 9.4C5.9 9.4 2 13.3 2 18.1C2 22.9 5.9 26.8 10.7 26.8C13.7 26.8 16.2 25 18 22.3C19.8 25 22.3 26.8 25.3 26.8C30.1 26.8 34 22.9 34 18.1C34 13.3 30.1 9.4 25.3 9.4C22.3 9.4 19.8 11.2 18 13.9ZM10.7 22.8C8.1 22.8 6 20.7 6 18.1C6 15.5 8.1 13.4 10.7 13.4C12.7 13.4 14.5 14.7 15.8 16.7C15 18.8 13.8 20.7 12.3 22.1C11.8 22.6 11.3 22.8 10.7 22.8ZM25.3 22.8C24.7 22.8 24.2 22.6 23.7 22.1C22.2 20.7 21 18.8 20.2 16.7C21.5 14.7 23.3 13.4 25.3 13.4C27.9 13.4 30 15.5 30 18.1C30 20.7 27.9 22.8 25.3 22.8Z" transform="translate(0, -6)"/>
+      </svg>
+      <span>Challenge 2</span>
+    </div>
+    <button class="mobile-drawer-close" id="mobile-drawer-close" aria-label="Cerrar menú">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <nav class="mobile-drawer-nav" id="mobile-drawer-nav"></nav>
+</div>
+
+<div id="progress-bar"></div>
+
+<main class="main-container">
+
+  <!-- ======================================================================
+       HERO PRINCIPAL DE CHALLENGE 2
+       ====================================================================== -->
+  <section class="course-hero" id="overview">
+    <div class="hero-badge-pill">
+      <span class="hero-badge-num">MÓDULO 1</span>
+      <span class="hero-badge-divider"></span>
+      <span class="hero-badge-label">ENTREGABLE OFICIAL 2 · PROYECTO RESUELTO</span>
+    </div>
+    <h1 class="hero-title">Asistente de Políticas con RAG</h1>
+    <p class="hero-subtitle">
+      <b>Recuperación Semántica de Documentación, Embeddings Densos y Mitigación Total de Alucinaciones</b> mediante integración de SentenceTransformers y Groq.
+    </p>
+
+    <div style="margin-top: 1.5rem; display: inline-flex; align-items: center; gap: 0.8rem; background: var(--bg-surface); padding: 0.6rem 1.2rem; border-radius: 30px; border: 1px solid var(--border-subtle); box-shadow: var(--shadow-sm);">
+      <span style="font-size: 0.85rem; color: var(--text-secondary);">Alumno: <strong style="color: var(--text-primary);">Ing. Jesús Javier Hernández Olvera</strong></span>
+      <span style="color: var(--border-strong);">&bull;</span>
+      <span style="font-size: 0.85rem; color: var(--accent-easy); font-weight: 700;">Módulo: IA Aplicada con Modelos Abiertos</span>
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       SECCIÓN 1: FUNDAMENTOS TEÓRICOS DE RAG Y SIMILITUD COSENO
+       ====================================================================== -->
+  <section class="tema-card" id="teoria" style="border-left: 5px solid var(--accent-easy); margin-bottom: 4rem;">
+    <div class="tema-header">
+      <div class="tema-eyebrow">Marco Teórico &middot; Retrieval-Augmented Generation</div>
+      <h3 class="tema-title">1. Fundamentos Matemáticos de RAG y Búsqueda Vectorial</h3>
+    </div>
+
+    <div class="tema-section-block">
+      <h4 class="tema-subheading"><span class="tema-subheading-tag">1.1 Bi-Encoders</span> Vectores densos de 384 dimensiones y normalización L2</h4>
+      <p class="prose-p">
+        A diferencia de los LLMs autorregresivos (que generan texto secuencialmente), un modelo <b>Bi-Encoder</b> como <code>paraphrase-multilingual-MiniLM-L12-v2</code> proyecta cualquier oración a un espacio continuo de \(d = 384\) dimensiones, capturando su significado semántico subyacente.
+      </p>
+      <p class="prose-p">
+        Cuando los vectores se normalizan mediante norma euclidiana unitaria (\(\|\mathbf{u}\| = 1\)), el cálculo de la <b>Similitud Coseno</b> se reduce exactamente al <b>Producto Punto</b>:
+      </p>
+      <div class="math-callout" style="background: var(--bg-subtle); padding: 1rem; border-radius: 10px; margin: 1rem 0; font-family: var(--font-mono); font-size: 0.9rem;">
+        $$\text{Similitud Coseno}(\mathbf{u}, \mathbf{v}) = \frac{\mathbf{u} \cdot \mathbf{v}}{\|\mathbf{u}\|_2 \cdot \|\mathbf{v}\|_2} \xrightarrow{\|\mathbf{u}\| = \|\mathbf{v}\| = 1} \mathbf{u} \cdot \mathbf{v} = \sum_{i=1}^{384} u_i \cdot v_i$$
+      </div>
+      <p class="prose-p">
+        Esto permite a NumPy o a motores vectoriales calcular similitudes semánticas sobre millones de fragmentos en fracciones de milisegundo.
+      </p>
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       SECCIÓN 2: SIMULADOR INTERACTIVO RAG EN VIVO
+       ====================================================================== -->
+  <section class="tema-card" id="simulador" style="margin-bottom: 4rem;">
+    <div class="tema-header">
+      <div class="tema-eyebrow">Laboratorio Interactivo &middot; Pipeline RAG en Tiempo Real</div>
+      <h3 class="tema-title">2. Simulador de Recuperación Semántica y Pipeline RAG</h3>
+    </div>
+
+    <div class="challenge-bench-box">
+      <!-- 1. BASE DE CONOCIMIENTO DOCUMENTAL -->
+      <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 1rem; margin-bottom: 1.2rem;">
+        <span style="font-size: 0.8rem; font-weight: 700; color: var(--meta-blue); text-transform: uppercase; letter-spacing: 0.5px;">Base de Conocimiento (Reglamento Oficial del Curso):</span>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0.8rem; margin-top: 0.6rem;">
+          <div id="doc-box-1" style="background: var(--bg-subtle); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 0.75rem; font-size: 0.78rem;">
+            <b style="color: var(--text-primary); display: block; margin-bottom: 0.2rem;">Doc #1: Criterios de Evaluación</b>
+            Challenges 40%, Proyecto 50%, Masterclasses 10%. Mínimo aprobatorio: 80/100 pts.
+          </div>
+          <div id="doc-box-2" style="background: var(--bg-subtle); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 0.75rem; font-size: 0.78rem;">
+            <b style="color: var(--text-primary); display: block; margin-bottom: 0.2rem;">Doc #2: Entregas Tardías y Penalizaciones</b>
+            Límite domingo 23:59 hrs. Hasta 24h: -15 pts. Entre 24-48h: -30 pts. >48h: Calificación 0.
+          </div>
+          <div id="doc-box-3" style="background: var(--bg-subtle); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 0.75rem; font-size: 0.78rem;">
+            <b style="color: var(--text-primary); display: block; margin-bottom: 0.2rem;">Doc #3: Integridad Académica y Asistencia</b>
+            80% asistencia mínima sincrónica. Código de autoría propia; plagio causa baja definitiva.
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. SELECTOR DE PREGUNTA Y MODELO -->
+      <p style="font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 0.6rem;">
+        Selecciona una consulta de prueba para evaluar la recuperación semántica:
+      </p>
+
+      <div class="challenge-btn-group" id="ch2-preset-container">
+        <button class="challenge-preset-btn active" data-q="0">
+          <b>Consulta 1:</b> Penalización por 20h de retraso y calificación mínima
+        </button>
+        <button class="challenge-preset-btn" data-q="1">
+          <b>Consulta 2:</b> Criterios de evaluación y nota aprobatoria
+        </button>
+        <button class="challenge-preset-btn" data-q="2">
+          <b>Consulta 3:</b> Asistencia obligatoria y consecuencias de plagio
+        </button>
+      </div>
+
+      <div style="display: grid; grid-template-columns: 2fr 1fr; gap: 1rem; margin-bottom: 1.2rem;">
+        <div>
+          <label for="ch2-query-text" style="display: block; font-size: 0.82rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 0.4rem;">
+            Pregunta del Estudiante:
+          </label>
+          <textarea id="ch2-query-text" class="bench-input-clean" style="width: 100%; min-height: 65px; font-family: var(--font-body); font-size: 0.88rem; padding: 0.75rem; border-radius: 8px;">¿Cuál es la penalización por entregar un challenge con 20 horas de retraso y cuál es la calificación mínima para aprobar el curso?</textarea>
+        </div>
+        <div>
+          <label for="ch2-model-select" style="display: block; font-size: 0.82rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 0.4rem;">
+            Modelo LLM Generador:
+          </label>
+          <select id="ch2-model-select" class="bench-input-clean" style="width: 100%; padding: 0.75rem; font-size: 0.85rem; font-family: var(--font-mono); border-radius: 8px;">
+            <option value="openai/gpt-oss-20b" selected>openai/gpt-oss-20b (Ligero)</option>
+            <option value="openai/gpt-oss-120b">openai/gpt-oss-120b (Grande)</option>
+            <option value="qwen/qwen3.6-27b">qwen/qwen3.6-27b (Qwen 27B)</option>
+          </select>
+        </div>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.8rem; margin-bottom: 1.4rem;">
+        <button class="btn-primary" id="ch2-btn-run" style="padding: 0.7rem 1.6rem; border-radius: 24px; font-weight: 700; display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          <span>Ejecutar Pipeline RAG &amp; Búsqueda Semántica</span>
+        </button>
+        <span id="ch2-status-indicator" style="font-size: 0.82rem; color: var(--accent-success); font-weight: 600;">
+          Listo para recuperar fragmentos y comparar
+        </span>
+      </div>
+
+      <!-- RANKING DE SIMILITUD COSENO -->
+      <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 1.2rem; margin-bottom: 1.4rem;">
+        <h5 style="font-family: var(--font-head); font-size: 0.95rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.8rem;">
+          Ranking de Similitud Coseno de Fragmentos (Vector Dot Product):
+        </h5>
+        
+        <div class="rag-similarity-meter">
+          <div style="display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 600;">
+            <span>Documento #1 (Criterios de Evaluación)</span>
+            <span id="ch2-score-1" style="font-family: var(--font-mono); color: var(--text-muted);">0.3120</span>
+          </div>
+          <div class="rag-meter-track">
+            <div id="ch2-bar-1" class="rag-meter-fill" style="width: 31.2%; background: var(--text-muted);"></div>
+          </div>
+        </div>
+
+        <div class="rag-similarity-meter" style="margin-top: 0.8rem;">
+          <div style="display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 600;">
+            <span style="color: var(--accent-success); font-weight: 700;">Documento #2 (Entregas Tardías y Penalizaciones) &larr; FRAGMENTO RECUPERADO</span>
+            <span id="ch2-score-2" style="font-family: var(--font-mono); color: var(--accent-success); font-weight: 700;">0.6384</span>
+          </div>
+          <div class="rag-meter-track">
+            <div id="ch2-bar-2" class="rag-meter-fill" style="width: 63.84%; background: var(--accent-success);"></div>
+          </div>
+        </div>
+
+        <div class="rag-similarity-meter" style="margin-top: 0.8rem;">
+          <div style="display: flex; justify-content: space-between; font-size: 0.8rem; font-weight: 600;">
+            <span>Documento #3 (Integridad Académica y Asistencia)</span>
+            <span id="ch2-score-3" style="font-family: var(--font-mono); color: var(--text-muted);">0.2240</span>
+          </div>
+          <div class="rag-meter-track">
+            <div id="ch2-bar-3" class="rag-meter-fill" style="width: 22.4%; background: var(--text-muted);"></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- CONTRASTE DUAL: SIN RAG vs CON RAG -->
+      <div class="rag-dual-contrast">
+        <!-- SIN RAG -->
+        <div class="rag-contrast-card sin-rag">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem;">
+            <div>
+              <span class="badge-status status-danger" style="font-size: 0.72rem; font-weight: 700;">CONSULTA SIN RAG</span>
+              <h5 style="font-family: var(--font-head); font-size: 0.95rem; font-weight: 700; color: var(--text-primary); margin: 0.2rem 0 0 0;">Inferencia Zero-Shot Genérica</h5>
+            </div>
+            <span style="font-size: 0.75rem; color: #ef4444; font-weight: 700;">Desconoce Normativa</span>
+          </div>
+          <div class="telemetry-row">
+            <div class="telemetry-item">
+              <span style="color: var(--text-muted);">Latencia:</span>
+              <b id="ch2-lat-sin">0.79 s</b>
+            </div>
+            <div class="telemetry-item">
+              <span style="color: var(--text-muted);">Tokens:</span>
+              <b id="ch2-tok-sin">510 tok</b>
+            </div>
+          </div>
+          <div class="model-response-preview" id="ch2-resp-sin" style="background: #fef2f2; border-color: #fecaca;">
+            La respuesta depende del curso o plataforma específica a la que te refieras, ya que cada institución establece sus propias políticas. Por lo general, algunas aplican una penalización del 10% al 20%, y la calificación mínima suele ser 70 o 75 puntos. Te sugiero consultar el programa de estudios oficial o preguntar a tu profesor.
+          </div>
+        </div>
+
+        <!-- CON RAG -->
+        <div class="rag-contrast-card con-rag">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.8rem;">
+            <div>
+              <span class="badge-status status-success" style="font-size: 0.72rem; font-weight: 700;">CONSULTA CON RAG</span>
+              <h5 style="font-family: var(--font-head); font-size: 0.95rem; font-weight: 700; color: var(--text-primary); margin: 0.2rem 0 0 0;">Generación Aumentada Fundamentada</h5>
+            </div>
+            <span style="font-size: 0.75rem; color: var(--accent-success); font-weight: 700;">Cero Alucinaciones</span>
+          </div>
+          <div class="telemetry-row">
+            <div class="telemetry-item">
+              <span style="color: var(--text-muted);">Latencia:</span>
+              <b id="ch2-lat-con">0.62 s</b>
+            </div>
+            <div class="telemetry-item">
+              <span style="color: var(--text-muted);">Tokens:</span>
+              <b id="ch2-tok-con">576 tok</b>
+            </div>
+          </div>
+          <div class="model-response-preview" id="ch2-resp-con" style="background: #f0fdf4; border-color: #bbf7d0;">
+            Basado en el <b>Reglamento Oficial del Curso (Doc #2 - Entregas Tardías)</b>:<br><br>
+            1. <b>Penalización por 20 horas de retraso:</b> Es exactamente de <b>15 puntos sobre la calificación obtenida</b>, dado que la entrega se realizó dentro del margen de hasta 24 horas de retraso permitido.<br><br>
+            2. <b>Calificación mínima para aprobar:</b> El fragmento recuperado <b>no contiene información sobre la calificación mínima aprobatoria</b> del curso.
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       SECCIÓN 3: CÓDIGO FUENTE DE PRODUCCIÓN RAG
+       ====================================================================== -->
+  <section class="tema-card" id="codigo" style="margin-bottom: 4rem;">
+    <div class="tema-header">
+      <div class="tema-eyebrow">Implementación en Python &middot; Script Oficial</div>
+      <h3 class="tema-title">3. Código del Pipeline RAG</h3>
+    </div>
+
+    <p class="prose-p">
+      Código de <code>ejecutar_challenge2.py</code> con vectorización en <code>SentenceTransformer</code>, cálculo de producto punto y delimitación estricta de contexto:
+    </p>
+
+    <div class="code-box">
+      <div class="code-header">
+        <span>Python &middot; ejecutar_challenge2.py</span>
+        <div class="code-actions">
+          <button class="btn-copy-code" onclick="copyCode(this)">Copiar Código</button>
+        </div>
+      </div>
+      <pre class="code-content"><code><span class="code-cm"># Challenge 2: Asistente de Políticas con RAG</span>
+<span class="code-cm"># Alumno: Ing. Jesús Javier Hernández Olvera</span>
+<span class="code-cm"># Módulo: IA Aplicada con Modelos Abiertos</span>
+
+<span class="code-kw">import</span> <span class="code-var">os</span>, <span class="code-var">re</span>, <span class="code-var">sys</span>, <span class="code-var">time</span>, <span class="code-var">argparse</span>
+<span class="code-kw">import</span> <span class="code-var">numpy</span> <span class="code-kw">as</span> <span class="code-var">np</span>
+<span class="code-kw">from</span> <span class="code-var">sentence_transformers</span> <span class="code-kw">import</span> <span class="code-var">SentenceTransformer</span>
+<span class="code-kw">from</span> <span class="code-var">groq</span> <span class="code-kw">import</span> <span class="code-var">Groq</span>
+<span class="code-kw">from</span> <span class="code-var">dotenv</span> <span class="code-kw">import</span> <span class="code-var">load_dotenv</span>
+
+<span class="code-var">load_dotenv</span>()
+<span class="code-var">client</span> = <span class="code-var">Groq</span>(<span class="code-var">api_key</span>=<span class="code-var">os</span>.<span class="code-var">environ</span>.<span class="code-var">get</span>(<span class="code-str">"GROQ_API_KEY"</span>))
+
+<span class="code-cm"># 1. Base de Conocimiento de Políticas</span>
+<span class="code-var">documentos</span> = [
+    <span class="code-str">"Criterios de Evaluación y Calificación Mínima: Challenges 40%, Proyecto 50%, Masterclasses 10%. Mínimo aprobatorio: 80/100."</span>,
+    <span class="code-str">"Política de Entregas Tardías y Penalizaciones: Límite domingo 23:59 hrs. Hasta 24h: -15 pts. De 24 a 48h: -30 pts. >48h: 0 pts."</span>,
+    <span class="code-str">"Integridad Académica y Asistencia: 80% asistencia mínima a sesiones sincrónicas. Plagio causa baja definitiva del programa."</span>
+]
+
+<span class="code-cm"># 2. Embeddings y Búsqueda Semántica</span>
+<span class="code-var">emb_model</span> = <span class="code-fn">SentenceTransformer</span>(<span class="code-str">'paraphrase-multilingual-MiniLM-L12-v2'</span>)
+<span class="code-var">embs_docs</span> = <span class="code-var">emb_model</span>.<span class="code-fn">encode</span>(<span class="code-var">documentos</span>, <span class="code-var">normalize_embeddings</span>=<span class="code-kw">True</span>)
+
+<span class="code-kw">def</span> <span class="code-fn">buscar_fragmento</span>(<span class="code-var">pregunta</span>):
+    <span class="code-var">emb_p</span> = <span class="code-var">emb_model</span>.<span class="code-fn">encode</span>([<span class="code-var">pregunta</span>], <span class="code-var">normalize_embeddings</span>=<span class="code-kw">True</span>)
+    <span class="code-var">sims</span> = <span class="code-var">np</span>.<span class="code-fn">dot</span>(<span class="code-var">embs_docs</span>, <span class="code-var">emb_p</span>.<span class="code-var">T</span>).<span class="code-fn">flatten</span>()
+    <span class="code-var">idx</span> = <span class="code-fn">int</span>(<span class="code-var">np</span>.<span class="code-fn">argmax</span>(<span class="code-var">sims</span>))
+    <span class="code-kw">return</span> <span class="code-var">documentos</span>[<span class="code-var">idx</span>], <span class="code-fn">float</span>(<span class="code-var">sims</span>[<span class="code-var">idx</span>]), <span class="code-var">idx</span>
+
+<span class="code-cm"># 3. Consulta RAG Delimitada</span>
+<span class="code-var">pregunta</span> = <span class="code-str">"¿Cuál es la penalización por entregar un challenge con 20 horas de retraso y cuál es la calificación mínima para aprobar el curso?"</span>
+<span class="code-var">frag</span>, <span class="code-var">score</span>, <span class="code-var">idx</span> = <span class="code-fn">buscar_fragmento</span>(<span class="code-var">pregunta</span>)
+
+<span class="code-var">prompt_rag</span> = <span class="code-str">f"Responde la pregunta basándote ÚNICAMENTE en el siguiente fragmento oficial. Si algún dato no aparece, acláralo honestamente y no lo inventes.\\n\\nReglamento:\\n\\\"\\\"\\\"{frag}\\\"\\\"\\\"\\n\\nPregunta:\\n{pregunta}\\n\\nRespuesta:"</span>
+
+<span class="code-var">res</span> = <span class="code-var">client</span>.<span class="code-var">chat</span>.<span class="code-var">completions</span>.<span class="code-fn">create</span>(
+    <span class="code-var">model</span>=<span class="code-str">"openai/gpt-oss-20b"</span>,
+    <span class="code-var">messages</span>=[{<span class="code-str">"role"</span>: <span class="code-str">"user"</span>, <span class="code-str">"content"</span>: <span class="code-var">prompt_rag</span>}],
+    <span class="code-var">max_tokens</span>=<span class="code-num">800</span>
+)
+<span class="code-fn">print</span>(<span class="code-var">res</span>.<span class="code-var">choices</span>[<span class="code-num">0</span>].<span class="code-var">message</span>.<span class="code-var">content</span>)</code></pre>
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       SECCIÓN 4: BANCO DE PREGUNTAS Y RESPUESTAS TÉCNICAS (Q&A)
+       ====================================================================== -->
+  <section class="tema-card" id="faq" style="margin-bottom: 4rem;">
+    <div class="tema-header">
+      <div class="tema-eyebrow">Banco de Conocimiento &middot; Q&amp;A Técnico</div>
+      <h3 class="tema-title">4. Preguntas Frecuentes de Sistemas RAG</h3>
+    </div>
+
+    <div class="faq-container">
+      <details class="faq-item">
+        <summary>¿Por qué el modelo declara honestamente que no conoce la calificación mínima cuando usa RAG?</summary>
+        <div class="faq-content">
+          <p>Porque el fragmento recuperado sobre entregas tardías no contiene la cláusula de calificación mínima (que está en el Doc #1). Al instruir explícitamente al LLM: <i>'Si algún dato no aparece en el fragmento, acláralo honestamente y no lo inventes'</i>, se suprime la alucinación probabilística y se garantiza una respuesta 100% auditable.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>¿Por qué la similitud coseno equivale al producto punto en este challenge?</summary>
+        <div class="faq-content">
+          <p>Porque al usar <code>normalize_embeddings=True</code>, cada vector se escala a norma euclidiana unitaria (||u|| = 1). La fórmula <code>cos(&theta;) = (u &middot; v) / (||u|| * ||v||)</code> se simplifica exactamente a <code>u &middot; v</code>, permitiendo a NumPy ejecutar la búsqueda semántica en microsegundos con <code>np.dot()</code>.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>¿Cómo escalar este pipeline a miles de PDFs corporativos?</summary>
+        <div class="faq-content">
+          <p>Para más de 10,000 documentos se reemplaza NumPy por una Base de Datos Vectorial especializada (ChromaDB, Pinecone, FAISS o Qdrant) que utiliza índices de grafos HNSW (Hierarchical Navigable Small World) para buscar entre millones de vectores en menos de 15 milisegundos.</p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       PAGINACIÓN DEL CURSO (ANTERIOR / SIGUIENTE)
+       ====================================================================== -->
+  <nav aria-label="Navegación del Curso" class="course-pagination-nav">
+    <a class="pagination-link pagination-link--prev" href="modulo1-challenge1.html">
+      <div class="pagination-link__sublabel">
+        <svg class="nav-arrow-svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"></path></svg>
+        <span>Anterior</span>
+      </div>
+      <div class="pagination-link__label">
+        <svg class="nav-arrow-svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"></path></svg>
+        <span>Challenge 1 · Comparador Multi-Modelo</span>
+      </div>
+    </a>
+
+    <a class="pagination-link pagination-link--next" href="modulo2-tema1.html">
+      <div class="pagination-link__sublabel">
+        <span>Siguiente Módulo</span>
+        <svg class="nav-arrow-svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"></path></svg>
+      </div>
+      <div class="pagination-link__label">
+        <span>Módulo 2 · Automatización Inteligente con WhatsApp</span>
+        <svg class="nav-arrow-svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+      </div>
+    </a>
+  </nav>
+</main>
+
+<!-- FOOTER CON AUTORÍA OFICIAL -->
+<footer class="course-footer">
+  <div style="max-width: 800px; margin: 0 auto; padding: 0 1.5rem;">
+    <h2 style="font-size: 1.85rem; font-family: var(--font-disp); margin-bottom: 0.8rem; color: var(--text-primary);">¡Has completado todos los Entregables del Módulo 1!</h2>
+    <p style="color: var(--text-secondary); margin-bottom: 1.6rem; font-size: 1.05rem;">Continúa con el Módulo 2 para construir tu Agente de WhatsApp con Llama 3 y Webhooks de FastAPI.</p>
+    <a class="btn-secondary" href="#overview">Volver arriba</a>
+    <div style="margin-top: 3.5rem; padding-top: 2rem; border-top: 1px solid var(--border-subtle); display: flex; flex-direction: column; align-items: center; gap: 0.35rem;">
+      <p style="font-size: 0.95rem; color: var(--text-secondary); font-weight: 500;">
+        Página creada por <span style="color: var(--text-primary); font-weight: 700;">Ing. Jesús Javier Hernández Olvera</span>
+      </p>
+      <p style="font-size: 0.82rem; color: var(--text-muted);">Meta AI · Especialización en Inteligencia Artificial con Modelos Abiertos</p>
+    </div>
+  </div>
+</footer>
+
+<!-- Botones Flotantes de Navegación Rápida -->
+<aside class="floating-scroll-nav" aria-label="Navegación rápida">
+  <button class="btn-floating-scroll" id="scroll-top-btn" title="Ir al inicio">
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 15l-6-6-6 6"/></svg>
+  </button>
+  <button class="btn-floating-scroll" id="scroll-bottom-btn" title="Ir al final">
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+  </button>
+</aside>
+</body>
+</html>

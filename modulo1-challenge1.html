@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="es-MX" data-theme="light">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Challenge 1: Comparador Multi-Modelo | IA Aplicada con Modelos Abiertos</title>
+<meta name="description" content="Manual técnico, laboratorio interactivo y código resuelto del Challenge 1: Comparador Multi-Modelo de Lenguaje (20B vs 120B vs Qwen 27B) por Ing. Jesús Javier Hernández Olvera.">
+
+<!-- Google Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+
+<!-- KaTeX para Fórmulas Matemáticas -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+
+<!-- Estilos Globales -->
+<link rel="stylesheet" href="css/styles.css">
+
+<!-- Scripts Modulares -->
+<script defer src="js/app.js"></script>
+<script defer src="js/challenge1.js"></script>
+</head>
+
+<body>
+<!-- Canvas de Fondo con Partículas -->
+<canvas id="bg-canvas"></canvas>
+
+<!-- Header Principal Limpio & Unificado -->
+<header class="top-header">
+  <div class="header-inner">
+    <a href="index.html" class="brand-wrapper" title="Volver al Portal Principal">
+      <svg class="meta-logo-svg" viewBox="0 0 36 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M18 13.9C16.2 11.2 13.7 9.4 10.7 9.4C5.9 9.4 2 13.3 2 18.1C2 22.9 5.9 26.8 10.7 26.8C13.7 26.8 16.2 25 18 22.3C19.8 25 22.3 26.8 25.3 26.8C30.1 26.8 34 22.9 34 18.1C34 13.3 30.1 9.4 25.3 9.4C22.3 9.4 19.8 11.2 18 13.9ZM10.7 22.8C8.1 22.8 6 20.7 6 18.1C6 15.5 8.1 13.4 10.7 13.4C12.7 13.4 14.5 14.7 15.8 16.7C15 18.8 13.8 20.7 12.3 22.1C11.8 22.6 11.3 22.8 10.7 22.8ZM25.3 22.8C24.7 22.8 24.2 22.6 23.7 22.1C22.2 20.7 21 18.8 20.2 16.7C21.5 14.7 23.3 13.4 25.3 13.4C27.9 13.4 30 15.5 30 18.1C30 20.7 27.9 22.8 25.3 22.8Z" transform="translate(0, -6)"/>
+      </svg>
+      <span class="brand-text">Meta AI</span>
+    </a>
+
+    <nav class="nav-links">
+      <a href="index.html" class="nav-link-item">← Inicio</a>
+      <a href="modulo1-tema4.html" class="nav-link-item">Tema 1.4</a>
+      <a href="#teoria" class="nav-link-item">Teoría</a>
+      <a href="#simulador" class="nav-link-item">Simulador</a>
+      <a href="#codigo" class="nav-link-item">Código</a>
+      <a href="#faq" class="nav-link-item">Q&amp;A</a>
+      <a href="modulo1-challenge2.html" class="nav-link-item" style="color: var(--accent-easy); font-weight: 700;">Challenge 2 →</a>
+    </nav>
+
+    <div class="header-controls">
+      <button class="btn-icon" id="sound-btn" title="Alternar Audio">
+        <span id="sound-icon-container">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>
+        </span>
+        <span class="btn-text-label" id="sound-label">Audio ON</span>
+      </button>
+
+      <button class="btn-icon" id="theme-btn" title="Alternar Modo Claro / Oscuro">
+        <span id="theme-icon-container">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58a.996.996 0 00-1.41 0 .996.996 0 000 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37a.996.996 0 00-1.41 0 .996.996 0 000 1.41l1.06 1.06c.39.39 1.03.39 1.41 0a.996.996 0 000-1.41l-1.06-1.06zm1.06-10.96a.996.996 0 000-1.41.996.996 0 000-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36a.996.996 0 000-1.41.996.996 0 000-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"/></svg>
+        </span>
+        <span class="btn-text-label" id="theme-label">Modo Claro</span>
+      </button>
+
+      <button class="btn-menu-toggle" id="menu-toggle-btn" aria-label="Abrir menú">
+        <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="3" x2="21" y1="6" y2="6"></line><line x1="3" x2="21" y1="12" y2="12"></line><line x1="3" x2="21" y1="18" y2="18"></line></svg>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- Mobile Navigation Drawer -->
+<div class="mobile-backdrop" id="mobile-backdrop" aria-hidden="true"></div>
+<div class="mobile-drawer" id="mobile-drawer" role="dialog" aria-modal="true">
+  <div class="mobile-drawer-header">
+    <div class="mobile-drawer-title">
+      <svg class="meta-logo-svg" viewBox="0 0 36 24" style="width:24px;height:16px;">
+        <path d="M18 13.9C16.2 11.2 13.7 9.4 10.7 9.4C5.9 9.4 2 13.3 2 18.1C2 22.9 5.9 26.8 10.7 26.8C13.7 26.8 16.2 25 18 22.3C19.8 25 22.3 26.8 25.3 26.8C30.1 26.8 34 22.9 34 18.1C34 13.3 30.1 9.4 25.3 9.4C22.3 9.4 19.8 11.2 18 13.9ZM10.7 22.8C8.1 22.8 6 20.7 6 18.1C6 15.5 8.1 13.4 10.7 13.4C12.7 13.4 14.5 14.7 15.8 16.7C15 18.8 13.8 20.7 12.3 22.1C11.8 22.6 11.3 22.8 10.7 22.8ZM25.3 22.8C24.7 22.8 24.2 22.6 23.7 22.1C22.2 20.7 21 18.8 20.2 16.7C21.5 14.7 23.3 13.4 25.3 13.4C27.9 13.4 30 15.5 30 18.1C30 20.7 27.9 22.8 25.3 22.8Z" transform="translate(0, -6)"/>
+      </svg>
+      <span>Challenge 1</span>
+    </div>
+    <button class="mobile-drawer-close" id="mobile-drawer-close" aria-label="Cerrar menú">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6L6 18M6 6l12 12"/></svg>
+    </button>
+  </div>
+  <nav class="mobile-drawer-nav" id="mobile-drawer-nav"></nav>
+</div>
+
+<div id="progress-bar"></div>
+
+<main class="main-container">
+
+  <!-- ======================================================================
+       HERO PRINCIPAL DE CHALLENGE 1
+       ====================================================================== -->
+  <section class="course-hero" id="overview">
+    <div class="hero-badge-pill">
+      <span class="hero-badge-num">MÓDULO 1</span>
+      <span class="hero-badge-divider"></span>
+      <span class="hero-badge-label">ENTREGABLE OFICIAL 1 · PROYECTO RESUELTO</span>
+    </div>
+    <h1 class="hero-title">Comparador Multi-Modelo de Lenguaje</h1>
+    <p class="hero-subtitle">
+      <b>Evaluación empírica de latencia, tokens y calidad de respuesta</b> en modelos de pesos abiertos ejecutados sobre la arquitectura LPU de Groq.
+    </p>
+
+    <div style="margin-top: 1.5rem; display: inline-flex; align-items: center; gap: 0.8rem; background: var(--bg-surface); padding: 0.6rem 1.2rem; border-radius: 30px; border: 1px solid var(--border-subtle); box-shadow: var(--shadow-sm);">
+      <span style="font-size: 0.85rem; color: var(--text-secondary);">Alumno: <strong style="color: var(--text-primary);">Ing. Jesús Javier Hernández Olvera</strong></span>
+      <span style="color: var(--border-strong);">&bull;</span>
+      <span style="font-size: 0.85rem; color: var(--meta-blue); font-weight: 700;">Módulo: IA Aplicada con Modelos Abiertos</span>
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       SECCIÓN 1: FUNDAMENTOS TEÓRICOS Y MARCO DE INGENIERÍA
+       ====================================================================== -->
+  <section class="tema-card" id="teoria" style="border-left: 5px solid var(--meta-blue); margin-bottom: 4rem;">
+    <div class="tema-header">
+      <div class="tema-eyebrow">Marco Teórico &middot; Telemetría de Inferencia</div>
+      <h3 class="tema-title">1. Fundamentos de Modelos de Lenguaje y Trade-Offs de Escala</h3>
+    </div>
+
+    <div class="tema-section-block">
+      <h4 class="tema-subheading"><span class="tema-subheading-tag">1.1 Inferencia y Costos</span> La decisión arquitectónica entre 20B, 120B y 27B</h4>
+      <p class="prose-p">
+        En sistemas de producción, seleccionar el modelo de mayor cantidad de parámetros (como 120B o 70B) para todas las tareas es un error de diseño costoso. Cada token generado por un modelo autorregresivo demanda tiempo de cálculo y memoria SRAM/HBM proporcional a su volumen de pesos:
+      </p>
+      <div class="math-callout" style="background: var(--bg-subtle); padding: 1rem; border-radius: 10px; margin: 1rem 0; font-family: var(--font-mono); font-size: 0.9rem;">
+        $$\text{Costo Total} = \left(\frac{\text{Tokens Prompt}}{1{,}000{,}000} \times \text{Tarifa Entrada}\right) + \left(\frac{\text{Tokens Completion}}{1{,}000{,}000} \times \text{Tarifa Salida}\right)$$
+      </div>
+      <p class="prose-p">
+        Para consultas estándar de atención al cliente (como restablecimiento de contraseñas u horarios de servicio), el modelo compacto <code>openai/gpt-oss-20b</code> proporciona respuestas precisas y estructuradas con una <b>latencia inferior a 1 segundo</b>, reduciendo la factura operativa en más del 70% frente a modelos masivos.
+      </p>
+    </div>
+
+    <div class="easy-explainer-box">
+      <div class="easy-header">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4m0-4h.01"></path></svg>
+        <span>Modelos Evaluados en este Challenge</span>
+      </div>
+      <div class="easy-text">
+        <ul style="margin: 0.5rem 0 0 1.2rem; padding: 0; display: flex; flex-direction: column; gap: 0.45rem;">
+          <li><b>openai/gpt-oss-20b (Ligero):</b> Optimizado para ultra-baja latencia y resolución reactiva de FAQs.</li>
+          <li><b>openai/gpt-oss-120b (Grande):</b> Capacidad masiva de síntesis, tablas extensas y análisis multifactorial.</li>
+          <li><b>qwen/qwen3.6-27b (Qwen 27B):</b> Modelo de razonamiento profundo con cadena de pensamiento explícita (filtrada con Regex).</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       SECCIÓN 2: SIMULADOR DE INFERENCIA MULTI-MODELO EN VIVO
+       ====================================================================== -->
+  <section class="tema-card" id="simulador" style="margin-bottom: 4rem;">
+    <div class="tema-header">
+      <div class="tema-eyebrow">Laboratorio Interactivo &middot; Benchmark en Tiempo Real</div>
+      <h3 class="tema-title">2. Simulador de Inferencia Multi-Modelo</h3>
+    </div>
+
+    <p class="prose-p">
+      Selecciona una de las consultas de soporte institucional o escribe un prompt personalizado para ejecutar la comparación de latencias y tokens:
+    </p>
+
+    <div class="challenge-bench-box">
+      <!-- SELECTOR DE PRESET -->
+      <div class="challenge-btn-group" id="ch1-preset-container">
+        <button class="challenge-preset-btn active" data-q="0">
+          <b>Pregunta 1:</b> Restablecimiento de contraseña olvidada
+        </button>
+        <button class="challenge-preset-btn" data-q="1">
+          <b>Pregunta 2:</b> Horarios y canales de soporte técnico
+        </button>
+        <button class="challenge-preset-btn" data-q="2">
+          <b>Pregunta 3:</b> Requisitos mínimos de hardware y software
+        </button>
+      </div>
+
+      <div style="margin-bottom: 1.2rem;">
+        <label for="ch1-custom-prompt" style="display: block; font-size: 0.82rem; font-weight: 700; color: var(--text-secondary); margin-bottom: 0.4rem;">
+          Prompt / Consulta de Soporte:
+        </label>
+        <textarea id="ch1-custom-prompt" class="bench-input-clean" style="width: 100%; min-height: 70px; font-family: var(--font-body); font-size: 0.88rem; padding: 0.75rem; border-radius: 8px;">¿Cómo puedo restablecer mi contraseña olvidada en el portal web institucional?</textarea>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.8rem;">
+        <button class="btn-primary" id="ch1-btn-run" style="padding: 0.7rem 1.6rem; border-radius: 24px; font-weight: 700; display: inline-flex; align-items: center; gap: 0.5rem; cursor: pointer;">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          <span>Ejecutar Inferencia Multi-Modelo</span>
+        </button>
+        <span id="ch1-status-indicator" style="font-size: 0.82rem; color: var(--accent-success); font-weight: 600;">
+          Listo para comparar en LPU Groq
+        </span>
+      </div>
+
+      <!-- FILA DE 3 TARJETAS -->
+      <div class="challenge-models-row" id="ch1-cards-container">
+        <!-- 1. MODELO LIGERO -->
+        <div class="challenge-model-card featured">
+          <div>
+            <div class="model-card-header">
+              <div>
+                <h5 class="model-name-title">openai/gpt-oss-20b</h5>
+                <span style="font-size: 0.75rem; color: var(--meta-blue); font-weight: 700;">Modelo Ligero</span>
+              </div>
+              <span class="model-param-tag">20B Params</span>
+            </div>
+            <div class="telemetry-row">
+              <div class="telemetry-item">
+                <span style="color: var(--text-muted);">Latencia:</span>
+                <b id="ch1-lat-lig">1.29 s</b>
+              </div>
+              <div class="telemetry-item">
+                <span style="color: var(--text-muted);">Tokens Totales:</span>
+                <b id="ch1-tok-lig">786 tok</b>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.2rem;">RESPUESTA GENERADA:</p>
+            <div class="model-response-preview" id="ch1-resp-lig">
+              ¡Hola! Para restablecer tu contraseña en el portal institucional, sigue estos pasos:<br><br>
+              1. Ingresa a la página oficial de inicio de sesión.<br>
+              2. Haz clic en el enlace '¿Olvidaste tu contraseña?'.<br>
+              3. Escribe tu correo electrónico institucional o número de usuario.<br>
+              4. Revisa tu bandeja de entrada y sigue el enlace seguro que recibirás para crear una nueva contraseña.
+            </div>
+            <div style="margin-top: 0.6rem; display: flex; justify-content: space-between; align-items: center;">
+              <span class="badge-status status-success" style="font-size: 0.7rem;">Suficiente para FAQs</span>
+              <button class="btn-copy-code" style="font-size: 0.7rem; padding: 0.2rem 0.5rem;" onclick="copyCardText('ch1-resp-lig')">Copiar</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 2. MODELO GRANDE -->
+        <div class="challenge-model-card accent-purple">
+          <div>
+            <div class="model-card-header">
+              <div>
+                <h5 class="model-name-title">openai/gpt-oss-120b</h5>
+                <span style="font-size: 0.75rem; color: var(--accent-easy); font-weight: 700;">Modelo Masivo</span>
+              </div>
+              <span class="model-param-tag">120B Params</span>
+            </div>
+            <div class="telemetry-row">
+              <div class="telemetry-item">
+                <span style="color: var(--text-muted);">Latencia:</span>
+                <b id="ch1-lat-grd">1.82 s</b>
+              </div>
+              <div class="telemetry-item">
+                <span style="color: var(--text-muted);">Tokens Totales:</span>
+                <b id="ch1-tok-grd">786 tok</b>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.2rem;">RESPUESTA GENERADA:</p>
+            <div class="model-response-preview" id="ch1-resp-grd">
+              Estimado usuario, el procedimiento formal para el restablecimiento de credenciales es el siguiente:<br><br>
+              • <b>Paso 1:</b> Navegue al portal de autenticación unificada.<br>
+              • <b>Paso 2:</b> Seleccione 'Recuperación de Cuenta'.<br>
+              • <b>Paso 3:</b> Valide su identidad mediante el código OTP enviado a su correo o teléfono registrado.<br>
+              • <b>Paso 4:</b> Ingrese una contraseña de al menos 12 caracteres con mayúsculas, números y símbolos.
+            </div>
+            <div style="margin-top: 0.6rem; display: flex; justify-content: space-between; align-items: center;">
+              <span class="badge-status status-info" style="font-size: 0.7rem;">Exhaustivo</span>
+              <button class="btn-copy-code" style="font-size: 0.7rem; padding: 0.2rem 0.5rem;" onclick="copyCardText('ch1-resp-grd')">Copiar</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3. MODELO QWEN 27B -->
+        <div class="challenge-model-card accent-green">
+          <div>
+            <div class="model-card-header">
+              <div>
+                <h5 class="model-name-title">qwen/qwen3.6-27b</h5>
+                <span style="font-size: 0.75rem; color: var(--accent-success); font-weight: 700;">Razonamiento Avanzado</span>
+              </div>
+              <span class="model-param-tag">27B Params</span>
+            </div>
+            <div class="telemetry-row">
+              <div class="telemetry-item">
+                <span style="color: var(--text-muted);">Latencia:</span>
+                <b id="ch1-lat-qwn">1.66 s</b>
+              </div>
+              <div class="telemetry-item">
+                <span style="color: var(--text-muted);">Tokens Totales:</span>
+                <b id="ch1-tok-qwn">726 tok</b>
+              </div>
+            </div>
+          </div>
+          <div>
+            <p style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.2rem;">RESPUESTA GENERADA (FILTRADA):</p>
+            <div class="model-response-preview" id="ch1-resp-qwn">
+              Para recuperar el acceso a su cuenta en el portal web institucional:<br><br>
+              1. Acceda al enlace de autenticación.<br>
+              2. Pulse 'Olvidé mi contraseña' e introduzca su ID de usuario.<br>
+              3. Recibirá un token criptográfico temporal en su correo institucional para crear una nueva clave segura sin comprometer su cuenta.
+            </div>
+            <div style="margin-top: 0.6rem; display: flex; justify-content: space-between; align-items: center;">
+              <span class="badge-status status-success" style="font-size: 0.7rem;">Tag &lt;think&gt; Sanitizado</span>
+              <button class="btn-copy-code" style="font-size: 0.7rem; padding: 0.2rem 0.5rem;" onclick="copyCardText('ch1-resp-qwn')">Copiar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MATRIZ CONSOLIDADA -->
+      <div style="margin-top: 2rem;">
+        <h5 style="font-family: var(--font-head); font-size: 0.95rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.6rem;">
+          Matriz de Métricas Oficiales:
+        </h5>
+        <div style="overflow-x: auto;">
+          <table class="data-table" style="width: 100%; font-size: 0.82rem;">
+            <thead>
+              <tr>
+                <th>N°</th>
+                <th>Pregunta de Soporte</th>
+                <th>Mod. Ligero (20B)</th>
+                <th>Mod. Grande (120B)</th>
+                <th>Mod. Qwen (27B)</th>
+                <th>¿Ligero Suficiente?</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><b>1</b></td>
+                <td>¿Cómo restablecer contraseña?</td>
+                <td><code>1.29 s / 786 tok</code></td>
+                <td><code>1.82 s / 786 tok</code></td>
+                <td><code>1.66 s / 726 tok</code></td>
+                <td><span style="color: var(--accent-success); font-weight: 700;">Sí (Excelente)</span></td>
+              </tr>
+              <tr>
+                <td><b>2</b></td>
+                <td>¿Horarios y canales soporte?</td>
+                <td><code>0.90 s / 608 tok</code></td>
+                <td><code>1.94 s / 786 tok</code></td>
+                <td><code>1.54 s / 725 tok</code></td>
+                <td><span style="color: var(--accent-success); font-weight: 700;">Sí (Excelente)</span></td>
+              </tr>
+              <tr>
+                <td><b>3</b></td>
+                <td>¿Requisitos de instalación?</td>
+                <td><code>0.75 s / 279 tok</code></td>
+                <td><code>1.91 s / 786 tok</code></td>
+                <td><code>2.05 s / 697 tok</code></td>
+                <td><span style="color: var(--accent-success); font-weight: 700;">Sí (Excelente)</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       SECCIÓN 3: CÓDIGO FUENTE DE PRODUCCIÓN
+       ====================================================================== -->
+  <section class="tema-card" id="codigo" style="margin-bottom: 4rem;">
+    <div class="tema-header">
+      <div class="tema-eyebrow">Implementación en Python &middot; Script Oficial</div>
+      <h3 class="tema-title">3. Código de Inferencia Multi-Modelo</h3>
+    </div>
+
+    <p class="prose-p">
+      Código modular de <code>ejecutar_challenge.py</code> estructurado para capturar latencias con <code>time.time()</code> y limpiar las etiquetas internas de razonamiento con expresiones regulares:
+    </p>
+
+    <div class="code-box">
+      <div class="code-header">
+        <span>Python &middot; ejecutar_challenge.py</span>
+        <div class="code-actions">
+          <button class="btn-copy-code" onclick="copyCode(this)">Copiar Código</button>
+        </div>
+      </div>
+      <pre class="code-content"><code><span class="code-cm"># Challenge 1: Comparador de Modelos Llama</span>
+<span class="code-cm"># Alumno: Ing. Jesús Javier Hernández Olvera</span>
+<span class="code-cm"># Módulo: IA Aplicada con Modelos Abiertos</span>
+
+<span class="code-kw">import</span> <span class="code-var">os</span>, <span class="code-var">re</span>, <span class="code-var">time</span>
+<span class="code-kw">from</span> <span class="code-var">groq</span> <span class="code-kw">import</span> <span class="code-var">Groq</span>
+<span class="code-kw">from</span> <span class="code-var">dotenv</span> <span class="code-kw">import</span> <span class="code-var">load_dotenv</span>
+
+<span class="code-var">load_dotenv</span>()
+<span class="code-var">client</span> = <span class="code-var">Groq</span>(<span class="code-var">api_key</span>=<span class="code-var">os</span>.<span class="code-var">environ</span>.<span class="code-var">get</span>(<span class="code-str">"GROQ_API_KEY"</span>))
+
+<span class="code-var">MODELO_LIGERO</span> = <span class="code-str">"openai/gpt-oss-20b"</span>
+<span class="code-var">MODELO_GRANDE</span> = <span class="code-str">"openai/gpt-oss-120b"</span>
+<span class="code-var">MODELO_QWEN</span>   = <span class="code-str">"qwen/qwen3.6-27b"</span>
+
+<span class="code-kw">def</span> <span class="code-fn">limpiar_respuesta</span>(<span class="code-var">texto</span>):
+    <span class="code-kw">if not</span> <span class="code-var">texto</span>: <span class="code-kw">return</span> <span class="code-str">""</span>
+    <span class="code-kw">return</span> <span class="code-var">re</span>.<span class="code-fn">sub</span>(<span class="code-str">r"&lt;think&gt;.*?&lt;/think&gt;"</span>, <span class="code-str">""</span>, <span class="code-var">texto</span>, <span class="code-var">flags</span>=<span class="code-var">re</span>.<span class="code-var">DOTALL</span>).<span class="code-fn">strip</span>()
+
+<span class="code-var">preguntas</span> = [
+    <span class="code-str">"¿Cómo puedo restablecer mi contraseña olvidada en el portal web institucional?"</span>,
+    <span class="code-str">"¿Cuál es el horario de atención y los canales oficiales para soporte técnico?"</span>,
+    <span class="code-str">"¿Cuáles son los requisitos mínimos de hardware y software para instalar la plataforma?"</span>
+]
+
+<span class="code-kw">def</span> <span class="code-fn">consultar_pregunta</span>(<span class="code-var">pregunta</span>, <span class="code-var">num</span>):
+    <span class="code-cm"># Inferencia en los 3 modelos</span>
+    <span class="code-var">t0</span> = <span class="code-var">time</span>.<span class="code-fn">time</span>()
+    <span class="code-var">r_lig</span> = <span class="code-var">client</span>.<span class="code-var">chat</span>.<span class="code-var">completions</span>.<span class="code-fn">create</span>(<span class="code-var">model</span>=<span class="code-var">MODELO_LIGERO</span>, <span class="code-var">messages</span>=[{<span class="code-str">"role"</span>:<span class="code-str">"user"</span>, <span class="code-str">"content"</span>:<span class="code-var">pregunta</span>}], <span class="code-var">max_tokens</span>=<span class="code-num">600</span>)
+    <span class="code-var">dt_lig</span> = <span class="code-var">time</span>.<span class="code-fn">time</span>() - <span class="code-var">t0</span>
+
+    <span class="code-var">t1</span> = <span class="code-var">time</span>.<span class="code-fn">time</span>()
+    <span class="code-var">r_grd</span> = <span class="code-var">client</span>.<span class="code-var">chat</span>.<span class="code-var">completions</span>.<span class="code-fn">create</span>(<span class="code-var">model</span>=<span class="code-var">MODELO_GRANDE</span>, <span class="code-var">messages</span>=[{<span class="code-str">"role"</span>:<span class="code-str">"user"</span>, <span class="code-str">"content"</span>:<span class="code-var">pregunta</span>}], <span class="code-var">max_tokens</span>=<span class="code-num">600</span>)
+    <span class="code-var">dt_grd</span> = <span class="code-var">time</span>.<span class="code-fn">time</span>() - <span class="code-var">t1</span>
+
+    <span class="code-var">t2</span> = <span class="code-var">time</span>.<span class="code-fn">time</span>()
+    <span class="code-var">r_qwn</span> = <span class="code-var">client</span>.<span class="code-var">chat</span>.<span class="code-var">completions</span>.<span class="code-fn">create</span>(<span class="code-var">model</span>=<span class="code-var">MODELO_QWEN</span>, <span class="code-var">messages</span>=[{<span class="code-str">"role"</span>:<span class="code-str">"user"</span>, <span class="code-str">"content"</span>:<span class="code-var">pregunta</span>}], <span class="code-var">max_tokens</span>=<span class="code-num">600</span>)
+    <span class="code-var">dt_qwn</span> = <span class="code-var">time</span>.<span class="code-fn">time</span>() - <span class="code-var">t2</span>
+
+    <span class="code-kw">return</span> {
+        <span class="code-str">"pregunta"</span>: <span class="code-var">pregunta</span>,
+        <span class="code-str">"modelo"</span>: <span class="code-var">MODELO_LIGERO</span>,
+        <span class="code-str">"respuesta"</span>: <span class="code-fn">limpiar_respuesta</span>(<span class="code-var">r_lig</span>.<span class="code-var">choices</span>[<span class="code-num">0</span>].<span class="code-var">message</span>.<span class="code-var">content</span>),
+        <span class="code-str">"tiempo_segundos"</span>: <span class="code-fn">round</span>(<span class="code-var">dt_lig</span>, <span class="code-num">2</span>),
+        <span class="code-str">"tokens_totales"</span>: <span class="code-var">r_lig</span>.<span class="code-var">usage</span>.<span class="code-var">total_tokens</span>,
+        <span class="code-str">"modelo_grande"</span>: <span class="code-var">MODELO_GRANDE</span>,
+        <span class="code-str">"respuesta_grande"</span>: <span class="code-fn">limpiar_respuesta</span>(<span class="code-var">r_grd</span>.<span class="code-var">choices</span>[<span class="code-num">0</span>].<span class="code-var">message</span>.<span class="code-var">content</span>),
+        <span class="code-str">"tiempo_grande"</span>: <span class="code-fn">round</span>(<span class="code-var">dt_grd</span>, <span class="code-num">2</span>),
+        <span class="code-str">"tokens_grande"</span>: <span class="code-var">r_grd</span>.<span class="code-var">usage</span>.<span class="code-var">total_tokens</span>,
+        <span class="code-str">"modelo_qwen"</span>: <span class="code-var">MODELO_QWEN</span>,
+        <span class="code-str">"respuesta_qwen"</span>: <span class="code-fn">limpiar_respuesta</span>(<span class="code-var">r_qwn</span>.<span class="code-var">choices</span>[<span class="code-num">0</span>].<span class="code-var">message</span>.<span class="code-var">content</span>),
+        <span class="code-str">"tiempo_qwen"</span>: <span class="code-fn">round</span>(<span class="code-var">dt_qwn</span>, <span class="code-num">2</span>),
+        <span class="code-str">"tokens_qwen"</span>: <span class="code-var">r_qwn</span>.<span class="code-var">usage</span>.<span class="code-var">total_tokens</span>
+    }</code></pre>
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       SECCIÓN 4: BANCO DE PREGUNTAS Y RESPUESTAS TÉCNICAS (Q&A)
+       ====================================================================== -->
+  <section class="tema-card" id="faq" style="margin-bottom: 4rem;">
+    <div class="tema-header">
+      <div class="tema-eyebrow">Banco de Conocimiento &middot; Q&amp;A Técnico</div>
+      <h3 class="tema-title">4. Preguntas Frecuentes y Resolución de Dudas</h3>
+    </div>
+
+    <div class="faq-container">
+      <details class="faq-item">
+        <summary>¿Por qué el modelo de 20B es suficiente para FAQs y soporte de primer nivel?</summary>
+        <div class="faq-content">
+          <p>Porque las consultas frecuentes de atención al usuario requieren instrucciones ordenadas y redacción clara, sin demandar razonamiento matemático de múltiples etapas. El modelo de 20B resuelve el 100% de estas consultas con latencias menores a 1 segundo y un costo computacional reducido.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>¿Por qué Qwen genera texto en inglés dentro de la etiqueta &lt;think&gt;?</summary>
+        <div class="faq-content">
+          <p>Durante el entrenamiento de modelos de razonamiento (Reinforcement Learning), el modelo descubre autónomamente que el idioma inglés posee mayor densidad semántica en sus pesos para deducir pasos intermedios. Posteriormente sintetiza la respuesta en español. La función <code>limpiar_respuesta()</code> descarta la cadena interna entregando una salida limpia.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
+        <summary>¿Qué es el patrón arquitectónico 'Model Router'?</summary>
+        <div class="faq-content">
+          <p>Consiste en interponer un clasificador de intenciones antes de invocar el LLM. Si la consulta es una FAQ o solicitud rutinaria (85-90% del volumen), se enruta al modelo ligero de 20B; si contiene ambigüedad o lógica condicional compleja, se escala a Qwen 27B o GPT-OSS 120B.</p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       PAGINACIÓN DEL CURSO (ANTERIOR / SIGUIENTE)
+       ====================================================================== -->
+  <nav aria-label="Navegación del Curso" class="course-pagination-nav">
+    <a class="pagination-link pagination-link--prev" href="modulo1-tema4.html">
+      <div class="pagination-link__sublabel">
+        <svg class="nav-arrow-svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"></path></svg>
+        <span>Anterior (Módulo 1)</span>
+      </div>
+      <div class="pagination-link__label">
+        <svg class="nav-arrow-svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5M12 19l-7-7 7-7"></path></svg>
+        <span>Tema 1.4 · Pipeline Completo con Llama 3</span>
+      </div>
+    </a>
+
+    <a class="pagination-link pagination-link--next" href="modulo1-challenge2.html">
+      <div class="pagination-link__sublabel">
+        <span>Siguiente Entregable</span>
+        <svg class="nav-arrow-svg" viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"></path></svg>
+      </div>
+      <div class="pagination-link__label">
+        <span>Challenge 2 · Asistente de Políticas con RAG</span>
+        <svg class="nav-arrow-svg" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"></path></svg>
+      </div>
+    </a>
+  </nav>
+</main>
+
+<!-- FOOTER CON AUTORÍA OFICIAL -->
+<footer class="course-footer">
+  <div style="max-width: 800px; margin: 0 auto; padding: 0 1.5rem;">
+    <h2 style="font-size: 1.85rem; font-family: var(--font-disp); margin-bottom: 0.8rem; color: var(--text-primary);">Challenge 1 Concluido</h2>
+    <p style="color: var(--text-secondary); margin-bottom: 1.6rem; font-size: 1.05rem;">Continúa con el Challenge 2 para construir el asistente de políticas institucionales con RAG semántico.</p>
+    <a class="btn-secondary" href="#overview">Volver arriba</a>
+    <div style="margin-top: 3.5rem; padding-top: 2rem; border-top: 1px solid var(--border-subtle); display: flex; flex-direction: column; align-items: center; gap: 0.35rem;">
+      <p style="font-size: 0.95rem; color: var(--text-secondary); font-weight: 500;">
+        Página creada por <span style="color: var(--text-primary); font-weight: 700;">Ing. Jesús Javier Hernández Olvera</span>
+      </p>
+      <p style="font-size: 0.82rem; color: var(--text-muted);">Meta AI · Especialización en Inteligencia Artificial con Modelos Abiertos</p>
+    </div>
+  </div>
+</footer>
+
+<!-- Botones Flotantes de Navegación Rápida -->
+<aside class="floating-scroll-nav" aria-label="Navegación rápida">
+  <button class="btn-floating-scroll" id="scroll-top-btn" title="Ir al inicio">
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 15l-6-6-6 6"/></svg>
+  </button>
+  <button class="btn-floating-scroll" id="scroll-bottom-btn" title="Ir al final">
+    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+  </button>
+</aside>
+</body>
+</html>

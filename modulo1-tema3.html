@@ -2004,7 +2004,7 @@
 </article>
 </section>
 <!-- ==========================================================================
-  EJERCICIOS PRÁCTICOS OFICIALES (1 AL 4) CON GUÍA Y SOLUCIONES DESPLEGABLES
+  EJERCICIOS PRÁCTICOS OFICIALES (1 AL 5) CON GUÍA Y SOLUCIONES DESPLEGABLES
   ========================================================================== -->
 <section class="exercises-section" id="ejercicios">
 <div style="text-align:center; margin-bottom:2rem;">
@@ -2012,6 +2012,7 @@
 <h2 style="font-size:2rem; font-family:var(--font-disp); font-weight:800; color:var(--text-primary); margin:0 0 0.8rem;">Ejercicios Prácticos del Tema 1.3</h2>
 <p class="module-desc" style="color:var(--text-secondary); max-width:72ch; margin:0 auto; font-size:1rem; line-height:1.65;">Pon a prueba tu comprensión técnica resolviendo casos reales de ingeniería de LLMs. Antes de ver la solución, trabaja con la guía de conceptos clave que precede cada enunciado.</p>
 </div>
+
 <!-- EJERCICIO 1 -->
 <article class="exercise-card">
 <div class="exercise-header">
@@ -2022,7 +2023,7 @@
 <div class="exercise-context-title">
 <svg fill="none" height="14" stroke="currentColor" stroke-width="2.2" viewbox="0 0 24 24" width="14"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4m0-4h.01"></path></svg>
   Conceptos necesarios para este ejercicio
-  </div>
+</div>
 <ul class="exercise-context-list">
 <li><b>Arquitectura LoRA:</b> Añade dos matrices de baja dimensión $B \in \mathbb{R}^{d \times r}$ y $A \in \mathbb{R}^{r \times d}$ por proyección adaptada, donde el rango $r \ll d_{\text{model}}$. Solo se entrenan estas matrices; los pesos originales $W_0$ se congelan.</li>
 <li><b>Rango $r$ y escala $\alpha$:</b> $r=16$ define el cuello de botella dimensional. La actualización efectiva es $\Delta W = \frac{\alpha}{r} B \cdot A$. Con $\alpha=32$ y $r=16$, el factor de escala es 2.</li>
@@ -2031,8 +2032,74 @@
 </ul>
 </div>
 <p class="exercise-prompt">
-  Para un modelo Meta Llama 3 8B ($d_{\text{model}} = 4096$, 32 capas transformer), calcula la cantidad exacta de parámetros entrenables si se aplica LoRA con $r=16$ y $\alpha=32$ adaptando únicamente $W_q$ y $W_v$. Compara la VRAM requerida por los pesos entrenables en FP16 frente a un Full Fine-Tuning de 8B parámetros, y explica por qué la inferencia no sufre latencia adicional tras la fusión.
-  </p>
+Para un modelo Meta Llama 3 8B ($d_{\text{model}} = 4096$, 32 capas transformer), calcula la cantidad exacta de parámetros entrenables si se aplica LoRA con $r=16$ y $\alpha=32$ adaptando únicamente $W_q$ y $W_v$. Compara la VRAM requerida por los pesos entrenables en FP16 frente a un Full Fine-Tuning de 8B parámetros, y explica por qué la inferencia no sufre latencia adicional tras la fusión.
+</p>
+<details class="exercise-solution-details">
+<summary class="exercise-solution-summary">
+<span>Ver Criterio de Solución &amp; Derivación Matemática</span>
+<svg fill="none" height="16" stroke="currentColor" stroke-width="2" viewbox="0 0 24 24" width="16"><path d="M6 9l6 6 6-6"></path></svg>
+</summary>
+<div class="exercise-solution-panel">
+<div class="step-flow-list" style="margin:0.5rem 0 0.8rem;">
+<div class="step-flow-item">
+<div class="step-num-badge">1</div>
+<div class="step-flow-content">
+<b>Cálculo Exacto de Parámetros Entrenables:</b>
+<p style="font-size:0.88rem; color:var(--text-secondary); margin:0.3rem 0;">
+• Para cada módulo adaptado ($W_q$ y $W_v$), las matrices $A \in \mathbb{R}^{16 \times 4096}$ y $B \in \mathbb{R}^{4096 \times 16}$ suman: $(4096 \times 16) + (16 \times 4096) = 65{,}536 + 65{,}536 = 131{,}072\text{ parámetros}$.<br>
+• Adaptando $W_q$ y $W_v$ por capa: $2 \times 131{,}072 = 262{,}144\text{ parámetros por capa}$.<br>
+• Para las 32 capas: $32 \times 262{,}144 = \mathbf{8{,}388{,}608\text{ parámetros}}$ (~8.39M params, que representa solo el <b>0.104% del modelo base</b>).
+</p>
+</div>
+</div>
+<div class="step-flow-item">
+<div class="step-num-badge">2</div>
+<div class="step-flow-content">
+<b>Comparativa de VRAM y Fusión Zero-Overhead:</b>
+<p style="font-size:0.88rem; color:var(--text-secondary); margin:0.3rem 0;">
+• <b>VRAM de Pesos LoRA (FP16):</b> $8{,}388{,}608 \times 2\text{ bytes} = \mathbf{16.78\text{ MB}}$. En Full FT se requerirían 16 GB de pesos + 16 GB de gradientes + 64 GB de optimizador AdamW = <b>96 GB de VRAM</b>.<br>
+• <b>Cero Latencia en Inferencia:</b> Al fusionar $W_{\text{final}} = W_0 + \frac{\alpha}{r}(B \cdot A)$, las dimensiones resultantes son idénticas a $W_0$, eliminando cualquier bifurcación de cálculo durante el runtime.
+</p>
+<div class="code-box" style="margin-top:0.6rem;">
+<div class="code-header">
+<span>calcular_lora_params.py</span>
+<div class="code-actions"><button class="btn-copy-code" onclick="copyCode(this)">Copiar</button><button class="btn-download-code" onclick="downloadCode(this)">Descargar</button></div>
+</div>
+<pre class="code-content"><code><span class="code-kw">def</span> <span class="code-fn">calcular_vram_lora</span>(<span class="code-var">d_model</span>=<span class="code-num">4096</span>, <span class="code-var">r</span>=<span class="code-num">16</span>, <span class="code-var">capas</span>=<span class="code-num">32</span>, <span class="code-var">modulos</span>=<span class="code-num">2</span>):
+    <span class="code-var">params_capa</span> = <span class="code-var">modulos</span> * (<span class="code-var">d_model</span> * <span class="code-var">r</span> + <span class="code-var">r</span> * <span class="code-var">d_model</span>)
+    <span class="code-var">total_params</span> = <span class="code-var">params_capa</span> * <span class="code-var">capas</span>
+    <span class="code-var">vram_mb</span> = (<span class="code-var">total_params</span> * <span class="code-num">2</span>) / (<span class="code-num">1024</span> * <span class="code-num">1024</span>)
+    <span class="code-fn">print</span>(<span class="code-str">f"Parámetros LoRA: {total_params:,} ({vram_mb:.2f} MB en FP16)"</span>)
+    <span class="code-kw">return</span> <span class="code-var">total_params</span>, <span class="code-var">vram_mb</span>
+
+<span class="code-fn">calcular_vram_lora</span>()  <span class="code-cm"># Output: 8,388,608 (16.00 MB en FP16)</span></code></pre>
+</div>
+</div>
+</div>
+</div>
+</div>
+</details>
+</article>
+
+<!-- EJERCICIO 2 -->
+<article class="exercise-card">
+<div class="exercise-header">
+<span class="exercise-num-badge">Ejercicio 2</span>
+<h4 class="exercise-title">Construcción y Validación de Dataset SFT en JSONL para PostgreSQL DBA</h4>
+</div>
+<div class="exercise-context-box">
+<div class="exercise-context-title">
+<svg fill="none" height="14" stroke="currentColor" stroke-width="2.2" viewbox="0 0 24 24" width="14"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4m0-4h.01"></path></svg>
+  Conceptos necesarios para este ejercicio
+</div>
+<ul class="exercise-context-list">
+<li><b>Esquema Multi-Turno SFT:</b> Cada línea del archivo JSONL debe contener un objeto <code>{"messages": [...]}</code> con roles <code>system</code>, <code>user</code> y <code>assistant</code>.</li>
+<li><b>Loss Masking (Enmascaramiento):</b> Asignar <code>label = -100</code> al prompt del usuario para concentrar los gradientes únicamente en la respuesta del asistente.</li>
+</ul>
+</div>
+<p class="exercise-prompt">
+Diseña un registro JSONL estructurado para entrenar a un asistente experto en optimización de bases de datos PostgreSQL. El prompt debe consultar sobre una consulta lenta con 10M de filas y la respuesta debe proporcionar un diagnóstico conciso con índices B-Tree y plan de ejecución. Justifica formalmente el uso de Loss Masking.
+</p>
 <details class="exercise-solution-details">
 <summary class="exercise-solution-summary">
 <span>Ver Criterio de Solución &amp; JSONL Oficial</span>
@@ -2044,16 +2111,27 @@
 <div class="step-num-badge">1</div>
 <div class="step-flow-content">
 <b>Registro Estructurado en Formato JSONL Oficial:</b>
-<div class="code-box" style="margin:0.6rem 0;">
+<div class="code-box" style="margin:0.8rem 0;">
 <div class="code-header">
 <span>dataset_sft_postgresql.jsonl</span>
-
-<div class="code-actions"><button class="btn-copy-code" onclick="copyCode(this)">Copiar</button><button class="btn-download-code" onclick="downloadCode(this)">Descargar</button></div></div>
-<pre class="code-content"><code>{<span class="code-var">"messages"</span>: [
-  {<span class="code-var">"role"</span>: <span class="code-str">"system"</span>,    <span class="code-var">"content"</span>: <span class="code-str">"Eres un DBA senior experto en PostgreSQL. Proporciona diagnósticos con EXPLAIN ANALYZE e índices concisos."</span>},
-  {<span class="code-var">"role"</span>: <span class="code-str">"user"</span>,      <span class="code-var">"content"</span>: <span class="code-str">"SELECT * FROM ordenes WHERE cliente_id=450 AND estado='PAGADO' tarda 4.2s con 10M filas. ¿Cómo la optimizo?"</span>},
-  {<span class="code-var">"role"</span>: <span class="code-str">"assistant"</span>, <span class="code-var">"content"</span>: <span class="code-str">"1. Crea índice compuesto B-Tree:\nCREATE INDEX idx_ord ON ordenes (cliente_id, estado);\n2. ANALYZE ordenes;\n3. El Seq Scan pasa a Index Scan en &lt;5ms."</span>}
-]}</code></pre>
+<div class="code-actions"><button class="btn-copy-code" onclick="copyCode(this)">Copiar</button><button class="btn-download-code" onclick="downloadCode(this)">Descargar</button></div>
+</div>
+<pre class="code-content"><code>{
+  <span class="code-var">"messages"</span>: [
+    {
+      <span class="code-var">"role"</span>: <span class="code-str">"system"</span>,
+      <span class="code-var">"content"</span>: <span class="code-str">"Eres un DBA senior experto en PostgreSQL. Proporciona diagnósticos con EXPLAIN ANALYZE e índices concisos."</span>
+    },
+    {
+      <span class="code-var">"role"</span>: <span class="code-str">"user"</span>,
+      <span class="code-var">"content"</span>: <span class="code-str">"SELECT * FROM ordenes WHERE cliente_id=450 AND estado='PAGADO' tarda 4.2s con 10M filas. ¿Cómo la optimizo?"</span>
+    },
+    {
+      <span class="code-var">"role"</span>: <span class="code-str">"assistant"</span>,
+      <span class="code-var">"content"</span>: <span class="code-str">"1. Crea índice compuesto B-Tree:\nCREATE INDEX idx_ord ON ordenes (cliente_id, estado);\n2. Ejecuta: ANALYZE ordenes;\n3. El Seq Scan pasará a Index Scan en &lt;5ms."</span>
+    }
+  ]
+}</code></pre>
 </div>
 </div>
 </div>
@@ -2071,6 +2149,7 @@
 </div>
 </details>
 </article>
+
 <!-- EJERCICIO 3 -->
 <article class="exercise-card">
 <div class="exercise-header">
@@ -2081,7 +2160,7 @@
 <div class="exercise-context-title">
 <svg fill="none" height="14" stroke="currentColor" stroke-width="2.2" viewbox="0 0 24 24" width="14"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4m0-4h.01"></path></svg>
   Conceptos necesarios para este ejercicio
-  </div>
+</div>
 <ul class="exercise-context-list">
 <li><b>ROUGE-L:</b> Métrica automática que mide el solapamiento de la subsecuencia común más larga (LCS) entre la respuesta generada y la referencia. Rango 0–1; valores $\geq 0.70$ indican alta fidelidad léxica en dominio específico.</li>
 <li><b>Llama Guard 3:</b> Modelo de clasificación de seguridad Meta que evalúa prompts y respuestas contra 14 categorías de riesgo ($S_1$–$S_{14}$). Se despliega como microservicio y retorna <code>safe</code> o la categoría de riesgo detectada.</li>
@@ -2090,8 +2169,8 @@
 </ul>
 </div>
 <p class="exercise-prompt">
-  Una institución financiera implementa un asistente de créditos con Llama 3 8B adaptado con QLoRA. Diseña la arquitectura del pipeline de inferencia y evaluación combinando ROUGE-L (contra 300 casos bancarios auditados) con Llama Guard 3 como filtro de seguridad. Explica qué categoría de riesgo ($S_1$–$S_{14}$) debe interceptar intentos de fuga de información y qué función cumple el juez sintético en la prevención de alucinaciones numéricas.
-  </p>
+Una institución financiera implementa un asistente de créditos con Llama 3 8B adaptado con QLoRA. Diseña la arquitectura del pipeline de inferencia y evaluación combinando ROUGE-L (contra 300 casos bancarios auditados) con Llama Guard 3 como filtro de seguridad. Explica qué categoría de riesgo ($S_1$–$S_{14}$) debe interceptar intentos de fuga de información y qué función cumple el juez sintético en la prevención de alucinaciones numéricas.
+</p>
 <details class="exercise-solution-details">
 <summary class="exercise-solution-summary">
 <span>Ver Criterio de Solución &amp; Arquitectura de 3 Capas</span>
@@ -2103,25 +2182,26 @@
 <div class="step-num-badge">1</div>
 <div class="step-flow-content">
 <b>Validación Offline Pre-Despliegue:</b> El adaptador LoRA se evalúa contra 300 pares de referencia bancarios. Se requiere ROUGE-L $\geq 0.70$ y BLEU-4 $\geq 0.45$ para aprobar el despliegue. Un umbral inferior cancela el release automáticamente.
-  </div>
+</div>
 </div>
 <div class="step-flow-item">
 <div class="step-num-badge">2</div>
 <div class="step-flow-content">
 <b>Filtro de Entrada/Salida — Llama Guard 3:</b> Cada prompt y respuesta pasa por Llama Guard 3 8B cuantizado. Si detecta <b>$S_{14}$</b> (Inyección de Prompt / Jailbreak) o <b>$S_2$</b> (Exfiltración de Datos Financieros Confidenciales), el microservicio bloquea el stream y retorna HTTP 403.
-  </div>
+</div>
 </div>
 <div class="step-flow-item">
 <div class="step-num-badge">3</div>
 <div class="step-flow-content">
 <b>Auditoría Continua — LLM-as-a-Judge:</b> Un modelo evaluador califica aleatoriamente el 5% del tráfico en 4 dimensiones: Factualidad, Relevancia, Coherencia, Adherencia Regulatoria (escala 1–5). Si la media cae bajo 4.5/5.0, se genera alerta a MLOps. Los montos y tasas de las tablas de amortización se validan contra las fórmulas financieras de referencia.
-  </div>
+</div>
 </div>
 </div>
 <p style="font-size:0.88rem; color:var(--text-secondary); margin:0;"><b>Arquitectura complementaria:</b> Llama Guard 3 opera en &lt;40ms protegiendo contra ataques externos, mientras el LLM Juez detecta alucinaciones numéricas que ninguna métrica automática puede capturar — una defensa en profundidad de dos capas.</p>
 </div>
 </details>
 </article>
+
 <!-- EJERCICIO 4 -->
 <article class="exercise-card">
 <div class="exercise-header">
@@ -2132,7 +2212,7 @@
 <div class="exercise-context-title">
 <svg fill="none" height="14" stroke="currentColor" stroke-width="2.2" viewbox="0 0 24 24" width="14"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4m0-4h.01"></path></svg>
   Conceptos necesarios para este ejercicio
-  </div>
+</div>
 <ul class="exercise-context-list">
 <li><b>RLHF con PPO:</b> Proceso de 4 etapas — entrenar reward model, inicializar política, optimizar con PPO (Proximal Policy Optimization), monitorear divergencia KL. Requiere ajustar 15+ hiperparámetros y puede colapsar la política si la KL no se controla.</li>
 <li><b>DPO (Direct Preference Optimization):</b> Elimina el reward model y el bucle RL. Optimiza directamente la política a partir de pares preferidos/rechazados $(y_w, y_l)$ usando una función de pérdida cerrada derivada de la solución analítica del RLHF.</li>
@@ -2141,8 +2221,8 @@
 </ul>
 </div>
 <p class="exercise-prompt">
-  Tras un SFT exitoso, el equipo de ML de una legal-tech aplica DPO para alinear Llama 3 8B con preferencias de abogados senior usando 1,200 pares $(x, y_w, y_l)$. (a) Escribe la función de pérdida DPO formal con $\beta=0.1$ identificando cada variable; (b) Explica en tres puntos por qué DPO es más estable que RLHF-PPO; (c) Escribe el script completo con TRL <code>DPOTrainer</code> con los hiperparámetros críticos justificados.
-  </p>
+Tras un SFT exitoso, el equipo de ML de una legal-tech aplica DPO para alinear Llama 3 8B con preferencias de abogados senior usando 1,200 pares $(x, y_w, y_l)$. (a) Escribe la función de pérdida DPO formal con $\beta=0.1$ identificando cada variable; (b) Explica en tres puntos por qué DPO es más estable que RLHF-PPO; (c) Escribe el script completo con TRL <code>DPOTrainer</code> con los hiperparámetros críticos justificados.
+</p>
 <details class="exercise-solution-details">
 <summary class="exercise-solution-summary">
 <span>Ver Criterio de Solución &amp; Script DPO Completo</span>
@@ -2211,20 +2291,21 @@
 </div>
 </details>
 </article>
-<!-- EJERCICIO 4 -->
+
+<!-- EJERCICIO 5 -->
 <article class="exercise-card">
 <div class="exercise-header">
-<span class="exercise-num-badge">Ejercicio 4</span>
+<span class="exercise-num-badge">Ejercicio 5</span>
 <h4 class="exercise-title">Análisis de Viabilidad: Fine-Tuning QLoRA en Despacho Contable</h4>
 </div>
 <div class="exercise-context-box">
 <div class="exercise-context-title">
 <svg fill="none" height="14" stroke="currentColor" stroke-width="2.2" viewbox="0 0 24 24" width="14"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4m0-4h.01"></path></svg>
-        Enunciado Oficial
-      </div>
+  Enunciado Oficial
+</div>
 <p style="margin:0; font-size:0.92rem; color:var(--text-secondary); line-height:1.55;">
-        Un despacho contable utilizó 200 ejemplos de dictámenes previos y una GPU gratuita en Google Colab con QLoRA. Basándote en la diferencia entre 93% y 61% de precisión terminológica, argumenta por qué QLoRA fue decisivo para que un equipo pequeño pudiera obtener esa mejora sin infraestructura empresarial.
-      </p>
+Un despacho contable utilizó 200 ejemplos de dictámenes previos y una GPU gratuita en Google Colab con QLoRA. Basándote en la diferencia entre 93% y 61% de precisión terminológica, argumenta por qué QLoRA fue decisivo para que un equipo pequeño pudiera obtener esa mejora sin infraestructura empresarial.
+</p>
 </div>
 <details class="exercise-solution-details">
 <summary class="exercise-solution-summary">
@@ -2238,8 +2319,8 @@
 <div class="step-flow-content" style="flex:1; min-width:0;">
 <h5 style="margin:0 0 0.3rem 0; font-size:1rem; font-family:var(--font-head); color:var(--text-primary);">Barrera de Entrada del Fine-Tuning Completo</h5>
 <p style="margin:0; font-size:0.88rem; color:var(--text-secondary); line-height:1.55;">
-                Ajustar los 8,000 millones de parámetros de Llama 3 en 16 bits requiere almacenar los pesos base (16 GB), gradientes (16 GB) y estados del optimizador AdamW (64 GB), exigiendo al menos <b>96 GB de VRAM</b> (clúster de 2x A100 de $10,000+ USD), inaccesible para una firma mediana.
-              </p>
+Ajustar los 8,000 millones de parámetros de Llama 3 en 16 bits requiere almacenar los pesos base (16 GB), gradientes (16 GB) y estados del optimizador AdamW (64 GB), exigiendo al menos <b>96 GB de VRAM</b> (clúster de 2x A100 de $10,000+ USD), inaccesible para una firma mediana.
+</p>
 </div>
 </div>
 <div class="step-flow-item">
@@ -2247,19 +2328,19 @@
 <div class="step-flow-content" style="flex:1; min-width:0;">
 <h5 style="margin:0 0 0.3rem 0; font-size:1rem; font-family:var(--font-head); color:var(--text-primary);">Democratización Técnica con QLoRA (NF4 + LoRA)</h5>
 <p style="margin:0; font-size:0.88rem; color:var(--text-secondary); line-height:1.55;">
-                • <b>Pesos Base Cuantizados en 4 bits:</b> El modelo base ocupa solo <b>5.5 GB</b> en VRAM.<br/>
-                • <b>Matrices Adaptadoras Ligeras:</b> Solo se entrenan ~16 MB de parámetros ($r=16, lpha=32$).<br/>
-                • <b>Consumo Total:</b> ~7.5 GB de VRAM durante el entrenamiento, ejecutándose perfectamente en la GPU T4 gratuita de Google Colab (16 GB VRAM).
-              </p>
+• <b>Pesos Base Cuantizados en 4 bits:</b> El modelo base ocupa solo <b>5.5 GB</b> en VRAM.<br/>
+• <b>Matrices Adaptadoras Ligeras:</b> Solo se entrenan ~16 MB de parámetros ($r=16, \alpha=32$).<br/>
+• <b>Consumo Total:</b> ~7.5 GB de VRAM durante el entrenamiento, ejecutándose perfectamente en la GPU T4 gratuita de Google Colab (16 GB VRAM).
+</p>
 </div>
 </div>
 <div class="step-flow-item" style="border-left-color:#059669; background:rgba(5,150,105,0.04);">
-<div class="step-num-badge" style="background:#059669;"><svg fill="none" height="14" stroke="currentColor" stroke-width="3" viewbox="0 0 24 24" width="14"><polyline points="20 6 9 17 4 12"></polyline></svg></div>
+<div class="step-num-badge" style="background:#059669;">3</div>
 <div class="step-flow-content" style="flex:1; min-width:0;">
 <h5 style="margin:0 0 0.3rem 0; font-size:1rem; font-family:var(--font-head); color:#059669;">Impacto Medible en Negocio (+32% Precisión)</h5>
 <p style="margin:0; font-size:0.88rem; color:var(--text-secondary); line-height:1.55;">
-                El salto del <b>61% al 93%</b> demuestra que para alinear el estilo, la jerga contable y los formatos de dictamen, no se necesita reescribir todo el cerebro del modelo: basta con modular las rutas de atención con adaptadores de bajo rango. QLoRA convirtió un proyecto de decenas de miles de dólares en un entregable exitoso con costo cero de infraestructura.
-              </p>
+El salto del <b>61% al 93%</b> demuestra que para alinear el estilo, la jerga contable y los formatos de dictamen, no se necesita reescribir todo el cerebro del modelo: basta con modular las rutas de atención con adaptadores de bajo rango. QLoRA convirtió un proyecto de decenas de miles de dólares en un entregable exitoso con costo cero de infraestructura.
+</p>
 </div>
 </div>
 </div>
