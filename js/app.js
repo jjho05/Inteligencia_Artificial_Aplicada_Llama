@@ -497,6 +497,38 @@
 
 })();
 
+function isDownloadableCodeBox(box, headerText, codeText) {
+  // Si está dentro de un simulador o visor dinámico interactivo, no descargar
+  if (box.closest(".challenge-bench-box") || box.closest(".api-tester-container") || box.closest(".simulator-container") || box.closest("#simulador")) {
+    return false;
+  }
+
+  var trimmed = codeText.trim();
+  var lines = trimmed.split("\n");
+
+  // Si es un comando simple de terminal o shell corto, solo debe tener botón Copiar
+  if (trimmed.startsWith("pip ") || trimmed.startsWith("npm ") || trimmed.startsWith("curl ") || trimmed.startsWith("ollama ") || trimmed.startsWith("sudo ") || trimmed.startsWith("git ") || trimmed.startsWith("uvicorn ") || trimmed.startsWith("$")) {
+    return false;
+  }
+
+  // 1. Si la cabecera tiene un nombre de archivo explícito con extensión de archivo
+  var fileMatch = headerText.match(/([a-zA-Z0-9_\-]+\.(py|jsonl|json|sql|sh|yml|yaml|service|ini|txt|md))/i);
+  if (fileMatch) {
+    var fname = fileMatch[1].toLowerCase();
+    if (fname.includes("response_") || fname.includes("request_payload")) {
+      return false;
+    }
+    return true;
+  }
+
+  // 2. Si es un script estructurado de Python o SQL con contenido sustancial
+  if (lines.length >= 4 && (codeText.includes("import ") || codeText.includes("def ") || codeText.includes("from ") || codeText.includes("CREATE TABLE") || codeText.includes("class "))) {
+    return true;
+  }
+
+  return false;
+}
+
 /* 7. GESTOR Y ACCIONES DE BLOQUES DE CÓDIGO (COPIAR & DESCARGAR) */
 function initCodeBoxActions() {
   var boxes = document.querySelectorAll(".code-box");
@@ -544,15 +576,28 @@ function initCodeBoxActions() {
       copyBtn.innerHTML = '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg><span>' + copyText + '</span>';
     }
 
-    // Verificar botón Descargar
+    // Filtrar botón Descargar: SOLO en archivos y scripts reales
     var downloadBtn = actions.querySelector(".btn-download-code");
-    if (!downloadBtn) {
-      downloadBtn = document.createElement("button");
-      downloadBtn.className = "btn-download-code";
-      downloadBtn.setAttribute("type", "button");
-      downloadBtn.setAttribute("onclick", "downloadCode(this)");
-      downloadBtn.innerHTML = '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg><span>Descargar</span>';
-      actions.appendChild(downloadBtn);
+    var codeEl = box.querySelector("code") || box.querySelector(".code-content") || box.querySelector("pre");
+    var codeText = codeEl ? (codeEl.innerText || codeEl.textContent) : "";
+    var headerText = header ? header.innerText : "";
+
+    var shouldDownload = isDownloadableCodeBox(box, headerText, codeText);
+
+    if (shouldDownload) {
+      if (!downloadBtn) {
+        downloadBtn = document.createElement("button");
+        downloadBtn.className = "btn-download-code";
+        downloadBtn.setAttribute("type", "button");
+        downloadBtn.setAttribute("onclick", "downloadCode(this)");
+        downloadBtn.innerHTML = '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M7 10l5 5 5-5M12 15V3"/></svg><span>Descargar</span>';
+        actions.appendChild(downloadBtn);
+      }
+    } else {
+      // Eliminar el botón descargar de comandos, terminal y respuestas dinámicas
+      if (downloadBtn) {
+        downloadBtn.remove();
+      }
     }
   });
 }
