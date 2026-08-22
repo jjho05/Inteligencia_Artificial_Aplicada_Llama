@@ -599,15 +599,22 @@ function downloadCode(btn){
   if (fileMatch && fileMatch[1]) {
     filename = fileMatch[1];
   } else {
+    var fnMatch = explicitTitle.match(/([a-zA-Z0-9_]+)\s*\(\)/);
     var codeLower = codeText.toLowerCase();
-    if (codeText.trim().startsWith("{") || codeText.trim().startsWith("[")) {
+    if (fnMatch && fnMatch[1]) {
+      filename = fnMatch[1] + (codeLower.includes("def ") || codeLower.includes("import ") ? ".py" : ".js");
+    } else if (codeText.trim().startsWith("{") || codeText.trim().startsWith("[")) {
       filename = "dataset.json";
     } else if (codeLower.includes("select ") || codeLower.includes("create table")) {
       filename = "consulta.sql";
     } else if (codeLower.includes("import ") || codeLower.includes("def ")) {
       filename = "script.py";
-    } else if (codeLower.includes("#!/bin/bash") || explicitTitle.toLowerCase().includes("terminal")) {
+    } else if (codeLower.includes("#!/bin/bash") || explicitTitle.toLowerCase().includes("terminal") || explicitTitle.toLowerCase().includes("bash") || explicitTitle.toLowerCase().includes("shell")) {
       filename = "script.sh";
+    } else if (explicitTitle.toLowerCase().includes("prompt") || explicitTitle.toLowerCase().includes("instrucción") || explicitTitle.toLowerCase().includes("template")) {
+      filename = "prompt.txt";
+    } else if (explicitTitle.toLowerCase().includes("docker") || explicitTitle.toLowerCase().includes("compose") || explicitTitle.toLowerCase().includes("yaml")) {
+      filename = "docker-compose.yml";
     } else {
       filename = "codigo.txt";
     }
