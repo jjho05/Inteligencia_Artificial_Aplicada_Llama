@@ -581,7 +581,7 @@ function copyCode(btn){
   });
 }
 
-function downloadCode(btn){
+async function downloadCode(btn){
   var codeBox = btn.closest(".code-box");
   if (!codeBox) return;
   var codeEl = codeBox.querySelector("code") || codeBox.querySelector(".code-content") || codeBox.querySelector("pre");
@@ -590,59 +590,104 @@ function downloadCode(btn){
   var codeText = codeEl.innerText || codeEl.textContent;
   if (!codeText || !codeText.trim()) return;
 
-  var header = codeBox.querySelector(".code-header");
-  var headerText = header ? header.innerText : "";
-  var langAttr = codeEl.className || "";
-
-  var extension = "py";
+  // 1. Extraer nombre de archivo explícito del header
+  var headerSpan = codeBox.querySelector(".code-header span");
+  var explicitTitle = headerSpan ? headerSpan.textContent.trim() : "";
   var filename = "script.py";
+  var extension = "py";
 
-  if (langAttr.includes("json") || headerText.toLowerCase().includes(".json") || headerText.toLowerCase().includes("json")) {
-    extension = "json";
-    filename = "snippet.json";
-  } else if (langAttr.includes("bash") || langAttr.includes("sh") || headerText.toLowerCase().includes(".sh") || headerText.toLowerCase().includes("bash") || headerText.toLowerCase().includes("terminal")) {
-    extension = "sh";
-    filename = "script.sh";
-  } else if (langAttr.includes("sql") || headerText.toLowerCase().includes(".sql") || headerText.toLowerCase().includes("sql")) {
-    extension = "sql";
-    filename = "query.sql";
-  } else if (langAttr.includes("ini") || headerText.toLowerCase().includes(".service") || headerText.toLowerCase().includes("systemd") || headerText.toLowerCase().includes(".ini")) {
-    extension = headerText.toLowerCase().includes(".service") ? "service" : "ini";
-    filename = "config." + extension;
-  } else if (langAttr.includes("yaml") || langAttr.includes("yml") || headerText.toLowerCase().includes("docker") || headerText.toLowerCase().includes("yaml")) {
-    extension = "yml";
-    filename = "docker-compose.yml";
-  } else if (langAttr.includes("markdown") || langAttr.includes("md") || headerText.toLowerCase().includes(".md")) {
-    extension = "md";
-    filename = "document.md";
-  } else if (langAttr.includes("html") || headerText.toLowerCase().includes("html")) {
-    extension = "html";
-    filename = "index.html";
-  } else if (langAttr.includes("javascript") || langAttr.includes("js")) {
-    extension = "js";
-    filename = "app.js";
-  } else if (langAttr.includes("python") || headerText.toLowerCase().includes("python") || headerText.toLowerCase().includes(".py")) {
-    extension = "py";
-    filename = "meta_llama_script.py";
+  var fileMatch = explicitTitle.match(/^([a-zA-Z0-9_\-\.]+\.([a-zA-Z0-9]+))$/i);
+  if (fileMatch) {
+    filename = fileMatch[1];
+    extension = fileMatch[2].toLowerCase();
   } else {
-    extension = "txt";
-    filename = "code_snippet.txt";
+    var rawMatch = explicitTitle.match(/([a-zA-Z0-9_\-]+\.[a-zA-Z0-9]+)/);
+    if (rawMatch) {
+      filename = rawMatch[1];
+      extension = rawMatch[1].split('.').pop().toLowerCase();
+    } else {
+      var codeLower = codeText.toLowerCase();
+      if (codeText.trim().startsWith("{") || codeText.trim().startsWith("[") || explicitTitle.toLowerCase().includes("json")) {
+        filename = "dataset.json";
+        extension = "json";
+      } else if (explicitTitle.toLowerCase().includes("txt") || explicitTitle.toLowerCase().includes("prompt")) {
+        filename = "prompt.txt";
+        extension = "txt";
+      } else if (explicitTitle.toLowerCase().includes("sql") || codeLower.includes("select ") || codeLower.includes("create table")) {
+        filename = "consulta.sql";
+        extension = "sql";
+      } else if (explicitTitle.toLowerCase().includes("sh") || explicitTitle.toLowerCase().includes("bash") || codeText.includes("#!/bin/bash")) {
+        filename = "script.sh";
+        extension = "sh";
+      } else if (explicitTitle.toLowerCase().includes("docker") || explicitTitle.toLowerCase().includes("yml") || explicitTitle.toLowerCase().includes("yaml")) {
+        filename = "docker-compose.yml";
+        extension = "yml";
+      } else if (codeLower.includes("import ") || codeLower.includes("def ") || explicitTitle.toLowerCase().includes("python")) {
+        filename = "script.py";
+        extension = "py";
+      } else {
+        filename = "codigo.txt";
+        extension = "txt";
+      }
+    }
   }
 
-  var match = headerText.match(/([a-zA-Z0-9_\-]+\.[a-zA-Z0-9]+)/);
-  if (match && match[1]) {
-    filename = match[1];
+  // 2. Mapeo formal de MIME Types
+  var mimeMap = {
+    py: "text/x-python;charset=utf-8",
+    json: "application/json;charset=utf-8",
+    jsonl: "application/x-ndjson;charset=utf-8",
+    txt: "text/plain;charset=utf-8",
+    sql: "application/sql;charset=utf-8",
+    sh: "application/x-sh;charset=utf-8",
+    yml: "text/yaml;charset=utf-8",
+    yaml: "text/yaml;charset=utf-8",
+    md: "text/markdown;charset=utf-8",
+    html: "text/html;charset=utf-8",
+    js: "application/javascript;charset=utf-8",
+    env: "text/plain;charset=utf-8",
+    service: "text/plain;charset=utf-8",
+    ini: "text/plain;charset=utf-8"
+  };
+  var mimeType = mimeMap[extension] || "text/plain;charset=utf-8";
+
+  // 3. Diálogo nativo 'Guardar como...' (File System Access API)
+  var savedViaPicker = false;
+  if (window.showSaveFilePicker) {
+    try {
+      var pickerOpts = {
+        suggestedName: filename,
+        types: [{
+          description: "Archivo " + extension.toUpperCase() + " (*." + extension + ")",
+          accept: {}
+        }]
+      };
+      pickerOpts.types[0].accept[mimeType.split(";")[0]] = ["." + extension];
+      var fileHandle = await window.showSaveFilePicker(pickerOpts);
+      var writable = await fileHandle.createWritable();
+      await writable.write(codeText);
+      await writable.close();
+      savedViaPicker = true;
+    } catch (err) {
+      if (err.name === "AbortError") {
+        return; // El usuario canceló la descarga conscientemente
+      }
+      savedViaPicker = false;
+    }
   }
 
-  var blob = new Blob([codeText], { type: "text/plain;charset=utf-8" });
-  var url = URL.createObjectURL(blob);
-  var a = document.createElement("a");
-  a.href = url;
-  a.download = filename;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
+  // 4. Fallback estándar si el picker no está disponible o falla
+  if (!savedViaPicker) {
+    var blob = new Blob([codeText], { type: mimeType });
+    var url = URL.createObjectURL(blob);
+    var a = document.createElement("a");
+    a.href = url;
+    a.download = filename;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    setTimeout(function(){ URL.revokeObjectURL(url); }, 5000);
+  }
 
   if (window.SOUND) window.SOUND.playChime();
 
