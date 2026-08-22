@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Challenge 1: Comparador Multi-Modelo | IA Aplicada con Modelos Abiertos</title>
-<meta name="description" content="Manual técnico, laboratorio interactivo y código resuelto del Challenge 1: Comparador Multi-Modelo de Lenguaje (20B vs 120B vs Qwen 27B) por Ing. Jesús Javier Hernández Olvera.">
+<title>Challenge 1: Comparador de Modelos Llama | IA Aplicada con Modelos Abiertos</title>
+<meta name="description" content="Hands-on oficial y resolución completa del Challenge 1: Comparador Multi-Modelo de Lenguaje (20B vs 120B vs Qwen 27B) por Ing. Jesús Javier Hernández Olvera.">
 
 <!-- Google Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -40,11 +40,11 @@
 
     <nav class="nav-links">
       <a href="modulo1-tema4.html" class="nav-link-item" style="color: var(--meta-blue); font-weight: 700;">← Tema 1.4</a>
-      <a href="#teoria" class="nav-link-item">Fundamentos</a>
-      <a href="#notebook-workflow" class="nav-link-item">Hands-On Notebook</a>
+      <a href="#hands-on-intro" class="nav-link-item">Hands-On Base</a>
+      <a href="#challenge-core" class="nav-link-item">Challenge Resuelto</a>
       <a href="#simulador" class="nav-link-item">Simulador en Vivo</a>
-      <a href="#codigo" class="nav-link-item">Código Python</a>
-      <a href="#faq" class="nav-link-item">Q&amp;A</a>
+      <a href="#script-produccion" class="nav-link-item">Script Python</a>
+      <a href="#analisis-ingenieria" class="nav-link-item">Conclusiones</a>
       <a href="modulo1-challenge2.html" class="nav-link-item" style="color: var(--accent-success); font-weight: 700;">Challenge 2 →</a>
     </nav>
 
@@ -100,9 +100,9 @@
       <span class="hero-badge-divider"></span>
       <span class="hero-badge-label">ENTREGABLE OFICIAL 1 · PROYECTO RESUELTO</span>
     </div>
-    <h1 class="hero-title">Comparador Multi-Modelo de Lenguaje</h1>
+    <h1 class="hero-title">Hands-On: Fundamentos de LLMs & Challenge Comparador</h1>
     <p class="hero-subtitle">
-      <b>Evaluación empírica de latencia, tokens y calidad de respuesta</b> en modelos de pesos abiertos ejecutados sobre la arquitectura LPU de Groq.
+      Construcción en vivo de llamadas a modelos de lenguaje con Groq, medición empírica de latencia, conteo de tokens de entrada/salida y análisis comparativo entre modelos ligeros (20B), masivos (120B) y de razonamiento (Qwen 27B).
     </p>
 
     <div style="margin-top: 1.5rem; display: inline-flex; align-items: center; gap: 0.8rem; background: var(--bg-surface); padding: 0.6rem 1.2rem; border-radius: 30px; border: 1px solid var(--border-subtle); box-shadow: var(--shadow-sm); flex-wrap: wrap;">
@@ -115,129 +115,311 @@
   </section>
 
   <!-- ======================================================================
-       SECCIÓN 1: FUNDAMENTOS TEÓRICOS Y MARCO DE INGENIERÍA
+       PARTE I: HANDS-ON BASE (FUNDAMENTOS DE LLMS CON MODELOS LLAMA)
        ====================================================================== -->
-  <section class="tema-card" id="teoria" style="border-left: 5px solid var(--meta-blue); margin-bottom: 3.5rem;">
+  <section class="tema-card" id="hands-on-intro" style="border-left: 5px solid var(--meta-blue); margin-bottom: 3.5rem;">
     <div class="tema-header">
-      <div class="tema-eyebrow">Marco Teórico &middot; Telemetría de Inferencia</div>
-      <h3 class="tema-title">1. Fundamentos de LLMs y Trade-Offs de Escala</h3>
-    </div>
-
-    <div class="tema-section-block">
-      <h4 class="tema-subheading"><span class="tema-subheading-tag">1.1 Inferencia y Costos</span> La decisión arquitectónica entre 20B, 120B y 27B</h4>
-      <p class="prose-p">
-        Un modelo de lenguaje predice el siguiente token más probable basándose en distribuciones de probabilidad calculadas a través de capas de atención (Transformer). En entornos industriales, seleccionar siempre el modelo con mayor cantidad de parámetros para responder preguntas frecuentes o consultas rutinarias representa una ineficiencia presupuestaria y operacional severa.
-      </p>
-      <div class="math-callout" style="background: var(--bg-subtle); padding: 1rem; border-radius: 10px; margin: 1rem 0; font-family: var(--font-mono); font-size: 0.9rem;">
-        $$\text{Costo Operativo Mensual} = \sum_{i=1}^{N} \left( \frac{T_{\text{in}}^{(i)}}{10^6} \times C_{\text{in}} + \frac{T_{\text{out}}^{(i)}}{10^6} \times C_{\text{out}} \right) + \text{Costos Infraestructura}$$
-      </div>
-      <p class="prose-p">
-        La arquitectura <b>LPU (Language Processing Unit)</b> desarrollada por Groq reemplaza la memoria HBM externa tradicional por memoria SRAM integrada directamente en el chip (80 TB/s de ancho de banda). Esto permite que modelos compactos como <code>openai/gpt-oss-20b</code> respondan en <b>menos de 1 segundo</b> con costos significativamente menores.
-      </p>
-    </div>
-
-    <div class="bento-grid" style="margin-top: 1.5rem;">
-      <div class="bento-sub-card">
-        <h5 style="margin: 0 0 0.4rem 0; color: var(--meta-blue); font-size: 0.95rem; font-family: var(--font-head);">⚡ Modelo Ligero (20B)</h5>
-        <p style="font-size: 0.86rem; color: var(--text-secondary); margin: 0; line-height: 1.55;">
-          <b>openai/gpt-oss-20b:</b> Optimizado para ultra-baja latencia (0.75s - 1.29s). Ideal para soporte nivel 1, FAQs, resúmenes operativos y enrutamiento en tiempo real.
-        </p>
-      </div>
-      <div class="bento-sub-card">
-        <h5 style="margin: 0 0 0.4rem 0; color: var(--accent-easy); font-size: 0.95rem; font-family: var(--font-head);">🧠 Modelo Masivo (120B)</h5>
-        <p style="font-size: 0.86rem; color: var(--text-secondary); margin: 0; line-height: 1.55;">
-          <b>openai/gpt-oss-120b:</b> Máxima capacidad de estructuración, generación de tablas exhaustivas, análisis legal/normativo y síntesis de documentos de alta complejidad.
-        </p>
-      </div>
-      <div class="bento-sub-card">
-        <h5 style="margin: 0 0 0.4rem 0; color: var(--accent-success); font-size: 0.95rem; font-family: var(--font-head);">🔬 Modelo de Razonamiento (27B)</h5>
-        <p style="font-size: 0.86rem; color: var(--text-secondary); margin: 0; line-height: 1.55;">
-          <b>qwen/qwen3.6-27b:</b> Genera cadenas de pensamiento estructuradas internas (etiquetas <code>&lt;think&gt;</code>) que son sanitizadas antes de entregar la respuesta final al usuario.
-        </p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ======================================================================
-       SECCIÓN 2: WORKFLOW DEL NOTEBOOK (HANDS-ON PASO A PASO)
-       ====================================================================== -->
-  <section class="tema-card" id="notebook-workflow" style="margin-bottom: 3.5rem;">
-    <div class="tema-header">
-      <div class="tema-eyebrow">Paso a Paso &middot; Estructura Oficial del Notebook</div>
-      <h3 class="tema-title">2. Flujo de Ejecución del Hands-On en Google Colab</h3>
+      <div class="tema-eyebrow">Parte I &middot; Práctica Guiada de Clase</div>
+      <h3 class="tema-title">Hands-On: Fundamentos de LLMs con Modelos Llama</h3>
     </div>
 
     <p class="prose-p">
-      El notebook oficial <code>Challenge_Comparador_Modelos_Llama_Resuelto.ipynb</code> está estructurado en 5 etapas secuenciales para garantizar el rigor experimental y la reproducibilidad de resultados:
+      Una vez vista la masterclass <i>Fundamentos de LLMs y Arquitectura de Llama</i>, se proporciona el siguiente entorno para construir, en vivo, la primera llamada a Llama y medir su comportamiento. Usamos <b>Groq</b> para tener acceso a inferencia con aceleración por hardware LPU gratuita, sin necesidad de infraestructura propia.
     </p>
 
-    <div class="step-flow-list" style="margin-top: 1.2rem;">
-      <div class="step-flow-item">
-        <div class="step-num-badge">1</div>
-        <div class="step-flow-content">
-          <h5 style="margin:0 0 0.3rem 0; font-size:1rem; font-family:var(--font-head); color:var(--text-primary);">Configuración y Carga Segura de API Key</h5>
-          <p>
-            Lectura de la credencial <code>GROQ_API_KEY</code> desde <b>Colab Secrets</b> (o archivo <code>.env</code> local) e inicialización del cliente <code>Groq(api_key=...)</code>. Se define la función de resolución dinámica de modelos disponibles y la función de limpieza <code>limpiar_respuesta(texto)</code> que remueve etiquetas <code>&lt;think&gt;...&lt;/think&gt;</code> mediante expresiones regulares.
-          </p>
+    <div class="tema-section-block">
+      <h4 class="tema-subheading"><span class="tema-subheading-tag">Paso 1</span> Configuración del Entorno & Colab Secrets</h4>
+      <p class="prose-p">
+        Antes de llamar a Llama necesitamos activar el entorno y conectar nuestra cuenta de <b>Groq</b>. Para no exponer la API key en el código, se utiliza el panel de Secrets:
+      </p>
+
+      <div class="code-box">
+        <div class="code-header">
+          <span>01_configuracion_groq.py</span>
+          <div class="code-actions">
+            <button class="btn-copy-code" onclick="copyCode(this)">Copiar</button>
+            <button class="btn-download-code" onclick="downloadCode(this)">Descargar</button>
+          </div>
         </div>
+        <pre class="code-content"><code><span class="code-cm"># Instalar cliente de Groq y leer API key desde Colab Secrets</span>
+<span class="code-cm"># !pip install groq -q</span>
+
+<span class="code-kw">import</span> <span class="code-var">os</span>, <span class="code-var">re</span>
+<span class="code-kw">from</span> <span class="code-var">groq</span> <span class="code-kw">import</span> <span class="code-var">Groq</span>
+<span class="code-kw">from</span> <span class="code-var">google.colab</span> <span class="code-kw">import</span> <span class="code-var">userdata</span>
+
+<span class="code-cm"># Lectura de la API Key desde Colab Secrets</span>
+<span class="code-var">client</span> = <span class="code-var">Groq</span>(<span class="code-var">api_key</span>=<span class="code-var">userdata</span>.<span class="code-fn">get</span>(<span class="code-str">'GROQ_API_KEY'</span>))
+
+<span class="code-cm"># Resolución dinámica de modelos activos en Groq</span>
+<span class="code-kw">def</span> <span class="code-fn">obtener_modelo</span>(<span class="code-var">client</span>, <span class="code-var">preferido</span>, <span class="code-var">alternativo</span>):
+    <span class="code-kw">try</span>:
+        <span class="code-var">activos</span> = [<span class="code-var">m</span>.<span class="code-var">id</span> <span class="code-kw">for</span> <span class="code-var">m</span> <span class="code-kw">in</span> <span class="code-var">client</span>.<span class="code-var">models</span>.<span class="code-fn">list</span>().<span class="code-var">data</span>]
+        <span class="code-kw">return</span> <span class="code-var">preferido</span> <span class="code-kw">if</span> <span class="code-var">preferido</span> <span class="code-kw">in</span> <span class="code-var">activos</span> <span class="code-kw">else</span> <span class="code-var">alternativo</span>
+    <span class="code-kw">except</span> <span class="code-var">Exception</span>:
+        <span class="code-kw">return</span> <span class="code-var">alternativo</span>
+
+<span class="code-var">modelo_ligero</span> = <span class="code-fn">obtener_modelo</span>(<span class="code-var">client</span>, <span class="code-str">"llama-3.1-8b-instant"</span>, <span class="code-str">"openai/gpt-oss-20b"</span>)
+<span class="code-var">modelo_grande</span> = <span class="code-fn">obtener_modelo</span>(<span class="code-var">client</span>, <span class="code-str">"llama-3.3-70b-versatile"</span>, <span class="code-str">"openai/gpt-oss-120b"</span>)
+<span class="code-var">modelo_qwen</span>   = <span class="code-fn">obtener_modelo</span>(<span class="code-var">client</span>, <span class="code-str">"qwen/qwen3.6-27b"</span>, <span class="code-str">"qwen/qwen3.6-27b"</span>)
+
+<span class="code-kw">def</span> <span class="code-fn">limpiar_respuesta</span>(<span class="code-var">texto</span>):
+    <span class="code-kw">if not</span> <span class="code-var">texto</span>: <span class="code-kw">return</span> <span class="code-str">""</span>
+    <span class="code-kw">return</span> <span class="code-var">re</span>.<span class="code-fn">sub</span>(<span class="code-str">r"&lt;think&gt;.*?&lt;/think&gt;"</span>, <span class="code-str">""</span>, <span class="code-var">texto</span>, <span class="code-var">flags</span>=<span class="code-var">re</span>.<span class="code-var">DOTALL</span>).<span class="code-fn">strip</span>()
+
+<span class="code-fn">print</span>(<span class="code-str">"Cliente de Groq inicializado correctamente."</span>)
+<span class="code-fn">print</span>(<span class="code-str">"Modelos configurados para evaluación:"</span>)
+<span class="code-fn">print</span>(<span class="code-str">f"  • Modelo Ligero: {modelo_ligero}"</span>)
+<span class="code-fn">print</span>(<span class="code-str">f"  • Modelo Grande: {modelo_grande}"</span>)
+<span class="code-fn">print</span>(<span class="code-str">f"  • Modelo Qwen: {modelo_qwen}"</span>)</code></pre>
       </div>
 
-      <div class="step-flow-item">
-        <div class="step-num-badge">2</div>
-        <div class="step-flow-content">
-          <h5 style="margin:0 0 0.3rem 0; font-size:1rem; font-family:var(--font-head); color:var(--text-primary);">Definición de las 3 Preguntas de Negocio</h5>
-          <p>
-            Se construye la lista <code>preguntas</code> conteniendo 3 consultas de soporte técnico y operaciones del portal institucional:
-            <ul style="margin: 0.4rem 0 0 1.2rem; font-size: 0.88rem; color: var(--text-secondary);">
-              <li><b>Pregunta 1:</b> <i>"¿Cómo puedo restablecer mi contraseña olvidada en el portal web institucional?"</i></li>
-              <li><b>Pregunta 2:</b> <i>"¿Cuál es el horario de atención y los canales oficiales para soporte técnico?"</i></li>
-              <li><b>Pregunta 3:</b> <i>"¿Cuáles son los requisitos mínimos de hardware y software para instalar la plataforma?"</i></li>
-            </ul>
-          </p>
+      <div class="code-output-terminal">
+        <span class="terminal-title">Salida de la Celda 1 (Colab):</span>
+        <pre>Cliente de Groq inicializado correctamente.
+Modelos configurados para evaluación:
+  • Modelo Ligero: openai/gpt-oss-20b
+  • Modelo Grande: openai/gpt-oss-120b
+  • Modelo Qwen: qwen/qwen3.6-27b</pre>
+      </div>
+    </div>
+
+    <div class="tema-section-block">
+      <h4 class="tema-subheading"><span class="tema-subheading-tag">Paso 2</span> De Palabras a Tokens y Primera Llamada Zero-Shot</h4>
+      <p class="prose-p">
+        Antes de que Llama genere una sola palabra, el prompt se divide en tokens. Un LLM predice el siguiente token más probable, no busca la respuesta en una base de datos.
+      </p>
+
+      <div class="code-box">
+        <div class="code-header">
+          <span>02_primera_llamada_zeroshot.py</span>
+          <div class="code-actions">
+            <button class="btn-copy-code" onclick="copyCode(this)">Copiar</button>
+            <button class="btn-download-code" onclick="downloadCode(this)">Descargar</button>
+          </div>
         </div>
+        <pre class="code-content"><code><span class="code-cm"># Definir un prompt de ejemplo</span>
+<span class="code-var">prompt</span> = <span class="code-str">"¿Cuál es la diferencia entre la RAM y el almacenamiento en una computadora?"</span>
+
+<span class="code-cm"># Enviar el prompt a Llama en Groq en modo Zero-Shot</span>
+<span class="code-var">response</span> = <span class="code-var">client</span>.<span class="code-var">chat</span>.<span class="code-var">completions</span>.<span class="code-fn">create</span>(
+    <span class="code-var">model</span>=<span class="code-var">modelo_ligero</span>,
+    <span class="code-var">messages</span>=[{<span class="code-str">"role"</span>: <span class="code-str">"user"</span>, <span class="code-str">"content"</span>: <span class="code-var">prompt</span>}],
+    <span class="code-var">max_tokens</span>=<span class="code-num">500</span>
+)
+
+<span class="code-fn">print</span>(<span class="code-var">response</span>.<span class="code-var">choices</span>[<span class="code-num">0</span>].<span class="code-var">message</span>.<span class="code-var">content</span>)</code></pre>
       </div>
 
-      <div class="step-flow-item">
-        <div class="step-num-badge">3</div>
-        <div class="step-flow-content">
-          <h5 style="margin:0 0 0.3rem 0; font-size:1rem; font-family:var(--font-head); color:var(--text-primary);">Consultas Individuales y Captura de Telemetría</h5>
-          <p>
-            Para cada pregunta, se ejecuta la llamada a los tres modelos en paralelo o secuencia registrando:
-            <code>tiempo_segundos = time.time() - inicio</code>, <code>tokens_prompt = response.usage.prompt_tokens</code>, <code>tokens_respuesta = response.usage.completion_tokens</code> y <code>tokens_totales = response.usage.total_tokens</code>.
-            Cada conjunto se almacena en diccionarios independientes: <code>resultado_1</code>, <code>resultado_2</code> y <code>resultado_3</code>.
-          </p>
+      <div class="code-output-terminal">
+        <span class="terminal-title">Salida de la Celda 3:</span>
+        <pre>La RAM (memoria de acceso aleatorio) es la memoria de trabajo temporal donde la computadora carga los programas y datos en uso activo para que la CPU los procese a gran velocidad. Al apagar el equipo, su contenido se borra (memoria volátil).
+
+En cambio, el almacenamiento (disco SSD o HDD) es la memoria secundaria permanente donde se guardan el sistema operativo, los archivos y aplicaciones de forma persistente aunque la máquina no tenga energía.</pre>
+      </div>
+    </div>
+
+    <div class="tema-section-block">
+      <h4 class="tema-subheading"><span class="tema-subheading-tag">Paso 3</span> Medición de Tokens y Latencia de Inferencia</h4>
+      <p class="prose-p">
+        La respuesta de la API trae el resumen <code>usage</code> con el número de tokens de entrada (prompt) y salida (completion). Medimos el tiempo transcurrido con <code>time.time()</code>:
+      </p>
+
+      <div class="code-box">
+        <div class="code-header">
+          <span>03_medicion_latencia_tokens.py</span>
+          <div class="code-actions">
+            <button class="btn-copy-code" onclick="copyCode(this)">Copiar</button>
+            <button class="btn-download-code" onclick="downloadCode(this)">Descargar</button>
+          </div>
         </div>
+        <pre class="code-content"><code><span class="code-kw">import</span> <span class="code-var">time</span>
+
+<span class="code-fn">print</span>(<span class="code-str">"Tokens del prompt:"</span>, <span class="code-var">response</span>.<span class="code-var">usage</span>.<span class="code-var">prompt_tokens</span>)
+<span class="code-fn">print</span>(<span class="code-str">"Tokens de la respuesta:"</span>, <span class="code-var">response</span>.<span class="code-var">usage</span>.<span class="code-var">completion_tokens</span>)
+<span class="code-fn">print</span>(<span class="code-str">"Tokens totales:"</span>, <span class="code-var">response</span>.<span class="code-var">usage</span>.<span class="code-var">total_tokens</span>)
+
+<span class="code-var">inicio</span> = <span class="code-var">time</span>.<span class="code-fn">time</span>()
+<span class="code-var">response_tiempo</span> = <span class="code-var">client</span>.<span class="code-var">chat</span>.<span class="code-var">completions</span>.<span class="code-fn">create</span>(
+    <span class="code-var">model</span>=<span class="code-var">modelo_ligero</span>,
+    <span class="code-var">messages</span>=[{<span class="code-str">"role"</span>: <span class="code-str">"user"</span>, <span class="code-str">"content"</span>: <span class="code-var">prompt</span>}],
+    <span class="code-var">max_tokens</span>=<span class="code-num">500</span>
+)
+<span class="code-var">duracion</span> = <span class="code-var">time</span>.<span class="code-fn">time</span>() - <span class="code-var">inicio</span>
+<span class="code-fn">print</span>(<span class="code-str">f"Tiempo de respuesta: {duracion:.2f} segundos"</span>)</code></pre>
       </div>
 
-      <div class="step-flow-item">
-        <div class="step-num-badge">4</div>
-        <div class="step-flow-content">
-          <h5 style="margin:0 0 0.3rem 0; font-size:1rem; font-family:var(--font-head); color:var(--text-primary);">Consolidación en la Lista de Resultados</h5>
-          <p>
-            Se genera la lista global <code>resultados = []</code> agregando los tres diccionarios estructurados mediante <code>resultados.append(...)</code> para su posterior procesamiento y serialización en JSON.
-          </p>
-        </div>
-      </div>
-
-      <div class="step-flow-item">
-        <div class="step-num-badge">5</div>
-        <div class="step-flow-content">
-          <h5 style="margin:0 0 0.3rem 0; font-size:1rem; font-family:var(--font-head); color:var(--text-primary);">Generación de la Tabla Comparativa & Conclusiones</h5>
-          <p>
-            Impresión de la matriz tabular de telemetría y emisión del veredicto de arquitectura: <b>El modelo ligero de 20B es 100% suficiente para resolver las consultas de FAQs</b>, logrando una reducción del 40-60% en latencia y economizando el consumo de tokens frente al modelo de 120B.
-          </p>
-        </div>
+      <div class="code-output-terminal">
+        <span class="terminal-title">Salida de las Celdas 5 y 6:</span>
+        <pre>Tokens del prompt: 32
+Tokens de la respuesta: 85
+Tokens totales: 117
+Tiempo de respuesta: 0.48 segundos</pre>
       </div>
     </div>
   </section>
 
   <!-- ======================================================================
-       SECCIÓN 3: SIMULADOR DE INFERENCIA MULTI-MODELO EN VIVO (INTERACTIVO)
+       PARTE II: CHALLENGE OFICIAL RESUELTO (COMPARADOR DE MODELOS LLAMA)
+       ====================================================================== -->
+  <section class="tema-card" id="challenge-core" style="border-left: 5px solid var(--accent-success); margin-bottom: 3.5rem;">
+    <div class="tema-header">
+      <div class="tema-eyebrow">Parte II &middot; Entregable Oficial de Código</div>
+      <h3 class="tema-title">Challenge Oficial: Comparador de Modelos Llama</h3>
+    </div>
+
+    <p class="prose-p">
+      Se construye un comparador formal que envía 3 preguntas reales de soporte institucional a los 3 modelos, registrando para cada una el tiempo de respuesta y el número de tokens consumidos, consolidando la salida en una lista de diccionarios.
+    </p>
+
+    <!-- INSTRUCCIÓN 1 -->
+    <div class="tema-section-block">
+      <h4 class="tema-subheading"><span class="tema-subheading-tag">Instrucción 1</span> Carga de API Key y Lista de 3 Preguntas</h4>
+      <p class="prose-p">
+        Construcción de la lista <code>preguntas</code> con 3 consultas de soporte técnico y operaciones:
+      </p>
+
+      <div class="code-box">
+        <div class="code-header">
+          <span>04_definicion_preguntas.py</span>
+          <div class="code-actions">
+            <button class="btn-copy-code" onclick="copyCode(this)">Copiar</button>
+            <button class="btn-download-code" onclick="downloadCode(this)">Descargar</button>
+          </div>
+        </div>
+        <pre class="code-content"><code><span class="code-var">preguntas</span> = []
+<span class="code-var">preguntas</span>.<span class="code-fn">append</span>(<span class="code-str">"¿Cómo puedo restablecer mi contraseña olvidada en el portal web institucional?"</span>)
+<span class="code-var">preguntas</span>.<span class="code-fn">append</span>(<span class="code-str">"¿Cuál es el horario de atención y los canales oficiales para soporte técnico?"</span>)
+<span class="code-var">preguntas</span>.<span class="code-fn">append</span>(<span class="code-str">"¿Cuáles son los requisitos mínimos de hardware y software para instalar la plataforma?"</span>)
+
+<span class="code-fn">print</span>(<span class="code-str">"Lista de preguntas cargadas:"</span>)
+<span class="code-kw">for</span> <span class="code-var">i</span>, <span class="code-var">p</span> <span class="code-kw">in</span> <span class="code-fn">enumerate</span>(<span class="code-var">preguntas</span>, <span class="code-var">start</span>=<span class="code-num">1</span>):
+    <span class="code-fn">print</span>(<span class="code-str">f"  {i}. {p}"</span>)</code></pre>
+      </div>
+
+      <div class="code-output-terminal">
+        <span class="terminal-title">Salida de la Celda 9:</span>
+        <pre>Lista de preguntas cargadas:
+  1. ¿Cómo puedo restablecer mi contraseña olvidada en el portal web institucional?
+  2. ¿Cuál es el horario de atención y los canales oficiales para soporte técnico?
+  3. ¿Cuáles son los requisitos mínimos de hardware y software para instalar la plataforma?</pre>
+      </div>
+    </div>
+
+    <!-- INSTRUCCIÓN 2, 3 Y 4 -->
+    <div class="tema-section-block">
+      <h4 class="tema-subheading"><span class="tema-subheading-tag">Instrucciones 2, 3 y 4</span> Consultas y Consolidación de Resultados</h4>
+      <p class="prose-p">
+        Se consulta cada pregunta a los 3 modelos (Ligero, Grande y Qwen 27B) y se estructuran los diccionarios <code>resultado_1</code>, <code>resultado_2</code> y <code>resultado_3</code> dentro de la lista <code>resultados</code>:
+      </p>
+
+      <div class="code-box">
+        <div class="code-header">
+          <span>05_consultas_y_diccionarios.py</span>
+          <div class="code-actions">
+            <button class="btn-copy-code" onclick="copyCode(this)">Copiar</button>
+            <button class="btn-download-code" onclick="downloadCode(this)">Descargar</button>
+          </div>
+        </div>
+        <pre class="code-content"><code><span class="code-kw">def</span> <span class="code-fn">consultar_pregunta</span>(<span class="code-var">pregunta</span>: <span class="code-type">str</span>):
+    <span class="code-cm"># 1. Consulta al Modelo Ligero (20B)</span>
+    <span class="code-var">t0</span> = <span class="code-var">time</span>.<span class="code-fn">time</span>()
+    <span class="code-var">r_lig</span> = <span class="code-var">client</span>.<span class="code-var">chat</span>.<span class="code-var">completions</span>.<span class="code-fn">create</span>(<span class="code-var">model</span>=<span class="code-var">modelo_ligero</span>, <span class="code-var">messages</span>=[{<span class="code-str">"role"</span>: <span class="code-str">"user"</span>, <span class="code-str">"content"</span>: <span class="code-var">pregunta</span>}], <span class="code-var">max_tokens</span>=<span class="code-num">600</span>)
+    <span class="code-var">dt_lig</span> = <span class="code-var">time</span>.<span class="code-fn">time</span>() - <span class="code-var">t0</span>
+
+    <span class="code-cm"># 2. Consulta al Modelo Grande (120B)</span>
+    <span class="code-var">t1</span> = <span class="code-var">time</span>.<span class="code-fn">time</span>()
+    <span class="code-var">r_grd</span> = <span class="code-var">client</span>.<span class="code-var">chat</span>.<span class="code-var">completions</span>.<span class="code-fn">create</span>(<span class="code-var">model</span>=<span class="code-var">modelo_grande</span>, <span class="code-var">messages</span>=[{<span class="code-str">"role"</span>: <span class="code-str">"user"</span>, <span class="code-str">"content"</span>: <span class="code-var">pregunta</span>}], <span class="code-var">max_tokens</span>=<span class="code-num">600</span>)
+    <span class="code-var">dt_grd</span> = <span class="code-var">time</span>.<span class="code-fn">time</span>() - <span class="code-var">t1</span>
+
+    <span class="code-cm"># 3. Consulta al Modelo Qwen (27B)</span>
+    <span class="code-var">t2</span> = <span class="code-var">time</span>.<span class="code-fn">time</span>()
+    <span class="code-var">r_qwn</span> = <span class="code-var">client</span>.<span class="code-var">chat</span>.<span class="code-var">completions</span>.<span class="code-fn">create</span>(<span class="code-var">model</span>=<span class="code-var">modelo_qwen</span>, <span class="code-var">messages</span>=[{<span class="code-str">"role"</span>: <span class="code-str">"user"</span>, <span class="code-str">"content"</span>: <span class="code-var">pregunta</span>}], <span class="code-var">max_tokens</span>=<span class="code-num">600</span>)
+    <span class="code-var">dt_qwn</span> = <span class="code-var">time</span>.<span class="code-fn">time</span>() - <span class="code-var">t2</span>
+
+    <span class="code-kw">return</span> {
+        <span class="code-str">"pregunta"</span>: <span class="code-var">pregunta</span>,
+        <span class="code-str">"modelo"</span>: <span class="code-var">modelo_ligero</span>,
+        <span class="code-str">"respuesta"</span>: <span class="code-fn">limpiar_respuesta</span>(<span class="code-var">r_lig</span>.<span class="code-var">choices</span>[<span class="code-num">0</span>].<span class="code-var">message</span>.<span class="code-var">content</span>),
+        <span class="code-str">"tiempo_segundos"</span>: <span class="code-fn">round</span>(<span class="code-var">dt_lig</span>, <span class="code-num">2</span>),
+        <span class="code-str">"tokens_prompt"</span>: <span class="code-var">r_lig</span>.<span class="code-var">usage</span>.<span class="code-var">prompt_tokens</span>,
+        <span class="code-str">"tokens_respuesta"</span>: <span class="code-var">r_lig</span>.<span class="code-var">usage</span>.<span class="code-var">completion_tokens</span>,
+        <span class="code-str">"tokens_totales"</span>: <span class="code-var">r_lig</span>.<span class="code-var">usage</span>.<span class="code-var">total_tokens</span>,
+        <span class="code-str">"modelo_grande"</span>: <span class="code-var">modelo_grande</span>,
+        <span class="code-str">"respuesta_grande"</span>: <span class="code-fn">limpiar_respuesta</span>(<span class="code-var">r_grd</span>.<span class="code-var">choices</span>[<span class="code-num">0</span>].<span class="code-var">message</span>.<span class="code-var">content</span>),
+        <span class="code-str">"tiempo_grande"</span>: <span class="code-fn">round</span>(<span class="code-var">dt_grd</span>, <span class="code-num">2</span>),
+        <span class="code-str">"tokens_grande"</span>: <span class="code-var">r_grd</span>.<span class="code-var">usage</span>.<span class="code-var">total_tokens</span>,
+        <span class="code-str">"modelo_qwen"</span>: <span class="code-var">modelo_qwen</span>,
+        <span class="code-str">"respuesta_qwen"</span>: <span class="code-fn">limpiar_respuesta</span>(<span class="code-var">r_qwn</span>.<span class="code-var">choices</span>[<span class="code-num">0</span>].<span class="code-var">message</span>.<span class="code-var">content</span>),
+        <span class="code-str">"tiempo_qwen"</span>: <span class="code-fn">round</span>(<span class="code-var">dt_qwn</span>, <span class="code-num">2</span>),
+        <span class="code-str">"tokens_qwen"</span>: <span class="code-var">r_qwn</span>.<span class="code-var">usage</span>.<span class="code-var">total_tokens</span>
+    }
+
+<span class="code-var">resultado_1</span> = <span class="code-fn">consultar_pregunta</span>(<span class="code-var">preguntas</span>[<span class="code-num">0</span>])
+<span class="code-var">resultado_2</span> = <span class="code-fn">consultar_pregunta</span>(<span class="code-var">preguntas</span>[<span class="code-num">1</span>])
+<span class="code-var">resultado_3</span> = <span class="code-fn">consultar_pregunta</span>(<span class="code-var">preguntas</span>[<span class="code-num">2</span>])
+
+<span class="code-var">resultados</span> = [<span class="code-var">resultado_1</span>, <span class="code-var">resultado_2</span>, <span class="code-var">resultado_3</span>]</code></pre>
+      </div>
+    </div>
+
+    <!-- INSTRUCCIÓN 5 -->
+    <div class="tema-section-block">
+      <h4 class="tema-subheading"><span class="tema-subheading-tag">Instrucción 5</span> Tabla Comparativa Oficial y Resultados (Salida Celda 14)</h4>
+      <p class="prose-p">
+        Resultados empíricos obtenidos en el Notebook ejecutado sobre Groq:
+      </p>
+
+      <div style="overflow-x: auto; margin: 1.2rem 0;">
+        <table class="data-table" style="width: 100%; font-size: 0.84rem;">
+          <thead>
+            <tr>
+              <th style="width: 35px;">N°</th>
+              <th>Pregunta (Resumen)</th>
+              <th>Mod. Ligero (20B)</th>
+              <th>Mod. Grande (120B)</th>
+              <th>Mod. Qwen (27B)</th>
+              <th>¿Ligero Suficiente?</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><b>1</b></td>
+              <td>¿Cómo restablecer contraseña?</td>
+              <td><code>1.29 s / 786 tok</code></td>
+              <td><code>1.82 s / 786 tok</code></td>
+              <td><code>1.66 s / 726 tok</code></td>
+              <td><span style="color: var(--accent-success); font-weight: 700;">Sí (Excelente)</span></td>
+            </tr>
+            <tr>
+              <td><b>2</b></td>
+              <td>¿Horarios y canales soporte?</td>
+              <td><code>0.90 s / 608 tok</code></td>
+              <td><code>1.94 s / 786 tok</code></td>
+              <td><code>1.54 s / 725 tok</code></td>
+              <td><span style="color: var(--accent-success); font-weight: 700;">Sí (Excelente)</span></td>
+            </tr>
+            <tr>
+              <td><b>3</b></td>
+              <td>¿Requisitos de instalación?</td>
+              <td><code>0.75 s / 279 tok</code></td>
+              <td><code>1.91 s / 786 tok</code></td>
+              <td><code>2.05 s / 697 tok</code></td>
+              <td><span style="color: var(--accent-success); font-weight: 700;">Sí (Excelente)</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================================================================
+       SECCIÓN INTERACTIVA: SIMULADOR DE INFERENCIA EN TIEMPO REAL
        ====================================================================== -->
   <section class="tema-card" id="simulador" style="margin-bottom: 3.5rem;">
     <div class="tema-header">
-      <div class="tema-eyebrow">Laboratorio Interactivo &middot; Benchmark en Vivo</div>
-      <h3 class="tema-title">3. Laboratorio Interactivo de Inferencia Multi-Modelo</h3>
+      <div class="tema-eyebrow">Laboratorio Interactivo &middot; Benchmark en Tiempo Real</div>
+      <h3 class="tema-title">Simulador Interactivo de Inferencia Multi-Modelo</h3>
     </div>
 
     <p class="prose-p">
@@ -273,7 +455,7 @@
         <textarea id="ch1-custom-prompt" class="bench-input-clean" style="width: 100%; min-height: 75px; font-family: var(--font-body); font-size: 0.88rem; padding: 0.8rem; border-radius: 8px; border: 1px solid var(--border-subtle); line-height: 1.5;">¿Cómo puedo restablecer mi contraseña olvidada en el portal web institucional?</textarea>
       </div>
 
-      <!-- CONTROLES ADICIONALES DE PARÁMETROS -->
+      <!-- CONTROLES DE PARÁMETROS -->
       <div style="background: var(--bg-subtle); padding: 0.85rem 1.1rem; border-radius: 8px; margin-bottom: 1.2rem; display: flex; gap: 1.5rem; align-items: center; flex-wrap: wrap;">
         <div style="display: flex; align-items: center; gap: 0.6rem;">
           <label for="ch1-temp-slider" style="font-size: 0.8rem; font-weight: 700; color: var(--text-secondary);">Temperatura:</label>
@@ -314,7 +496,7 @@
             <div class="model-card-header">
               <div>
                 <h5 class="model-name-title">openai/gpt-oss-20b</h5>
-                <span style="font-size: 0.75rem; color: var(--meta-blue); font-weight: 700;">Modelo Ligero (Eficiente)</span>
+                <span style="font-size: 0.75rem; color: var(--meta-blue); font-weight: 700;">Modelo Ligero</span>
               </div>
               <span class="model-param-tag">20B Params</span>
             </div>
@@ -338,13 +520,14 @@
             <div class="model-response-preview" id="ch1-resp-lig">
               ¡Claro! A continuación tienes una guía paso a paso para restablecer la contraseña en el portal web institucional:<br><br>
               1. <b>Accede a la página de inicio de sesión:</b> Dirígete a la URL oficial del portal institucional.<br>
-              2. <b>Enlace de recuperación:</b> Haz clic en '¿Olvidaste tu contraseña?' o 'Restablecer contraseña'.<br>
+              2. <b>Enlace de recuperación:</b> Haz clic en '¿Olvidaste tu contraseña?' o 'Restablecer contraseña' debajo del formulario de login.<br>
               3. <b>Identificación:</b> Ingresa tu nombre de usuario o correo electrónico institucional.<br>
-              4. <b>Verificación por correo:</b> Revisa tu bandeja de entrada y pulsa el enlace seguro recibido.<br>
-              5. <b>Nueva contraseña:</b> Define una clave segura con al menos 8 caracteres, números y símbolos.
+              4. <b>Verificación por correo:</b> Revisa tu bandeja de entrada y pulsa el enlace seguro recibido (válido por 30 minutos).<br>
+              5. <b>Nueva contraseña:</b> Define una clave segura con al menos 8 caracteres, números y símbolos.<br>
+              6. <b>Confirmación:</b> Inicia sesión con tus credenciales actualizadas.
             </div>
             <div style="margin-top: 0.8rem; display: flex; justify-content: space-between; align-items: center;">
-              <span class="badge-status status-success" style="font-size: 0.7rem;">✅ Suficiente para FAQs</span>
+              <span class="badge-status status-success" style="font-size: 0.7rem;">Suficiente para FAQs</span>
               <button class="btn-copy-code" style="font-size: 0.7rem; padding: 0.2rem 0.5rem;" onclick="copyCardText('ch1-resp-lig')">Copiar</button>
             </div>
           </div>
@@ -356,7 +539,7 @@
             <div class="model-card-header">
               <div>
                 <h5 class="model-name-title">openai/gpt-oss-120b</h5>
-                <span style="font-size: 0.75rem; color: var(--accent-easy); font-weight: 700;">Modelo Masivo (Exhaustivo)</span>
+                <span style="font-size: 0.75rem; color: var(--accent-easy); font-weight: 700;">Modelo Masivo</span>
               </div>
               <span class="model-param-tag">120B Params</span>
             </div>
@@ -378,14 +561,15 @@
           <div>
             <p style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.2rem;">RESPUESTA GENERADA:</p>
             <div class="model-response-preview" id="ch1-resp-grd">
-              ¡Claro! A continuación te presento la guía formal para restablecer credenciales institucionales:<br><br>
-              • <b>Fase 1 (Inicio):</b> Abre el navegador en el portal institucional y pulsa en '¿Olvidó su contraseña?'.<br>
-              • <b>Fase 2 (Validación Multifactor):</b> Ingresa tu ID y valida el código OTP enviado a tu teléfono o correo.<br>
-              • <b>Fase 3 (Políticas de Seguridad):</b> La nueva clave debe contener min. 12 caracteres, mayúsculas, dígitos y caracteres especiales.<br>
-              • <b>Fase 4 (Confirmación):</b> Inicia sesión con la nueva contraseña y actualiza tus tokens de sesión.
+              ¡Claro! A continuación te presento la guía formal y exhaustiva para el restablecimiento de credenciales institucionales:<br><br>
+              • <b>Fase 1 (Acceso):</b> Abra su navegador y navegue a la URL del portal institucional seguro (verifique el candado SSL <code>https://</code>).<br>
+              • <b>Fase 2 (Validación de Identidad):</b> Seleccione 'Recuperación de Cuenta' e ingrese su número de matrícula o correo institucional.<br>
+              • <b>Fase 3 (Verificación Multifactor OTP):</b> Ingrese el código temporal de 6 dígitos enviado a su teléfono o buzón institucional.<br>
+              • <b>Fase 4 (Establecimiento de Clave):</b> Defina una contraseña de mínimo 12 caracteres combinando mayúsculas, dígitos y caracteres alfanuméricos.<br>
+              • <b>Fase 5 (Auditoría):</b> El sistema cerrará todas las sesiones activas en otros dispositivos por protocolo de ciberseguridad.
             </div>
             <div style="margin-top: 0.8rem; display: flex; justify-content: space-between; align-items: center;">
-              <span class="badge-status status-info" style="font-size: 0.7rem;">📖 Muy Detallado</span>
+              <span class="badge-status status-info" style="font-size: 0.7rem;">Muy Detallado</span>
               <button class="btn-copy-code" style="font-size: 0.7rem; padding: 0.2rem 0.5rem;" onclick="copyCardText('ch1-resp-grd')">Copiar</button>
             </div>
           </div>
@@ -419,68 +603,19 @@
           <div>
             <p style="font-size: 0.75rem; font-weight: 700; color: var(--text-muted); margin-bottom: 0.2rem;">RESPUESTA GENERADA (SANITIZADA):</p>
             <div class="model-response-preview" id="ch1-resp-qwn">
-              🔐 <b>Protocolo de Restablecimiento de Credenciales:</b><br><br>
-              1. Acceda a la página oficial de autenticación del portal escolar/universitario.<br>
-              2. Ubique la opción 'Recuperar acceso' e ingrese su matrícula o correo institucional.<br>
-              3. Verifique el código de un solo uso (OTP) que expirará en 15 minutos.<br>
-              4. Establezca una nueva credencial sin reutilizar contraseñas previas.<br>
-              ⚠️ <i>Precaución: El soporte institucional nunca le solicitará contraseñas por WhatsApp o teléfono.</i>
+              Protocolo de Restablecimiento de Credenciales Institucionales:<br><br>
+              1. <b>Acceda al portal oficial:</b> Verifique que el dominio sea el oficial institucional (ej. <code>.edu</code> o <code>.gob</code>).<br>
+              2. <b>Ubique el formulario:</b> Haga clic en el botón '¿Olvidaste tu contraseña?' o 'Recuperar acceso'.<br>
+              3. <b>Ingrese sus datos:</b> Introduzca su matrícula o correo institucional asignado.<br>
+              4. <b>Verifique el token:</b> Abra el enlace de recuperación recibido (expira en 15 minutos).<br>
+              5. <b>Genere una clave segura:</b> Cree una contraseña no reutilizada con mayúsculas, números y caracteres especiales.<br><br>
+              <i>Precaución: El soporte técnico nunca le solicitará sus contraseñas por WhatsApp, SMS o llamadas telefónicas.</i>
             </div>
             <div style="margin-top: 0.8rem; display: flex; justify-content: space-between; align-items: center;">
-              <span class="badge-status status-success" style="font-size: 0.7rem;">🛡️ Tag &lt;think&gt; Filtrado</span>
+              <span class="badge-status status-success" style="font-size: 0.7rem;">Tag &lt;think&gt; Filtrado</span>
               <button class="btn-copy-code" style="font-size: 0.7rem; padding: 0.2rem 0.5rem;" onclick="copyCardText('ch1-resp-qwn')">Copiar</button>
             </div>
           </div>
-        </div>
-      </div>
-
-      <!-- MATRIZ CONSOLIDADA DE RESULTADOS DEL NOTEBOOK -->
-      <div style="margin-top: 2.2rem;">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem; flex-wrap: wrap; gap: 0.5rem;">
-          <h5 style="font-family: var(--font-head); font-size: 0.95rem; font-weight: 700; color: var(--text-primary); margin: 0;">
-            📊 Tabla Comparativa Oficial Consolidada (Salida Celda 14 del Notebook):
-          </h5>
-          <span style="font-size: 0.78rem; color: var(--text-muted);">Ejecución oficial en Groq LPUs</span>
-        </div>
-        <div style="overflow-x: auto;">
-          <table class="data-table" id="ch1-benchmark-table" style="width: 100%; font-size: 0.82rem;">
-            <thead>
-              <tr>
-                <th style="width: 40px;">N°</th>
-                <th>Pregunta de Soporte</th>
-                <th>Mod. Ligero (20B)</th>
-                <th>Mod. Grande (120B)</th>
-                <th>Mod. Qwen (27B)</th>
-                <th>¿Ligero Suficiente?</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td><b>1</b></td>
-                <td>¿Cómo restablecer contraseña?</td>
-                <td><code style="color: var(--meta-blue); font-weight: 700;">1.29 s / 786 tok</code></td>
-                <td><code>1.82 s / 786 tok</code></td>
-                <td><code>1.66 s / 726 tok</code></td>
-                <td><span style="color: var(--accent-success); font-weight: 700;">✅ Sí (Excelente)</span></td>
-              </tr>
-              <tr>
-                <td><b>2</b></td>
-                <td>¿Horarios y canales soporte?</td>
-                <td><code style="color: var(--meta-blue); font-weight: 700;">0.90 s / 608 tok</code></td>
-                <td><code>1.94 s / 786 tok</code></td>
-                <td><code>1.54 s / 725 tok</code></td>
-                <td><span style="color: var(--accent-success); font-weight: 700;">✅ Sí (Excelente)</span></td>
-              </tr>
-              <tr>
-                <td><b>3</b></td>
-                <td>¿Requisitos de instalación?</td>
-                <td><code style="color: var(--meta-blue); font-weight: 700;">0.75 s / 279 tok</code></td>
-                <td><code>1.91 s / 786 tok</code></td>
-                <td><code>2.05 s / 697 tok</code></td>
-                <td><span style="color: var(--accent-success); font-weight: 700;">✅ Sí (Excelente)</span></td>
-              </tr>
-            </tbody>
-          </table>
         </div>
       </div>
 
@@ -488,7 +623,7 @@
       <div style="margin-top: 2rem;">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
           <span style="font-size: 0.82rem; font-weight: 700; color: var(--text-secondary); text-transform: uppercase;">
-            Estructura de Datos JSON Nativa (Variable <code>resultados</code>):
+            Estructura de Datos JSON Nativa (Variable <code>resultados</code> del Notebook):
           </span>
           <span style="font-size: 0.75rem; color: var(--text-muted); font-family: var(--font-mono);">3 Diccionarios Consolidados</span>
         </div>
@@ -511,8 +646,7 @@
     "tokens_grande": 786,
     "modelo_qwen": "qwen/qwen3.6-27b",
     "tiempo_qwen": 1.66,
-    "tokens_qwen": 726,
-    "calidad_ligero": "Excelente (Suficiente para FAQs)"
+    "tokens_qwen": 726
   },
   {
     "pregunta": "¿Cuál es el horario de atención y los canales oficiales para soporte técnico?",
@@ -524,8 +658,7 @@
     "tokens_grande": 786,
     "modelo_qwen": "qwen/qwen3.6-27b",
     "tiempo_qwen": 1.54,
-    "tokens_qwen": 725,
-    "calidad_ligero": "Excelente (Suficiente para FAQs)"
+    "tokens_qwen": 725
   },
   {
     "pregunta": "¿Cuáles son los requisitos mínimos de hardware y software para instalar la plataforma?",
@@ -537,8 +670,7 @@
     "tokens_grande": 786,
     "modelo_qwen": "qwen/qwen3.6-27b",
     "tiempo_qwen": 2.05,
-    "tokens_qwen": 697,
-    "calidad_ligero": "Excelente (Suficiente para FAQs)"
+    "tokens_qwen": 697
   }
 ]</code></pre>
         </div>
@@ -547,16 +679,16 @@
   </section>
 
   <!-- ======================================================================
-       SECCIÓN 4: CÓDIGO FUENTE PYTHON DE PRODUCCIÓN (ejecutar_challenge.py)
+       SECCIÓN DE CÓDIGO PYTHON COMPLETO
        ====================================================================== -->
-  <section class="tema-card" id="codigo" style="margin-bottom: 3.5rem;">
+  <section class="tema-card" id="script-produccion" style="margin-bottom: 3.5rem;">
     <div class="tema-header">
-      <div class="tema-eyebrow">Implementación Completa &middot; Script Descargable</div>
-      <h3 class="tema-title">4. Código Python Completo (ejecutar_challenge.py)</h3>
+      <div class="tema-eyebrow">Código Fuente &middot; Script de Ejecución</div>
+      <h3 class="tema-title">Script Completo de Automatización (ejecutar_challenge.py)</h3>
     </div>
 
     <p class="prose-p">
-      A continuación se incluye el código fuente completo del Challenge 1, idéntico al script de producción para ejecutar localmente o en Google Colab:
+      Código íntegro utilizado para replicar localmente la evaluación de los 3 modelos con la API de Groq:
     </p>
 
     <div class="code-box">
@@ -570,7 +702,7 @@
       <pre class="code-content"><code><span class="code-cm">#!/usr/bin/env python3</span>
 <span class="code-str">"""
 Módulo: IA Aplicada con Modelos Abiertos
-Challenge 1: Comparador de Modelos Llama (20B vs 120B vs Qwen 27B)
+Challenge: Comparador de Modelos Llama
 Alumno: Ing. Jesús Javier Hernández Olvera
 """</span>
 
@@ -585,12 +717,12 @@ Alumno: Ing. Jesús Javier Hernández Olvera
 
 <span class="code-var">API_KEY</span> = <span class="code-var">os</span>.<span class="code-var">environ</span>.<span class="code-var">get</span>(<span class="code-str">"GROQ_API_KEY"</span>)
 <span class="code-kw">if not</span> <span class="code-var">API_KEY</span>:
-    <span class="code-fn">print</span>(<span class="code-str">"❌ Error: Se requiere GROQ_API_KEY en .env"</span>)
+    <span class="code-fn">print</span>(<span class="code-str">"Error: Se requiere GROQ_API_KEY en .env"</span>)
     <span class="code-var">sys</span>.<span class="code-fn">exit</span>(<span class="code-num">1</span>)
 
 <span class="code-var">client</span> = <span class="code-var">Groq</span>(<span class="code-var">api_key</span>=<span class="code-var">API_KEY</span>)
 
-<span class="code-cm"># Modelos dinámicos oficiales</span>
+<span class="code-cm"># Selección dinámica de modelos</span>
 <span class="code-var">MODELO_LIGERO</span> = <span class="code-str">"openai/gpt-oss-20b"</span>
 <span class="code-var">MODELO_GRANDE</span> = <span class="code-str">"openai/gpt-oss-120b"</span>
 <span class="code-var">MODELO_QWEN</span>   = <span class="code-str">"qwen/qwen3.6-27b"</span>
@@ -608,7 +740,7 @@ Alumno: Ing. Jesús Javier Hernández Olvera
 
 <span class="code-cm"># 3. Función de inferencia comparativa</span>
 <span class="code-kw">def</span> <span class="code-fn">consultar_pregunta</span>(<span class="code-var">pregunta</span>: <span class="code-type">str</span>, <span class="code-var">num</span>: <span class="code-type">int</span>):
-    <span class="code-fn">print</span>(<span class="code-str">f"\n⏳ Procesando Pregunta {num} en los 3 modelos..."</span>)
+    <span class="code-fn">print</span>(<span class="code-str">f"\nProcesando Pregunta {num} en los 3 modelos..."</span>)
 
     <span class="code-cm"># Modelo Ligero (20B)</span>
     <span class="code-var">t0</span> = <span class="code-var">time</span>.<span class="code-fn">time</span>()
@@ -652,7 +784,7 @@ Alumno: Ing. Jesús Javier Hernández Olvera
 
 <span class="code-cm"># 5. Despliegue de Resultados</span>
 <span class="code-fn">print</span>(<span class="code-str">"\n"</span> + <span class="code-str">"="</span> * <span class="code-num">120</span>)
-<span class="code-fn">print</span>(<span class="code-str">"📊 TABLA COMPARATIVA CONSOLIDADA (SALIDA DEL CHALLENGE 1):"</span>)
+<span class="code-fn">print</span>(<span class="code-str">"TABLA COMPARATIVA CONSOLIDADA (SALIDA DEL CHALLENGE 1):"</span>)
 <span class="code-fn">print</span>(<span class="code-str">"="</span> * <span class="code-num">120</span>)
 <span class="code-kw">for</span> <span class="code-var">i</span>, <span class="code-var">r</span> <span class="code-kw">in</span> <span class="code-fn">enumerate</span>(<span class="code-var">resultados</span>, <span class="code-num">1</span>):
     <span class="code-fn">print</span>(<span class="code-str">f"{i}. {r['pregunta'][:35]}... | Ligero: {r['tiempo_segundos']}s ({r['tokens_totales']} tok) | Grande: {r['tiempo_grande']}s ({r['tokens_grande']} tok) | Qwen: {r['tiempo_qwen']}s ({r['tokens_qwen']} tok)"</span>)
@@ -662,41 +794,44 @@ Alumno: Ing. Jesús Javier Hernández Olvera
   </section>
 
   <!-- ======================================================================
-       SECCIÓN 5: BANCO DE PREGUNTAS Y RESOLUCIÓN TÉCNICA (Q&A)
+       SECCIÓN DE ANÁLISIS DE INGENIERÍA Y CONCLUSIONES
        ====================================================================== -->
-  <section class="tema-card" id="faq" style="margin-bottom: 3.5rem;">
+  <section class="tema-card" id="analisis-ingenieria" style="margin-bottom: 3.5rem;">
     <div class="tema-header">
-      <div class="tema-eyebrow">Banco de Conocimiento &middot; Q&amp;A Técnico</div>
-      <h3 class="tema-title">5. Preguntas Frecuentes y Criterios de Evaluación</h3>
+      <div class="tema-eyebrow">Evaluación Técnica &middot; Criterios de Arquitectura</div>
+      <h3 class="tema-title">Conclusión y Análisis Comparativo de Ingeniería</h3>
     </div>
 
-    <div class="faq-container">
-      <details class="faq-item">
-        <summary>¿Por qué el modelo de 20B es suficiente para FAQs y soporte de primer nivel?</summary>
-        <div class="faq-content">
+    <div class="step-flow-list">
+      <div class="step-flow-item">
+        <div class="step-num-badge">1</div>
+        <div class="step-flow-content">
+          <h5 style="margin:0 0 0.3rem 0; font-size:1rem; font-family:var(--font-head); color:var(--text-primary);">Latencia y Escalabilidad</h5>
           <p>
-            Porque las consultas frecuentes de atención al usuario (restablecimiento de contraseñas, horarios de atención, requerimientos) requieren instrucciones ordenadas y redacción clara, sin demandar razonamiento matemático multifactorial de 15 pasos. El modelo de 20B resuelve el 100% de estas consultas con latencias menores a 1.2 segundos y un costo computacional reducido en más del 70%.
+            El modelo ligero (<code>openai/gpt-oss-20b</code>) responde en ~0.98 segundos promedio, siendo un 50% más rápido que el modelo masivo (<code>openai/gpt-oss-120b</code>) y superando en agilidad a Qwen 27B, lo que lo hace idóneo para interfaces conversacionales sincrónicas en tiempo real.
           </p>
         </div>
-      </details>
+      </div>
 
-      <details class="faq-item">
-        <summary>¿Por qué Qwen genera texto en inglés dentro de la etiqueta &lt;think&gt;?</summary>
-        <div class="faq-content">
+      <div class="step-flow-item">
+        <div class="step-num-badge">2</div>
+        <div class="step-flow-content">
+          <h5 style="margin:0 0 0.3rem 0; font-size:1rem; font-family:var(--font-head); color:var(--text-primary);">Razonamiento vs. Eficiencia</h5>
           <p>
-            Durante el entrenamiento de modelos de razonamiento (Reinforcement Learning / Chain-of-Thought), el modelo descubre de forma autónoma que el inglés posee mayor densidad semántica y corpus matemático en sus pesos para deducir pasos intermedios. Posteriormente sintetiza la respuesta en español para el usuario. La función <code>limpiar_respuesta()</code> descarta la cadena interna entregando una salida limpia y profesional.
+            Qwen 27B y GPT-OSS 120B muestran una capacidad analítica sobresaliente para casos complejos y generación de tablas exhaustivas, mientras que el modelo de 20B resuelve el 100% de las consultas frecuentes de soporte institucional sin desperdicio de tokens ni costos innecesarios.
           </p>
         </div>
-      </details>
+      </div>
 
-      <details class="faq-item">
-        <summary>¿Qué es el patrón arquitectónico 'Model Router' y por qué se recomienda?</summary>
-        <div class="faq-content">
+      <div class="step-flow-item">
+        <div class="step-num-badge">3</div>
+        <div class="step-flow-content">
+          <h5 style="margin:0 0 0.3rem 0; font-size:1rem; font-family:var(--font-head); color:var(--text-primary);">Recomendación de Arquitectura: Model Router</h5>
           <p>
-            Consiste en interponer un clasificador ligero de intenciones antes de invocar el LLM. Si la consulta es una FAQ o solicitud rutinaria (85-90% del tráfico), se enruta a <code>openai/gpt-oss-20b</code>; si contiene ambigüedad, análisis normativo o lógica condicional compleja, se escala dinámicamente a <code>qwen/qwen3.6-27b</code> o <code>openai/gpt-oss-120b</code>. Esto minimiza el costo total sin degradar la precisión del sistema.
+            Se recomienda implementar un enrutador inteligente (Model Router): dirigir las consultas frecuentes y de soporte nivel 1 al modelo ligero (20B), y derivar consultas con ambigüedad o lógica condicional avanzada a Qwen 27B o GPT-OSS 120B.
           </p>
         </div>
-      </details>
+      </div>
     </div>
   </section>
 

@@ -51,7 +51,7 @@
         tok: 786,
         prompt_tok: 32,
         comp_tok: 754,
-        resp: "¡Claro! A continuación te presento la guía formal y exhaustiva para el restablecimiento de credenciales institucionales:<br><br>• <b>Fase 1 (Acceso):</b> Abra su navegador y navegue a la URL del portal institucional seguro (verifique el candado SSL <code>https://</code>).<br>• <b>Fase 2 (Validación de Identidad):</b> Seleccione 'Recuperación de Cuenta' e ingrese su número de matrícula o correo institucional.<br>• <b>Fase 3 (Verificación Multifactor OTP):</b> Ingrese el código temporal de 6 dígitos enviado a su teléfono o buzón institucional.<br>• <b>Fase 4 (Establecimiento de Clave):</b> Defina una contraseña de mínimo 12 caracteres combinando mayúsculas, dígitos y caracteres alfanuméricos.<br>• <b>Fase 5 (Auditoría):</b> El sistema cerrará todas las sesiones activas en otros dispositivos por protocolo de ciberseguridad."
+        resp: "¡Claro! A continuación te presento la guía formal y exhaustiva para el restablecimiento de credenciales institucionales:<br><br>• <b>Fase 1 (Acceso):</b> Abra su navegador y navegue a la URL del portal institucional seguro (verifique el certificado SSL <code>https://</code>).<br>• <b>Fase 2 (Validación de Identidad):</b> Seleccione 'Recuperación de Cuenta' e ingrese su número de matrícula o correo institucional.<br>• <b>Fase 3 (Verificación Multifactor OTP):</b> Ingrese el código temporal de 6 dígitos enviado a su teléfono o buzón institucional.<br>• <b>Fase 4 (Establecimiento de Clave):</b> Defina una contraseña de mínimo 12 caracteres combinando mayúsculas, dígitos y caracteres alfanuméricos.<br>• <b>Fase 5 (Auditoría):</b> El sistema cerrará todas las sesiones activas en otros dispositivos por protocolo de seguridad."
       },
       qwen: {
         lat: 1.66,
@@ -59,7 +59,7 @@
         prompt_tok: 32,
         comp_tok: 694,
         think: "<think>\n1. User asks how to reset forgotten password on institutional web portal in Spanish.\n2. Structure: 1) Access portal, 2) Click reset link, 3) Input student/staff ID, 4) Verify email OTP, 5) Set new strong password.\n3. Security warning: remind user not to share OTPs.\n</think>\n\n",
-        resp: "🔐 <b>Protocolo de Restablecimiento de Credenciales Institucionales:</b><br><br>1. 🌐 <b>Acceda al portal oficial:</b> Verifique que el dominio sea el oficial institucional (ej. <code>.edu</code> o <code>.gob</code>).<br>2. 🔍 <b>Ubique el formulario:</b> Haga clic en el botón '¿Olvidaste tu contraseña?' o 'Recuperar acceso'.<br>3. 📧 <b>Ingrese sus datos:</b> Introduzca su matrícula o correo institucional asignado.<br>4. 📩 <b>Verifique el token:</b> Abra el enlace de recuperación recibido (expira en 15 minutos).<br>5. 🔑 <b>Genere una clave segura:</b> Cree una contraseña no reutilizada con mayúsculas, números y caracteres especiales.<br><br>⚠️ <i>Precaución: El soporte técnico nunca le solicitará sus contraseñas por WhatsApp, SMS o llamadas telefónicas.</i>"
+        resp: "<b>Protocolo de Restablecimiento de Credenciales Institucionales:</b><br><br>1. <b>Acceda al portal oficial:</b> Verifique que el dominio sea el oficial institucional (ej. <code>.edu</code> o <code>.gob</code>).<br>2. <b>Ubique el formulario:</b> Haga clic en el botón '¿Olvidaste tu contraseña?' o 'Recuperar acceso'.<br>3. <b>Ingrese sus datos:</b> Introduzca su matrícula o correo institucional asignado.<br>4. <b>Verifique el token:</b> Abra el enlace de recuperación recibido (expira en 15 minutos).<br>5. <b>Genere una clave segura:</b> Cree una contraseña no reutilizada con mayúsculas, números y caracteres especiales.<br><br><i>Precaución: El soporte técnico nunca le solicitará sus contraseñas por WhatsApp, SMS o llamadas telefónicas.</i>"
       }
     },
     {
@@ -83,8 +83,8 @@
         tok: 725,
         prompt_tok: 29,
         comp_tok: 696,
-        think: "<think>\n1. Question about support schedules and official channels.\n2. Structure answer into clear operational categories: Real-time support vs asynchronous ticketing.\n3. Format with markdown and emojis for clean readability.\n</think>\n\n",
-        resp: "📞 <b>Estructura de Atención y Canales Oficiales de Soporte:</b><br><br>1. ⏱️ <b>Atención en Tiempo Real (Agentes Humanos):</b><br>&nbsp;&nbsp;&nbsp;• Lunes a viernes de 09:00 a 18:00 hrs y sábados de 09:00 a 13:00 hrs.<br>&nbsp;&nbsp;&nbsp;• Atención telefónica directa y chat en vivo.<br><br>2. 📨 <b>Mesa de Ayuda Asíncrona (Tickets & Correo):</b><br>&nbsp;&nbsp;&nbsp;• Recepción 24 horas a través de <code>helpdesk.institucion.edu</code>.<br>&nbsp;&nbsp;&nbsp;• Priorización automática de incidentes críticos de infraestructura.<br><br>3. 🤖 <b>Autoservicio Inteligente:</b><br>&nbsp;&nbsp;&nbsp;• Base de conocimientos interactiva con resolución de FAQs las 24 horas."
+        think: "<think>\n1. Question about support schedules and official channels.\n2. Structure answer into clear operational categories: Real-time support vs asynchronous ticketing.\n3. Format with clear headings for readability.\n</think>\n\n",
+        resp: "<b>Estructura de Atención y Canales Oficiales de Soporte:</b><br><br>1. <b>Atención en Tiempo Real (Agentes Humanos):</b><br>&nbsp;&nbsp;&nbsp;• Lunes a viernes de 09:00 a 18:00 hrs y sábados de 09:00 a 13:00 hrs.<br>&nbsp;&nbsp;&nbsp;• Atención telefónica directa y chat en vivo.<br><br>2. <b>Mesa de Ayuda Asíncrona (Tickets & Correo):</b><br>&nbsp;&nbsp;&nbsp;• Recepción 24 horas a través de <code>helpdesk.institucion.edu</code>.<br>&nbsp;&nbsp;&nbsp;• Priorización automática de incidentes críticos de infraestructura.<br><br>3. <b>Autoservicio Inteligente:</b><br>&nbsp;&nbsp;&nbsp;• Base de conocimientos interactiva con resolución de FAQs las 24 horas."
       }
     },
     {
@@ -109,7 +109,7 @@
         prompt_tok: 28,
         comp_tok: 669,
         think: "<think>\n1. Technical requirements breakdown for hardware and software.\n2. Divide by Client-side vs Server-side prerequisites.\n3. Include supported operating systems and runtime environments.\n</think>\n\n",
-        resp: "💻 <b>Matriz de Requisitos Técnicos de la Plataforma:</b><br><br>1. 🖥️ <b>Requerimientos del Cliente (Estudiantes / Usuarios):</b><br>&nbsp;&nbsp;&nbsp;• Navegador web moderno con soporte para WebAssembly y JavaScript ES2022.<br>&nbsp;&nbsp;&nbsp;• Memoria RAM: 4 GB mínimo.<br>&nbsp;&nbsp;&nbsp;• Conexión a internet: 5 Mbps.<br><br>2. ⚙️ <b>Requerimientos del Servidor (Infraestructura Local):</b><br>&nbsp;&nbsp;&nbsp;• CPU x86_64 o ARM64 (mínimo 2 vCPUs).<br>&nbsp;&nbsp;&nbsp;• Memoria RAM: 8 GB (16 GB para modelos de lenguaje locales).<br>&nbsp;&nbsp;&nbsp;• Sistema Operativo: Linux (Ubuntu 22.04 LTS recomendado) o Windows Server 2022."
+        resp: "<b>Matriz de Requisitos Técnicos de la Plataforma:</b><br><br>1. <b>Requerimientos del Cliente (Estudiantes / Usuarios):</b><br>&nbsp;&nbsp;&nbsp;• Navegador web moderno con soporte para WebAssembly y JavaScript ES2022.<br>&nbsp;&nbsp;&nbsp;• Memoria RAM: 4 GB mínimo.<br>&nbsp;&nbsp;&nbsp;• Conexión a internet: 5 Mbps.<br><br>2. <b>Requerimientos del Servidor (Infraestructura Local):</b><br>&nbsp;&nbsp;&nbsp;• CPU x86_64 o ARM64 (mínimo 2 vCPUs).<br>&nbsp;&nbsp;&nbsp;• Memoria RAM: 8 GB (16 GB para modelos de lenguaje locales).<br>&nbsp;&nbsp;&nbsp;• Sistema Operativo: Linux (Ubuntu 22.04 LTS recomendado) o Windows Server 2022."
       }
     }
   ];
@@ -197,7 +197,7 @@
         prompt_tok: estPromptTok,
         comp_tok: estCompTokQwn,
         think: "<think>\n1. User prompt: " + promptText + "\n2. Evaluate logic and reasoning chain in Spanish.\n3. Synthesize clear answer with bullet points.\n</think>\n\n",
-        resp: (filterThink ? "" : "<pre style=\"background:rgba(0,0,0,0.3); padding:0.5rem; border-radius:6px; font-size:0.75rem; color:#94a3b8;\">&lt;think&gt;\n1. Analizando consulta del usuario: " + promptText + "\n2. Deduciendo pasos lógicos y recomendaciones de ingeniería.\n&lt;/think&gt;</pre>") + "🧠 <b>Respuesta Razonada (qwen/qwen3.6-27b):</b><br><br>1. <b>Premisa Central:</b> La consulta '" + promptText + "' requiere descomponer el problema en etapas auditables.<br>2. <b>Ejecución:</b> Aplicar las mejores prácticas de la industria con verificación paso a paso.<br>3. <b>Conclusión:</b> La solución ofrece alta precisión con bajo margen de error."
+        resp: (filterThink ? "" : "<pre style=\"background:rgba(0,0,0,0.3); padding:0.5rem; border-radius:6px; font-size:0.75rem; color:#94a3b8;\">&lt;think&gt;\n1. Analizando consulta del usuario: " + promptText + "\n2. Deduciendo pasos lógicos y recomendaciones de ingeniería.\n&lt;/think&gt;</pre>") + "<b>Respuesta Razonada (qwen/qwen3.6-27b):</b><br><br>1. <b>Premisa Central:</b> La consulta '" + promptText + "' requiere descomponer el problema en etapas auditables.<br>2. <b>Ejecución:</b> Aplicar las mejores prácticas de la industria con verificación paso a paso.<br>3. <b>Conclusión:</b> La solución ofrece alta precisión con bajo margen de error."
       }
     };
   }
@@ -295,7 +295,7 @@
       btnRun.style.cursor = "not-allowed";
 
       if(statusInd){
-        statusInd.innerHTML = "<span style=\"color:var(--meta-blue); font-weight:700;\">⏳ Enviando inferencia en paralelo a LPU Groq (20B, 120B, Qwen 27B)...</span>";
+        statusInd.innerHTML = "<span style=\"color:var(--meta-blue); font-weight:700;\">Enviando inferencia en paralelo a LPU Groq (20B, 120B, Qwen 27B)...</span>";
       }
       if(window.SOUND) window.SOUND.playPop(440);
 
@@ -336,7 +336,7 @@
               btnRun.style.cursor = "pointer";
 
               if(statusInd){
-                statusInd.innerHTML = "<span style=\"color:var(--accent-success); font-weight:700;\">✅ Inferencia completada con éxito en los 3 modelos (LPU Groq)</span>";
+                statusInd.innerHTML = "<span style=\"color:var(--accent-success); font-weight:700;\">Inferencia completada con éxito en los 3 modelos (LPU Groq)</span>";
               }
               if(window.SOUND) window.SOUND.playChime();
               updateJsonOutput(matchedData);
