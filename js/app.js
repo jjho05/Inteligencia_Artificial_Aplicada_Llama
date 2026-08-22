@@ -691,3 +691,109 @@ function downloadCode(btn){
     btn.style.borderColor = "";
   }, 2500);
 }
+
+/* 8. ANIMACIONES Y TRANSICIONES FLUIDAS PARA DESPLEGABLES (<details> Y ACORDEONES) */
+class SmoothDetails {
+  constructor(el) {
+    this.el = el;
+    this.summary = el.querySelector('summary');
+    this.content = el.querySelector('.exercise-solution-panel, .faq-answer, .accordion-content') || el.querySelector('div:not(.code-actions)');
+    this.animation = null;
+    this.isClosing = false;
+    this.isExpanding = false;
+
+    if (this.summary && this.content) {
+      this.summary.addEventListener('click', (e) => this.onClick(e));
+    }
+  }
+
+  onClick(e) {
+    e.preventDefault();
+    this.el.style.overflow = 'hidden';
+    if (this.isClosing || !this.el.open) {
+      this.open();
+    } else if (this.isExpanding || this.el.open) {
+      this.shrink();
+    }
+  }
+
+  shrink() {
+    this.isClosing = true;
+    const startHeight = `${this.el.offsetHeight}px`;
+    const endHeight = `${this.summary.offsetHeight}px`;
+
+    if (this.animation) this.animation.cancel();
+
+    this.animation = this.el.animate({
+      height: [startHeight, endHeight]
+    }, {
+      duration: 260,
+      easing: 'cubic-bezier(0.16, 1, 0.3, 1)'
+    });
+
+    if (this.content) {
+      this.content.animate({
+        opacity: [1, 0],
+        transform: ['translateY(0)', 'translateY(-6px)']
+      }, {
+        duration: 180,
+        easing: 'ease-out'
+      });
+    }
+
+    this.animation.onfinish = () => this.onAnimationFinish(false);
+    this.animation.oncancel = () => this.isClosing = false;
+  }
+
+  open() {
+    this.el.style.height = `${this.el.offsetHeight}px`;
+    this.el.open = true;
+    window.requestAnimationFrame(() => this.expand());
+  }
+
+  expand() {
+    this.isExpanding = true;
+    const startHeight = `${this.el.offsetHeight}px`;
+    const endHeight = `${this.summary.offsetHeight + this.content.offsetHeight}px`;
+
+    if (this.animation) this.animation.cancel();
+
+    this.animation = this.el.animate({
+      height: [startHeight, endHeight]
+    }, {
+      duration: 300,
+      easing: 'cubic-bezier(0.16, 1, 0.3, 1)'
+    });
+
+    if (this.content) {
+      this.content.animate({
+        opacity: [0, 1],
+        transform: ['translateY(-6px)', 'translateY(0)']
+      }, {
+        duration: 280,
+        easing: 'cubic-bezier(0.16, 1, 0.3, 1)'
+      });
+    }
+
+    this.animation.onfinish = () => this.onAnimationFinish(true);
+    this.animation.oncancel = () => this.isExpanding = false;
+  }
+
+  onAnimationFinish(open) {
+    this.el.open = open;
+    this.animation = null;
+    this.isClosing = false;
+    this.isExpanding = false;
+    this.el.style.height = '';
+    this.el.style.overflow = '';
+  }
+}
+
+function initSmoothAccordions() {
+  document.querySelectorAll('details').forEach(function(el) {
+    if (!el._smoothInitialized) {
+      new SmoothDetails(el);
+      el._smoothInitialized = true;
+    }
+  });
+}

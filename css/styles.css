@@ -3709,6 +3709,12 @@ button:active, a.btn-primary:active, a.btn-secondary:active, a.btn-module-action
   border-radius: 10px;
   overflow: hidden;
   margin-top: 0.9rem;
+  transition: background-color 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.exercise-solution-details[open] {
+  box-shadow: var(--shadow-sm);
+  border-color: var(--meta-blue-border);
 }
 
 .exercise-solution-summary {
@@ -3722,7 +3728,7 @@ button:active, a.btn-primary:active, a.btn-secondary:active, a.btn-module-action
   align-items: center;
   user-select: none;
   background: transparent;
-  transition: background 0.15s ease;
+  transition: background 0.18s ease, color 0.18s ease;
 }
 
 .exercise-solution-summary:hover {
@@ -3733,6 +3739,17 @@ button:active, a.btn-primary:active, a.btn-secondary:active, a.btn-module-action
   display: none;
 }
 
+.exercise-solution-summary svg,
+summary svg {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1) !important;
+  flex-shrink: 0;
+}
+
+details[open] > .exercise-solution-summary svg,
+details[open] > summary svg {
+  transform: rotate(180deg) !important;
+}
+
 .exercise-solution-panel {
   padding: 1rem 1.15rem;
   border-top: 1px solid var(--border-subtle);
@@ -3740,6 +3757,24 @@ button:active, a.btn-primary:active, a.btn-secondary:active, a.btn-module-action
   line-height: 1.65;
   color: var(--text-primary);
   background: var(--bg-surface);
+  transition: opacity 0.25s ease;
+}
+
+details[open] > .exercise-solution-panel,
+details[open] > .faq-answer,
+details[open] > .accordion-content {
+  animation: smoothAccordionOpen 0.28s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+@keyframes smoothAccordionOpen {
+  0% {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .exercise-solution-panel p:last-child {
