@@ -492,14 +492,14 @@
     });
   }
 
-  // MOTOR GENERATIVO MULTI-DOMINIO REALISTA Y NATURAL PARA CUALQUIER CONSULTA
+  // MOTOR OFICIAL DE LOS 5 PRESETS DEL CURSO
   function generateBenchmarkResponses(query, maxTokens, temperature) {
     var qLower = query.toLowerCase().trim();
     var respLig = "";
     var respGrd = "";
     var respQwn = "";
 
-    // 1. PRESET OFICIAL #1: CONTRASEÑAS Y RESTABLECIMIENTO (Prioridad Máxima)
+    // 1. PRESET OFICIAL #1: CONTRASEÑAS Y RECUPERACIÓN
     if(qLower.includes("contraseña") || qLower.includes("password") || qLower.includes("restablecer") || qLower.includes("clave")){
       respLig = "¡Claro! Guía rápida para restablecer tu contraseña:\n\n1. Entra al portal web institucional de inicio de sesión.\n2. Haz clic en el enlace «¿Olvidó su contraseña?».\n3. Escribe tu correo electrónico institucional registrado.\n4. Revisa tu bandeja de entrada y abre el enlace de seguridad recibido.\n5. Ingresa tu nueva contraseña (mínimo 8 caracteres combinando mayúsculas, números y símbolos).\n6. Guarda los cambios e inicia sesión.";
 
@@ -539,47 +539,46 @@
 
       respQwn = "# Estrategia de Enrutamiento Inteligente y Fallbacks\n\n1. Flujo de Decisión:\n   • Paso 1: Cache semántico (Redis / Qdrant) para responder consultas repetidas en 0 ms.\n   • Paso 2: Evaluación del clasificador de complejidad del prompt.\n   • Paso 3: Inferencia primaria en modelo ligero (SLM).\n   • Paso 4: Fallback condicional al modelo grande solo si la confianza del modelo ligero es baja (Confidence < 0.8).";
 
-    // 6. DOMINIO: SALUD, MEDICINA Y FIEBRE (Modo Libre)
-    } else if(/\b(fiebre|temperatura|calentura|salud|sintomas|síntomas|medico|médico|dolor|gripe|tos)\b/i.test(qLower)){
-      respLig = "Para saber si tienes fiebre de forma precisa:\n\n1. Medición con Termómetro (el método exacto):\n   • Normal: 36.0 °C a 37.2 °C.\n   • Febrícula: 37.3 °C a 37.9 °C.\n   • Fiebre: 38.0 °C o más.\n\n2. Síntomas corporales que la acompañan:\n   • Escalofríos y sensación de frío repentino.\n   • Piel muy caliente al tacto (en frente, cuello o pecho).\n   • Sudoración, dolor de cabeza y fatiga muscular.\n\nRecomendación: Si la temperatura supera los 38.5 °C o dura más de 48 horas, consulta a un médico profesional.";
-
-      respGrd = "Guía Clínica para la Detección y Evaluación de Fiebre:\n\n1. Valores Térmicos y Sitios de Medición:\n   • Axilar: Fiebre a partir de 37.8 °C.\n   • Oral: Fiebre a partir de 38.0 °C.\n   • Timpánica (oído) / Rectal: Fiebre a partir de 38.3 °C (mayor precisión central).\n\n2. Fases Fisiológicas de la Respuesta Febril:\n   • Fase de Inicio: El hipotálamo eleva el punto de ajuste térmico → Vasoconstricción periférica, escalofríos y palidez.\n   • Fase de Meseta: Sensación intensa de calor, taquicardia leve y malestar general.\n   • Fase de Defervescencia: Sudoración profusa y vasodilatación para disipar calor.\n\n3. Signos de Alarma para Acudir a Urgencias:\n   • Fiebre mayor a 39.5 °C que no cede con antipiréticos.\n   • Dificultad para respirar, dolor torácico o rigidez en el cuello.\n   • Confusión o somnolencia extrema.\n   • En bebés menores de 3 meses: Cualquier fiebre ≥ 38.0 °C requiere valoración médica inmediata.";
-
-      respQwn = "# Protocolo Diagnóstico de Evaluación Térmica y Triage Médico\n\n1. Clasificación Termométrica:\n   - Eutermia (Normal): [36.0, 37.2] °C\n   - Febrícula: [37.3, 37.9] °C\n   - Pirexia (Fiebre clínica): ≥ 38.0 °C\n   - Hiperpirexia: ≥ 40.0 °C (Riesgo crítico de desnaturalización proteica)\n\n2. Algoritmo de Decisión:\n   • Medición confirmatoria: Termómetro digital axilar o infrarrojo timpánico.\n   • Evaluación de banderas rojas: Rigidez nucal, disnea, exantema purpúrico.\n   • Medidas conservadoras: Hidratación constante, reposo y uso de antipiréticos bajo prescripción (paracetamol/ibuprofeno).";
-
-    // 7. DOMINIO: ARITMÉTICA Y MATEMÁTICAS (Sumas, restas, cifras, cálculo con límites de palabra exactos)
-    } else if(/\b(sumar|suma|sumas|restar|restas|multiplicar|multiplicacion|multiplicación|dividir|division|división|cifras|numeros|números|calcular|calcula|calculo|cálculo|fraccion|fracción|porcentaje|ecuacion|ecuación)\b/i.test(qLower)){
-      respLig = "Para sumar un número de 2 cifras con uno de 3 cifras (por ejemplo: 45 + 328):\n\n1. Alinea los números por la derecha (unidades con unidades, decenas con decenas):\n      328\n    +  45\n    -----\n\n2. Suma de derecha a izquierda:\n   • Unidades: 8 + 5 = 13 → Escribes 3 abajo y llevas 1 a las decenas.\n   • Decenas: 2 + 4 + 1 (que llevabas) = 7.\n   • Centenas: 3 (se mantiene igual).\n\nResultado: 373.\n\nRegla de oro: Siempre alinea a la derecha para no sumar decenas con centenas por error.";
-
-      respGrd = "Guía Completa para Sumar Números de Distinto Número de Cifras (2 Cifras + 3 Cifras):\n\n1. Principio del Sistema Posicional Decimal:\n   Cada dígito tiene un peso según su posición de derecha a izquierda: Unidades (10^0), Decenas (10^1) y Centenas (10^2). Al sumar ab (2 cifras) con cde (3 cifras), la alineación correcta es fundamental.\n\n2. Ejemplo Paso a Paso con Doble Acarreo (68 + 275):\n   • Paso 1 (Columna de Unidades): 8 + 5 = 13.\n     Se anota el 3 en el resultado y se acarrea 1 a la columna de decenas.\n   • Paso 2 (Columna de Decenas): 6 + 7 + 1 (acarreo) = 14.\n     Se anota el 4 en el resultado y se acarrea 1 a la columna de centenas.\n   • Paso 3 (Columna de Centenas): 2 + 1 (acarreo) = 3.\n     Se anota el 3.\n   • Total: 343.\n\n3. Estrategia de Cálculo Mental Rápido:\n   Descompón el número de 2 cifras en decenas y unidades:\n   275 + 68 = (275 + 60) + 8 = 335 + 8 = 343.";
-
-      respQwn = "# Algoritmo de Adición Posicional con Propagación de Acarreo\n\nSean A en [10, 99] (representado como 10a1 + a0) y B en [100, 999] (representado como 100b2 + 10b1 + b0):\n\n1. Formulación por Columnas:\n   • Unidades: S0 = (a0 + b0) mod 10, con acarreo c1 = floor((a0 + b0) / 10)\n   • Decenas: S1 = (a1 + b1 + c1) mod 10, con acarreo c2 = floor((a1 + b1 + c1) / 10)\n   • Centenas: S2 = (b2 + c2) mod 10, con acarreo c3 = floor((b2 + c2) / 10)\n\n2. Análisis de Rango y Desbordamiento:\n   • Límite inferior: 100 + 10 = 110 (3 dígitos).\n   • Límite superior: 999 + 99 = 1098 (4 dígitos si c3 = 1).\n   • Conclusión: La suma siempre producirá un resultado entre 3 y 4 dígitos.";
-
-    // 8. DOMINIO: MACHINE LEARNING, LLMS, RAG, EMBEDDINGS
-    } else if(qLower.includes("rag") || qLower.includes("embedding") || qLower.includes("transformer") || qLower.includes("lora") || qLower.includes("fine-tuning") || qLower.includes("token")){
-      respLig = "Explicación Rápida:\n\nSobre «" + query + "»:\n\n1. Concepto Central: Es una técnica clave en inteligencia artificial moderna para conectar conocimiento externo o adaptar modelos a tareas específicas.\n2. Beneficio Clave: Permite que el modelo responda con información actualizada y privada sin necesidad de reentrenarlo desde cero.\n3. Aplicación Práctica: Búsqueda semántica, asistentes con documentos PDF y bases de conocimiento internas.";
-
-      respGrd = "Análisis Estructurado de Arquitectura de IA:\n\nDeconstrucción Técnica de «" + query + "»:\n\n1. Fundamentos Matemáticos y de Representación:\n   • Los textos se transforman en vectores continuos (embeddings) en un espacio multidimensional (D = 4096).\n   • La similitud semántica se calcula mediante el coseno del ángulo entre vectores (Sim(A, B) = (A·B)/(||A|| ||B||)).\n\n2. Pipeline de Implementación en Producción:\n   • Ingesta y segmentación de documentos en fragmentos (chunks) de 500 tokens.\n   • Almacenamiento en bases de datos vectoriales (Chroma, Qdrant o FAISS).\n   • Inyección de fragmentos relevantes en el contexto del LLM para generar respuestas fundamentadas sin alucinaciones.";
-
-      respQwn = "# Análisis Comparativo de Eficiencia y Escalabilidad en IA\n\n1. Balance entre Memoria y Cómputo:\n   - RAG (Retrieval-Augmented Generation): Complejidad O(N log N) en búsqueda vectorial HNSW, manteniendo el contexto del modelo corto y económico.\n   - Fine-Tuning: Ajuste de pesos por LoRA con matrices de bajo rango (r=8, 16), ideal para cambiar el estilo o formato de salida.\n\n2. Conclusión Técnica: RAG es la mejor opción para actualizar conocimiento factual; Fine-Tuning es óptimo para adaptar el comportamiento y tono del modelo.";
-
-    // 9. CUALQUIER OTRA CONSULTA O PREGUNTA GENERAL (MODO LIBRE NATURAL)
+    // CUALQUIER OTRA CONSULTA FUERA DE LOS 5 PRESETS (MODO LIBRE SIN API KEY)
     } else {
       var capitalizedQuery = query.charAt(0).toUpperCase() + query.slice(1);
-      respLig = "Respuesta Directa (Modelo Ligero 20B / LPU):\n\nSobre tu consulta: «" + capitalizedQuery + "»\n\n• Resumen: La forma más directa de abordarlo es entender el objetivo principal y seguir los pasos esenciales de manera práctica.\n• Recomendación: Priorizar soluciones sencillas y claras que resuelvan la duda de inmediato.\n• Ejemplo / Aplicación: Si tienes un caso concreto o deseas profundizar en algún detalle específico, puedes consultarlo directamente.";
+      respLig = "[Aviso de Conexión en Modo Libre]\n\nConsulta ingresada: «" + capitalizedQuery + "»\n\nPara obtener respuestas reales generadas por IA sobre cualquier tema personalizado, conecta tu API Key de Groq (gsk_...) en la barra superior o configura la variable GROQ_API_KEY en tu proyecto de Vercel.";
 
-      respGrd = "Explicación Detallada y Contextualizada (Modelo Grande 120B):\n\nAnálisis de la consulta: «" + capitalizedQuery + "»\n\n1. Conceptos Fundamentales:\n   Para responder con precisión, es importante considerar el contexto, las causas principales y las alternativas disponibles.\n\n2. Guía Paso a Paso:\n   • Paso 1: Definir claramente la meta y los datos de partida.\n   • Paso 2: Aplicar el procedimiento estándar comprobado para este tipo de situaciones.\n   • Paso 3: Verificar los resultados para asegurar que se cumpla lo esperado.\n\n3. Consejos Prácticos:\n   Mantener un enfoque estructurado permite ahorrar tiempo y obtener resultados más consistentes y confiables.";
+      respGrd = "[Modo Libre - Inferencia Real Requerida]\n\nHas ingresado una pregunta personalizada: «" + capitalizedQuery + "»\n\nLos 5 presets oficiales del curso ya cuentan con respuestas de referencia. Para consultar directamente a los modelos Llama 3.1 8B, Llama 3.3 70B y Gemma 2 en vivo sobre esta consulta, activa tu conexión Groq API arriba.";
 
-      respQwn = "# Desglose Analítico y Razonamiento Paso a Paso (Qwen 3.6 27B)\n\n1. Planteamiento Inicial:\n   Analizando «" + capitalizedQuery + "» desde una perspectiva lógica:\n   - Objetivo Principal: Identificar la solución más eficiente con el menor margen de error.\n   - Factores a Considerar: Claridad conceptual, aplicabilidad y coherencia del resultado.\n\n2. Conclusión Lógica:\n   La mejor estrategia es dividir el problema en pasos manejables y validar cada etapa antes de continuar.";
+      respQwn = "# [Groq LPU Live Inference Required]\n\nQuery: «" + capitalizedQuery + "»\n\nEstado: Consulta libre detectada fuera de los 5 presets del curso.\nInstrucción: Conecta tu token de Groq en la barra de inferencia para procesar este prompt en tiempo real a través de los servidores de cómputo LPU.";
     }
 
     return { lig: respLig, grd: respGrd, qwn: respQwn };
   }
 
-  // FUNCIÓN PARA CONSULTAR LA API REAL DE GROQ DESDE EL NAVEGADOR
+  // FUNCIÓN PARA CONSULTAR LA API REAL DE GROQ (Vercel Serverless o Browser Direct)
   async function callGroqModel(modelName, query, maxTokens, temperature, apiKey) {
     var t0 = performance.now();
-    var response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+    var response;
+
+    // 1. Si no hay API key en el cliente, intentar llamar a la función Serverless de Vercel (/api/groq)
+    if(!apiKey || !apiKey.startsWith("gsk_")) {
+      response = await fetch("/api/groq", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          model: modelName,
+          query: query,
+          max_tokens: parseInt(maxTokens, 10) || 600,
+          temperature: parseFloat(temperature) || 0.3
+        })
+      });
+      if(!response.ok) {
+        var errJson = await response.json().catch(function(){ return {}; });
+        throw new Error(errJson.error || "No hay API Key configurada en Vercel");
+      }
+      var dataVercel = await response.json();
+      return dataVercel;
+    }
+
+    // 2. Si el usuario ingresó su API key directamente en el navegador
+    response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
       method: "POST",
       headers: {
         "Authorization": "Bearer " + apiKey,
@@ -648,8 +647,11 @@
         if(cardQwn && cardQwn.classList.contains("running") && valLatQwn) valLatQwn.textContent = cur.toFixed(2) + " s";
       }, 30);
 
-      // MODO 1: SI EL USUARIO TIENE API KEY REAL DE GROQ CONECTADA
-      if(activeGroqKey && activeGroqKey.startsWith("gsk_")) {
+      // INTENTO DE INFERENCIA 100% REAL (Groq API en navegador o Vercel Serverless)
+      var hasApiKey = activeGroqKey && activeGroqKey.startsWith("gsk_");
+      var isFreeModeQuery = !query.includes("contraseña") && !query.includes("password") && !query.includes("restablecer") && !query.includes("horario") && !query.includes("soporte") && !query.includes("canales") && !query.includes("requisito") && !query.includes("hardware") && !query.includes("python") && !query.includes("script") && !query.includes("router") && !query.includes("ahorro");
+
+      if(hasApiKey || isFreeModeQuery) {
         try {
           var p1 = callGroqModel("llama-3.1-8b-instant", query, maxTokens, temp, activeGroqKey)
             .then(function(res){
@@ -700,8 +702,7 @@
           }
           return;
         } catch(apiErr) {
-          console.warn("Fallo llamada a API Real Groq:", apiErr);
-          // Si falla la API real, continuar fluidamente con el simulador inteligente
+          console.warn("Inferencia Real no disponible (se utilizarán presets del curso):", apiErr.message);
         }
       }
 
