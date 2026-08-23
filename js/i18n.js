@@ -1,12 +1,13 @@
 /**
- * MOTOR DE TRADUCCIÓN BILINGÜE INTEGRAL (ES / EN)
+ * MOTOR DE TRADUCCIÓN BILINGÜE INTEGRAL (ES / EN) CON PROTECCIÓN ANTI-GLITCH
  * Plataforma: Especialización en Inteligencia Artificial con Meta Llama 3
  * Autor: Ing. Jesús Javier Hernández Olvera
  */
 
 (function() {
   const STORAGE_KEY = "meta_llama_lang";
-  
+  let isChanging = false;
+
   function getSavedLang() {
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved === "en" || saved === "es") return saved;
@@ -16,7 +17,21 @@
 
   let currentLang = getSavedLang();
 
-  // Initialize Google Translate Element silently
+  // Protect brand, logos, formulas, code, badges and the switcher itself
+  function applyNotranslateRules() {
+    const elements = document.querySelectorAll(
+      ".lang-toggle-btn, #lang-switcher-btn, .lang-code, .lang-sep, " +
+      ".brand-wrapper, .brand-text, .meta-logo-svg, " +
+      "pre, code, svg, .math-display, .formula-box, .katex, " +
+      ".badge-role, .model-badge, .badge-model, .notranslate"
+    );
+    elements.forEach(el => {
+      el.classList.add("notranslate");
+      el.setAttribute("translate", "no");
+    });
+  }
+
+  // Google Translate initialization callback
   window.googleTranslateElementInit = function() {
     new google.translate.TranslateElement({
       pageLanguage: "es",
@@ -26,79 +41,64 @@
 
     if (currentLang === "en") {
       setTimeout(function() {
-        triggerGoogleTranslate("en");
-      }, 300);
+        triggerTranslate("en");
+      }, 350);
     }
   };
 
-  function triggerGoogleTranslate(lang) {
+  function triggerTranslate(lang) {
     const select = document.querySelector(".goog-te-combo");
     if (select) {
       select.value = lang;
       select.dispatchEvent(new Event("change"));
-    } else {
-      document.cookie = "googtrans=/es/" + lang + "; path=/";
-      document.cookie = "googtrans=/es/" + lang + "; domain=" + window.location.hostname + "; path=/";
     }
   }
 
-  function setLanguage(lang) {
-    if (lang !== "es" && lang !== "en") return;
-    currentLang = lang;
-    localStorage.setItem(STORAGE_KEY, lang);
-    document.documentElement.lang = lang;
+  function clearTranslateCookies() {
+    const domain = window.location.hostname;
+    const paths = ["/", "/es", "/en"];
+    const cookieNames = ["googtrans", "googtrans_es", "googtrans_en"];
+    
+    paths.forEach(p => {
+      cookieNames.forEach(c => {
+        document.cookie = `${c}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=${p};`;
+        document.cookie = `${c}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=${p}; domain=${domain};`;
+        document.cookie = `${c}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=${p}; domain=.${domain};`;
+      });
+    });
+  }
 
-    if (lang === "en") {
+  function setLanguage(targetLang) {
+    if (isChanging || (targetLang === currentLang && targetLang === "es")) return;
+    isChanging = true;
+
+    localStorage.setItem(STORAGE_KEY, targetLang);
+    currentLang = targetLang;
+    updateSwitcherUI();
+
+    if (targetLang === "en") {
       document.cookie = "googtrans=/es/en; path=/";
       document.cookie = "googtrans=/es/en; domain=" + window.location.hostname + "; path=/";
-      triggerGoogleTranslate("en");
+      triggerTranslate("en");
+      setTimeout(() => { isChanging = false; }, 600);
     } else {
-      document.cookie = "googtrans=/es/es; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC";
-      document.cookie = "googtrans=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC";
-      document.cookie = "googtrans=/es/es; domain=" + window.location.hostname + "; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC";
-      triggerGoogleTranslate("es");
-      setTimeout(function() {
-        const frame = document.querySelector(".goog-te-banner-frame");
-        if (frame) frame.style.display = "none";
-      }, 100);
+      // Clean reset to original Spanish
+      clearTranslateCookies();
+      // Reload ensures 100% pristine original Spanish without back-translation bugs
+      window.location.reload();
     }
-
-    updateSwitcherUI();
   }
 
   function updateSwitcherUI() {
     const btns = document.querySelectorAll(".lang-toggle-btn, #lang-switcher-btn");
     btns.forEach(btn => {
-      btn.innerHTML = `<span class="lang-code ${currentLang === "es" ? "lang-active" : ""}">ES</span><span class="lang-sep">/</span><span class="lang-code ${currentLang === "en" ? "lang-active" : ""}">EN</span>`;
-      btn.setAttribute("aria-label", `Cambiar idioma (actual: ${currentLang.toUpperCase()})`);
+      btn.innerHTML = `<span class="lang-code ${currentLang === "es" ? "lang-active" : ""} notranslate" translate="no">ES</span><span class="lang-sep notranslate" translate="no">/</span><span class="lang-code ${currentLang === "en" ? "lang-active" : ""} notranslate" translate="no">EN</span>`;
+      btn.setAttribute("aria-label", `Idioma: ${currentLang.toUpperCase()}`);
     });
   }
 
-  function protectBrandsAndCode() {
-    // List of selectors that MUST NOT be translated (Brand names, Logos, Code, Formulas, Author)
-    const selectors = [
-      ".brand-wrapper",
-      ".brand-text",
-      ".meta-logo-svg",
-      "pre",
-      "code",
-      "svg",
-      ".math-display",
-      ".formula-box",
-      ".katex",
-      ".model-badge",
-      ".badge-model",
-      ".badge-role"
-    ];
-    
-    document.querySelectorAll(selectors.join(", ")).forEach(el => {
-      el.classList.add("notranslate");
-      el.setAttribute("translate", "no");
-    });
-  }
-
-  function setupElements() {
-    protectBrandsAndCode();
+  function init() {
+    applyNotranslateRules();
 
     if (!document.getElementById("google_translate_element")) {
       const div = document.createElement("div");
@@ -127,9 +127,9 @@
   }
 
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", setupElements);
+    document.addEventListener("DOMContentLoaded", init);
   } else {
-    setupElements();
+    init();
   }
 
   window.MetaAI_i18n = {
