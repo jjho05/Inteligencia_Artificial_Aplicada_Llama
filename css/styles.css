@@ -255,6 +255,42 @@ body {
   flex-shrink: 0;
 }
 
+.lang-toggle-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.25rem;
+  background: var(--bg-subtle);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+  font-size: 0.76rem;
+  font-weight: 750;
+  padding: 0.35rem 0.65rem;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  user-select: none;
+}
+
+.lang-toggle-btn:hover {
+  background: var(--bg-surface-hover);
+  border-color: var(--meta-blue-border);
+}
+
+.lang-code {
+  transition: color 0.2s ease;
+}
+
+.lang-active {
+  color: var(--meta-blue);
+  font-weight: 800;
+}
+
+.lang-sep {
+  color: var(--text-muted);
+  font-weight: 400;
+  opacity: 0.6;
+}
+
 .btn-icon {
   background: var(--bg-subtle);
   border: 1px solid var(--border-subtle);
