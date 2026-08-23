@@ -1815,11 +1815,16 @@ CONCLUSIÓN Y ANÁLISIS COMPARATIVO DE INGENIERÍA:
               <button class="bench-chip" data-query="¿Cuáles son los requisitos mínimos de hardware y software para instalar la plataforma?">3. Requisitos Técnicos</button>
               <button class="bench-chip" data-query="Escribe un script en Python con la librería groq para consultar el modelo llama-3.1-8b y medir su latencia.">4. Script Python Groq</button>
               <button class="bench-chip" data-query="Explica cómo funciona un Model Router y por qué optimiza los costos de inferencia en producción.">5. Model Router</button>
+              <button class="bench-chip" id="btn-chip-modo-libre" data-mode="free" style="border-color: var(--meta-blue); color: var(--meta-blue); font-weight: 700;">Modo Libre (Pregunta Personalizada)</button>
             </div>
           </div>
 
           <div style="margin-bottom: 0.8rem;">
-            <textarea id="bench-custom-query" rows="2" placeholder="Escribe aquí cualquier pregunta personalizada o selecciona un preset para evaluar a los 3 modelos en paralelo..." style="width:100%; background:var(--bg-surface); border:1px solid var(--border-subtle); color:var(--text-primary); padding:0.7rem 0.9rem; border-radius:6px; font-family:var(--font-mono); font-size:0.88rem; resize:vertical; line-height:1.5;">¿Cómo puedo restablecer mi contraseña olvidada en el portal web institucional?</textarea>
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.35rem;">
+              <span id="bench-mode-badge" style="font-size:0.74rem; font-family:var(--font-mono); color:var(--text-muted); font-weight:600;">MODO ACTIVO: PRESET 1</span>
+              <span style="font-size:0.74rem; color:var(--text-secondary);">Escribe cualquier duda o usa los botones de arriba</span>
+            </div>
+            <textarea id="bench-custom-query" rows="2" placeholder="Escribe aquí cualquier pregunta personalizada sobre código, ciencia, teoría, negocios o arquitectura..." style="width:100%; background:var(--bg-surface); border:1px solid var(--border-subtle); color:var(--text-primary); padding:0.7rem 0.9rem; border-radius:6px; font-family:var(--font-mono); font-size:0.88rem; resize:vertical; line-height:1.5;">¿Cómo puedo restablecer mi contraseña olvidada en el portal web institucional?</textarea>
           </div>
 
           <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; align-items: center;">

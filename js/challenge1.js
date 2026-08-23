@@ -348,34 +348,62 @@
     });
   }
 
-  // Chips de acceso rápido
-  function updateActiveChip(queryText) {
+  // Chips de acceso rápido y Modo Libre
+  var modeBadge = document.getElementById("bench-mode-badge");
+  var chipModoLibre = document.getElementById("btn-chip-modo-libre");
+
+  function updateActiveChip(queryText, isFreeMode) {
     if(!presetChips) return;
     var chips = presetChips.querySelectorAll(".bench-chip");
+    var foundPreset = false;
+
     chips.forEach(function(chip){
-      if(chip.getAttribute("data-query") === queryText){
+      if(isFreeMode && chip.id === "btn-chip-modo-libre") {
         chip.classList.add("active");
+      } else if(!isFreeMode && chip.getAttribute("data-query") === queryText){
+        chip.classList.add("active");
+        foundPreset = true;
       } else {
         chip.classList.remove("active");
       }
     });
+
+    if(modeBadge) {
+      if(isFreeMode || !foundPreset) {
+        modeBadge.textContent = "MODO ACTIVO: CONSULTA LIBRE (PERSONALIZADA)";
+        modeBadge.style.color = "#3fb950";
+        if(chipModoLibre) chipModoLibre.classList.add("active");
+      } else {
+        modeBadge.textContent = "MODO ACTIVO: PRESET DE EVALUACIÓN";
+        modeBadge.style.color = "var(--meta-blue)";
+        if(chipModoLibre) chipModoLibre.classList.remove("active");
+      }
+    }
   }
 
   if(presetChips && customQuery){
     presetChips.addEventListener("click", function(e){
       var target = e.target;
       if(target && target.classList.contains("bench-chip")){
+        if(target.id === "btn-chip-modo-libre" || target.getAttribute("data-mode") === "free"){
+          updateActiveChip("", true);
+          customQuery.focus();
+          customQuery.select();
+          safePlaySound("pop", 550);
+          return;
+        }
+
         var query = target.getAttribute("data-query");
         if(query){
           customQuery.value = query;
-          updateActiveChip(query);
+          updateActiveChip(query, false);
           safePlaySound("pop", 500);
         }
       }
     });
 
     customQuery.addEventListener("input", function(){
-      updateActiveChip(customQuery.value.trim());
+      updateActiveChip(customQuery.value.trim(), false);
     });
   }
 
@@ -394,11 +422,12 @@
 
   // MOTOR GENERATIVO MULTI-DOMINIO PARA CUALQUIER CONSULTA
   function generateBenchmarkResponses(query, maxTokens, temperature) {
-    var qLower = query.toLowerCase();
+    var qLower = query.toLowerCase().trim();
     var respLig = "";
     var respGrd = "";
     var respQwn = "";
 
+    // 1. DOMINIO: SEGURIDAD Y CONTRASEÑAS
     if(qLower.includes("contraseña") || qLower.includes("password") || qLower.includes("restablecer") || qLower.includes("clave")){
       respLig = "¡Claro! Guía de restablecimiento institucional:\n\n1. Accede a la página oficial de autenticación.\n2. Pulsa en «¿Olvidó su contraseña?».\n3. Ingresa tu correo institucional registrado.\n4. Abre el correo de recuperación recibido y sigue el enlace seguro.\n5. Establece una contraseña con al menos 8 caracteres (mayúsculas, números y símbolos).\n6. Inicia sesión con tus nuevas credenciales.";
 
@@ -406,6 +435,7 @@
 
       respQwn = "# Protocolo de Restablecimiento Criptográfico de Credenciales\n\n1. Validación de Canal Seguro: Confirmar certificado SSL/TLS del dominio institucional.\n2. Generación de Token Temporal: Emisión de token HMAC con validez máxima de 15 minutos.\n3. Mutación en Active Directory: Sobrescritura de hash Argon2id en el servidor LDAP.\n4. Invalidación de Sesiones: Cierre preventivo de sesiones JWT activas en todos los dispositivos.";
 
+    // 2. DOMINIO: HORARIOS Y SOPORTE TÉCNICO
     } else if(qLower.includes("horario") || qLower.includes("soporte") || qLower.includes("canales") || qLower.includes("atención") || qLower.includes("sla")){
       respLig = "Horarios y Canales Oficiales de Soporte Técnico:\n\n• Horario de Oficina: Lunes a Viernes de 09:00 a 18:00 hrs.\n• Correo Electrónico: soporte@institucion.edu (Tiempo de respuesta: < 24 hrs).\n• Mesa de Ayuda Telefónica: 800-123-4567 (Línea gratuita).\n• Chat en Vivo: Disponible en la esquina inferior del portal web.";
 
@@ -413,6 +443,7 @@
 
       respQwn = "# Estructura de Atención a Incidentes y Escalabilidad de SLAs\n\n- Canal Automatizado: Clasificación mediante árboles de decisión y agentes LLM (Triage Inicial).\n- Canal Humano Especializado: Asignación a colas de Jira Service Management.\n- Matriz de Severidad:\n  • P1 (Caída crítica de servicio): Notificación PagerDuty inmediata.\n  • P2/P3 (Degradación menor / Consultas): Resolución en horario laboral estándar.";
 
+    // 3. DOMINIO: REQUISITOS TÉCNICOS
     } else if(qLower.includes("requisito") || qLower.includes("hardware") || qLower.includes("instalar") || qLower.includes("software") || qLower.includes("especificaciones")){
       respLig = "Requisitos Mínimos para la Instalación de la Plataforma:\n\n• Procesador (CPU): 64 bits Dual-Core a 2.0 GHz o superior.\n• Memoria RAM: 4 GB mínimo (8 GB recomendado para mejor rendimiento).\n• Almacenamiento Libre: 20 GB en unidad de estado sólido (SSD).\n• Sistema Operativo: Windows 10/11, macOS 12+ o Ubuntu 22.04 LTS.\n• Navegadores: Google Chrome 110+, Mozilla Firefox 115+ o MS Edge.";
 
@@ -420,13 +451,15 @@
 
       respQwn = "# Arquitectura de Compatibilidad y Requisitos de Kernel\n\n- Arquitecturas soportadas: x86_64 (Intel/AMD) y aarch64 (Apple Silicon M1/M2/M3, AWS Graviton).\n- Stack de Bibliotecas del Sistema:\n  • glibc >= 2.31\n  • OpenSSL 3.0.x\n  • Driver NVIDIA CUDA 12.x (opcional para inferencia acelerada local).\n- Políticas de Seguridad: SELinux / AppArmor en modo restrictivo con reglas de socket definidas.";
 
-    } else if(qLower.includes("python") || qLower.includes("script") || qLower.includes("codigo") || qLower.includes("código") || qLower.includes("groq")){
+    // 4. DOMINIO: PYTHON, CÓDIGO Y GROQ SDK
+    } else if(qLower.includes("python") || qLower.includes("script") || qLower.includes("codigo") || qLower.includes("código") || qLower.includes("groq") || qLower.includes("api")){
       respLig = "Ejemplo rápido en Python con la API de Groq:\n\n```python\nimport time\nfrom groq import Groq\n\nclient = Groq(api_key='gsk_tu_api_key_aqui')\ninicio = time.time()\n\nresponse = client.chat.completions.create(\n    model='llama-3.1-8b-instant',\n    messages=[{'role': 'user', 'content': '" + query.replace("'", "") + "'}],\n    max_tokens=" + maxTokens + "\n)\n\nlatencia = time.time() - inicio\nprint(f'Latencia: {latencia:.2f} s')\nprint(response.choices[0].message.content)\n```";
 
       respGrd = "Implementación Robusta de Cliente Groq con Manejo de Excepciones y Telemetría:\n\n```python\nimport os, time, sys\nfrom groq import Groq, APIError, RateLimitError\n\ndef ejecutar_inferencia_segura(prompt: str, modelo: str = 'llama-3.3-70b-versatile'):\n    client = Groq(api_key=os.environ.get('GROQ_API_KEY'))\n    t_start = time.perf_counter()\n    \n    try:\n        res = client.chat.completions.create(\n            model=modelo,\n            messages=[{'role': 'user', 'content': prompt}],\n            temperature=" + temperature + ",\n            max_tokens=" + maxTokens + "\n        )\n        elapsed = time.perf_counter() - t_start\n        return {\n            'texto': res.choices[0].message.content,\n            'latencia': round(elapsed, 3),\n            'tokens': res.usage.total_tokens\n        }\n    except RateLimitError as e:\n        print(f'[Error 429] Límite de tasa excedido: {e}', file=sys.stderr)\n    except APIError as e:\n        print(f'[Error API] Fallo en la llamada: {e}', file=sys.stderr)\n```";
 
       respQwn = "# Patrón Async / Streaming con Groq SDK\n\n```python\nimport asyncio, time\nfrom groq import AsyncGroq\n\nasync def stream_groq_response(prompt: str):\n    client = AsyncGroq()\n    t0 = time.perf_counter()\n    stream = await client.chat.completions.create(\n        model='qwen/qwen3.6-27b',\n        messages=[{'role': 'user', 'content': prompt}],\n        stream=True\n    )\n    async for chunk in stream:\n        content = chunk.choices[0].delta.content or ''\n        print(content, end='', flush=True)\n    print(f'\\n[Total: {time.perf_counter()-t0:.2f}s]')\n```";
 
+    // 5. DOMINIO: MODEL ROUTER, COSTOS Y ARQUITECTURA
     } else if(qLower.includes("router") || qLower.includes("arquitectura") || qLower.includes("costo") || qLower.includes("ahorro")){
       respLig = "Resumen del Model Router:\n\n1. Concepto: Es una capa proxy que analiza la dificultad del prompt.\n2. Regla de Ruteo: Las preguntas frecuentes van al modelo ligero (20B / 8B), ahorrando 80% de costo.\n3. Casos Difíciles: Las tareas analíticas o de código se envían a 120B o Qwen 27B.\n4. Ventaja: Latencia promedio < 1 segundo para la gran mayoría de usuarios.";
 
@@ -434,12 +467,22 @@
 
       respQwn = "# Heurística de Enrutamiento Dinámico y Fallbacks\n\n- Capa 1: Filtro de Cache Semántico (Redis / Qdrant) -> Resuelve consultas idénticas con latencia 0 ms.\n- Capa 2: Clasificador de Intenciones (FastText / Embeddings de 384 dims).\n- Capa 3: Inferencia Primaria en Modelo Ligero (SLM).\n- Capa 4: Verificador de Calidad / Fallback a LLM Masivo si el SLM emite baja certidumbre (Confidence Score < 0.75).";
 
+    // 6. DOMINIO: MACHINE LEARNING, LLMS, RAG, EMBEDDINGS
+    } else if(qLower.includes("rag") || qLower.includes("embedding") || qLower.includes("transformer") || qLower.includes("lora") || qLower.includes("fine-tuning") || qLower.includes("ia") || qLower.includes("token")){
+      respLig = "Respuesta Modelo Ligero (20B):\n\nSobre «" + query + "»:\n\n1. Definición Clave: En el contexto de modelos de lenguaje, esta técnica busca optimizar el rendimiento mediante representaciones vectoriales densas y alineación contextual.\n2. Beneficio Principal: Reduce drásticamente las alucinaciones y permite inyectar conocimiento privado sin reentrenar el modelo base.\n3. Aplicación Práctica: Ideal para búsqueda semántica, asistentes corporativos y bases de conocimiento vivas.";
+
+      respGrd = "Análisis de Arquitectura LLM (Modelo Masivo 120B):\n\nDeconstrucción Profunda de «" + query + "»:\n\n1. Fundamento Matemático & Representación:\n   • Los vectores de embeddings proyectan el texto a un espacio latente de $D=4096$ dimensiones.\n   • La similitud coseno $S_C(u, v) = \\frac{u \\cdot v}{\\|u\\| \\|v\\|}$ clasifica la relevancia semántica de los documentos.\n\n2. Pipeline de Producción:\n   • Ingesta & Chunking (RecursiveCharacterTextSplitter a 512 tokens).\n   • Indexación en Base de Datos Vectorial (Qdrant / Milvus / FAISS).\n   • Re-ranking y Generación Aumentada con Context Window optimizado.\n\n3. Garantías de Gobernanza: Reducción del error factual por debajo del 1.2% en benchmarks de producción.";
+
+      respQwn = "# Deducción Lógica y Análisis de Complejidad (Qwen 3.6 27B)\n\n1. Premisa y Formulación:\n   Analizando «" + query + "», el compromiso fundamental radica entre la precisión de recuperación ($Recall@k$) y el costo computacional de inferencia.\n\n2. Comparativa de Eficiencia:\n   - Enfoque Denso (Embeddings): $O(N \\log N)$ con indexación HNSW.\n   - Enfoque Generativo Directo: $O(L^2)$ con respecto a la longitud de contexto $L$.\n\n3. Dictamen Formal: Para producción masiva, desacoplar la memoria en RAG semántico reduce el costo de inferencia en un 90% frente al contexto largo nativo.";
+
+    // 7. CUALQUIER OTRA PREGUNTA PERSONALIZADA (MODO LIBRE GENERAL)
     } else {
-      respLig = "Respuesta del Modelo Ligero (openai/gpt-oss-20b):\n\nRespecto a «" + query + "»:\n\n• Análisis directo: La consulta puede abordarse identificando los componentes fundamentales y ejecutando los pasos operativos clave de inmediato.\n• Recomendación: Priorizar la simplicidad y la agilidad en la ejecución para maximizar el rendimiento.";
+      var capitalizedQuery = query.charAt(0).toUpperCase() + query.slice(1);
+      respLig = "Respuesta Ejecutiva (Modelo Ligero 20B / LPU):\n\nRespecto a tu consulta: «" + capitalizedQuery + "»\n\n• Síntesis Rápida: Los puntos esenciales se resuelven identificando las variables principales y aplicando una solución directa paso a paso.\n• Pasos Clave: 1) Definir el objetivo específico, 2) Ejecutar la acción operativa prioritaria, 3) Validar el resultado obtenido.\n• Conclusión: Solución directa generada a máxima velocidad (>600 tokens/segundo).";
 
-      respGrd = "Análisis Estructural Exhaustivo (openai/gpt-oss-120b):\n\nEvaluación integral de la consulta «" + query + "»:\n\n1. Fundamentos y Contexto:\n   Desglose multidimensional de los factores técnicos y operativos involucrados.\n\n2. Metodología de Implementación:\n   • Fase 1: Diagnóstico y planificación de requerimientos.\n   • Fase 2: Ejecución controlada con monitoreo de telemetría.\n   • Fase 3: Validación de resultados y verificación de calidad.\n\n3. Consideraciones de Seguridad y Escalabilidad a largo plazo.";
+      respGrd = "Análisis Integral Multidimensional (Modelo Grande 120B):\n\nEvaluación Estructurada de: «" + capitalizedQuery + "»\n\n1. Contexto & Fundamentos:\n   Se examinan los factores primarios, dependencias operativas y el marco conceptual de la pregunta.\n\n2. Metodología de Resolución Recomendada:\n   • Diagnóstico & Alcance: Delimitación de requerimientos y restricciones.\n   • Implementación Estructurada: Ejecución controlada con mejores prácticas de la industria.\n   • Verificación de Calidad: Auditoría de resultados, resiliencia y monitoreo continuo.\n\n3. Recomendación Estratégica: Para maximizar impacto, estructurar el flujo de trabajo con gobernanza y control de calidad formal.";
 
-      respQwn = "# Desglose Lógico y Razonamiento Analítico (qwen/qwen3.6-27b)\n\n1. Premisa Inicial: La consulta «" + query + "» requiere descomponer las variables dependientes e independientes.\n2. Evaluación de Riesgos y Trade-offs: Identificar cuellos de botella en latencia, consistencia semántica y consumo de recursos.\n3. Conclusión Formal: La solución óptima balancea precisión técnica con costo operativo mínimo.";
+      respQwn = "# Desglose Analítico y Razonamiento Lógico (Qwen 3.6 27B)\n\n1. Deconstrucción de la Pregunta:\n   Analizando «" + capitalizedQuery + "» desde una perspectiva lógica:\n   - Premisa Central: Identificación del problema raíz y delimitación del espacio de búsqueda.\n   - Variables en Juego: Factores deterministas vs estocásticos.\n\n2. Razonamiento Deductivo:\n   Siguiendo un árbol de derivación lógica paso a paso, la solución óptima balancea precisión técnica, factibilidad operativa y costo computacional mínimo.\n\n3. Veredicto Final: Respuesta validada mediante coherencia semántica formal.";
     }
 
     return { lig: respLig, grd: respGrd, qwn: respQwn };
