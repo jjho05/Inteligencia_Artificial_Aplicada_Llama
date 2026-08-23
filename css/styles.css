@@ -7546,30 +7546,42 @@ details[open] > summary svg {
    COLAB NOTEBOOK CELL & INTERACTIVE TERMINAL COMPONENT SYSTEM
    ========================================================================== */
 .colab-cell-box {
-  background: var(--bg-surface);
-  border: 1px solid var(--border-subtle);
+  background: #1e1e1e !important;
+  border: 1px solid #333333 !important;
   border-radius: 12px;
   margin: 1.4rem 0;
   overflow: hidden;
-  box-shadow: var(--shadow-sm);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.25);
   transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
 .colab-cell-box:focus-within,
 .colab-cell-box:hover {
-  border-color: var(--meta-blue);
-  box-shadow: 0 4px 20px rgba(8, 102, 255, 0.08);
+  border-color: var(--meta-blue) !important;
+  box-shadow: 0 4px 24px rgba(8, 102, 255, 0.25) !important;
 }
 
 .colab-cell-header {
-  background: #1e1e1e;
-  padding: 0.6rem 1rem;
+  background: #252526 !important;
+  padding: 0.65rem 1.1rem !important;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border-bottom: 1px solid #2d2d2d;
+  border-bottom: 1px solid #333333 !important;
   gap: 0.6rem;
   flex-wrap: wrap;
+}
+
+.colab-code-content {
+  background: #1e1e1e !important;
+  color: #d4d4d4 !important;
+  padding: 1.2rem 1.4rem !important;
+  margin: 0 !important;
+  font-family: var(--font-mono) !important;
+  font-size: 0.86rem !important;
+  line-height: 1.6 !important;
+  overflow-x: auto;
+  border: none !important;
 }
 
 .colab-cell-tag {
