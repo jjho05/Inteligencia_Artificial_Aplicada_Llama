@@ -38,9 +38,10 @@
         <a class="nav-link-item" href="#obtener-api-key">Guía &amp; Secrets</a>
         <a class="nav-link-item" href="#parte1-handson">Parte I: Hands-On</a>
         <a class="nav-link-item" href="#parte2-challenge">Parte II: Challenge</a>
-        <a class="nav-link-item" href="#simulador-live">Simulador RAG en Vivo</a>
+        <a class="nav-link-item" href="#simulador-live">Simulador RAG</a>
         <a class="nav-link-item" href="#script-completo">Script Python</a>
         <a class="nav-link-item" href="#faq-section">Q&amp;A</a>
+        <a class="nav-link-item" href="#fuentes-oficiales">Fuentes</a>
         <a class="nav-link-item" href="modulo2-tema1.html" style="color: #3fb950; font-weight: 700;">Módulo 2 →</a>
       </nav>
       <div class="header-controls">
@@ -93,15 +94,45 @@
          HERO PRINCIPAL DE CHALLENGE 2
          ====================================================================== -->
     <section class="course-hero" id="overview">
-      <div class="hero-badge-pill">
-        <span class="hero-badge-num">MÓDULO 1</span>
-        <span class="hero-badge-divider"></span>
-        <span class="hero-badge-label">CHALLENGE 2 · ASISTENTE DE POLÍTICAS CON RAG</span>
+      <div style="display: flex; gap: 0.6rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1.2rem;">
+        <div class="hero-badge-pill">
+          <span class="hero-badge-num">MÓDULO 1</span>
+          <span class="hero-badge-divider"></span>
+          <span class="hero-badge-label">CHALLENGE 2 · ASISTENTE DE POLÍTICAS CON RAG</span>
+        </div>
+        <div class="hero-badge-pill" style="border-color: rgba(168, 85, 247, 0.4); background: rgba(168, 85, 247, 0.08);">
+          <span class="hero-badge-dot" style="background: #a855f7; box-shadow: 0 0 8px #a855f7;"></span>
+          <span class="hero-badge-label" style="color: #a855f7;">DIRECCIÓN &amp; ARQUITECTURA: ING. JESÚS JAVIER HERNÁNDEZ OLVERA</span>
+        </div>
       </div>
       <h1 class="hero-title">Asistente de Políticas con RAG &amp; Búsqueda Semántica</h1>
       <p class="hero-subtitle">
         <b>Construcción de un pipeline RAG (Retrieval-Augmented Generation) de grado industrial</b>. Transforma documentos de políticas institucionales en vectores densos con Sentence-Transformers, ejecuta búsquedas por Similitud Coseno sobre representaciones multidimensionales y elimina las alucinaciones probabilísticas inyectando evidencia verídica en modelos de pesos abiertos en hardware Groq LPU.
       </p>
+
+      <!-- Banner Destacado del Repositorio GitHub y Autor -->
+      <div style="max-width: 900px; margin: 1.8rem auto 0; background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: 16px; padding: 1.3rem 1.6rem; box-shadow: var(--shadow-sm); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.2rem; text-align: left;">
+        <div style="display: flex; align-items: center; gap: 1.2rem;">
+          <div style="width: 48px; height: 48px; border-radius: 50%; background: var(--meta-blue-subtle); border: 2px solid var(--meta-blue); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.1rem; color: var(--meta-blue); flex-shrink: 0;">
+            JO
+          </div>
+          <div>
+            <div style="display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;">
+              <strong style="font-size: 1rem; color: var(--text-primary);">Ing. Jesús Javier Hernández Olvera</strong>
+              <span style="background: rgba(8, 102, 255, 0.12); color: var(--meta-blue); font-size: 0.72rem; font-weight: 750; padding: 0.15rem 0.55rem; border-radius: 20px;">Autor &amp; Arquitecto</span>
+            </div>
+            <p style="margin: 0.2rem 0 0; font-size: 0.83rem; color: var(--text-secondary); line-height: 1.45;">
+              Pipeline RAG completo, embeddings multilingües y simulador interactivo de similitud vectorial.
+            </p>
+          </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <a href="https://github.com/jjho05/Inteligencia_Artificial_Aplicada_Llama" target="_blank" rel="noopener noreferrer" class="btn-primary" style="padding: 0.5rem 1.1rem; font-size: 0.82rem; border-radius: 20px; text-decoration: none; display: flex; align-items: center; gap: 0.5rem;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+            <span>Ver Código en GitHub</span>
+          </a>
+        </div>
+      </div>
     </section>
 
     <!-- INTRODUCCIÓN GENERAL Y GUÍA EJECUTIVA -->
@@ -1791,6 +1822,220 @@ Respuesta:"""</span>
             <p>En documentos extensos se utilizan segmentaciones semánticas con solapamiento (ej. trozos de 500 tokens con 50 tokens de overlap) o <i>Parent-Document Retrieval</i> (donde se busca en fragmentos pequeños pero se inyecta el documento padre completo al LLM para preservar la coherencia contextual).</p>
           </div>
         </details>
+
+        <details class="faq-item">
+          <summary>¿Qué técnicas avanzadas (HyDE, Re-ranking con Cross-Encoders y Búsqueda Híbrida) optimizan sistemas RAG complejos?</summary>
+          <div class="faq-content">
+            <p>Para casos de alta complejidad fáctica, la industria combina <b>Búsqueda Híbrida (Dense Vector + Sparse BM25)</b> con algoritmos de <b>Re-ranking mediante Cross-Encoders</b> (como <code>bge-reranker-large</code> o Cohere Rerank) para reordenar los 20 mejores fragmentos recuperados y seleccionar los 3 de mayor densidad informacional. Además, <b>HyDE (Hypothetical Document Embeddings)</b> genera primero una respuesta hipotética con el LLM para buscar vectores en el espacio de respuestas en lugar de preguntas.</p>
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         FUENTES DE INFORMACIÓN REALES & REFERENCIAS ACADÉMICAS (CUADRÍCULA 3x4)
+         ====================================================================== -->
+    <section class="sources-section" id="fuentes-oficiales" style="margin-bottom: 5.5rem;">
+      <div style="text-align: center; margin-bottom: 2.2rem;">
+        <span class="hero-badge-tag">Evidencia Científica &amp; Recursos Oficiales</span>
+        <h2 style="font-size: 2.2rem; font-family: var(--font-disp); font-weight: 800; color: var(--text-primary);">Fuentes de Información Reales &amp; Referencias Académicas</h2>
+        <p style="color: var(--text-secondary); max-width: 75ch; margin: 0.5rem auto 0; font-size: 1.05rem;">
+          Todo el pipeline RAG, las formulaciones de similitud coseno, los modelos de embeddings densos y la arquitectura de inferencia están rigurosamente fundamentados en papers científicos y especificaciones de ingeniería.
+        </p>
+      </div>
+
+      <div class="sources-grid">
+        <!-- Card 1 -->
+        <div class="source-card">
+          <div class="source-card-header">
+            <span class="source-tag">Lewis et al. / Meta AI · 2020</span>
+            <span class="source-type-pill">Paper Fundacional RAG</span>
+          </div>
+          <h4 class="source-title">Retrieval-Augmented Generation for Knowledge-Intensive NLP</h4>
+          <p class="source-desc">
+            Artículo científico fundacional que formula el paradigma RAG combinando generadores pre-entrenados con recuperadores densos indexados por similitud.
+          </p>
+          <a class="source-link-btn" href="https://arxiv.org/abs/2005.11401" rel="noopener noreferrer" target="_blank">
+            <span>Consultar en arXiv: 2005.11401</span>
+            <svg fill="none" height="14" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"></path></svg>
+          </a>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="source-card">
+          <div class="source-card-header">
+            <span class="source-tag">Reimers &amp; Gurevych · 2019</span>
+            <span class="source-type-pill">Sentence-BERT</span>
+          </div>
+          <h4 class="source-title">Sentence-BERT: Sentence Embeddings using Siamese Networks</h4>
+          <p class="source-desc">
+            Arquitectura de redes siamesas que permite mapear oraciones a espacios vectoriales densos donde la similitud coseno preserva la afinidad semántica.
+          </p>
+          <a class="source-link-btn" href="https://arxiv.org/abs/1908.10084" rel="noopener noreferrer" target="_blank">
+            <span>Consultar en arXiv: 1908.10084</span>
+            <svg fill="none" height="14" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"></path></svg>
+          </a>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="source-card">
+          <div class="source-card-header">
+            <span class="source-tag">Malkov &amp; Yashunin · 2018</span>
+            <span class="source-type-pill">Índices Vectoriales HNSW</span>
+          </div>
+          <h4 class="source-title">Efficient &amp; Robust ANN Search Using HNSW Graphs</h4>
+          <p class="source-desc">
+            Estructura de grafos navegables en capas jerárquicas adoptada por bases vectoriales modernas para búsqueda de vecinos más cercanos con complejidad $O(\log N)$.
+          </p>
+          <a class="source-link-btn" href="https://arxiv.org/abs/1603.09320" rel="noopener noreferrer" target="_blank">
+            <span>Consultar en arXiv: 1603.09320</span>
+            <svg fill="none" height="14" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"></path></svg>
+          </a>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="source-card">
+          <div class="source-card-header">
+            <span class="source-tag">Johnson, Douze &amp; Jégou · 2019</span>
+            <span class="source-type-pill">Búsqueda Masiva FAISS</span>
+          </div>
+          <h4 class="source-title">Billion-Scale Similarity Search with GPUs (FAISS)</h4>
+          <p class="source-desc">
+            Biblioteca de investigación de Meta AI para indexación vectorial acelerada por hardware, cuantización de producto (PQ) y clustering de embeddings a escala masiva.
+          </p>
+          <a class="source-link-btn" href="https://arxiv.org/abs/1702.08734" rel="noopener noreferrer" target="_blank">
+            <span>Consultar en arXiv: 1702.08734</span>
+            <svg fill="none" height="14" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"></path></svg>
+          </a>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="source-card">
+          <div class="source-card-header">
+            <span class="source-tag">Gao et al. · 2023</span>
+            <span class="source-type-pill">Taxonomía RAG Survey</span>
+          </div>
+          <h4 class="source-title">Retrieval-Augmented Generation for LLMs: A Survey</h4>
+          <p class="source-desc">
+            Estado del arte exhaustivo sobre RAG Ingenuo, RAG Avanzado y RAG Modular, detallando técnicas de re-ranking, filtrado contextual y alineación post-retrieval.
+          </p>
+          <a class="source-link-btn" href="https://arxiv.org/abs/2312.10997" rel="noopener noreferrer" target="_blank">
+            <span>Consultar en arXiv: 2312.10997</span>
+            <svg fill="none" height="14" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"></path></svg>
+          </a>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="source-card">
+          <div class="source-card-header">
+            <span class="source-tag">Asai et al. / Univ. Washington · 2024</span>
+            <span class="source-type-pill">Auto-Reflexión Self-RAG</span>
+          </div>
+          <h4 class="source-title">Self-RAG: Learning to Retrieve, Generate, and Critique</h4>
+          <p class="source-desc">
+            Entrenamiento de modelos con tokens especiales de reflexión para decidir cuándo recuperar información y evaluar dinámicamente la fidelidad fáctica de las citas.
+          </p>
+          <a class="source-link-btn" href="https://arxiv.org/abs/2310.11511" rel="noopener noreferrer" target="_blank">
+            <span>Consultar en arXiv: 2310.11511</span>
+            <svg fill="none" height="14" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"></path></svg>
+          </a>
+        </div>
+
+        <!-- Card 7 -->
+        <div class="source-card">
+          <div class="source-card-header">
+            <span class="source-tag">Wang et al. / Microsoft · 2022</span>
+            <span class="source-type-pill">Modelos MiniLM &amp; E5</span>
+          </div>
+          <h4 class="source-title">Text Embeddings by Weakly-Supervised Pre-Training</h4>
+          <p class="source-desc">
+            Metodología de destilación y pre-entrenamiento débil para generar representaciones vectoriales densas ultra-eficientes de 384 y 768 dimensiones.
+          </p>
+          <a class="source-link-btn" href="https://arxiv.org/abs/2212.03533" rel="noopener noreferrer" target="_blank">
+            <span>Consultar en arXiv: 2212.03533</span>
+            <svg fill="none" height="14" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"></path></svg>
+          </a>
+        </div>
+
+        <!-- Card 8 -->
+        <div class="source-card">
+          <div class="source-card-header">
+            <span class="source-tag">Meta AI Research · 2024</span>
+            <span class="source-type-pill">Modelos Abiertos Llama 3</span>
+          </div>
+          <h4 class="source-title">The Llama 3 Herd of Models</h4>
+          <p class="source-desc">
+            Reporte técnico de Meta AI sobre la arquitectura de 8B a 405B parámetros, el soporte de 128k tokens de contexto y la integración de mecanismos GQA.
+          </p>
+          <a class="source-link-btn" href="https://arxiv.org/abs/2407.21783" rel="noopener noreferrer" target="_blank">
+            <span>Consultar en arXiv: 2407.21783</span>
+            <svg fill="none" height="14" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"></path></svg>
+          </a>
+        </div>
+
+        <!-- Card 9 -->
+        <div class="source-card">
+          <div class="source-card-header">
+            <span class="source-tag">Abts et al. / Groq Inc. · 2022</span>
+            <span class="source-type-pill">Inferencia Ultra-Rápida</span>
+          </div>
+          <h4 class="source-title">A Software-Defined Tensor Streaming Architecture</h4>
+          <p class="source-desc">
+            Diseño de microarquitectura LPU para procesamiento streaming determinista sin colas de espera en DRAM, logrando latencias de RAG menores a 0.65 s.
+          </p>
+          <a class="source-link-btn" href="https://ieeexplore.ieee.org/document/9772967" rel="noopener noreferrer" target="_blank">
+            <span>Consultar en IEEE Micro: 9772967</span>
+            <svg fill="none" height="14" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"></path></svg>
+          </a>
+        </div>
+
+        <!-- Card 10 -->
+        <div class="source-card">
+          <div class="source-card-header">
+            <span class="source-tag">Robertson &amp; Zaragoza · 2009</span>
+            <span class="source-type-pill">Recuperación Léxica BM25</span>
+          </div>
+          <h4 class="source-title">The Probabilistic Relevance Framework: BM25 and Beyond</h4>
+          <p class="source-desc">
+            Fundamento matemático de la recuperación por frecuencia inversa de términos (TF-IDF / BM25) para búsquedas léxicas exactas en esquemas híbridos.
+          </p>
+          <a class="source-link-btn" href="https://www.nowpublishers.com/article/Details/INR-019" rel="noopener noreferrer" target="_blank">
+            <span>Consultar en nowpublishers.com</span>
+            <svg fill="none" height="14" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"></path></svg>
+          </a>
+        </div>
+
+        <!-- Card 11 -->
+        <div class="source-card">
+          <div class="source-card-header">
+            <span class="source-tag">Hugging Face &amp; UKP Lab · 2025</span>
+            <span class="source-type-pill">Framework de Embeddings</span>
+          </div>
+          <h4 class="source-title">Sentence-Transformers Framework &amp; MTEB Benchmark</h4>
+          <p class="source-desc">
+            Documentación técnica de la suite de embeddings multilingües y el Massive Text Embedding Benchmark (MTEB) para evaluación de tareas semánticas.
+          </p>
+          <a class="source-link-btn" href="https://sbert.net" rel="noopener noreferrer" target="_blank">
+            <span>Consultar en sbert.net</span>
+            <svg fill="none" height="14" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"></path></svg>
+          </a>
+        </div>
+
+        <!-- Card 12 -->
+        <div class="source-card">
+          <div class="source-card-header">
+            <span class="source-tag">NIST &amp; ISO/IEC · 2025</span>
+            <span class="source-type-pill">Estándares de IA</span>
+          </div>
+          <h4 class="source-title">NIST AI Risk Management Framework (AI RMF 1.0)</h4>
+          <p class="source-desc">
+            Directivas de fiabilidad, trazabilidad y mitigación de alucinaciones en sistemas de inteligencia artificial generativa con acceso a bases de conocimiento.
+          </p>
+          <a class="source-link-btn" href="https://www.nist.gov/itl/ai-risk-management-framework" rel="noopener noreferrer" target="_blank">
+            <span>Consultar en nist.gov</span>
+            <svg fill="none" height="14" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"></path></svg>
+          </a>
+        </div>
       </div>
     </section>
 
@@ -1822,22 +2067,36 @@ Respuesta:"""</span>
     </nav>
   </main>
 
-  <!-- Footer Global Unificado -->
-  <footer class="footer-root">
-    <div class="footer-inner">
-      <div class="footer-brand">
-        <div class="footer-logo-row">
-          <svg class="meta-logo-svg" style="width:24px;height:16px;" viewBox="0 0 36 24">
-            <path d="M18 13.9C16.2 11.2 13.7 9.4 10.7 9.4C5.9 9.4 2 13.3 2 18.1C2 22.9 5.9 26.8 10.7 26.8C13.7 26.8 16.2 25 18 22.3C19.8 25 22.3 26.8 25.3 26.8C30.1 26.8 34 22.9 34 18.1C34 13.3 30.1 9.4 25.3 9.4C22.3 9.4 19.8 11.2 18 13.9ZM10.7 22.8C8.1 22.8 6 20.7 6 18.1C6 15.5 8.1 13.4 10.7 13.4C12.7 13.4 14.5 14.7 15.8 16.7C15 18.8 13.8 20.7 12.3 22.1C11.8 22.6 11.3 22.8 10.7 22.8ZM25.3 22.8C24.7 22.8 24.2 22.6 23.7 22.1C22.2 20.7 21 18.8 20.2 16.7C21.5 14.7 23.3 13.4 25.3 13.4C27.9 13.4 30 15.5 30 18.1C30 20.7 27.9 22.8 25.3 22.8Z" transform="translate(0, -6)"></path>
-          </svg>
-          <span class="footer-brand-name">Meta AI · IA Aplicada con Modelos Abiertos</span>
-        </div>
-        <p class="footer-tagline">Entregables de Ingeniería &amp; Laboratorios Prácticos de IA</p>
+  <!-- FOOTER CON AUTORÍA OFICIAL -->
+  <footer class="course-footer">
+    <div style="max-width: 800px; margin: 0 auto; padding: 0 1.5rem;">
+      <h2 style="font-size: 1.85rem; font-family: var(--font-disp); margin-bottom: 0.8rem; color: var(--text-primary);">Challenge 2 Concluido</h2>
+      <p style="color: var(--text-secondary); margin-bottom: 1.6rem; font-size: 1.05rem;">Has finalizado todos los entregables del Módulo 1. Continúa al Módulo 2 para profundizar en bases vectoriales avanzadas.</p>
+      
+      <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2rem;">
+        <a class="btn-secondary" href="#overview">Volver arriba</a>
+        <a class="btn-secondary" href="https://github.com/jjho05/Inteligencia_Artificial_Aplicada_Llama" target="_blank" rel="noopener noreferrer" style="border-color: var(--meta-blue-border); color: var(--meta-blue);">
+          Repositorio GitHub
+        </a>
       </div>
-      <div class="footer-meta">
-        <span>© 2026 Ing. Jesús Javier Hernández Olvera. Todos los derechos reservados.</span>
+
+      <div style="margin-top: 3.5rem; padding-top: 2rem; border-top: 1px solid var(--border-subtle); display: flex; flex-direction: column; align-items: center; gap: 0.35rem;">
+        <p style="font-size: 0.95rem; color: var(--text-secondary); font-weight: 500;">
+          Página creada por <span style="color: var(--text-primary); font-weight: 700;">Ing. Jesús Javier Hernández Olvera</span>
+        </p>
+        <p style="font-size: 0.82rem; color: var(--text-muted);">Meta AI · Especialización en Inteligencia Artificial con Modelos Abiertos</p>
       </div>
     </div>
   </footer>
+
+  <!-- Botones Flotantes de Navegación Rápida -->
+  <aside class="floating-scroll-nav" aria-label="Navegación rápida">
+    <button class="btn-floating-scroll" id="scroll-top-btn" title="Ir al inicio">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 15l-6-6-6 6"/></svg>
+    </button>
+    <button class="btn-floating-scroll" id="scroll-bottom-btn" title="Ir al final">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+    </button>
+  </aside>
 </body>
 </html>

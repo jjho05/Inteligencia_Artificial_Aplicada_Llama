@@ -34,8 +34,10 @@
         <a class="nav-link-item" href="#obtener-api-key">Obtener API Key</a>
         <a class="nav-link-item" href="#parte1-handson">Parte I: Hands-On</a>
         <a class="nav-link-item" href="#parte2-challenge">Parte II: Challenge</a>
-        <a class="nav-link-item" href="#banco-pruebas-live">Laboratorio en Vivo</a>
+        <a class="nav-link-item" href="#banco-pruebas-live">Laboratorio</a>
         <a class="nav-link-item" href="#script-completo">Script Python</a>
+        <a class="nav-link-item" href="#faq-section">Q&amp;A</a>
+        <a class="nav-link-item" href="#fuentes-oficiales">Fuentes</a>
         <a class="nav-link-item" href="modulo1-challenge2.html" style="color: #3fb950; font-weight: 700;">Challenge 2 →</a>
       </nav>
       <div class="header-controls">
@@ -88,15 +90,45 @@
          HERO PRINCIPAL DEL CHALLENGE 1
          ====================================================================== -->
     <section class="course-hero" id="overview">
-      <div class="hero-badge-pill">
-        <span class="hero-badge-num">MÓDULO 1</span>
-        <span class="hero-badge-divider"></span>
-        <span class="hero-badge-label">CHALLENGE 1 · COMPARADOR MULTI-MODELO DE LENGUAJE</span>
+      <div style="display: flex; gap: 0.6rem; justify-content: center; flex-wrap: wrap; margin-bottom: 1.2rem;">
+        <div class="hero-badge-pill">
+          <span class="hero-badge-num">MÓDULO 1</span>
+          <span class="hero-badge-divider"></span>
+          <span class="hero-badge-label">CHALLENGE 1 · COMPARADOR MULTI-MODELO DE LENGUAJE</span>
+        </div>
+        <div class="hero-badge-pill" style="border-color: rgba(168, 85, 247, 0.4); background: rgba(168, 85, 247, 0.08);">
+          <span class="hero-badge-dot" style="background: #a855f7; box-shadow: 0 0 8px #a855f7;"></span>
+          <span class="hero-badge-label" style="color: #a855f7;">DIRECCIÓN &amp; ARQUITECTURA: ING. JESÚS JAVIER HERNÁNDEZ OLVERA</span>
+        </div>
       </div>
-      <h1 class="hero-title">Comparador de Modelos Llama & Benchmarking de Inferencia</h1>
+      <h1 class="hero-title">Comparador de Modelos Llama &amp; Benchmarking de Inferencia</h1>
       <p class="hero-subtitle">
         <b>Evaluación empírica de latencia, consumo de tokens y calidad de respuesta</b>. Conecta la API de Groq Cloud mediante Google Colab Secrets, orquesta inferencias zero-shot en chips LPU de alta velocidad y construye una matriz analítica para comparar modelos ligeros (20B / 8B), medianos de razonamiento (Qwen 27B) y modelos masivos (120B / 70B).
       </p>
+
+      <!-- Banner Destacado del Repositorio GitHub y Autor -->
+      <div style="max-width: 900px; margin: 1.8rem auto 0; background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: 16px; padding: 1.3rem 1.6rem; box-shadow: var(--shadow-sm); display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.2rem; text-align: left;">
+        <div style="display: flex; align-items: center; gap: 1.2rem;">
+          <div style="width: 48px; height: 48px; border-radius: 50%; background: var(--meta-blue-subtle); border: 2px solid var(--meta-blue); display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 1.1rem; color: var(--meta-blue); flex-shrink: 0;">
+            JO
+          </div>
+          <div>
+            <div style="display: flex; align-items: center; gap: 0.6rem; flex-wrap: wrap;">
+              <strong style="font-size: 1rem; color: var(--text-primary);">Ing. Jesús Javier Hernández Olvera</strong>
+              <span style="background: rgba(8, 102, 255, 0.12); color: var(--meta-blue); font-size: 0.72rem; font-weight: 750; padding: 0.15rem 0.55rem; border-radius: 20px;">Autor &amp; Arquitecto</span>
+            </div>
+            <p style="margin: 0.2rem 0 0; font-size: 0.83rem; color: var(--text-secondary); line-height: 1.45;">
+              Entorno oficial de benchmarking, scripts de terminal y simulador multi-modelo de alta fidelidad.
+            </p>
+          </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 0.75rem;">
+          <a href="https://github.com/jjho05/Inteligencia_Artificial_Aplicada_Llama" target="_blank" rel="noopener noreferrer" class="btn-primary" style="padding: 0.5rem 1.1rem; font-size: 0.82rem; border-radius: 20px; text-decoration: none; display: flex; align-items: center; gap: 0.5rem;">
+            <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.53 1.032 1.53 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0112 6.844c.85.004 1.705.115 2.504.337 1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0022 12.017C22 6.484 17.522 2 12 2z"/></svg>
+            <span>Ver Código en GitHub</span>
+          </a>
+        </div>
+      </div>
     </section>
 
     <!-- INTRODUCCIÓN GENERAL Y GUÍA EJECUTIVA -->
@@ -2306,32 +2338,269 @@ CONCLUSIÓN Y ANÁLISIS COMPARATIVO DE INGENIERÍA:
     </section>
 
     <!-- ======================================================================
-         FUENTES OFICIALES Y DOCUMENTACIÓN DE REFERENCIA
+         PARTE V: BANCO DE PREGUNTAS FRECUENTES Y FUNDAMENTOS TÉCNICOS (Q&A / FAQ)
          ====================================================================== -->
-    <section class="sources-section" id="fuentes-oficiales" style="margin-bottom: 3.5rem;">
-      <div class="sources-header">
-        <h3 style="font-size: 1.4rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Fuentes Oficiales &amp; Referencias Técnicas</h3>
-        <p style="color: var(--text-secondary); font-size: 0.9rem;">Documentación oficial de Meta AI, Groq Cloud y repositorios de investigación:</p>
+    <section class="tema-card" id="faq-section" style="margin-bottom: 4.5rem;">
+      <div class="tema-header">
+        <div class="tema-eyebrow">Dudas de Ingeniería &amp; Optimización</div>
+        <h3 class="tema-title">Preguntas Frecuentes &amp; Arquitectura de Inferencia (Q&amp;A)</h3>
       </div>
 
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-top: 1rem;">
-        <a href="https://console.groq.com/docs" target="_blank" rel="noopener" style="display: block; background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1rem; text-decoration: none; transition: all 0.2s ease;">
-          <div style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--meta-blue); font-weight: 700;">DOCUMENTACIÓN OFICIAL</div>
-          <div style="font-size: 0.95rem; font-weight: 600; color: var(--text-primary); margin-top: 0.3rem;">Groq Cloud API &amp; SDK Python</div>
-          <p style="font-size: 0.82rem; color: var(--text-secondary); margin-top: 0.3rem;">Guía de referencia de endpoints, límites de tasa y compatibilidad con OpenAI API.</p>
-        </a>
+      <div class="faq-container">
+        <!-- FAQ 1 -->
+        <details class="faq-item">
+          <summary>¿Qué es exactamente una LPU (Language Processing Unit) de Groq y en qué difiere de una GPU?</summary>
+          <div class="faq-answer">
+            Una <b>LPU (Language Processing Unit)</b> es un procesador de flujo tensorial (Tensor Streaming Processor) diseñado desde el silicio específicamente para la ejecución secuencial autoregresiva de modelos de lenguaje. A diferencia de las GPUs convencionales (diseñadas para procesamiento gráfico paralelo masivo con memoria HBM de alta latencia), las LPUs utilizan memoria <b>SRAM ultrarrápida integrada en el chip</b>, eliminando los cuellos de botella de ancho de banda y alcanzando velocidades sostenidas superiores a <b>500 - 800 tokens/segundo</b> por usuario.
+          </div>
+        </details>
 
-        <a href="https://llama.meta.com/docs" target="_blank" rel="noopener" style="display: block; background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1rem; text-decoration: none; transition: all 0.2s ease;">
-          <div style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--meta-blue); font-weight: 700;">META AI RESEARCH</div>
-          <div style="font-size: 0.95rem; font-weight: 600; color: var(--text-primary); margin-top: 0.3rem;">Meta Llama 3 Model Card</div>
-          <p style="font-size: 0.82rem; color: var(--text-secondary); margin-top: 0.3rem;">Arquitectura del modelo, vocabulario de 128k tokens y métricas de benchmark MMLU.</p>
-        </a>
+        <!-- FAQ 2 -->
+        <details class="faq-item">
+          <summary>¿Por qué el tokenizador BPE con 128,000 tokens en Llama 3 es superior a los anteriores de 32k?</summary>
+          <div class="faq-answer">
+            Un vocabulario más amplio (128k vs 32k tokens) permite representar palabras completas y estructuras sintácticas complejas en menos unidades subléxicas. Esto reduce la longitud total de la secuencia de tokens en un <b>15% a 25% para código fuente y textos en español</b>, disminuyendo directamente la latencia de inferencia y el costo computacional por solicitud.
+          </div>
+        </details>
 
-        <a href="https://github.com/jjho05/Inteligencia_Artificial_Aplicada_Llama" target="_blank" rel="noopener" style="display: block; background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1rem; text-decoration: none; transition: all 0.2s ease;">
-          <div style="font-size: 0.75rem; font-family: var(--font-mono); color: #3fb950; font-weight: 700;">REPOSITORIO DEL CURSO</div>
-          <div style="font-size: 0.95rem; font-weight: 600; color: var(--text-primary); margin-top: 0.3rem;">GitHub: Notebooks y Entregables</div>
-          <p style="font-size: 0.82rem; color: var(--text-secondary); margin-top: 0.3rem;">Código fuente completo de los temas y challenges resueltos del módulo.</p>
-        </a>
+        <!-- FAQ 3 -->
+        <details class="faq-item">
+          <summary>¿Cómo reduce Grouped-Query Attention (GQA) el consumo de memoria VRAM durante la inferencia?</summary>
+          <div class="faq-answer">
+            En Multi-Head Attention (MHA) clásica, cada cabezal de atención mantiene su propio par de tensores $K$ y $V$ en el KV-Cache. <b>GQA agrupa múltiples cabezales de consulta ($Q$) para compartir un único cabezal de llave ($K$) y valor ($V$)</b>. Esto reduce el tamaño del KV-Cache en memoria en un <b>75% a 87.5%</b> (ej. 8 grupos en Llama 3 8B), permitiendo atender ventanas de contexto de 8k a 128k tokens sin saturar la VRAM.
+          </div>
+        </details>
+
+        <!-- FAQ 4 -->
+        <details class="faq-item">
+          <summary>¿Qué ventajas ofrece RoPE (Rotary Position Embeddings) frente a las posiciones absolutas?</summary>
+          <div class="faq-answer">
+            <b>RoPE</b> codifica la información posicional multiplicando los vectores de consulta y clave por matrices de rotación ortogonales en el plano complejo. Esto preserva de forma natural la <b>distancia relativa entre tokens</b> ($\mathbf{q}_m^T \mathbf{k}_n = g(\mathbf{x}_m, \mathbf{x}_n, m-n)$), permitiendo que el modelo extrapole a longitudes de contexto mucho más extensas que las vistas durante el pre-entrenamiento.
+          </div>
+        </details>
+
+        <!-- FAQ 5 -->
+        <details class="faq-item">
+          <summary>¿Por qué la generación de texto en un LLM es un problema limitado por memoria (Memory-Bound)?</summary>
+          <div class="faq-answer">
+            Durante la fase de generación token por token (decoding), el modelo debe transferir todos sus parámetros de pesos y el KV-Cache desde la memoria RAM/VRAM a las unidades aritméticas de cómputo para calcular un solo token. Por lo tanto, la velocidad de generación no está limitada por los teraflops brutos del procesador, sino por el <b>ancho de banda de transferencia de memoria (GB/s)</b>.
+          </div>
+        </details>
+
+        <!-- FAQ 6 -->
+        <details class="faq-item">
+          <summary>¿Cuál es la diferencia práctica entre cuantización en 4-bit (GGUF / AWQ) y precisión completa FP16?</summary>
+          <div class="faq-answer">
+            La cuantización a 4-bit comprime los pesos de 16 bits a 4 bits, reduciendo el tamaño en disco y memoria en un <b>70% a 75%</b> (un modelo de 8B pasa de 16 GB a solo 4.8 - 5.5 GB de VRAM). La pérdida de calidad o perplejidad es menor al <b>1.5%</b> gracias a métodos modernos de cuantización consciente de activaciones (AWQ / GPTQ), permitiendo ejecutar modelos de escala industrial en GPUs de consumo y laptops estándar.
+          </div>
+        </details>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         FUENTES DE INFORMACIÓN REALES & REFERENCIAS ACADÉMICAS (CUADRÍCULA 3x4)
+         ====================================================================== -->
+    <section class="sources-section" id="fuentes-oficiales" style="margin-bottom: 5.5rem;">
+      <div style="text-align: center; margin-bottom: 2.2rem;">
+        <span class="hero-badge-tag">Evidencia Científica &amp; Recursos Oficiales</span>
+        <h2 style="font-size: 2.2rem; font-family: var(--font-disp); font-weight: 800; color: var(--text-primary);">Fuentes de Información Reales &amp; Referencias Académicas</h2>
+        <p style="color: var(--text-secondary); max-width: 75ch; margin: 0.5rem auto 0; font-size: 1.05rem;">
+          Todo el contenido técnico, métricas de telemetría y decisiones arquitectónicas presentadas están rigurosamente fundamentadas en investigaciones científicas publicadas y documentación técnica oficial.
+        </p>
+      </div>
+
+      <div class="sources-grid">
+        <!-- Card 1 -->
+        <div class="source-card">
+          <div class="source-card-header">
+            <span class="source-tag">Meta AI Research · 2024</span>
+            <span class="source-type-pill">Paper Fundacional</span>
+          </div>
+          <h4 class="source-title">The Llama 3 Herd of Models</h4>
+          <p class="source-desc">
+            Documento técnico exhaustivo que detalla el preentrenamiento en 15T tokens, la arquitectura GQA, el vocabulario de 128k y los procesos de alineación mediante DPO y PPO.
+          </p>
+          <a class="source-link-btn" href="https://arxiv.org/abs/2407.21783" rel="noopener noreferrer" target="_blank">
+            <span>Consultar en arXiv: 2407.21783</span>
+            <svg fill="none" height="14" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"></path></svg>
+          </a>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="source-card">
+          <div class="source-card-header">
+            <span class="source-tag">Google Brain · 2017</span>
+            <span class="source-type-pill">Arquitectura Base</span>
+          </div>
+          <h4 class="source-title">Attention Is All You Need</h4>
+          <p class="source-desc">
+            El artículo científico que introdujo la auto-atención por producto punto escalado ($Q, K, V$) y eliminó la necesidad de capas recurrentes en el procesamiento del lenguaje.
+          </p>
+          <a class="source-link-btn" href="https://arxiv.org/abs/1706.03762" rel="noopener noreferrer" target="_blank">
+            <span>Consultar en arXiv: 1706.03762</span>
+            <svg fill="none" height="14" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"></path></svg>
+          </a>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="source-card">
+          <div class="source-card-header">
+            <span class="source-tag">Abts et al. / Groq Inc. · 2022</span>
+            <span class="source-type-pill">Hardware LPU</span>
+          </div>
+          <h4 class="source-title">A Software-Defined Tensor Streaming Architecture</h4>
+          <p class="source-desc">
+            Publicación en IEEE Micro sobre la arquitectura de silicio de la LPU de Groq y la eliminación de latencias de memoria DRAM para inferencia ultra-rápida.
+          </p>
+          <a class="source-link-btn" href="https://ieeexplore.ieee.org/document/9772967" rel="noopener noreferrer" target="_blank">
+            <span>Consultar en IEEE Micro: 9772967</span>
+            <svg fill="none" height="14" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"></path></svg>
+          </a>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="source-card">
+          <div class="source-card-header">
+            <span class="source-tag">Ainslie et al. · 2023</span>
+            <span class="source-type-pill">Atención GQA</span>
+          </div>
+          <h4 class="source-title">GQA: Training Generalized Multi-Query Transformer Models</h4>
+          <p class="source-desc">
+            Metodología que agrupa cabezales de consulta para compartir llaves y valores, reduciendo drásticamente el KV-Cache en memoria durante inferencia autoregresiva.
+          </p>
+          <a class="source-link-btn" href="https://arxiv.org/abs/2305.13245" rel="noopener noreferrer" target="_blank">
+            <span>Consultar en arXiv: 2305.13245</span>
+            <svg fill="none" height="14" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"></path></svg>
+          </a>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="source-card">
+          <div class="source-card-header">
+            <span class="source-tag">Su et al. · 2024</span>
+            <span class="source-type-pill">Posicionamiento RoPE</span>
+          </div>
+          <h4 class="source-title">RoFormer: Enhanced Transformer with Rotary Position Embedding</h4>
+          <p class="source-desc">
+            Formulación de matrices de rotación ortogonales para incrustar posiciones relativas de tokens, estándar actual en Llama 3, Mistral y Qwen.
+          </p>
+          <a class="source-link-btn" href="https://arxiv.org/abs/2104.09864" rel="noopener noreferrer" target="_blank">
+            <span>Consultar en arXiv: 2104.09864</span>
+            <svg fill="none" height="14" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"></path></svg>
+          </a>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="source-card">
+          <div class="source-card-header">
+            <span class="source-tag">Dao et al. · 2022</span>
+            <span class="source-type-pill">Aceleración IO</span>
+          </div>
+          <h4 class="source-title">FlashAttention: Fast and Memory-Efficient Exact Attention</h4>
+          <p class="source-desc">
+            Algoritmo de atención consciente de la jerarquía de memoria GPU (SRAM vs HBM), reduciendo accesos a memoria en un factor de 3x a 5x.
+          </p>
+          <a class="source-link-btn" href="https://arxiv.org/abs/2205.14135" rel="noopener noreferrer" target="_blank">
+            <span>Consultar en arXiv: 2205.14135</span>
+            <svg fill="none" height="14" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"></path></svg>
+          </a>
+        </div>
+
+        <!-- Card 7 -->
+        <div class="source-card">
+          <div class="source-card-header">
+            <span class="source-tag">Dettmers et al. · 2023</span>
+            <span class="source-type-pill">Cuantización 4-Bit</span>
+          </div>
+          <h4 class="source-title">QLoRA: Efficient Finetuning of Quantized LLMs</h4>
+          <p class="source-desc">
+            Demostración empírica de cuantización en formato NormalFloat4 (NF4) con doble cuantización para ejecutar y adaptar modelos de 70B en GPUs de 48 GB.
+          </p>
+          <a class="source-link-btn" href="https://arxiv.org/abs/2305.14314" rel="noopener noreferrer" target="_blank">
+            <span>Consultar en arXiv: 2305.14314</span>
+            <svg fill="none" height="14" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"></path></svg>
+          </a>
+        </div>
+
+        <!-- Card 8 -->
+        <div class="source-card">
+          <div class="source-card-header">
+            <span class="source-tag">Brown et al. / OpenAI · 2020</span>
+            <span class="source-type-pill">In-Context Learning</span>
+          </div>
+          <h4 class="source-title">Language Models are Few-Shot Learners</h4>
+          <p class="source-desc">
+            Descubrimiento fundamental de cómo las demostraciones en contexto (Few-Shot) permiten condicionar el comportamiento y taxonomía del modelo sin modificar parámetros.
+          </p>
+          <a class="source-link-btn" href="https://arxiv.org/abs/2005.14165" rel="noopener noreferrer" target="_blank">
+            <span>Consultar en arXiv: 2005.14165</span>
+            <svg fill="none" height="14" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"></path></svg>
+          </a>
+        </div>
+
+        <!-- Card 9 -->
+        <div class="source-card">
+          <div class="source-card-header">
+            <span class="source-tag">Wei et al. / Google · 2022</span>
+            <span class="source-type-pill">Razonamiento CoT</span>
+          </div>
+          <h4 class="source-title">Chain-of-Thought Prompting Elicits Reasoning in LLMs</h4>
+          <p class="source-desc">
+            Investigación que demuestra cómo solicitar razonamiento paso a paso desbloquea capacidades analíticas complejas en matemáticas y lógica simbólica.
+          </p>
+          <a class="source-link-btn" href="https://arxiv.org/abs/2201.11903" rel="noopener noreferrer" target="_blank">
+            <span>Consultar en arXiv: 2201.11903</span>
+            <svg fill="none" height="14" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"></path></svg>
+          </a>
+        </div>
+
+        <!-- Card 10 -->
+        <div class="source-card">
+          <div class="source-card-header">
+            <span class="source-tag">Shazeer / Google · 2020</span>
+            <span class="source-type-pill">Activación SwiGLU</span>
+          </div>
+          <h4 class="source-title">GLU Variants Improve Transformer</h4>
+          <p class="source-desc">
+            Propuesta de la función de activación Swish-Gated Linear Unit (SwiGLU) adoptada en Llama 3 para mejorar la capacidad de convergencia frente a ReLU y GELU.
+          </p>
+          <a class="source-link-btn" href="https://arxiv.org/abs/2002.05202" rel="noopener noreferrer" target="_blank">
+            <span>Consultar en arXiv: 2002.05202</span>
+            <svg fill="none" height="14" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"></path></svg>
+          </a>
+        </div>
+
+        <!-- Card 11 -->
+        <div class="source-card">
+          <div class="source-card-header">
+            <span class="source-tag">Groq Cloud Official · 2025</span>
+            <span class="source-type-pill">Documentación API</span>
+          </div>
+          <h4 class="source-title">Groq Cloud API &amp; SDK Architecture Reference</h4>
+          <p class="source-desc">
+            Especificación oficial de endpoints compatibles con OpenAI, protocolos de streaming HTTP/2, gestión de cuotas y catálogo dinámico de modelos.
+          </p>
+          <a class="source-link-btn" href="https://console.groq.com/docs" rel="noopener noreferrer" target="_blank">
+            <span>Consultar en console.groq.com/docs</span>
+            <svg fill="none" height="14" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"></path></svg>
+          </a>
+        </div>
+
+        <!-- Card 12 -->
+        <div class="source-card">
+          <div class="source-card-header">
+            <span class="source-tag">OWASP &amp; NIST · 2025</span>
+            <span class="source-type-pill">Seguridad &amp; Privacidad</span>
+          </div>
+          <h4 class="source-title">OWASP Top 10 for LLM Applications &amp; AI RMF</h4>
+          <p class="source-desc">
+            Directivas de mitigación contra inyecciones de prompts, exposición de credenciales en código y estándares de gobernanza para agentes en producción.
+          </p>
+          <a class="source-link-btn" href="https://owasp.org/www-project-top-10-for-large-language-model-applications/" rel="noopener noreferrer" target="_blank">
+            <span>Consultar en owasp.org</span>
+            <svg fill="none" height="14" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"></path></svg>
+          </a>
+        </div>
       </div>
     </section>
 
