@@ -1,62 +1,82 @@
 /**
- * MOTOR DE INTERNACIONALIZACIÓN (i18n) NATIVO
+ * MOTOR DE TRADUCCIÓN BILINGÜE EN TIEMPO REAL (ES/EN)
  * Plataforma: Especialización en Inteligencia Artificial con Meta Llama 3
  * Autor: Ing. Jesús Javier Hernández Olvera
  */
 
 (function() {
   const STORAGE_KEY = "meta_llama_lang";
-  
-  function getInitialLanguage() {
-    const saved = localStorage.getItem(STORAGE_KEY);
-    if (saved === "en" || saved === "es") return saved;
-    const browserLang = (navigator.language || navigator.userLanguage || "es").toLowerCase();
-    return browserLang.startsWith("en") ? "en" : "es";
+  let currentLang = localStorage.getItem(STORAGE_KEY) || (navigator.language.startsWith("en") ? "en" : "es");
+
+  // Sorted keys from longest to shortest for accurate phrase matching
+  let sortedKeys = [];
+
+  function getSortedKeys() {
+    if (sortedKeys.length === 0 && typeof I18N_DICTIONARY !== "undefined") {
+      sortedKeys = Object.keys(I18N_DICTIONARY).sort((a, b) => b.length - a.length);
+    }
+    return sortedKeys;
   }
 
-  let currentLang = getInitialLanguage();
+  function translateText(text) {
+    if (!text || typeof text !== "string") return text;
+    let result = text;
+    const keys = getSortedKeys();
+    for (let i = 0; i < keys.length; i++) {
+      const esKey = keys[i];
+      if (result.includes(esKey)) {
+        const enVal = I18N_DICTIONARY[esKey];
+        result = result.split(esKey).join(enVal);
+      }
+    }
+    return result;
+  }
 
-  function setLanguage(lang) {
-    if (lang !== "es" && lang !== "en") return;
+  function walkAndTranslate(node) {
+    // Ignore code blocks, preformatted code, scripts, styles
+    if (!node) return;
+    const tag = node.nodeName ? node.nodeName.toUpperCase() : "";
+    if (tag === "SCRIPT" || tag === "STYLE" || tag === "CODE" || tag === "PRE" || tag === "SVG") {
+      return;
+    }
+
+    if (node.nodeType === Node.TEXT_NODE) {
+      if (node._orig === undefined) {
+        node._orig = node.nodeValue;
+      }
+      if (currentLang === "en") {
+        node.nodeValue = translateText(node._orig);
+      } else {
+        node.nodeValue = node._orig;
+      }
+    } else if (node.nodeType === Node.ELEMENT_NODE) {
+      // Translate title and placeholder if present
+      if (node.hasAttribute("title")) {
+        if (!node._origTitle) node._origTitle = node.getAttribute("title");
+        node.setAttribute("title", currentLang === "en" ? translateText(node._origTitle) : node._origTitle);
+      }
+      if (node.hasAttribute("placeholder")) {
+        if (!node._origPlaceholder) node._origPlaceholder = node.getAttribute("placeholder");
+        node.setAttribute("placeholder", currentLang === "en" ? translateText(node._origPlaceholder) : node._origPlaceholder);
+      }
+      
+      // Traverse children
+      for (let child = node.firstChild; child; child = child.nextSibling) {
+        walkAndTranslate(child);
+      }
+    }
+  }
+
+  function applyLanguage(lang) {
     currentLang = lang;
     localStorage.setItem(STORAGE_KEY, lang);
     document.documentElement.lang = lang;
-    applyTranslations();
-    updateSwitcherUI();
-  }
-
-  function applyTranslations() {
-    const dict = typeof I18N_TRANSLATIONS !== "undefined" ? I18N_TRANSLATIONS[currentLang] : null;
-    if (!dict) return;
-
-    // Apply data-i18n attributes
-    document.querySelectorAll("[data-i18n]").forEach(el => {
-      const key = el.getAttribute("data-i18n");
-      if (dict[key]) {
-        el.textContent = dict[key];
-      }
-    });
-
-    // Translate common buttons and labels
-    document.querySelectorAll(".copy-code-btn, .btn-copy").forEach(btn => {
-      btn.textContent = dict.btn_copy_code || "Copiar Código";
-    });
-
-    // Translate back to top
-    document.querySelectorAll(".btn-back-to-top").forEach(btn => {
-      if (btn.querySelector("span")) {
-        btn.querySelector("span").textContent = dict.btn_back_to_top || "Volver Arriba";
-      }
-    });
-
-    // Specific page elements
-    const isIndex = window.location.pathname.endsWith("index.html") || window.location.pathname.endsWith("/");
-    if (isIndex) {
-      const hTitle = document.querySelector(".hero-title");
-      if (hTitle && dict.hero_title) hTitle.textContent = dict.hero_title;
-      const hSub = document.querySelector(".hero-subtitle");
-      if (hSub && dict.hero_subtitle) hSub.textContent = dict.hero_subtitle;
+    
+    if (document.body) {
+      walkAndTranslate(document.body);
     }
+    
+    updateSwitcherUI();
   }
 
   function updateSwitcherUI() {
@@ -67,48 +87,32 @@
     });
   }
 
-  function initSwitcher() {
-    const controls = document.querySelector(".header-controls") || document.querySelector(".nav-actions");
-    let btn = document.getElementById("lang-switcher-btn");
-    
-    if (!btn && controls) {
-      btn = document.createElement("button");
-      btn.id = "lang-switcher-btn";
-      btn.className = "lang-toggle-btn";
-      btn.type = "button";
-      btn.title = "Cambiar idioma / Switch language";
-      const soundBtn = document.getElementById("sound-btn") || document.getElementById("theme-btn");
-      if (soundBtn) {
-        controls.insertBefore(btn, soundBtn);
-      } else {
-        controls.appendChild(btn);
-      }
-    }
-
+  function setupSwitcherButton() {
+    const btn = document.getElementById("lang-switcher-btn");
     if (btn) {
       btn.onclick = function(e) {
         e.preventDefault();
-        setLanguage(currentLang === "es" ? "en" : "es");
+        applyLanguage(currentLang === "es" ? "en" : "es");
       };
     }
-
     updateSwitcherUI();
   }
 
-  function onReady() {
-    document.documentElement.lang = currentLang;
-    initSwitcher();
-    applyTranslations();
+  function init() {
+    setupSwitcherButton();
+    if (currentLang === "en") {
+      applyLanguage("en");
+    }
   }
 
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", onReady);
+    document.addEventListener("DOMContentLoaded", init);
   } else {
-    onReady();
+    init();
   }
 
   window.MetaAI_i18n = {
-    setLanguage: setLanguage,
+    setLanguage: applyLanguage,
     getLanguage: function() { return currentLang; }
   };
 })();
