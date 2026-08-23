@@ -116,45 +116,69 @@
         </p>
 
         <!-- Bento Grid de Etapas del Benchmark -->
-        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:1rem; margin-top:1.5rem;">
+        <div class="bento-layout-grid">
           <div class="bento-sub-card">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.4rem;">
-              <span class="tema-subheading-tag" style="margin:0;">Fase #1</span>
-              <span style="font-family:var(--font-mono); font-size:0.72rem; font-weight:800; color:var(--meta-blue);">Seguridad</span>
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem;">
+                <span class="tema-subheading-tag" style="margin:0;">Fase #1</span>
+                <span style="font-family:var(--font-mono); font-size:0.75rem; font-weight:800; color:var(--meta-blue);">Seguridad</span>
+              </div>
+              <h5 class="bento-sub-title">1. Gestión de Credenciales</h5>
+              <p class="bento-sub-desc">
+                <b>Intuición:</b> Como guardar la llave de tu casa en una caja fuerte: tu API Key queda protegida y nadie puede verla en el código público.
+              </p>
+              <p class="bento-sub-desc" style="margin-bottom:0;">
+                <b>Técnica:</b> Lectura mediante <code>google.colab.userdata.get('GROQ_API_KEY')</code> sin hardcoding en repositorios públicos.
+              </p>
             </div>
-            <h5 class="bento-sub-title">1. Gestión de Credenciales</h5>
-            <p class="bento-sub-desc"><b>Intuición:</b> Como guardar la llave de tu casa en una caja fuerte: nadie puede ver tu API Key en el código público.</p>
-            <p class="bento-sub-desc" style="margin-bottom:0;"><b>Técnica:</b> Lectura mediante <code>google.colab.userdata.get('GROQ_API_KEY')</code> sin hardcoding.</p>
           </div>
 
           <div class="bento-sub-card">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.4rem;">
-              <span class="tema-subheading-tag" style="margin:0;">Fase #2</span>
-              <span style="font-family:var(--font-mono); font-size:0.72rem; font-weight:800; color:#a855f7;">Inferencia</span>
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem;">
+                <span class="tema-subheading-tag" style="margin:0;">Fase #2</span>
+                <span style="font-family:var(--font-mono); font-size:0.75rem; font-weight:800; color:#a855f7;">Inferencia</span>
+              </div>
+              <h5 class="bento-sub-title">2. Inferencia Zero-Shot</h5>
+              <p class="bento-sub-desc">
+                <b>Intuición:</b> Preguntar directamente al experto sin darle ejemplos previos de cómo contestar; el modelo deduce el patrón por sí mismo.
+              </p>
+              <p class="bento-sub-desc" style="margin-bottom:0;">
+                <b>Técnica:</b> Endpoint <code>chat.completions.create</code> en hardware LPU de Groq con latencia sub-segundo ($&lt; 1\text{ s}$).
+              </p>
             </div>
-            <h5 class="bento-sub-title">2. Llamadas Zero-Shot</h5>
-            <p class="bento-sub-desc"><b>Intuición:</b> Preguntarle directamente al experto sin darle ejemplos previos de cómo contestar.</p>
-            <p class="bento-sub-desc" style="margin-bottom:0;"><b>Técnica:</b> Endpoint <code>chat.completions.create</code> en hardware LPU con latencia inferior a 1s.</p>
           </div>
 
           <div class="bento-sub-card">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.4rem;">
-              <span class="tema-subheading-tag" style="margin:0;">Fase #3</span>
-              <span style="font-family:var(--font-mono); font-size:0.72rem; font-weight:800; color:#eab308;">Métricas</span>
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem;">
+                <span class="tema-subheading-tag" style="margin:0;">Fase #3</span>
+                <span style="font-family:var(--font-mono); font-size:0.75rem; font-weight:800; color:#eab308;">Métricas</span>
+              </div>
+              <h5 class="bento-sub-title">3. Telemetría de Tokens</h5>
+              <p class="bento-sub-desc">
+                <b>Intuición:</b> El taxímetro de la IA: saber exactamente cuántas palabras entraron y salieron para proyectar la factura mensual.
+              </p>
+              <p class="bento-sub-desc" style="margin-bottom:0;">
+                <b>Técnica:</b> Extracción de <code>prompt_tokens</code>, <code>completion_tokens</code> y Throughput de generación ($T/s$).
+              </p>
             </div>
-            <h5 class="bento-sub-title">3. Telemetría de Tokens</h5>
-            <p class="bento-sub-desc"><b>Intuición:</b> El taxímetro de la IA: saber exactamente cuántas palabras entraron y salieron para controlar la factura.</p>
-            <p class="bento-sub-desc" style="margin-bottom:0;"><b>Técnica:</b> Extracción de <code>prompt_tokens</code>, <code>completion_tokens</code> y Throughput ($T/s$).</p>
           </div>
 
           <div class="bento-sub-card">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.4rem;">
-              <span class="tema-subheading-tag" style="margin:0;">Fase #4</span>
-              <span style="font-family:var(--font-mono); font-size:0.72rem; font-weight:800; color:var(--accent-success);">Decisión</span>
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem;">
+                <span class="tema-subheading-tag" style="margin:0;">Fase #4</span>
+                <span style="font-family:var(--font-mono); font-size:0.75rem; font-weight:800; color:var(--accent-success);">Decisión</span>
+              </div>
+              <h5 class="bento-sub-title">4. Matriz de Decisión</h5>
+              <p class="bento-sub-desc">
+                <b>Intuición:</b> La tabla final de calificaciones: comparar tiempo, calidad y costo para elegir el modelo ganador para el negocio.
+              </p>
+              <p class="bento-sub-desc" style="margin-bottom:0;">
+                <b>Técnica:</b> Consolidación en lista de diccionarios y fundamentación técnica de arquitectura con Model Router.
+              </p>
             </div>
-            <h5 class="bento-sub-title">4. Matriz Comparativa</h5>
-            <p class="bento-sub-desc"><b>Intuición:</b> La tabla final de calificaciones: comparar tiempo, calidad y costo para elegir el ganador.</p>
-            <p class="bento-sub-desc" style="margin-bottom:0;"><b>Técnica:</b> Consolidación en diccionarios y recomendación de arquitectura Model Router.</p>
           </div>
         </div>
       </div>

@@ -748,43 +748,49 @@ body {
 }
 
 /* Bento Layout */
+.bento-grid,
 .bento-layout-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 1.3rem;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.4rem;
   margin-top: 1.5rem;
+  margin-bottom: 1.5rem;
 }
 
 .bento-sub-card {
-  background: var(--bg-subtle);
+  background: var(--bg-surface-2, var(--bg-subtle));
   border: 1px solid var(--border-subtle);
   border-radius: 12px;
-  padding: 1.4rem;
+  padding: 1.5rem 1.6rem;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   transition: all 0.2s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.04);
 }
 
 .bento-sub-card:hover {
   border-color: var(--meta-blue);
   background: var(--bg-surface);
   transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
 }
 
 .bento-sub-title {
   font-family: var(--font-head);
-  font-size: 1.12rem;
+  font-size: 1.15rem;
   font-weight: 700;
   color: var(--text-primary);
-  margin-bottom: 0.5rem;
+  margin-top: 0.4rem;
+  margin-bottom: 0.7rem;
+  line-height: 1.35;
 }
 
 .bento-sub-desc {
   font-size: 0.92rem;
   color: var(--text-secondary);
   line-height: 1.65;
-  margin-bottom: 1rem;
+  margin-bottom: 0.8rem;
 }
 
 /* SECCIÓN PEDAGÓGICA ESTRUCTURADA DENTRO DE CADA TEMA */
