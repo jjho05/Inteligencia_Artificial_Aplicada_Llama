@@ -7541,3 +7541,117 @@ details[open] > summary svg {
 .rag-contrast-card.con-rag {
   border-left: 4px solid var(--accent-success);
 }
+
+/* ==========================================================================
+   COLAB NOTEBOOK CELL & INTERACTIVE TERMINAL COMPONENT SYSTEM
+   ========================================================================== */
+.colab-cell-box {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  margin: 1.4rem 0;
+  overflow: hidden;
+  box-shadow: var(--shadow-sm);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.colab-cell-box:focus-within,
+.colab-cell-box:hover {
+  border-color: var(--meta-blue);
+  box-shadow: 0 4px 20px rgba(8, 102, 255, 0.08);
+}
+
+.colab-cell-header {
+  background: #1e1e1e;
+  padding: 0.6rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #2d2d2d;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+}
+
+.colab-cell-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: #9cdcfe;
+}
+
+.colab-run-btn {
+  background: var(--meta-blue);
+  color: #ffffff;
+  border: none;
+  border-radius: 6px;
+  padding: 0.35rem 0.85rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  font-family: var(--font-mono);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: all 0.2s ease;
+}
+
+.colab-run-btn:hover {
+  background: #0052cc;
+  transform: translateY(-1px);
+}
+
+.colab-run-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.colab-output-box {
+  background: #0d1117;
+  border-top: 1px solid #21262d;
+  padding: 1.1rem 1.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.84rem;
+  color: #c9d1d9;
+  line-height: 1.65;
+  overflow-x: auto;
+}
+
+.colab-output-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: #8b949e;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.6rem;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.1);
+  padding-bottom: 0.4rem;
+}
+
+.colab-output-text {
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: #e6edf3;
+  margin: 0;
+}
+
+.colab-metric-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  background: rgba(8, 102, 255, 0.15);
+  border: 1px solid rgba(8, 102, 255, 0.3);
+  color: #58a6ff;
+  padding: 0.2rem 0.55rem;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  font-family: var(--font-mono);
+  font-weight: 600;
+}
+
