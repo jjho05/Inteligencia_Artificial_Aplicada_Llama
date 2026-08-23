@@ -10,11 +10,12 @@ Plataforma formativa e interactiva de grado industrial diseñada y construida po
 
 ---
 
-## Dirección Técnica &amp; Autoría
+## Dirección Técnica &amp; Ecosistema de Repositorios
 
 * **Creador &amp; Arquitecto:** **Ing. Jesús Javier Hernández Olvera**
+* **Repositorio de la Plataforma Web &amp; Simuladores:** [github.com/jjho05/Inteligencia_Artificial_Aplicada_Llama](https://github.com/jjho05/Inteligencia_Artificial_Aplicada_Llama)
+* **Repositorio de Cuadernos Colab, Labs &amp; Scripts:** [github.com/jjho05/meta-llama-engineering-labs](https://github.com/jjho05/meta-llama-engineering-labs)
 * **Enfoque de Ingeniería:** Soberanía tecnológica, inferencia en hardware LPU de ultra-alta velocidad (500+ tokens/seg), sistemas RAG libres de alucinaciones y microservicios asíncronos en producción.
-* **Repositorio Oficial en GitHub:** [https://github.com/jjho05/Inteligencia_Artificial_Aplicada_Llama](https://github.com/jjho05/Inteligencia_Artificial_Aplicada_Llama)
 
 ---
 
