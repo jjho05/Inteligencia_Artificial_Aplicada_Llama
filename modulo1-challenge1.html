@@ -106,6 +106,38 @@
         <h3 class="tema-title">Resumen Ejecutivo & Fundamento: ¿Por qué no usar siempre el modelo más grande?</h3>
       </div>
 
+      <div class="tema-section-block">
+        <h4 class="tema-subheading"><span class="tema-subheading-tag">1. El Dilema del Ingeniero</span> Balance entre Costo, Latencia y Calidad Cognitiva</h4>
+        <p class="prose-p">
+          En entornos de producción reales, enviar cada consulta de usuario a un modelo masivo de 70B o 120B parámetros representa un <b>desperdicio crítico de presupuesto de cómputo y degrada la experiencia de usuario</b> debido a tiempos de respuesta elevados (> 2 segundos).
+        </p>
+        <p class="prose-p">
+          Para más del <b>80% de las consultas cotidianas</b> (restablecimiento de contraseñas, horarios de atención, dudas de catálogo o resúmenes directos), un modelo ligero optimizado de 8B o 20B parámetros en hardware LPU resuelve la tarea en menos de <b>0.9 segundos</b> con un costo hasta <b>10 veces menor</b>.
+        </p>
+
+        <!-- Roadmap visual de los 11 pasos -->
+        <div style="margin-top: 1.5rem; background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1.2rem;">
+          <h4 style="font-size: 0.95rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.8rem;">
+            Estructura del Laboratorio y Desglose de Celdas Oficiales:
+          </h4>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0.8rem;">
+            <div style="background: var(--bg-surface); padding: 0.7rem; border-radius: 6px; border-left: 3px solid var(--meta-blue);">
+              <div style="font-size: 0.75rem; color: var(--meta-blue); font-weight: 700;">PARTE I: HANDS-ON (CELDAS 1-7)</div>
+              <div style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.2rem;">Configuración de Secrets, Tokenización, Inferencia Zero-Shot, JSON Dump, Conteo de Tokens y Comparación en Clase.</div>
+            </div>
+            <div style="background: var(--bg-surface); padding: 0.7rem; border-radius: 6px; border-left: 3px solid #3fb950;">
+              <div style="font-size: 0.75rem; color: #3fb950; font-weight: 700;">PARTE II: RETO DE NEGOCIO (CELDAS 8-14)</div>
+              <div style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.2rem;">Definición de 3 Preguntas de Soporte, Evaluación Multi-Modelo, Consolidación en Diccionarios y Tabla Final con Dictamen.</div>
+            </div>
+            <div style="background: var(--bg-surface); padding: 0.7rem; border-radius: 6px; border-left: 3px solid #d2a8ff;">
+              <div style="font-size: 0.75rem; color: #d2a8ff; font-weight: 700;">LABORATORIO EN VIVO & SCRIPT</div>
+              <div style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.2rem;">Benchmark Studio interactivo para cualquier pregunta libre y script autónomo descargable en Python.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cuadros Pedagógicos colocados después del Contexto -->
       <div class="easy-explainer-box">
         <div class="easy-header">
           <svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="18"><path d="M9 18h6m-5 3h4m-7-9.5A6.5 6.5 0 1 1 18 11.5c0 2.5-1.5 4-2.5 5h-7c-1-1-2.5-2.5-2.5-5z"></path></svg>
@@ -124,37 +156,6 @@
         <p class="pro-tip-text">
           Las empresas líderes en IA no eligen un solo modelo: implementan un <b>Model Router</b> (clasificador semántico de intenciones). El router clasifica la complejidad de la pregunta en menos de 15 ms: si es una consulta estándar, la atiende el modelo ligero; si detecta razonamiento analítico, la escala al modelo masivo. Esto ahorra hasta un <b>85% en la factura mensual de APIs</b>.
         </p>
-      </div>
-
-      <div class="tema-section-block">
-        <h4 class="tema-subheading"><span class="tema-subheading-tag">1. El Dilema del Ingeniero</span> Balance entre Costo, Latencia y Calidad Cognitiva</h4>
-        <p class="prose-p">
-          En entornos de producción reales, enviar cada consulta de usuario a un modelo masivo de 70B o 120B parámetros representa un <b>desperdicio crítico de presupuesto de cómputo y degrada la experiencia de usuario</b> debido a tiempos de respuesta elevados (> 2 segundos).
-        </p>
-        <p class="prose-p">
-          Para más del <b>80% de las consultas cotidianas</b> (restablecimiento de contraseñas, horarios de atención, dudas de catálogo o resúmenes directos), un modelo ligero optimizado de 8B o 20B parámetros en hardware LPU resuelve la tarea en menos de <b>0.9 segundos</b> con un costo hasta <b>10 veces menor</b>.
-        </p>
-      </div>
-
-      <!-- Roadmap visual de los 11 pasos -->
-      <div style="margin-top: 2rem; background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1.2rem;">
-        <h4 style="font-size: 0.95rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.8rem;">
-          Estructura del Laboratorio y Desglose de Celdas Oficiales:
-        </h4>
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0.8rem;">
-          <div style="background: var(--bg-surface); padding: 0.7rem; border-radius: 6px; border-left: 3px solid var(--meta-blue);">
-            <div style="font-size: 0.75rem; color: var(--meta-blue); font-weight: 700;">PARTE I: HANDS-ON (CELDAS 1-7)</div>
-            <div style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.2rem;">Configuración de Secrets, Tokenización, Inferencia Zero-Shot, JSON Dump, Conteo de Tokens y Comparación en Clase.</div>
-          </div>
-          <div style="background: var(--bg-surface); padding: 0.7rem; border-radius: 6px; border-left: 3px solid #3fb950;">
-            <div style="font-size: 0.75rem; color: #3fb950; font-weight: 700;">PARTE II: RETO DE NEGOCIO (CELDAS 8-14)</div>
-            <div style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.2rem;">Definición de 3 Preguntas de Soporte, Evaluación Multi-Modelo, Consolidación en Diccionarios y Tabla Final con Dictamen.</div>
-          </div>
-          <div style="background: var(--bg-surface); padding: 0.7rem; border-radius: 6px; border-left: 3px solid #d2a8ff;">
-            <div style="font-size: 0.75rem; color: #d2a8ff; font-weight: 700;">LABORATORIO EN VIVO & SCRIPT</div>
-            <div style="font-size: 0.85rem; color: var(--text-secondary); margin-top: 0.2rem;">Benchmark Studio interactivo para cualquier pregunta libre y script autónomo descargable en Python.</div>
-          </div>
-        </div>
       </div>
     </article>
 
@@ -232,26 +233,6 @@
       <div class="tema-header">
         <div class="tema-eyebrow">Paso 1 · Celda 1 (Hands-On)</div>
         <h3 class="tema-title">Configuración del Entorno, Dependencias y Google Colab Secrets</h3>
-      </div>
-
-      <div class="easy-explainer-box">
-        <div class="easy-header">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6m-5 3h4m-7-9.5A6.5 6.5 0 1 1 18 11.5c0 2.5-1.5 4-2.5 5h-7c-1-1-2.5-2.5-2.5-5z"/></svg>
-          <span>¿No entendiste? Te lo explico fácil: La llamada telefónica a la central de IA</span>
-        </div>
-        <p class="easy-text">
-          Esta primera celda es como <b>marcar el número de teléfono y presentar tu credencial de acceso</b> ante la central de supercómputo de Groq. Instalamos el auricular (la librería <code>groq</code>), leemos nuestra contraseña secreta sin que nadie la vea y acordamos qué modelos usaremos para las consultas.
-        </p>
-      </div>
-
-      <div class="pro-tip-box">
-        <div class="pro-tip-header">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
-          <span>Consejo Pro: Fallback Dinámico y Limpieza Preventiva de Tokens de Pensamiento</span>
-        </div>
-        <p class="pro-tip-text">
-          Los proveedores de nube actualizan sus nombres de modelos frecuentemente. La función <code>obtener_modelo()</code> inspecciona el catálogo activo en vivo para evitar excepciones 404, mientras que <code>limpiar_respuesta()</code> elimina etiquetas <code>&lt;think&gt;...&lt;/think&gt;</code> producidas por modelos de razonamiento (como Qwen 3.6).
-        </p>
       </div>
 
       <div class="tema-section-block">
@@ -364,17 +345,27 @@ Modelos configurados para evaluación:
             </div>
           </div>
         </details>
+      </div>
 
-        <!-- Q&A y Diagnóstico de Errores -->
-        <div style="margin-top: 1.2rem; background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1.2rem;">
-          <div style="font-size: 0.85rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">
-            Diagnóstico de Errores Frecuentes en el Paso 1:
-          </div>
-          <ul style="margin-left: 1.2rem; color: var(--text-secondary); font-size: 0.85rem; line-height: 1.7;">
-            <li><b>SecretNotFoundError / KeyError 'GROQ_API_KEY':</b> Ocurre si no agregaste el secreto en Colab o si el interruptor <i>Notebook access</i> está desactivado. Solución: abre el icono de llave, crea el secreto y activa el switch.</li>
-            <li><b>AuthenticationError (401 Unauthorized):</b> La API Key ingresada no es válida o fue revocada en la consola de Groq. Solución: genera una nueva llave en console.groq.com y actualízala en Secrets.</li>
-          </ul>
+      <!-- Cuadros Pedagógicos después del Contexto -->
+      <div class="easy-explainer-box">
+        <div class="easy-header">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6m-5 3h4m-7-9.5A6.5 6.5 0 1 1 18 11.5c0 2.5-1.5 4-2.5 5h-7c-1-1-2.5-2.5-2.5-5z"/></svg>
+          <span>¿No entendiste? Te lo explico fácil: La llamada telefónica a la central de IA</span>
         </div>
+        <p class="easy-text">
+          Esta primera celda es como <b>marcar el número de teléfono y presentar tu credencial de acceso</b> ante la central de supercómputo de Groq. Instalamos el auricular (la librería <code>groq</code>), leemos nuestra contraseña secreta sin que nadie la vea y acordamos qué modelos usaremos para las consultas.
+        </p>
+      </div>
+
+      <div class="pro-tip-box">
+        <div class="pro-tip-header">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
+          <span>Consejo Pro: Fallback Dinámico y Limpieza Preventiva de Tokens de Pensamiento</span>
+        </div>
+        <p class="pro-tip-text">
+          Los proveedores de nube actualizan sus nombres de modelos frecuentemente. La función <code>obtener_modelo()</code> inspecciona el catálogo activo en vivo para evitar excepciones 404, mientras que <code>limpiar_respuesta()</code> elimina etiquetas <code>&lt;think&gt;...&lt;/think&gt;</code> producidas por modelos de razonamiento (como Qwen 3.6).
+        </p>
       </div>
     </article>
 
@@ -383,16 +374,6 @@ Modelos configurados para evaluación:
       <div class="tema-header">
         <div class="tema-eyebrow">Paso 2 · Celda 2 (Hands-On)</div>
         <h3 class="tema-title">De Palabras a Tokens: Definición del Prompt de Ejemplo</h3>
-      </div>
-
-      <div class="easy-explainer-box">
-        <div class="easy-header">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6m-5 3h4m-7-9.5A6.5 6.5 0 1 1 18 11.5c0 2.5-1.5 4-2.5 5h-7c-1-1-2.5-2.5-2.5-5z"/></svg>
-          <span>¿No entendiste? Te lo explico fácil: Escribir la carta antes de enviarla</span>
-        </div>
-        <p class="easy-text">
-          Un <b>Prompt</b> es simplemente el texto que tú le entregas al modelo. Antes de enviarlo a los servidores de Groq, lo guardamos en una variable de texto en memoria. Puedes editar la pregunta en el campo interactivo de abajo para probar con tus propias consultas.
-        </p>
       </div>
 
       <div class="tema-section-block">
@@ -467,6 +448,17 @@ Modelos configurados para evaluación:
           </div>
         </details>
       </div>
+
+      <!-- Cuadro Pedagógico después del Contexto -->
+      <div class="easy-explainer-box">
+        <div class="easy-header">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6m-5 3h4m-7-9.5A6.5 6.5 0 1 1 18 11.5c0 2.5-1.5 4-2.5 5h-7c-1-1-2.5-2.5-2.5-5z"/></svg>
+          <span>¿No entendiste? Te lo explico fácil: Escribir la carta antes de enviarla</span>
+        </div>
+        <p class="easy-text">
+          Un <b>Prompt</b> es simplemente el texto que tú le entregas al modelo. Antes de enviarlo a los servidores de Groq, lo guardamos en una variable de texto en memoria. Puedes editar la pregunta en el campo interactivo para probar con tus propias consultas.
+        </p>
+      </div>
     </article>
 
     <!-- PASO 3: CELDA 3 -->
@@ -474,16 +466,6 @@ Modelos configurados para evaluación:
       <div class="tema-header">
         <div class="tema-eyebrow">Paso 3 · Celda 3 (Hands-On)</div>
         <h3 class="tema-title">Primera Llamada a Llama en Modo Zero-Shot</h3>
-      </div>
-
-      <div class="easy-explainer-box">
-        <div class="easy-header">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6m-5 3h4m-7-9.5A6.5 6.5 0 1 1 18 11.5c0 2.5-1.5 4-2.5 5h-7c-1-1-2.5-2.5-2.5-5z"/></svg>
-          <span>¿No entendiste? Te lo explico fácil: Inferencia Zero-Shot (El examen a libro abierto)</span>
-        </div>
-        <p class="easy-text">
-          <b>Zero-Shot</b> significa que le haces una pregunta directa al modelo <b>sin darle ejemplos previos</b> de cómo quieres la respuesta. El modelo recurre a todo lo que aprendió durante su pre-entrenamiento masivo para predecir el siguiente token estadísticamente más probable.
-        </p>
       </div>
 
       <div class="tema-section-block">
@@ -563,6 +545,17 @@ En cambio, el almacenamiento (disco SSD o HDD) es la memoria secundaria permanen
           </div>
         </details>
       </div>
+
+      <!-- Cuadro Pedagógico después del Contexto -->
+      <div class="easy-explainer-box">
+        <div class="easy-header">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6m-5 3h4m-7-9.5A6.5 6.5 0 1 1 18 11.5c0 2.5-1.5 4-2.5 5h-7c-1-1-2.5-2.5-2.5-5z"/></svg>
+          <span>¿No entendiste? Te lo explico fácil: Inferencia Zero-Shot (El examen a libro abierto)</span>
+        </div>
+        <p class="easy-text">
+          <b>Zero-Shot</b> significa que le haces una pregunta directa al modelo <b>sin darle ejemplos previos</b> de cómo quieres la respuesta. El modelo recurre a todo lo que aprendió durante su pre-entrenamiento masivo para predecir el siguiente token estadísticamente más probable.
+        </p>
+      </div>
     </article>
 
     <!-- PASO 4 Y 5: CELDAS 4 Y 5 -->
@@ -570,16 +563,6 @@ En cambio, el almacenamiento (disco SSD o HDD) es la memoria secundaria permanen
       <div class="tema-header">
         <div class="tema-eyebrow">Pasos 4 y 5 · Celdas 4 y 5 (Hands-On)</div>
         <h3 class="tema-title">Inspección de la Estructura JSON y Facturación de Tokens</h3>
-      </div>
-
-      <div class="easy-explainer-box">
-        <div class="easy-header">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6m-5 3h4m-7-9.5A6.5 6.5 0 1 1 18 11.5c0 2.5-1.5 4-2.5 5h-7c-1-1-2.5-2.5-2.5-5z"/></svg>
-          <span>¿No entendiste? Te lo explico fácil: La analogía de los bloques de Lego y la factura telefónica</span>
-        </div>
-        <p class="easy-text">
-          Los modelos no leen letras ni palabras completas: leen <b>tokens</b> (fragmentos de palabras con números asignados). El objeto <code>usage</code> es como el <b>ticket de la tienda</b>: te dice cuántos bloques de Lego le enviaste tú en la pregunta (<code>prompt_tokens</code>) y cuántos bloques construyó el modelo para responderte (<code>completion_tokens</code>). La suma de ambos (<code>total_tokens</code>) es lo que se factura.
-        </p>
       </div>
 
       <div class="tema-section-block">
@@ -662,6 +645,17 @@ Tokens totales: 117</pre>
           </div>
         </details>
       </div>
+
+      <!-- Cuadro Pedagógico después del Contexto -->
+      <div class="easy-explainer-box">
+        <div class="easy-header">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6m-5 3h4m-7-9.5A6.5 6.5 0 1 1 18 11.5c0 2.5-1.5 4-2.5 5h-7c-1-1-2.5-2.5-2.5-5z"/></svg>
+          <span>¿No entendiste? Te lo explico fácil: La analogía de los bloques de Lego y la factura telefónica</span>
+        </div>
+        <p class="easy-text">
+          Los modelos no leen letras ni palabras completas: leen <b>tokens</b> (fragmentos de palabras con números asignados). El objeto <code>usage</code> es como el <b>ticket de la tienda</b>: te dice cuántos bloques de Lego le enviaste tú en la pregunta (<code>prompt_tokens</code>) y cuántos bloques construyó el modelo para responderte (<code>completion_tokens</code>). La suma de ambos (<code>total_tokens</code>) es lo que se factura.
+        </p>
+      </div>
     </article>
 
     <!-- PASO 6: CELDA 6 -->
@@ -669,16 +663,6 @@ Tokens totales: 117</pre>
       <div class="tema-header">
         <div class="tema-eyebrow">Paso 6 · Celda 6 (Hands-On)</div>
         <h3 class="tema-title">Midiendo la Latencia de Inferencia y Throughput</h3>
-      </div>
-
-      <div class="easy-explainer-box">
-        <div class="easy-header">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6m-5 3h4m-7-9.5A6.5 6.5 0 1 1 18 11.5c0 2.5-1.5 4-2.5 5h-7c-1-1-2.5-2.5-2.5-5z"/></svg>
-          <span>¿No entendiste? Te lo explico fácil: El cronómetro de la carrera</span>
-        </div>
-        <p class="easy-text">
-          <b>Latencia</b> es el tiempo exacto que tienes que esperar con los brazos cruzados desde que presionas Enter hasta que la última letra de la respuesta aparece en tu pantalla. Con la librería <code>time</code> de Python, medimos este tiempo con precisión de centésimas de segundo.
-        </p>
       </div>
 
       <div class="tema-section-block">
@@ -766,6 +750,17 @@ Tokens totales: 117</pre>
           </div>
         </details>
       </div>
+
+      <!-- Cuadro Pedagógico después del Contexto -->
+      <div class="easy-explainer-box">
+        <div class="easy-header">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6m-5 3h4m-7-9.5A6.5 6.5 0 1 1 18 11.5c0 2.5-1.5 4-2.5 5h-7c-1-1-2.5-2.5-2.5-5z"/></svg>
+          <span>¿No entendiste? Te lo explico fácil: El cronómetro de la carrera</span>
+        </div>
+        <p class="easy-text">
+          <b>Latencia</b> es el tiempo exacto que tienes que esperar con los brazos cruzados desde que presionas Enter hasta que la última letra de la respuesta aparece en tu pantalla. Con la librería <code>time</code> de Python, medimos este tiempo con precisión de centésimas de segundo.
+        </p>
+      </div>
     </article>
 
     <!-- PASO 7: CELDA 7 -->
@@ -773,16 +768,6 @@ Tokens totales: 117</pre>
       <div class="tema-header">
         <div class="tema-eyebrow">Paso 7 · Celda 7 (Hands-On)</div>
         <h3 class="tema-title">Comparación de Modelos en Clase (Prompt Único)</h3>
-      </div>
-
-      <div class="easy-explainer-box">
-        <div class="easy-header">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6m-5 3h4m-7-9.5A6.5 6.5 0 1 1 18 11.5c0 2.5-1.5 4-2.5 5h-7c-1-1-2.5-2.5-2.5-5z"/></svg>
-          <span>¿No entendiste? Te lo explico fácil: La carrera comparativa de atletismo</span>
-        </div>
-        <p class="easy-text">
-          Le hacemos exactamente la misma pregunta al <b>modelo ligero (20B)</b>, al <b>modelo grande (120B)</b> y al <b>modelo de razonamiento (Qwen 27B)</b>. Medimos quién llega primero a la meta y comparamos si la respuesta del grande justifica haber esperado el triple de tiempo.
-        </p>
       </div>
 
       <div class="tema-section-block">
@@ -892,6 +877,17 @@ Respuesta del modelo grande (openai/gpt-oss-120b):
           </div>
         </details>
       </div>
+
+      <!-- Cuadro Pedagógico después del Contexto -->
+      <div class="easy-explainer-box">
+        <div class="easy-header">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6m-5 3h4m-7-9.5A6.5 6.5 0 1 1 18 11.5c0 2.5-1.5 4-2.5 5h-7c-1-1-2.5-2.5-2.5-5z"/></svg>
+          <span>¿No entendiste? Te lo explico fácil: La carrera comparativa de atletismo</span>
+        </div>
+        <p class="easy-text">
+          Le hacemos exactamente la misma pregunta al <b>modelo ligero (20B)</b>, al <b>modelo grande (120B)</b> y al <b>modelo de razonamiento (Qwen 27B)</b>. Medimos quién llega primero a la meta y comparamos si la respuesta del grande justifica haber esperado el triple de tiempo.
+        </p>
+      </div>
     </article>
 
     <!-- ======================================================================
@@ -908,16 +904,6 @@ Respuesta del modelo grande (openai/gpt-oss-120b):
       <div class="tema-header">
         <div class="tema-eyebrow">Pasos 8 y 9 · Celdas 8 y 9 (Challenge)</div>
         <h3 class="tema-title">Carga de Credenciales y Definición de las 3 Preguntas de Negocio</h3>
-      </div>
-
-      <div class="easy-explainer-box">
-        <div class="easy-header">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6m-5 3h4m-7-9.5A6.5 6.5 0 1 1 18 11.5c0 2.5-1.5 4-2.5 5h-7c-1-1-2.5-2.5-2.5-5z"/></svg>
-          <span>¿No entendiste? Te lo explico fácil: La lista de tareas para el robot</span>
-        </div>
-        <p class="easy-text">
-          Creamos una <b>lista vacía llamada <code>preguntas</code></b> y le agregamos una por una las 3 consultas de soporte que le haremos a los modelos. Es como escribir los 3 exámenes que le aplicaremos a cada modelo para calificar su rendimiento.
-        </p>
       </div>
 
       <div class="tema-section-block">
@@ -1017,6 +1003,17 @@ Lista de preguntas cargadas:
           </div>
         </details>
       </div>
+
+      <!-- Cuadro Pedagógico después del Contexto -->
+      <div class="easy-explainer-box">
+        <div class="easy-header">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6m-5 3h4m-7-9.5A6.5 6.5 0 1 1 18 11.5c0 2.5-1.5 4-2.5 5h-7c-1-1-2.5-2.5-2.5-5z"/></svg>
+          <span>¿No entendiste? Te lo explico fácil: La lista de tareas para el robot</span>
+        </div>
+        <p class="easy-text">
+          Creamos una <b>lista vacía llamada <code>preguntas</code></b> y le agregamos una por una las 3 consultas de soporte que le haremos a los modelos. Es como escribir los 3 exámenes que le aplicaremos a cada modelo para calificar su rendimiento.
+        </p>
+      </div>
     </article>
 
     <!-- PASO 10: CELDA 10 (PREGUNTA 1) -->
@@ -1024,16 +1021,6 @@ Lista de preguntas cargadas:
       <div class="tema-header">
         <div class="tema-eyebrow">Paso 10 · Celda 10 (Challenge)</div>
         <h3 class="tema-title">Consulta de la Pregunta 1 y Estructuración de <code>resultado_1</code></h3>
-      </div>
-
-      <div class="easy-explainer-box">
-        <div class="easy-header">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6m-5 3h4m-7-9.5A6.5 6.5 0 1 1 18 11.5c0 2.5-1.5 4-2.5 5h-7c-1-1-2.5-2.5-2.5-5z"/></svg>
-          <span>¿No entendiste? Te lo explico fácil: El archivero de la primera pregunta</span>
-        </div>
-        <p class="easy-text">
-          Enviamos la <b>Pregunta 1</b> (¿Cómo restablecer contraseña?) a los 3 modelos. Guardamos la respuesta, el tiempo en segundos y los tokens gastados dentro de un <b>diccionario de Python llamado <code>resultado_1</code></b> (como una carpeta con etiquetas bien organizadas).
-        </p>
       </div>
 
       <div class="tema-section-block">
@@ -1167,6 +1154,17 @@ Lista de preguntas cargadas:
           </div>
         </details>
       </div>
+
+      <!-- Cuadro Pedagógico después del Contexto -->
+      <div class="easy-explainer-box">
+        <div class="easy-header">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6m-5 3h4m-7-9.5A6.5 6.5 0 1 1 18 11.5c0 2.5-1.5 4-2.5 5h-7c-1-1-2.5-2.5-2.5-5z"/></svg>
+          <span>¿No entendiste? Te lo explico fácil: El archivero de la primera pregunta</span>
+        </div>
+        <p class="easy-text">
+          Enviamos la <b>Pregunta 1</b> (¿Cómo restablecer contraseña?) a los 3 modelos. Guardamos la respuesta, el tiempo en segundos y los tokens gastados dentro de un <b>diccionario de Python llamado <code>resultado_1</code></b> (como una carpeta con etiquetas bien organizadas).
+        </p>
+      </div>
     </article>
 
     <!-- PASO 11 Y 12: CELDAS 11 Y 12 (PREGUNTAS 2 Y 3) -->
@@ -1174,16 +1172,6 @@ Lista de preguntas cargadas:
       <div class="tema-header">
         <div class="tema-eyebrow">Pasos 11 y 12 · Celdas 11 y 12 (Challenge)</div>
         <h3 class="tema-title">Consultas de las Preguntas 2 y 3 (<code>resultado_2</code> y <code>resultado_3</code>)</h3>
-      </div>
-
-      <div class="easy-explainer-box">
-        <div class="easy-header">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6m-5 3h4m-7-9.5A6.5 6.5 0 1 1 18 11.5c0 2.5-1.5 4-2.5 5h-7c-1-1-2.5-2.5-2.5-5z"/></svg>
-          <span>¿No entendiste? Te lo explico fácil: Los archiveros de las preguntas 2 y 3</span>
-        </div>
-        <p class="easy-text">
-          Repetimos exactamente el mismo proceso científico para la <b>Pregunta 2</b> (Horarios y canales de atención) y la <b>Pregunta 3</b> (Requisitos técnicos de hardware y software), generando los diccionarios <code>resultado_2</code> y <code>resultado_3</code>.
-        </p>
       </div>
 
       <div class="tema-section-block">
@@ -1262,6 +1250,17 @@ Pregunta 3 consultada en los 3 modelos:
           </div>
         </details>
       </div>
+
+      <!-- Cuadro Pedagógico después del Contexto -->
+      <div class="easy-explainer-box">
+        <div class="easy-header">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6m-5 3h4m-7-9.5A6.5 6.5 0 1 1 18 11.5c0 2.5-1.5 4-2.5 5h-7c-1-1-2.5-2.5-2.5-5z"/></svg>
+          <span>¿No entendiste? Te lo explico fácil: Los archiveros de las preguntas 2 y 3</span>
+        </div>
+        <p class="easy-text">
+          Repetimos exactamente el mismo proceso científico para la <b>Pregunta 2</b> (Horarios y canales de atención) y la <b>Pregunta 3</b> (Requisitos técnicos de hardware y software), generando los diccionarios <code>resultado_2</code> y <code>resultado_3</code>.
+        </p>
+      </div>
     </article>
 
     <!-- PASO 13: CELDA 13 (CONSOLIDACIÓN) -->
@@ -1269,16 +1268,6 @@ Pregunta 3 consultada en los 3 modelos:
       <div class="tema-header">
         <div class="tema-eyebrow">Paso 13 · Celda 13 (Challenge)</div>
         <h3 class="tema-title">Consolidación de Resultados en la Lista <code>resultados</code></h3>
-      </div>
-
-      <div class="easy-explainer-box">
-        <div class="easy-header">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6m-5 3h4m-7-9.5A6.5 6.5 0 1 1 18 11.5c0 2.5-1.5 4-2.5 5h-7c-1-1-2.5-2.5-2.5-5z"/></svg>
-          <span>¿No entendiste? Te lo explico fácil: Guardar los 3 folders en una sola caja</span>
-        </div>
-        <p class="easy-text">
-          Juntamos las 3 carpetas (<code>resultado_1</code>, <code>resultado_2</code> y <code>resultado_3</code>) dentro de una sola <b>lista general llamada <code>resultados</code></b>. Así podemos recorrerla con un bucle <code>for</code> para imprimir tablas o exportar los datos en formato JSON.
-        </p>
       </div>
 
       <div class="tema-section-block">
@@ -1350,6 +1339,17 @@ Se han consolidado los 3 resultados completos en la lista.</pre>
           </div>
         </details>
       </div>
+
+      <!-- Cuadro Pedagógico después del Contexto -->
+      <div class="easy-explainer-box">
+        <div class="easy-header">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6m-5 3h4m-7-9.5A6.5 6.5 0 1 1 18 11.5c0 2.5-1.5 4-2.5 5h-7c-1-1-2.5-2.5-2.5-5z"/></svg>
+          <span>¿No entendiste? Te lo explico fácil: Guardar los 3 folders en una sola caja</span>
+        </div>
+        <p class="easy-text">
+          Juntamos las 3 carpetas (<code>resultado_1</code>, <code>resultado_2</code> y <code>resultado_3</code>) dentro de una sola <b>lista general llamada <code>resultados</code></b>. Así podemos recorrerla con un bucle <code>for</code> para imprimir tablas o exportar los datos en formato JSON.
+        </p>
+      </div>
     </article>
 
     <!-- PASO 14: CELDA 14 (TABLA FINAL Y DICTAMEN) -->
@@ -1357,16 +1357,6 @@ Se han consolidado los 3 resultados completos en la lista.</pre>
       <div class="tema-header">
         <div class="tema-eyebrow">Paso 14 · Celda 14 (Challenge)</div>
         <h3 class="tema-title">Tabla Comparativa Consolidada y Dictamen de Arquitectura</h3>
-      </div>
-
-      <div class="easy-explainer-box">
-        <div class="easy-header">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6m-5 3h4m-7-9.5A6.5 6.5 0 1 1 18 11.5c0 2.5-1.5 4-2.5 5h-7c-1-1-2.5-2.5-2.5-5z"/></svg>
-          <span>¿No entendiste? Te lo explico fácil: El veredicto final del juez</span>
-        </div>
-        <p class="easy-text">
-          Es la <b>entrega de calificaciones finales</b>. Dibujamos una tabla comparativa limpia donde se demuestra que el modelo ligero (20B) resolvió las 3 preguntas en menos de 1 segundo con la misma precisión que el modelo grande de 120B, demostrando que <b>es el modelo ideal para producción</b>.
-        </p>
       </div>
 
       <div class="tema-section-block">
@@ -1471,6 +1461,17 @@ CONCLUSIÓN Y ANÁLISIS COMPARATIVO DE INGENIERÍA:
           </div>
         </details>
       </div>
+
+      <!-- Cuadro Pedagógico después del Contexto -->
+      <div class="easy-explainer-box">
+        <div class="easy-header">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6m-5 3h4m-7-9.5A6.5 6.5 0 1 1 18 11.5c0 2.5-1.5 4-2.5 5h-7c-1-1-2.5-2.5-2.5-5z"/></svg>
+          <span>¿No entendiste? Te lo explico fácil: El veredicto final del juez</span>
+        </div>
+        <p class="easy-text">
+          Es la <b>entrega de calificaciones finales</b>. Dibujamos una tabla comparativa limpia donde se demuestra que el modelo ligero (20B) resolvió las 3 preguntas en menos de 1 segundo con la misma precisión que el modelo grande de 120B, demostrando que <b>es el modelo ideal para producción</b>.
+        </p>
+      </div>
     </article>
 
     <!-- ======================================================================
@@ -1504,7 +1505,7 @@ CONCLUSIÓN Y ANÁLISIS COMPARATIVO DE INGENIERÍA:
         <!-- Controles del Benchmark -->
         <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1.2rem; margin: 1.2rem 0;">
           <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.8rem; margin-bottom: 0.8rem;">
-            <label for="bench-preset-select" style="font-size: 0.8rem; font-family: var(--font-mono); color: var(--meta-blue); font-weight: 700; text-transform: uppercase;">
+            <label for="bench-custom-query" style="font-size: 0.8rem; font-family: var(--font-mono); color: var(--meta-blue); font-weight: 700; text-transform: uppercase;">
               Seleccionar Consulta de Negocio:
             </label>
             <div id="bench-preset-chips" style="display: flex; gap: 0.4rem; flex-wrap: wrap;">
