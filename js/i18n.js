@@ -24,7 +24,6 @@
       autoDisplay: false
     }, "google_translate_element");
 
-    // Apply saved language if English
     if (currentLang === "en") {
       setTimeout(function() {
         triggerGoogleTranslate("en");
@@ -38,7 +37,6 @@
       select.value = lang;
       select.dispatchEvent(new Event("change"));
     } else {
-      // Fallback via cookie
       document.cookie = "googtrans=/es/" + lang + "; path=/";
       document.cookie = "googtrans=/es/" + lang + "; domain=" + window.location.hostname + "; path=/";
     }
@@ -59,7 +57,6 @@
       document.cookie = "googtrans=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC";
       document.cookie = "googtrans=/es/es; domain=" + window.location.hostname + "; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC";
       triggerGoogleTranslate("es");
-      // If needed reload to restore clean original DOM
       setTimeout(function() {
         const frame = document.querySelector(".goog-te-banner-frame");
         if (frame) frame.style.display = "none";
@@ -77,8 +74,32 @@
     });
   }
 
+  function protectBrandsAndCode() {
+    // List of selectors that MUST NOT be translated (Brand names, Logos, Code, Formulas, Author)
+    const selectors = [
+      ".brand-wrapper",
+      ".brand-text",
+      ".meta-logo-svg",
+      "pre",
+      "code",
+      "svg",
+      ".math-display",
+      ".formula-box",
+      ".katex",
+      ".model-badge",
+      ".badge-model",
+      ".badge-role"
+    ];
+    
+    document.querySelectorAll(selectors.join(", ")).forEach(el => {
+      el.classList.add("notranslate");
+      el.setAttribute("translate", "no");
+    });
+  }
+
   function setupElements() {
-    // 1. Add hidden translate container
+    protectBrandsAndCode();
+
     if (!document.getElementById("google_translate_element")) {
       const div = document.createElement("div");
       div.id = "google_translate_element";
@@ -86,12 +107,6 @@
       document.body.appendChild(div);
     }
 
-    // 2. Protect code and pre elements with notranslate
-    document.querySelectorAll("pre, code, svg, .math-display, .formula-box, .meta-logo-svg").forEach(el => {
-      el.classList.add("notranslate");
-    });
-
-    // 3. Load script if not present
     if (!document.getElementById("google-translate-script")) {
       const script = document.createElement("script");
       script.id = "google-translate-script";
@@ -100,7 +115,6 @@
       document.body.appendChild(script);
     }
 
-    // 4. Setup switcher button listener
     const btn = document.getElementById("lang-switcher-btn");
     if (btn) {
       btn.onclick = function(e) {
