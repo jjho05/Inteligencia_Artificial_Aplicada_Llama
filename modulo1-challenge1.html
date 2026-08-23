@@ -110,6 +110,16 @@
        MANUAL DE OPERACIONES: OBTENCIÓN DE CREDENCIALES EN GROQ CLOUD
        ====================================================================== -->
   <section class="tema-card" id="manual-groq" style="margin-bottom: 3rem; border: 1px solid var(--border-subtle); background: var(--bg-surface);">
+    <div class="pro-tip-box">
+      <div class="pro-tip-header">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
+        <span>Consejo Pro de Seguridad: Protección de Credenciales en Entornos Productivos</span>
+      </div>
+      <p class="pro-tip-text">
+        Nunca cometas archivos <code class="code-inline-dark">.env</code> ni expongas claves <code class="code-inline-dark">gsk_...</code> en código fuente público. En entornos de nube y notebooks colaborativos, utiliza siempre administradores de secretos como <b>Google Colab Secrets</b>, <b>AWS Secrets Manager</b> o <b>Vault</b>.
+      </p>
+    </div>
+
     <div class="tema-header">
       <div class="tema-eyebrow">Guía de Inicio Rápido &middot; Infraestructura</div>
       <h3 class="tema-title">CÓMO OBTENER TU API KEY GRATUITA EN GROQ CONSOLE</h3>
@@ -154,6 +164,16 @@
 
     <!-- SECCIÓN 1: CONFIGURACIÓN DEL ENTORNO & COLAB SECRETS -->
     <section class="tema-card" id="cell-1-section" style="margin-bottom: 3rem;">
+      <div class="pro-tip-box">
+        <div class="pro-tip-header">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
+          <span>Consejo Pro: Recuperación Cifrada de Claves con google.colab.userdata</span>
+        </div>
+        <p class="pro-tip-text">
+          La librería <code class="code-inline-dark">google.colab.userdata</code> garantiza que tu clave se inyecte directamente en memoria sin persistir en el historial de ejecución del cuaderno, evitando fugas involuntarias al compartir notebooks.
+        </p>
+      </div>
+
       <div class="tema-header">
         <div class="tema-eyebrow">Paso 1 &middot; Celda 1</div>
         <h3 class="tema-title">CONFIGURACIÓN DEL ENTORNO & COLAB SECRETS</h3>
@@ -269,59 +289,85 @@ Modelos configurados para evaluación:
         </div>
       </div>
 
-      <!-- Desglose Línea por Línea -->
-      <div class="expl-box">
-        <div class="expl-box-header">
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="var(--text-primary)"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
-          <span>Desglose Técnico Línea por Línea</span>
+      <!-- Desglose Línea por Línea Colapsable -->
+      <details class="formula-breakdown-details" open>
+        <summary class="formula-breakdown-summary">
+          <div class="summary-left">
+            <svg fill="currentColor" height="16" viewBox="0 0 24 24" width="16"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path></svg>
+            <span>Desglose Técnico Línea por Línea</span>
+            <span class="breakdown-count-tag">4 instrucciones clave</span>
+          </div>
+          <span class="summary-toggle-icon">
+            <svg fill="none" height="14" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" width="14"><path d="M6 9l6 6 6-6"></path></svg>
+          </span>
+        </summary>
+        <div class="formula-breakdown-panel">
+          <table class="line-breakdown-table">
+            <thead>
+              <tr>
+                <th style="width: 85px;">Línea</th>
+                <th style="width: 260px;">Instrucción de Código</th>
+                <th>Propósito y Comportamiento en Ingeniería</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="line-num-badge">L1</span></td>
+                <td><code class="code-inline-dark">!pip install groq -q</code></td>
+                <td>Instala el SDK oficial de Groq en el entorno de Google Colab. La bandera <code class="code-inline-dark">-q</code> silencia logs redundantes.</td>
+              </tr>
+              <tr>
+                <td><span class="line-num-badge">L7</span></td>
+                <td><code class="code-inline-dark">userdata.get('GROQ_API_KEY')</code></td>
+                <td>Recupera de forma cifrada el secreto almacenado en el panel lateral de Colab sin exponer la cadena en texto plano.</td>
+              </tr>
+              <tr>
+                <td><span class="line-num-badge">L10-15</span></td>
+                <td><code class="code-inline-dark">def obtener_modelo(...)</code></td>
+                <td>Consulta <code class="code-inline-dark">client.models.list()</code> para validar qué checkpoints están activos en la infraestructura de Groq, implementando un fallback graceful.</td>
+              </tr>
+              <tr>
+                <td><span class="line-num-badge">L21-23</span></td>
+                <td><code class="code-inline-dark">re.sub(r"&lt;think&gt;.*?&lt;/think&gt;", ...)</code></td>
+                <td>Sanitiza las etiquetas de razonamiento interno que emiten modelos como Qwen o DeepSeek R1, garantizando que el usuario solo reciba la respuesta limpia.</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-        <table class="line-breakdown-table">
-          <thead>
-            <tr>
-              <th style="width: 85px;">Línea</th>
-              <th style="width: 260px;">Instrucción de Código</th>
-              <th>Propósito y Comportamiento en Ingeniería</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><span class="line-num-badge">L1</span></td>
-              <td><code class="code-inline-dark">!pip install groq -q</code></td>
-              <td>Instala el SDK oficial de Groq en el entorno de Google Colab. La bandera <code class="code-inline-dark">-q</code> (quiet) silencia logs innecesarios para mantener la salida limpia.</td>
-            </tr>
-            <tr>
-              <td><span class="line-num-badge">L7</span></td>
-              <td><code class="code-inline-dark">userdata.get('GROQ_API_KEY')</code></td>
-              <td>Recupera de forma cifrada el secreto almacenado en el panel lateral de Colab sin exponer la cadena en texto plano.</td>
-            </tr>
-            <tr>
-              <td><span class="line-num-badge">L10-15</span></td>
-              <td><code class="code-inline-dark">def obtener_modelo(...)</code></td>
-              <td>Consulta <code class="code-inline-dark">client.models.list()</code> para validar qué checkpoints están activos en la infraestructura de Groq, implementando un fallback graceful si un endpoint cambia de versión.</td>
-            </tr>
-            <tr>
-              <td><span class="line-num-badge">L21-23</span></td>
-              <td><code class="code-inline-dark">re.sub(r"&lt;think&gt;.*?&lt;/think&gt;", ...)</code></td>
-              <td>Sanitiza las etiquetas de razonamiento interno que emiten modelos como Qwen o DeepSeek R1, garantizando que el usuario final solo reciba la respuesta procesada.</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      </details>
 
-      <!-- Q&A de Ingeniería -->
-      <div class="qa-card">
-        <div class="qa-q">
-          <svg viewBox="0 0 24 24" width="14" height="14" fill="var(--meta-blue)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16h-2v-2h2v2zm1.07-7.75l-.9.92C12.45 11.9 12 12.5 12 14h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg>
-          <span>Q&A: ¿Qué ocurre si obtengo el error <code class="code-inline-dark" style="color:#ff7b72;">SecretNotFoundError</code> o <code class="code-inline-dark" style="color:#ff7b72;">AuthenticationError</code>?</span>
+      <!-- Q&A de Ingeniería Colapsable -->
+      <details class="formula-breakdown-details">
+        <summary class="formula-breakdown-summary">
+          <div class="summary-left">
+            <svg fill="currentColor" height="16" viewBox="0 0 24 24" width="16"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16h-2v-2h2v2zm1.07-7.75l-.9.92C12.45 11.9 12 12.5 12 14h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"></path></svg>
+            <span>Q&A y Diagnóstico de Errores: AuthenticationError 401 & SecretNotFoundError</span>
+            <span class="breakdown-count-tag">1 diagnóstico</span>
+          </div>
+          <span class="summary-toggle-icon">
+            <svg fill="none" height="14" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" width="14"><path d="M6 9l6 6 6-6"></path></svg>
+          </span>
+        </summary>
+        <div class="formula-breakdown-panel">
+          <p class="prose-p" style="font-size:0.86rem; margin:0;">
+            El error <b>SecretNotFoundError</b> indica que el nombre asignado en Colab Secrets no coincide exactamente con <code class="code-inline-dark">GROQ_API_KEY</code> (sensible a mayúsculas) o que no se activó el interruptor "Notebook access". El error <b>AuthenticationError 401</b> ocurre cuando la API Key ha sido revocada o copiada con espacios en blanco adicionales.
+          </p>
         </div>
-        <div class="qa-a">
-          El error <b>SecretNotFoundError</b> indica que el nombre asignado en Colab Secrets no coincide exactamente con <code class="code-inline-dark">GROQ_API_KEY</code> (sensible a mayúsculas) o que no se activó el interruptor "Notebook access". El error <b>AuthenticationError 401</b> ocurre cuando la API Key ha sido revocada o copiada con espacios en blanco adicionales.
-        </div>
-      </div>
+      </details>
     </section>
 
     <!-- SECCIÓN 2: DE PALABRAS A TOKENS -->
     <section class="tema-card" id="cell-2-section" style="margin-bottom: 3rem;">
+      <div class="pro-tip-box">
+        <div class="pro-tip-header">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
+          <span>Consejo Pro: Estimación de Costos a Partir del Conteo de Tokens</span>
+        </div>
+        <p class="pro-tip-text">
+          En español, multiplica la cantidad estimada de palabras por <b>1.4</b> para calcular los tokens resultantes. Esto te permite proyectar el presupuesto de inferencia antes de lanzar llamadas masivas.
+        </p>
+      </div>
+
       <div class="tema-header">
         <div class="tema-eyebrow">Paso 2 &middot; Celda 2</div>
         <h3 class="tema-title">DE PALABRAS A TOKENS</h3>
@@ -376,49 +422,75 @@ Modelos configurados para evaluación:
         </div>
       </div>
 
-      <!-- Desglose Línea por Línea -->
-      <div class="expl-box">
-        <div class="expl-box-header">
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="var(--text-primary)"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
-          <span>Desglose Técnico Línea por Línea</span>
+      <!-- Desglose Línea por Línea Colapsable -->
+      <details class="formula-breakdown-details" open>
+        <summary class="formula-breakdown-summary">
+          <div class="summary-left">
+            <svg fill="currentColor" height="16" viewBox="0 0 24 24" width="16"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path></svg>
+            <span>Desglose Técnico Línea por Línea</span>
+            <span class="breakdown-count-tag">2 instrucciones clave</span>
+          </div>
+          <span class="summary-toggle-icon">
+            <svg fill="none" height="14" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" width="14"><path d="M6 9l6 6 6-6"></path></svg>
+          </span>
+        </summary>
+        <div class="formula-breakdown-panel">
+          <table class="line-breakdown-table">
+            <thead>
+              <tr>
+                <th style="width: 85px;">Línea</th>
+                <th style="width: 260px;">Instrucción de Código</th>
+                <th>Propósito y Comportamiento en Ingeniería</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="line-num-badge">L1</span></td>
+                <td><code class="code-inline-dark">prompt = "..."</code></td>
+                <td>Declara la variable de entrada de tipo <code class="code-inline-dark">str</code> que contiene la consulta en lenguaje natural que será enviada al tokenizador del modelo.</td>
+              </tr>
+              <tr>
+                <td><span class="line-num-badge">L4</span></td>
+                <td><code class="code-inline-dark">print(prompt)</code></td>
+                <td>Imprime la cadena en la consola para verificar que los caracteres UTF-8 no se hayan corrompido durante la asignación.</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-        <table class="line-breakdown-table">
-          <thead>
-            <tr>
-              <th style="width: 85px;">Línea</th>
-              <th style="width: 260px;">Instrucción de Código</th>
-              <th>Propósito y Comportamiento en Ingeniería</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><span class="line-num-badge">L1</span></td>
-              <td><code class="code-inline-dark">prompt = "..."</code></td>
-              <td>Declara la variable de entrada de tipo <code class="code-inline-dark">str</code> que contiene la consulta en lenguaje natural que será enviada al tokenizador del modelo.</td>
-            </tr>
-            <tr>
-              <td><span class="line-num-badge">L4</span></td>
-              <td><code class="code-inline-dark">print(prompt)</code></td>
-              <td>Imprime la cadena en la consola para verificar que los caracteres UTF-8 (signos de interrogación y acentos) no se hayan corrompido durante la asignación.</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      </details>
 
-      <!-- Q&A de Ingeniería -->
-      <div class="qa-card">
-        <div class="qa-q">
-          <svg viewBox="0 0 24 24" width="14" height="14" fill="var(--meta-blue)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16h-2v-2h2v2zm1.07-7.75l-.9.92C12.45 11.9 12 12.5 12 14h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg>
-          <span>Q&A: ¿Por qué no contamos caracteres o palabras en lugar de tokens?</span>
+      <!-- Q&A de Ingeniería Colapsable -->
+      <details class="formula-breakdown-details">
+        <summary class="formula-breakdown-summary">
+          <div class="summary-left">
+            <svg fill="currentColor" height="16" viewBox="0 0 24 24" width="16"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16h-2v-2h2v2zm1.07-7.75l-.9.92C12.45 11.9 12 12.5 12 14h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"></path></svg>
+            <span>Q&A: ¿Por qué no contamos caracteres o palabras en lugar de tokens?</span>
+            <span class="breakdown-count-tag">1 pregunta resuelta</span>
+          </div>
+          <span class="summary-toggle-icon">
+            <svg fill="none" height="14" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" width="14"><path d="M6 9l6 6 6-6"></path></svg>
+          </span>
+        </summary>
+        <div class="formula-breakdown-panel">
+          <p class="prose-p" style="font-size:0.86rem; margin:0;">
+            Porque la arquitectura Transformer procesa matrices de vectores donde cada token representa una posición en la ventana de contexto. Las APIs de inferencia y la memoria VRAM están delimitadas por tokens máximos (ej: 8,192 o 128,000 tokens), no por longitud de texto en caracteres.
+          </p>
         </div>
-        <div class="qa-a">
-          Porque la arquitectura Transformer procesa matrices de vectores donde cada token representa una posición en la ventana de contexto. Las APIs de inferencia y la memoria VRAM están delimitadas por tokens máximos (ej: 8,192 o 128,000 tokens), no por longitud de texto en caracteres.
-        </div>
-      </div>
+      </details>
     </section>
 
     <!-- SECCIÓN 3: PRIMERA LLAMADA A LLAMA (ZERO-SHOT) -->
     <section class="tema-card" id="cell-3-section" style="margin-bottom: 3rem;">
+      <div class="pro-tip-box">
+        <div class="pro-tip-header">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
+          <span>Consejo Pro: Inferencia Determinista para Soporte Técnico</span>
+        </div>
+        <p class="pro-tip-text">
+          En asistentes de preguntas frecuentes, fija siempre <code class="code-inline-dark">temperature=0.2</code> o <code class="code-inline-dark">temperature=0.0</code> para obtener respuestas reproducibles, precisas y sin alucinaciones.
+        </p>
+      </div>
+
       <div class="tema-header">
         <div class="tema-eyebrow">Paso 3 &middot; Celda 3</div>
         <h3 class="tema-title">PRIMERA LLAMADA A LLAMA (ZERO-SHOT)</h3>
@@ -474,54 +546,80 @@ En cambio, el almacenamiento (disco SSD o HDD) es la memoria secundaria permanen
         </div>
       </div>
 
-      <!-- Desglose Línea por Línea -->
-      <div class="expl-box">
-        <div class="expl-box-header">
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="var(--text-primary)"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
-          <span>Desglose Técnico Línea por Línea</span>
+      <!-- Desglose Línea por Línea Colapsable -->
+      <details class="formula-breakdown-details" open>
+        <summary class="formula-breakdown-summary">
+          <div class="summary-left">
+            <svg fill="currentColor" height="16" viewBox="0 0 24 24" width="16"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path></svg>
+            <span>Desglose Técnico Línea por Línea</span>
+            <span class="breakdown-count-tag">3 instrucciones clave</span>
+          </div>
+          <span class="summary-toggle-icon">
+            <svg fill="none" height="14" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" width="14"><path d="M6 9l6 6 6-6"></path></svg>
+          </span>
+        </summary>
+        <div class="formula-breakdown-panel">
+          <table class="line-breakdown-table">
+            <thead>
+              <tr>
+                <th style="width: 85px;">Línea</th>
+                <th style="width: 260px;">Instrucción de Código</th>
+                <th>Propósito y Comportamiento en Ingeniería</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="line-num-badge">L1-5</span></td>
+                <td><code class="code-inline-dark">client.chat.completions.create(...)</code></td>
+                <td>Envía una solicitud HTTP POST asíncrona a los servidores LPU de Groq con la configuración de modelo, mensajes y límite de tokens.</td>
+              </tr>
+              <tr>
+                <td><span class="line-num-badge">L3</span></td>
+                <td><code class="code-inline-dark">messages=[{"role": "user", ...}]</code></td>
+                <td>Define la lista del historial de conversación. Al tener solo 1 elemento, se ejecuta en modalidad Zero-Shot.</td>
+              </tr>
+              <tr>
+                <td><span class="line-num-badge">L7</span></td>
+                <td><code class="code-inline-dark">response.choices[0].message.content</code></td>
+                <td>Accede al primer candidato generado (índice 0) y extrae el texto puro de la respuesta generada por el asistente.</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-        <table class="line-breakdown-table">
-          <thead>
-            <tr>
-              <th style="width: 85px;">Línea</th>
-              <th style="width: 260px;">Instrucción de Código</th>
-              <th>Propósito y Comportamiento en Ingeniería</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><span class="line-num-badge">L1-5</span></td>
-              <td><code class="code-inline-dark">client.chat.completions.create(...)</code></td>
-              <td>Envía una solicitud HTTP POST asíncrona a los servidores LPU de Groq con la configuración de modelo, mensajes y límite de tokens.</td>
-            </tr>
-            <tr>
-              <td><span class="line-num-badge">L3</span></td>
-              <td><code class="code-inline-dark">messages=[{"role": "user", ...}]</code></td>
-              <td>Define la lista del historial de conversación. Al tener solo 1 elemento, se ejecuta en modalidad Zero-Shot.</td>
-            </tr>
-            <tr>
-              <td><span class="line-num-badge">L7</span></td>
-              <td><code class="code-inline-dark">response.choices[0].message.content</code></td>
-              <td>Accede al primer candidato generado (índice 0) y extrae el texto puro de la respuesta generada por el asistente.</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      </details>
 
-      <!-- Q&A de Ingeniería -->
-      <div class="qa-card">
-        <div class="qa-q">
-          <svg viewBox="0 0 24 24" width="14" height="14" fill="var(--meta-blue)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16h-2v-2h2v2zm1.07-7.75l-.9.92C12.45 11.9 12 12.5 12 14h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg>
-          <span>Q&A: ¿Qué significa <code class="code-inline-dark">choices[0]</code>? ¿Puede haber más de una elección?</span>
+      <!-- Q&A de Ingeniería Colapsable -->
+      <details class="formula-breakdown-details">
+        <summary class="formula-breakdown-summary">
+          <div class="summary-left">
+            <svg fill="currentColor" height="16" viewBox="0 0 24 24" width="16"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16h-2v-2h2v2zm1.07-7.75l-.9.92C12.45 11.9 12 12.5 12 14h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"></path></svg>
+            <span>Q&A: ¿Qué significa choices[0]? ¿Puede haber más de una elección?</span>
+            <span class="breakdown-count-tag">1 pregunta resuelta</span>
+          </div>
+          <span class="summary-toggle-icon">
+            <svg fill="none" height="14" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" width="14"><path d="M6 9l6 6 6-6"></path></svg>
+          </span>
+        </summary>
+        <div class="formula-breakdown-panel">
+          <p class="prose-p" style="font-size:0.86rem; margin:0;">
+            Sí. Si pasas el parámetro <code class="code-inline-dark">n=3</code> a la API, el modelo generará 3 respuestas alternativas independientes para el mismo prompt. Por defecto <code class="code-inline-dark">n=1</code>, por lo que siempre se accede al elemento en el índice 0.
+          </p>
         </div>
-        <div class="qa-a">
-          Sí. Si pasas el parámetro <code class="code-inline-dark">n=3</code> a la API, el modelo generará 3 respuestas alternativas independientes para el mismo prompt. Por defecto <code class="code-inline-dark">n=1</code>, por lo que siempre se accede al elemento en el índice 0.
-        </div>
-      </div>
+      </details>
     </section>
 
     <!-- SECCIÓN 4: INSPECCIÓN DE RESPUESTA & CONTEO DE TOKENS -->
     <section class="tema-card" id="cell-4-section" style="margin-bottom: 3rem;">
+      <div class="pro-tip-box">
+        <div class="pro-tip-header">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
+          <span>Consejo Pro: Auditoría Continua con el Objeto Usage</span>
+        </div>
+        <p class="pro-tip-text">
+          Registra siempre <code class="code-inline-dark">response.usage.total_tokens</code> en tu base de datos de telemetría (PostgreSQL / Redis) para auditar consumos por usuario y detectar anomalías de costos.
+        </p>
+      </div>
+
       <div class="tema-header">
         <div class="tema-eyebrow">Paso 4 &middot; Celdas 4 y 5</div>
         <h3 class="tema-title">INSPECCIÓN DE LA RESPUESTA COMPLETA & CUÁNTOS TOKENS CONSUMIÓ EL PROMPT</h3>
@@ -581,54 +679,80 @@ Tokens totales: 117</pre>
         </div>
       </div>
 
-      <!-- Desglose Línea por Línea -->
-      <div class="expl-box">
-        <div class="expl-box-header">
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="var(--text-primary)"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
-          <span>Desglose Técnico Línea por Línea</span>
+      <!-- Desglose Línea por Línea Colapsable -->
+      <details class="formula-breakdown-details" open>
+        <summary class="formula-breakdown-summary">
+          <div class="summary-left">
+            <svg fill="currentColor" height="16" viewBox="0 0 24 24" width="16"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path></svg>
+            <span>Desglose Técnico Línea por Línea</span>
+            <span class="breakdown-count-tag">3 instrucciones clave</span>
+          </div>
+          <span class="summary-toggle-icon">
+            <svg fill="none" height="14" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" width="14"><path d="M6 9l6 6 6-6"></path></svg>
+          </span>
+        </summary>
+        <div class="formula-breakdown-panel">
+          <table class="line-breakdown-table">
+            <thead>
+              <tr>
+                <th style="width: 85px;">Línea</th>
+                <th style="width: 260px;">Instrucción de Código</th>
+                <th>Propósito y Comportamiento en Ingeniería</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="line-num-badge">L1</span></td>
+                <td><code class="code-inline-dark">response.model_dump_json(indent=2)</code></td>
+                <td>Serializa el objeto Pydantic devuelto por Groq a una cadena JSON estructurada con sangría de 2 espacios para auditoría completa.</td>
+              </tr>
+              <tr>
+                <td><span class="line-num-badge">L4</span></td>
+                <td><code class="code-inline-dark">response.usage.prompt_tokens</code></td>
+                <td>Extrae la propiedad entera que representa los tokens consumidos por el texto de entrada.</td>
+              </tr>
+              <tr>
+                <td><span class="line-num-badge">L5</span></td>
+                <td><code class="code-inline-dark">response.usage.completion_tokens</code></td>
+                <td>Extrae el conteo de tokens generados por la red neuronal en la respuesta.</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-        <table class="line-breakdown-table">
-          <thead>
-            <tr>
-              <th style="width: 85px;">Línea</th>
-              <th style="width: 260px;">Instrucción de Código</th>
-              <th>Propósito y Comportamiento en Ingeniería</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><span class="line-num-badge">L1</span></td>
-              <td><code class="code-inline-dark">response.model_dump_json(indent=2)</code></td>
-              <td>Serializa el objeto Pydantic devuelto por Groq a una cadena JSON estructurada con sangría de 2 espacios para auditoría completa.</td>
-            </tr>
-            <tr>
-              <td><span class="line-num-badge">L4</span></td>
-              <td><code class="code-inline-dark">response.usage.prompt_tokens</code></td>
-              <td>Extrae la propiedad entera que representa los tokens consumidos por el texto de entrada.</td>
-            </tr>
-            <tr>
-              <td><span class="line-num-badge">L5</span></td>
-              <td><code class="code-inline-dark">response.usage.completion_tokens</code></td>
-              <td>Extrae el conteo de tokens generados por la red neuronal en la respuesta.</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      </details>
 
-      <!-- Q&A de Ingeniería -->
-      <div class="qa-card">
-        <div class="qa-q">
-          <svg viewBox="0 0 24 24" width="14" height="14" fill="var(--meta-blue)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16h-2v-2h2v2zm1.07-7.75l-.9.92C12.45 11.9 12 12.5 12 14h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg>
-          <span>Q&A: ¿Cómo calcular el costo financiero en USD de una llamada?</span>
+      <!-- Q&A de Ingeniería Colapsable -->
+      <details class="formula-breakdown-details">
+        <summary class="formula-breakdown-summary">
+          <div class="summary-left">
+            <svg fill="currentColor" height="16" viewBox="0 0 24 24" width="16"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16h-2v-2h2v2zm1.07-7.75l-.9.92C12.45 11.9 12 12.5 12 14h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"></path></svg>
+            <span>Q&A: ¿Cómo calcular el costo financiero en USD de una llamada?</span>
+            <span class="breakdown-count-tag">1 fórmula explicada</span>
+          </div>
+          <span class="summary-toggle-icon">
+            <svg fill="none" height="14" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" width="14"><path d="M6 9l6 6 6-6"></path></svg>
+          </span>
+        </summary>
+        <div class="formula-breakdown-panel">
+          <p class="prose-p" style="font-size:0.86rem; margin:0;">
+            Multiplicando los <code class="code-inline-dark">prompt_tokens</code> por la tarifa de entrada por millón (ej: $0.05 / 1M en Llama 3.1 8B) y los <code class="code-inline-dark">completion_tokens</code> por la tarifa de salida (ej: $0.08 / 1M), sumando ambos resultados.
+          </p>
         </div>
-        <div class="qa-a">
-          Multiplicando los <code class="code-inline-dark">prompt_tokens</code> por la tarifa de entrada por millón (ej: $0.05 / 1M en Llama 3.1 8B) y los <code class="code-inline-dark">completion_tokens</code> por la tarifa de salida (ej: $0.08 / 1M), sumando ambos resultados.
-        </div>
-      </div>
+      </details>
     </section>
 
     <!-- SECCIÓN 5: MIDIENDO LA LATENCIA DE INFERENCIA -->
     <section class="tema-card" id="cell-6-section" style="margin-bottom: 3rem;">
+      <div class="pro-tip-box">
+        <div class="pro-tip-header">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
+          <span>Consejo Pro: Reducción de Latencia Percibida con Streaming</span>
+        </div>
+        <p class="pro-tip-text">
+          En interfaces de usuario web, habilita siempre <code class="code-inline-dark">stream=True</code>. Aunque la latencia total sea similar, el usuario percibe una respuesta instantánea al ver aparecer los tokens en menos de <b>150 ms</b> (Time-to-First-Token).
+        </p>
+      </div>
+
       <div class="tema-header">
         <div class="tema-eyebrow">Paso 5 &middot; Celda 6</div>
         <h3 class="tema-title">MIDIENDO LA LATENCIA DE INFERENCIA</h3>
@@ -687,54 +811,80 @@ Tokens totales: 117</pre>
         </div>
       </div>
 
-      <!-- Desglose Línea por Línea -->
-      <div class="expl-box">
-        <div class="expl-box-header">
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="var(--text-primary)"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
-          <span>Desglose Técnico Línea por Línea</span>
+      <!-- Desglose Línea por Línea Colapsable -->
+      <details class="formula-breakdown-details" open>
+        <summary class="formula-breakdown-summary">
+          <div class="summary-left">
+            <svg fill="currentColor" height="16" viewBox="0 0 24 24" width="16"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path></svg>
+            <span>Desglose Técnico Línea por Línea</span>
+            <span class="breakdown-count-tag">3 instrucciones clave</span>
+          </div>
+          <span class="summary-toggle-icon">
+            <svg fill="none" height="14" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" width="14"><path d="M6 9l6 6 6-6"></path></svg>
+          </span>
+        </summary>
+        <div class="formula-breakdown-panel">
+          <table class="line-breakdown-table">
+            <thead>
+              <tr>
+                <th style="width: 85px;">Línea</th>
+                <th style="width: 260px;">Instrucción de Código</th>
+                <th>Propósito y Comportamiento en Ingeniería</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="line-num-badge">L1</span></td>
+                <td><code class="code-inline-dark">import time</code></td>
+                <td>Importa el módulo estándar de Python para captura de tiempo de época (timestamp en segundos).</td>
+              </tr>
+              <tr>
+                <td><span class="line-num-badge">L3</span></td>
+                <td><code class="code-inline-dark">inicio = time.time()</code></td>
+                <td>Registra la estampa de tiempo previa al disparo de la conexión HTTP con la API de Groq.</td>
+              </tr>
+              <tr>
+                <td><span class="line-num-badge">L9</span></td>
+                <td><code class="code-inline-dark">duracion = time.time() - inicio</code></td>
+                <td>Calcula la diferencia matemática del tiempo total de viaje de ida y vuelta (Round-Trip Time + Generación).</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-        <table class="line-breakdown-table">
-          <thead>
-            <tr>
-              <th style="width: 85px;">Línea</th>
-              <th style="width: 260px;">Instrucción de Código</th>
-              <th>Propósito y Comportamiento en Ingeniería</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><span class="line-num-badge">L1</span></td>
-              <td><code class="code-inline-dark">import time</code></td>
-              <td>Importa el módulo estándar de Python para captura de tiempo de época (timestamp en segundos).</td>
-            </tr>
-            <tr>
-              <td><span class="line-num-badge">L3</span></td>
-              <td><code class="code-inline-dark">inicio = time.time()</code></td>
-              <td>Registra la estampa de tiempo previa al disparo de la conexión HTTP con la API de Groq.</td>
-            </tr>
-            <tr>
-              <td><span class="line-num-badge">L9</span></td>
-              <td><code class="code-inline-dark">duracion = time.time() - inicio</code></td>
-              <td>Calcula la diferencia matemática del tiempo total de viaje de ida y vuelta (Round-Trip Time + Generación).</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      </details>
 
-      <!-- Q&A de Ingeniería -->
-      <div class="qa-card">
-        <div class="qa-q">
-          <svg viewBox="0 0 24 24" width="14" height="14" fill="var(--meta-blue)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16h-2v-2h2v2zm1.07-7.75l-.9.92C12.45 11.9 12 12.5 12 14h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg>
-          <span>Q&A: ¿Por qué la primera llamada puede tardar ligeramente más que las subsecuentes?</span>
+      <!-- Q&A de Ingeniería Colapsable -->
+      <details class="formula-breakdown-details">
+        <summary class="formula-breakdown-summary">
+          <div class="summary-left">
+            <svg fill="currentColor" height="16" viewBox="0 0 24 24" width="16"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16h-2v-2h2v2zm1.07-7.75l-.9.92C12.45 11.9 12 12.5 12 14h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"></path></svg>
+            <span>Q&A: ¿Por qué la primera llamada puede tardar más que las subsecuentes?</span>
+            <span class="breakdown-count-tag">1 causa técnica</span>
+          </div>
+          <span class="summary-toggle-icon">
+            <svg fill="none" height="14" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" width="14"><path d="M6 9l6 6 6-6"></path></svg>
+          </span>
+        </summary>
+        <div class="formula-breakdown-panel">
+          <p class="prose-p" style="font-size:0.86rem; margin:0;">
+            Por el establecimiento de la sesión TLS/TCP y la inicialización del socket HTTPS (fase de "Warm-up"). Las llamadas siguientes reutilizan el canal de conexión con menor latencia.
+          </p>
         </div>
-        <div class="qa-a">
-          Por el establecimiento de la sesión TLS/TCP y la inicialización del socket HTTPS (fase de "Warm-up"). Las llamadas siguientes reutilizan el canal de conexión con menor latencia.
-        </div>
-      </div>
+      </details>
     </section>
 
     <!-- SECCIÓN 6: COMPARANDO DOS TAMAÑOS DE MODELO -->
     <section class="tema-card" id="cell-7-section" style="margin-bottom: 3rem;">
+      <div class="pro-tip-box">
+        <div class="pro-tip-header">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
+          <span>Consejo Pro: Selección Pragmática del Modelo en Producción</span>
+        </div>
+        <p class="pro-tip-text">
+          Aplica el principio de parsimonia: utiliza siempre el modelo más compacto que cumpla el SLA de calidad requerido. Desplegar un modelo de 120B para FAQs simples incrementa el costo 10x y triplica la latencia sin aportar valor al usuario.
+        </p>
+      </div>
+
       <div class="tema-header">
         <div class="tema-eyebrow">Paso 6 &middot; Celda 7</div>
         <h3 class="tema-title">COMPARANDO DOS TAMAÑOS DE MODELO EN CLASE</h3>
@@ -823,50 +973,66 @@ Respuesta del modelo grande (openai/gpt-oss-120b):
         </div>
       </div>
 
-      <!-- Desglose Línea por Línea -->
-      <div class="expl-box">
-        <div class="expl-box-header">
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="var(--text-primary)"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
-          <span>Desglose Técnico Línea por Línea</span>
+      <!-- Desglose Línea por Línea Colapsable -->
+      <details class="formula-breakdown-details" open>
+        <summary class="formula-breakdown-summary">
+          <div class="summary-left">
+            <svg fill="currentColor" height="16" viewBox="0 0 24 24" width="16"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path></svg>
+            <span>Desglose Técnico Línea por Línea</span>
+            <span class="breakdown-count-tag">3 bloques de comparación</span>
+          </div>
+          <span class="summary-toggle-icon">
+            <svg fill="none" height="14" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" width="14"><path d="M6 9l6 6 6-6"></path></svg>
+          </span>
+        </summary>
+        <div class="formula-breakdown-panel">
+          <table class="line-breakdown-table">
+            <thead>
+              <tr>
+                <th style="width: 85px;">Línea</th>
+                <th style="width: 260px;">Instrucción de Código</th>
+                <th>Propósito y Comportamiento en Ingeniería</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="line-num-badge">L1-6</span></td>
+                <td><code class="code-inline-dark">response_grande = client.chat...</code></td>
+                <td>Ejecuta la inferencia contra el modelo de 120B/70B parámetros y cronometra su latencia independiente.</td>
+              </tr>
+              <tr>
+                <td><span class="line-num-badge">L9-14</span></td>
+                <td><code class="code-inline-dark">response_qwen = client.chat...</code></td>
+                <td>Ejecuta la inferencia contra el modelo Qwen 3.6 de 27B parámetros para contrastar su ratio de tokens generados.</td>
+              </tr>
+              <tr>
+                <td><span class="line-num-badge">L16-24</span></td>
+                <td><code class="code-inline-dark">print(f"| {'Modelo':&lt;36} ...")</code></td>
+                <td>Formatea las métricas en una tabla ASCII limpia alineando columnas con especificadores de formato de texto en Python.</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-        <table class="line-breakdown-table">
-          <thead>
-            <tr>
-              <th style="width: 85px;">Línea</th>
-              <th style="width: 260px;">Instrucción de Código</th>
-              <th>Propósito y Comportamiento en Ingeniería</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><span class="line-num-badge">L1-6</span></td>
-              <td><code class="code-inline-dark">response_grande = client.chat...</code></td>
-              <td>Ejecuta la inferencia contra el modelo de 120B/70B parámetros y cronometra su latencia independiente.</td>
-            </tr>
-            <tr>
-              <td><span class="line-num-badge">L9-14</span></td>
-              <td><code class="code-inline-dark">response_qwen = client.chat...</code></td>
-              <td>Ejecuta la inferencia contra el modelo Qwen 3.6 de 27B parámetros para contrastar su ratio de tokens generados.</td>
-            </tr>
-            <tr>
-              <td><span class="line-num-badge">L16-24</span></td>
-              <td><code class="code-inline-dark">print(f"| {'Modelo':&lt;36} ...")</code></td>
-              <td>Formatea las métricas en una tabla ASCII limpia alineando columnas con especificadores de formato de texto en Python.</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      </details>
 
-      <!-- Q&A de Ingeniería -->
-      <div class="qa-card">
-        <div class="qa-q">
-          <svg viewBox="0 0 24 24" width="14" height="14" fill="var(--meta-blue)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16h-2v-2h2v2zm1.07-7.75l-.9.92C12.45 11.9 12 12.5 12 14h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg>
-          <span>Q&A: ¿Por qué el modelo grande tarda más si la arquitectura de hardware es la misma?</span>
+      <!-- Q&A de Ingeniería Colapsable -->
+      <details class="formula-breakdown-details">
+        <summary class="formula-breakdown-summary">
+          <div class="summary-left">
+            <svg fill="currentColor" height="16" viewBox="0 0 24 24" width="16"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16h-2v-2h2v2zm1.07-7.75l-.9.92C12.45 11.9 12 12.5 12 14h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"></path></svg>
+            <span>Q&A: ¿Por qué el modelo grande tarda más si la arquitectura de hardware es la misma?</span>
+            <span class="breakdown-count-tag">1 análisis de FLOPs</span>
+          </div>
+          <span class="summary-toggle-icon">
+            <svg fill="none" height="14" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" width="14"><path d="M6 9l6 6 6-6"></path></svg>
+          </span>
+        </summary>
+        <div class="formula-breakdown-panel">
+          <p class="prose-p" style="font-size:0.86rem; margin:0;">
+            Porque la cantidad de operaciones en coma flotante (FLOPs) por token generado es directamente proporcional al número de parámetros de la red. Un modelo de 120B parámetros requiere procesar ~6 veces más pesos sinápticos en memoria por cada paso auto-regresivo.
+          </p>
         </div>
-        <div class="qa-a">
-          Porque la cantidad de operaciones en coma flotante (FLOPs) por token generado es directamente proporcional al número de parámetros de la red. Un modelo de 120B parámetros requiere procesar ~6 veces más pesos sinápticos en memoria por cada paso auto-regresivo.
-        </div>
-      </div>
+      </details>
     </section>
   </div>
 
@@ -883,6 +1049,16 @@ Respuesta del modelo grande (openai/gpt-oss-120b):
 
     <!-- INSTRUCCIÓN 1: CARGA DE API KEY Y GENERACIÓN DE 3 PREGUNTAS -->
     <section class="tema-card" id="ch-inst-1" style="margin-bottom: 3rem;">
+      <div class="pro-tip-box">
+        <div class="pro-tip-header">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
+          <span>Consejo Pro: Selección de Consultas Representativas de Negocio</span>
+        </div>
+        <p class="pro-tip-text">
+          Al diseñar un banco de pruebas para evaluar LLMs en producción, selecciona preguntas con distinta complejidad: 1) Pregunta con pasos guiados (contraseñas), 2) Consulta de datos tabulares (horarios), y 3) Pregunta abierta que requiera desambiguación (requisitos técnicos).
+        </p>
+      </div>
+
       <div class="tema-header">
         <div class="tema-eyebrow">Instrucción 1 &middot; Celdas 8 y 9</div>
         <h3 class="tema-title">1. CARGA LA API KEY Y GENERA 3 PREGUNTAS</h3>
@@ -960,54 +1136,80 @@ Lista de preguntas cargadas:
         </div>
       </div>
 
-      <!-- Desglose Línea por Línea -->
-      <div class="expl-box">
-        <div class="expl-box-header">
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="var(--text-primary)"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
-          <span>Desglose Técnico Línea por Línea</span>
+      <!-- Desglose Línea por Línea Colapsable -->
+      <details class="formula-breakdown-details" open>
+        <summary class="formula-breakdown-summary">
+          <div class="summary-left">
+            <svg fill="currentColor" height="16" viewBox="0 0 24 24" width="16"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path></svg>
+            <span>Desglose Técnico Línea por Línea</span>
+            <span class="breakdown-count-tag">3 instrucciones clave</span>
+          </div>
+          <span class="summary-toggle-icon">
+            <svg fill="none" height="14" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" width="14"><path d="M6 9l6 6 6-6"></path></svg>
+          </span>
+        </summary>
+        <div class="formula-breakdown-panel">
+          <table class="line-breakdown-table">
+            <thead>
+              <tr>
+                <th style="width: 85px;">Línea</th>
+                <th style="width: 260px;">Instrucción de Código</th>
+                <th>Propósito y Comportamiento en Ingeniería</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="line-num-badge">L1-2</span></td>
+                <td><code class="code-inline-dark">api_key = userdata.get(...)</code></td>
+                <td>Instancia el cliente oficial autenticado contra el servicio de inferencia de Groq.</td>
+              </tr>
+              <tr>
+                <td><span class="line-num-badge">L8</span></td>
+                <td><code class="code-inline-dark">preguntas = []</code></td>
+                <td>Inicializa la lista dinámica en memoria donde se alojarán los enunciados del benchmark.</td>
+              </tr>
+              <tr>
+                <td><span class="line-num-badge">L10-12</span></td>
+                <td><code class="code-inline-dark">preguntas.append(...)</code></td>
+                <td>Inserta las 3 preguntas clave de soporte institucional (Autenticación, Canales de Soporte, Especificaciones).</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-        <table class="line-breakdown-table">
-          <thead>
-            <tr>
-              <th style="width: 85px;">Línea</th>
-              <th style="width: 260px;">Instrucción de Código</th>
-              <th>Propósito y Comportamiento en Ingeniería</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><span class="line-num-badge">L1-2</span></td>
-              <td><code class="code-inline-dark">api_key = userdata.get(...)</code></td>
-              <td>Instancia el cliente oficial autenticado contra el servicio de inferencia de Groq.</td>
-            </tr>
-            <tr>
-              <td><span class="line-num-badge">L8</span></td>
-              <td><code class="code-inline-dark">preguntas = []</code></td>
-              <td>Inicializa la lista dinámica en memoria donde se alojarán los enunciados del benchmark.</td>
-            </tr>
-            <tr>
-              <td><span class="line-num-badge">L10-12</span></td>
-              <td><code class="code-inline-dark">preguntas.append(...)</code></td>
-              <td>Añade de forma ordenada las 3 preguntas clave de soporte institucional (Autenticación, Canales de Soporte, Especificaciones).</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      </details>
 
-      <!-- Q&A de Ingeniería -->
-      <div class="qa-card">
-        <div class="qa-q">
-          <svg viewBox="0 0 24 24" width="14" height="14" fill="var(--meta-blue)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16h-2v-2h2v2zm1.07-7.75l-.9.92C12.45 11.9 12 12.5 12 14h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg>
-          <span>Q&A: ¿Por qué es buena práctica definir las preguntas en una lista antes de iterar?</span>
+      <!-- Q&A de Ingeniería Colapsable -->
+      <details class="formula-breakdown-details">
+        <summary class="formula-breakdown-summary">
+          <div class="summary-left">
+            <svg fill="currentColor" height="16" viewBox="0 0 24 24" width="16"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16h-2v-2h2v2zm1.07-7.75l-.9.92C12.45 11.9 12 12.5 12 14h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"></path></svg>
+            <span>Q&A: ¿Por qué es buena práctica definir las preguntas en una lista antes de iterar?</span>
+            <span class="breakdown-count-tag">1 desacoplamiento modular</span>
+          </div>
+          <span class="summary-toggle-icon">
+            <svg fill="none" height="14" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" width="14"><path d="M6 9l6 6 6-6"></path></svg>
+          </span>
+        </summary>
+        <div class="formula-breakdown-panel">
+          <p class="prose-p" style="font-size:0.86rem; margin:0;">
+            Porque desacopla los datos de prueba de la lógica de ejecución del pipeline, permitiendo escalar el comparador a cientos de preguntas o cargarlas desde un archivo JSON/CSV sin modificar el código de inferencia.
+          </p>
         </div>
-        <div class="qa-a">
-          Porque desacopla los datos de prueba de la lógica de ejecución del pipeline, permitiendo escalar el comparador a cientos de preguntas o cargarlas desde un archivo JSON/CSV sin modificar el código de inferencia.
-        </div>
-      </div>
+      </details>
     </section>
 
     <!-- INSTRUCCIÓN 2: CONSULTA LA PRIMERA PREGUNTA (CELDA 10) -->
     <section class="tema-card" id="ch-inst-2" style="margin-bottom: 3rem;">
+      <div class="pro-tip-box">
+        <div class="pro-tip-header">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
+          <span>Consejo Pro: Limpieza de Etiquetas Think en Modelos de Razonamiento</span>
+        </div>
+        <p class="pro-tip-text">
+          Al integrar modelos como Qwen 3.6 o DeepSeek R1, recuerda que emiten su cadena de pensamiento dentro de bloques <code class="code-inline-dark">&lt;think&gt;...&lt;/think&gt;</code>. Sanitizar esta cadena con expresiones regulares garantiza una experiencia de usuario limpia y profesional.
+        </p>
+      </div>
+
       <div class="tema-header">
         <div class="tema-eyebrow">Instrucción 2 &middot; Celda 10</div>
         <h3 class="tema-title">2. CONSULTA LA PRIMERA PREGUNTA (resultado_1)</h3>
@@ -1107,8 +1309,9 @@ Lista de preguntas cargadas:
    • Modelo Qwen (qwen/qwen3.6-27b): 1.66 s | 726 tokens
 
 --- RESPUESTA DEL MODELO LIGERO (resultado_1) ---
-¡Claro! A continuación tienes una guía paso‑a‑paso para restablecer la contraseña en el portal web institucional:
+¡Claro! A continuación tienes una guía paso‑a‑paso para restablecer la contraseña en el portal web institucional. Si tu institución utiliza un sistema específico (por ejemplo, Blackboard, Moodle, SAP, etc.), el proceso puede variar un poco, pero en general seguirá estos mismos pasos:
 
+---
 1. Accede a la página de inicio de sesión (URL típica: https://portal.tuinstitucion.edu).
 2. Busca el enlace «Olvidé mi contraseña» o «Restablecer contraseña».
 3. Proporciona tu nombre de usuario o correo electrónico institucional.
@@ -1118,54 +1321,80 @@ Lista de preguntas cargadas:
         </div>
       </div>
 
-      <!-- Desglose Línea por Línea -->
-      <div class="expl-box">
-        <div class="expl-box-header">
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="var(--text-primary)"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
-          <span>Desglose Técnico Línea por Línea</span>
+      <!-- Desglose Línea por Línea Colapsable -->
+      <details class="formula-breakdown-details" open>
+        <summary class="formula-breakdown-summary">
+          <div class="summary-left">
+            <svg fill="currentColor" height="16" viewBox="0 0 24 24" width="16"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path></svg>
+            <span>Desglose Técnico Línea por Línea</span>
+            <span class="breakdown-count-tag">3 bloques de captura</span>
+          </div>
+          <span class="summary-toggle-icon">
+            <svg fill="none" height="14" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" width="14"><path d="M6 9l6 6 6-6"></path></svg>
+          </span>
+        </summary>
+        <div class="formula-breakdown-panel">
+          <table class="line-breakdown-table">
+            <thead>
+              <tr>
+                <th style="width: 85px;">Línea</th>
+                <th style="width: 260px;">Instrucción de Código</th>
+                <th>Propósito y Comportamiento en Ingeniería</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="line-num-badge">L1</span></td>
+                <td><code class="code-inline-dark">pregunta_1 = preguntas[0]</code></td>
+                <td>Indexa el primer elemento de la lista que contiene la consulta de recuperación de contraseña.</td>
+              </tr>
+              <tr>
+                <td><span class="line-num-badge">L10</span></td>
+                <td><code class="code-inline-dark">resp_1_lig = limpiar_respuesta(...)</code></td>
+                <td>Aplica la expresión regular para eliminar bloques <code class="code-inline-dark">&lt;think&gt;</code> antes de guardar el texto final.</td>
+              </tr>
+              <tr>
+                <td><span class="line-num-badge">L26-41</span></td>
+                <td><code class="code-inline-dark">resultado_1 = { ... }</code></td>
+                <td>Estructura el diccionario estándar de telemetría con claves homogéneas de latencia, tokens y respuestas.</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-        <table class="line-breakdown-table">
-          <thead>
-            <tr>
-              <th style="width: 85px;">Línea</th>
-              <th style="width: 260px;">Instrucción de Código</th>
-              <th>Propósito y Comportamiento en Ingeniería</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><span class="line-num-badge">L1</span></td>
-              <td><code class="code-inline-dark">pregunta_1 = preguntas[0]</code></td>
-              <td>Indexa el primer elemento de la lista que contiene la consulta de recuperación de contraseña.</td>
-            </tr>
-            <tr>
-              <td><span class="line-num-badge">L10</span></td>
-              <td><code class="code-inline-dark">resp_1_lig = limpiar_respuesta(...)</code></td>
-              <td>Aplica la expresión regular para eliminar bloques <code class="code-inline-dark">&lt;think&gt;</code> antes de guardar el texto final.</td>
-            </tr>
-            <tr>
-              <td><span class="line-num-badge">L26-41</span></td>
-              <td><code class="code-inline-dark">resultado_1 = { ... }</code></td>
-              <td>Estructura el diccionario estándar de telemetría con claves homogéneas de latencia, tokens y respuestas.</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      </details>
 
-      <!-- Q&A de Ingeniería -->
-      <div class="qa-card">
-        <div class="qa-q">
-          <svg viewBox="0 0 24 24" width="14" height="14" fill="var(--meta-blue)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16h-2v-2h2v2zm1.07-7.75l-.9.92C12.45 11.9 12 12.5 12 14h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg>
-          <span>Q&A: ¿Por qué es fundamental redondear la latencia con <code class="code-inline-dark">round(tiempo, 2)</code>?</span>
+      <!-- Q&A de Ingeniería Colapsable -->
+      <details class="formula-breakdown-details">
+        <summary class="formula-breakdown-summary">
+          <div class="summary-left">
+            <svg fill="currentColor" height="16" viewBox="0 0 24 24" width="16"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16h-2v-2h2v2zm1.07-7.75l-.9.92C12.45 11.9 12 12.5 12 14h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"></path></svg>
+            <span>Q&A: ¿Por qué es fundamental redondear la latencia con round(tiempo, 2)?</span>
+            <span class="breakdown-count-tag">1 optimización de datos</span>
+          </div>
+          <span class="summary-toggle-icon">
+            <svg fill="none" height="14" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" width="14"><path d="M6 9l6 6 6-6"></path></svg>
+          </span>
+        </summary>
+        <div class="formula-breakdown-panel">
+          <p class="prose-p" style="font-size:0.86rem; margin:0;">
+            Porque los valores flotantes nativos en Python tienen hasta 16 dígitos decimales que saturan los logs y dificultan la lectura en dashboards y reportes analíticos.
+          </p>
         </div>
-        <div class="qa-a">
-          Porque los valores flotantes nativos en Python tienen hasta 16 dígitos decimales que saturan los logs y dificultan la lectura en dashboards y reportes analíticos.
-        </div>
-      </div>
+      </details>
     </section>
 
     <!-- INSTRUCCIÓN 3: REPITE PARA LA SEGUNDA Y TERCERA PREGUNTA (CELDAS 11 Y 12) -->
     <section class="tema-card" id="ch-inst-3" style="margin-bottom: 3rem;">
+      <div class="pro-tip-box">
+        <div class="pro-tip-header">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
+          <span>Consejo Pro: Modularidad con Funciones Reutilizables</span>
+        </div>
+        <p class="pro-tip-text">
+          En lugar de duplicar bloques de código para cada pregunta, encapsula la lógica en una función de orden superior como <code class="code-inline-dark">consultar_pregunta(prompt, num)</code> para garantizar mantenibilidad y escalabilidad.
+        </p>
+      </div>
+
       <div class="tema-header">
         <div class="tema-eyebrow">Instrucción 3 &middot; Celdas 11 y 12</div>
         <h3 class="tema-title">3. REPITE PARA LA SEGUNDA Y TERCERA PREGUNTA (resultado_2 y resultado_3)</h3>
@@ -1228,49 +1457,75 @@ Pregunta 3 consultada en los 3 modelos:
         </div>
       </div>
 
-      <!-- Desglose Línea por Línea -->
-      <div class="expl-box">
-        <div class="expl-box-header">
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="var(--text-primary)"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
-          <span>Desglose Técnico Línea por Línea</span>
+      <!-- Desglose Línea por Línea Colapsable -->
+      <details class="formula-breakdown-details" open>
+        <summary class="formula-breakdown-summary">
+          <div class="summary-left">
+            <svg fill="currentColor" height="16" viewBox="0 0 24 24" width="16"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path></svg>
+            <span>Desglose Técnico Línea por Línea</span>
+            <span class="breakdown-count-tag">2 indexaciones</span>
+          </div>
+          <span class="summary-toggle-icon">
+            <svg fill="none" height="14" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" width="14"><path d="M6 9l6 6 6-6"></path></svg>
+          </span>
+        </summary>
+        <div class="formula-breakdown-panel">
+          <table class="line-breakdown-table">
+            <thead>
+              <tr>
+                <th style="width: 85px;">Línea</th>
+                <th style="width: 260px;">Instrucción de Código</th>
+                <th>Propósito y Comportamiento en Ingeniería</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="line-num-badge">L1</span></td>
+                <td><code class="code-inline-dark">pregunta_2 = preguntas[1]</code></td>
+                <td>Recupera la consulta de horarios y canales oficiales para su inferencia.</td>
+              </tr>
+              <tr>
+                <td><span class="line-num-badge">L5</span></td>
+                <td><code class="code-inline-dark">pregunta_3 = preguntas[2]</code></td>
+                <td>Recupera la consulta de especificaciones técnicas mínimas para la instalación.</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-        <table class="line-breakdown-table">
-          <thead>
-            <tr>
-              <th style="width: 85px;">Línea</th>
-              <th style="width: 260px;">Instrucción de Código</th>
-              <th>Propósito y Comportamiento en Ingeniería</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><span class="line-num-badge">L1</span></td>
-              <td><code class="code-inline-dark">pregunta_2 = preguntas[1]</code></td>
-              <td>Recupera la consulta de horarios y canales oficiales para su inferencia.</td>
-            </tr>
-            <tr>
-              <td><span class="line-num-badge">L5</span></td>
-              <td><code class="code-inline-dark">pregunta_3 = preguntas[2]</code></td>
-              <td>Recupera la consulta de especificaciones técnicas mínimas para la instalación.</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      </details>
 
-      <!-- Q&A de Ingeniería -->
-      <div class="qa-card">
-        <div class="qa-q">
-          <svg viewBox="0 0 24 24" width="14" height="14" fill="var(--meta-blue)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16h-2v-2h2v2zm1.07-7.75l-.9.92C12.45 11.9 12 12.5 12 14h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg>
-          <span>Q&A: ¿Por qué la Pregunta 3 consumió menos tokens en el modelo ligero (279 tok)?</span>
+      <!-- Q&A de Ingeniería Colapsable -->
+      <details class="formula-breakdown-details">
+        <summary class="formula-breakdown-summary">
+          <div class="summary-left">
+            <svg fill="currentColor" height="16" viewBox="0 0 24 24" width="16"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16h-2v-2h2v2zm1.07-7.75l-.9.92C12.45 11.9 12 12.5 12 14h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"></path></svg>
+            <span>Q&A: ¿Por qué la Pregunta 3 consumió menos tokens en el modelo ligero (279 tok)?</span>
+            <span class="breakdown-count-tag">1 análisis de longitud</span>
+          </div>
+          <span class="summary-toggle-icon">
+            <svg fill="none" height="14" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" width="14"><path d="M6 9l6 6 6-6"></path></svg>
+          </span>
+        </summary>
+        <div class="formula-breakdown-panel">
+          <p class="prose-p" style="font-size:0.86rem; margin:0;">
+            Porque la respuesta solicitaba desambiguación ("¿A qué plataforma te refieres?"), deteniendo la generación tempranamente al no requerir tablas extensas como la Pregunta 1.
+          </p>
         </div>
-        <div class="qa-a">
-          Porque la respuesta solicitaba desambiguación ("¿A qué plataforma te refieres?"), deteniendo la generación tempranamente al no requerir tablas extensas como la Pregunta 1.
-        </div>
-      </div>
+      </details>
     </section>
 
     <!-- INSTRUCCIÓN 4: JUNTA LOS RESULTADOS (CELDA 13) -->
     <section class="tema-card" id="ch-inst-4" style="margin-bottom: 3rem;">
+      <div class="pro-tip-box">
+        <div class="pro-tip-header">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
+          <span>Consejo Pro: Validación de Esquema JSON antes de la Consolidación</span>
+        </div>
+        <p class="pro-tip-text">
+          En pipelines de grado industrial, valida que cada diccionario contenga todas las claves esperadas (<code class="code-inline-dark">tiempo_segundos</code>, <code class="code-inline-dark">tokens_totales</code>) mediante esquemas <b>Pydantic</b> o <b>Zod</b> antes de almacenarlos en la lista final.
+        </p>
+      </div>
+
       <div class="tema-header">
         <div class="tema-eyebrow">Instrucción 4 &middot; Celda 13</div>
         <h3 class="tema-title">4. JUNTA LOS RESULTADOS (Lista resultados)</h3>
@@ -1319,49 +1574,75 @@ Pregunta 3 consultada en los 3 modelos:
         </div>
       </div>
 
-      <!-- Desglose Línea por Línea -->
-      <div class="expl-box">
-        <div class="expl-box-header">
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="var(--text-primary)"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
-          <span>Desglose Técnico Línea por Línea</span>
+      <!-- Desglose Línea por Línea Colapsable -->
+      <details class="formula-breakdown-details" open>
+        <summary class="formula-breakdown-summary">
+          <div class="summary-left">
+            <svg fill="currentColor" height="16" viewBox="0 0 24 24" width="16"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path></svg>
+            <span>Desglose Técnico Línea por Línea</span>
+            <span class="breakdown-count-tag">2 instrucciones clave</span>
+          </div>
+          <span class="summary-toggle-icon">
+            <svg fill="none" height="14" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" width="14"><path d="M6 9l6 6 6-6"></path></svg>
+          </span>
+        </summary>
+        <div class="formula-breakdown-panel">
+          <table class="line-breakdown-table">
+            <thead>
+              <tr>
+                <th style="width: 85px;">Línea</th>
+                <th style="width: 260px;">Instrucción de Código</th>
+                <th>Propósito y Comportamiento en Ingeniería</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="line-num-badge">L1</span></td>
+                <td><code class="code-inline-dark">resultados = []</code></td>
+                <td>Crea el contenedor de nivel superior para agregación de telemetría.</td>
+              </tr>
+              <tr>
+                <td><span class="line-num-badge">L2-4</span></td>
+                <td><code class="code-inline-dark">resultados.append(...)</code></td>
+                <td>Inserta los diccionarios garantizando el orden cronológico de las preguntas evaluadas.</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-        <table class="line-breakdown-table">
-          <thead>
-            <tr>
-              <th style="width: 85px;">Línea</th>
-              <th style="width: 260px;">Instrucción de Código</th>
-              <th>Propósito y Comportamiento en Ingeniería</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><span class="line-num-badge">L1</span></td>
-              <td><code class="code-inline-dark">resultados = []</code></td>
-              <td>Crea el contenedor de nivel superior para agregación de telemetría.</td>
-            </tr>
-            <tr>
-              <td><span class="line-num-badge">L2-4</span></td>
-              <td><code class="code-inline-dark">resultados.append(...)</code></td>
-              <td>Inserta los diccionarios garantizando el orden cronológico de las preguntas evaluadas.</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      </details>
 
-      <!-- Q&A de Ingeniería -->
-      <div class="qa-card">
-        <div class="qa-q">
-          <svg viewBox="0 0 24 24" width="14" height="14" fill="var(--meta-blue)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16h-2v-2h2v2zm1.07-7.75l-.9.92C12.45 11.9 12 12.5 12 14h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg>
-          <span>Q&A: ¿Por qué no usar un DataFrame de Pandas directamente?</span>
+      <!-- Q&A de Ingeniería Colapsable -->
+      <details class="formula-breakdown-details">
+        <summary class="formula-breakdown-summary">
+          <div class="summary-left">
+            <svg fill="currentColor" height="16" viewBox="0 0 24 24" width="16"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16h-2v-2h2v2zm1.07-7.75l-.9.92C12.45 11.9 12 12.5 12 14h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"></path></svg>
+            <span>Q&A: ¿Por qué no usar un DataFrame de Pandas directamente?</span>
+            <span class="breakdown-count-tag">1 ventaja de portabilidad</span>
+          </div>
+          <span class="summary-toggle-icon">
+            <svg fill="none" height="14" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" width="14"><path d="M6 9l6 6 6-6"></path></svg>
+          </span>
+        </summary>
+        <div class="formula-breakdown-panel">
+          <p class="prose-p" style="font-size:0.86rem; margin:0;">
+            Porque en pipelines de IA ligeros y microservicios sin estado, trabajar con tipos nativos de Python (<code class="code-inline-dark">list</code> y <code class="code-inline-dark">dict</code>) elimina dependencias pesadas y acelera la serialización directa a JSON.
+          </p>
         </div>
-        <div class="qa-a">
-          Porque en pipelines de IA ligeros y microservicios sin estado, trabajar con tipos nativos de Python (<code class="code-inline-dark">list</code> y <code class="code-inline-dark">dict</code>) elimina dependencias pesadas y acelera la serialización directa a JSON.
-        </div>
-      </div>
+      </details>
     </section>
 
     <!-- INSTRUCCIÓN 5: MUESTRA LA COMPARACIÓN (CELDA 14) -->
     <section class="tema-card" id="tabla-consolidada" style="margin-bottom: 3rem;">
+      <div class="pro-tip-box">
+        <div class="pro-tip-header">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 12l2 2 4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0z"/></svg>
+          <span>Consejo Pro: Implementación de un Model Router Dinámico</span>
+        </div>
+        <p class="pro-tip-text">
+          Diseña un clasificador semántico de intenciones antes de invocar al LLM: las consultas directas de soporte se derivan al modelo de 20B/8B (0.8s), mientras que consultas con análisis condicional o código se enrutan al modelo de 120B/70B o Qwen 27B.
+        </p>
+      </div>
+
       <div class="tema-header">
         <div class="tema-eyebrow">Instrucción 5 &middot; Celda 14</div>
         <h3 class="tema-title">5. MUESTRA LA COMPARACIÓN & ANÁLISIS DE INGENIERÍA</h3>
@@ -1445,50 +1726,66 @@ CONCLUSIÓN Y ANÁLISIS COMPARATIVO DE INGENIERÍA:
         </div>
       </div>
 
-      <!-- Desglose Línea por Línea -->
-      <div class="expl-box">
-        <div class="expl-box-header">
-          <svg viewBox="0 0 24 24" width="16" height="16" fill="var(--text-primary)"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
-          <span>Desglose Técnico Línea por Línea</span>
+      <!-- Desglose Línea por Línea Colapsable -->
+      <details class="formula-breakdown-details" open>
+        <summary class="formula-breakdown-summary">
+          <div class="summary-left">
+            <svg fill="currentColor" height="16" viewBox="0 0 24 24" width="16"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path></svg>
+            <span>Desglose Técnico Línea por Línea</span>
+            <span class="breakdown-count-tag">3 bloques de análisis</span>
+          </div>
+          <span class="summary-toggle-icon">
+            <svg fill="none" height="14" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" width="14"><path d="M6 9l6 6 6-6"></path></svg>
+          </span>
+        </summary>
+        <div class="formula-breakdown-panel">
+          <table class="line-breakdown-table">
+            <thead>
+              <tr>
+                <th style="width: 85px;">Línea</th>
+                <th style="width: 260px;">Instrucción de Código</th>
+                <th>Propósito y Comportamiento en Ingeniería</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><span class="line-num-badge">L7-13</span></td>
+                <td><code class="code-inline-dark">for idx, res in enumerate(...)</code></td>
+                <td>Itera sobre la lista <code class="code-inline-dark">resultados</code> formateando dinámicamente cada fila de la tabla comparativa.</td>
+              </tr>
+              <tr>
+                <td><span class="line-num-badge">L17</span></td>
+                <td><code class="code-inline-dark">pprint.pprint(resultados, depth=2)</code></td>
+                <td>Imprime el árbol de objetos serializados con identación clara para inspección de diccionarios.</td>
+              </tr>
+              <tr>
+                <td><span class="line-num-badge">L20-24</span></td>
+                <td><code class="code-inline-dark">print("CONCLUSIÓN Y ANÁLISIS...")</code></td>
+                <td>Emite el dictamen formal de arquitectura de software recomendando la implementación de un <i>Model Router</i>.</td>
+              </tr>
+            </tbody>
+          </table>
         </div>
-        <table class="line-breakdown-table">
-          <thead>
-            <tr>
-              <th style="width: 85px;">Línea</th>
-              <th style="width: 260px;">Instrucción de Código</th>
-              <th>Propósito y Comportamiento en Ingeniería</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><span class="line-num-badge">L7-13</span></td>
-              <td><code class="code-inline-dark">for idx, res in enumerate(...)</code></td>
-              <td>Itera sobre la lista <code class="code-inline-dark">resultados</code> formateando dinámicamente cada fila de la tabla comparativa.</td>
-            </tr>
-            <tr>
-              <td><span class="line-num-badge">L17</span></td>
-              <td><code class="code-inline-dark">pprint.pprint(resultados, depth=2)</code></td>
-              <td>Imprime el árbol de objetos serializados con identación clara para inspección de diccionarios.</td>
-            </tr>
-            <tr>
-              <td><span class="line-num-badge">L20-24</span></td>
-              <td><code class="code-inline-dark">print("CONCLUSIÓN Y ANÁLISIS...")</code></td>
-              <td>Emite el dictamen formal de arquitectura de software recomendando la implementación de un <i>Model Router</i>.</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+      </details>
 
-      <!-- Q&A de Ingeniería -->
-      <div class="qa-card">
-        <div class="qa-q">
-          <svg viewBox="0 0 24 24" width="14" height="14" fill="var(--meta-blue)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16h-2v-2h2v2zm1.07-7.75l-.9.92C12.45 11.9 12 12.5 12 14h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg>
-          <span>Q&A: ¿Qué es exactamente un "Model Router" en arquitectura de producción?</span>
+      <!-- Q&A de Ingeniería Colapsable -->
+      <details class="formula-breakdown-details">
+        <summary class="formula-breakdown-summary">
+          <div class="summary-left">
+            <svg fill="currentColor" height="16" viewBox="0 0 24 24" width="16"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16h-2v-2h2v2zm1.07-7.75l-.9.92C12.45 11.9 12 12.5 12 14h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"></path></svg>
+            <span>Q&A: ¿Qué es exactamente un "Model Router" en arquitectura de producción?</span>
+            <span class="breakdown-count-tag">1 patrón de diseño</span>
+          </div>
+          <span class="summary-toggle-icon">
+            <svg fill="none" height="14" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" width="14"><path d="M6 9l6 6 6-6"></path></svg>
+          </span>
+        </summary>
+        <div class="formula-breakdown-panel">
+          <p class="prose-p" style="font-size:0.86rem; margin:0;">
+            Es una capa intermedia de software (proxy) que clasifica la complejidad de la consulta entrante. Si es una pregunta factual o FAQ, la redirige a un modelo ligero (ej: 8B/20B) reduciendo costos y latencia; si detecta razonamiento matemático o código complejo, la escala a un modelo masivo (ej: 70B/120B).
+          </p>
         </div>
-        <div class="qa-a">
-          Es una capa intermedia de software (proxy) que clasifica la complejidad de la consulta entrante. Si es una pregunta factual o FAQ, la redirige a un modelo ligero (ej: 8B/20B) reduciendo costos y latencia; si detecta razonamiento matemático o código complejo, la escala a un modelo masivo (ej: 70B/120B).
-        </div>
-      </div>
+      </details>
     </section>
   </div>
 
