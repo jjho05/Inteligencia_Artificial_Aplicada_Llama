@@ -13,7 +13,7 @@ Plataforma formativa e interactiva de grado industrial diseñada y construida po
 ## Dirección Técnica &amp; Ecosistema de Repositorios
 
 * **Creador &amp; Arquitecto:** **Ing. Jesús Javier Hernández Olvera**
-* **Repositorio de la Plataforma Web &amp; Simuladores:** [github.com/jjho05/Inteligencia_Artificial_Aplicada_Llama](https://github.com/jjho05/Inteligencia_Artificial_Aplicada_Llama)
+* **Repositorio de la Plataforma Web &amp; Simuladores:** [github.com/jjho05/meta-llama-engineering-labs](https://github.com/jjho05/meta-llama-engineering-labs)
 * **Repositorio de Cuadernos Colab, Labs &amp; Scripts:** [github.com/jjho05/meta-llama-engineering-labs](https://github.com/jjho05/meta-llama-engineering-labs)
 * **Enfoque de Ingeniería:** Soberanía tecnológica, inferencia en hardware LPU de ultra-alta velocidad (500+ tokens/seg), sistemas RAG libres de alucinaciones y microservicios asíncronos en producción.
 
@@ -66,7 +66,7 @@ python3 ejecutar_challenge2.py --modelo openai/gpt-oss-20b
 
 1. **Clonar el repositorio:**
    ```bash
-   git clone https://github.com/jjho05/Inteligencia_Artificial_Aplicada_Llama.git
+   git clone https://github.com/jjho05/meta-llama-engineering-labs.git
    cd Inteligencia_Artificial_Aplicada_Llama
    ```
 
