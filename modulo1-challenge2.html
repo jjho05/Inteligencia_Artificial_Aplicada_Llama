@@ -394,6 +394,14 @@
       </details>
 
       <details class="faq-item">
+        <summary>¿Qué modelo LLM se utiliza para la síntesis RAG y cómo se compara con Meta Llama?</summary>
+        <div class="faq-content">
+          <p>En este challenge utilizamos <code>openai/gpt-oss-20b</code> como generador principal en Groq LPU (equivalente a <code>llama-3.1-8b</code>). Ambos modelos comparten la arquitectura <b>Decoder-only Transformer con Grouped-Query Attention (GQA)</b> y formato de pesos abiertos (<i>Open-Weights</i>).</p>
+          <p style="margin-top: 0.5rem;"><b>Ventaja en Sistemas RAG:</b> Dado que el fragmento recuperado ya contiene los hechos verídicos en el contexto, el LLM no requiere memorizar datos masivos (ahorrando el costo de un modelo 70B/120B). El modelo ligero de 20B/8B ofrece la combinación óptima: comprensión lectora precisa, estricta adherencia anti-alucinación y <b>latencia ultra-baja (&lt; 0.6 s)</b> a una fracción del costo operativo.</p>
+        </div>
+      </details>
+
+      <details class="faq-item">
         <summary>¿Cómo escalar este pipeline a miles de PDFs corporativos?</summary>
         <div class="faq-content">
           <p>Para más de 10,000 documentos se reemplaza NumPy por una Base de Datos Vectorial especializada (ChromaDB, Pinecone, FAISS o Qdrant) que utiliza índices de grafos HNSW (Hierarchical Navigable Small World) para buscar entre millones de vectores en menos de 15 milisegundos.</p>

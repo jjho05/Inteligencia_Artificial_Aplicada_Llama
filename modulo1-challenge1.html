@@ -301,6 +301,112 @@
     </article>
 
     <!-- ======================================================================
+         ANÁLISIS DE ARQUITECTURA: EVOLUCIÓN DE MODELOS EN GROQ (LLAMA vs GPT-OSS vs QWEN)
+         ====================================================================== -->
+    <article class="tema-card" id="arquitectura-modelos-groq" style="border-left: 4px solid var(--meta-blue); background: linear-gradient(180deg, rgba(8,102,255,0.03) 0%, var(--bg-surface) 100%);">
+      <div class="tema-header">
+        <div class="tema-eyebrow">Arquitectura de Cómputo · Ecosistema Open-Weights</div>
+        <h3 class="tema-title">Evolución de Modelos en Groq: De Meta Llama a GPT-OSS y Qwen</h3>
+      </div>
+
+      <div class="tema-section-block">
+        <h4 class="tema-subheading"><span class="tema-subheading-tag">1. Contexto Operativo</span> Dinámica de Catálogo y Disponibilidad en Groq LPUs</h4>
+        <p class="prose-p">
+          En los clústeres de cómputo ultra-acelerado LPU de Groq, los proveedores de infraestructura actualizan periódicamente sus catálogos de pesos abiertos (<em>Open-Weights</em>) para ofrecer la mayor densidad de procesamiento y compatibilidad. Aunque el curso toma como fundamento conceptual la familia <strong>Meta Llama (Llama 3 / 3.1 / 3.3)</strong>, en la infraestructura activa de Groq los endpoints oficiales de alto rendimiento están provistos por <strong><code>openai/gpt-oss-20b</code></strong>, <strong><code>openai/gpt-oss-120b</code></strong> y <strong><code>qwen/qwen3.6-27b</code></strong>.
+        </p>
+        <p class="prose-p">
+          Para garantizar que el código de ingeniería sea <strong>100% resiliente y portable</strong> ante cualquier cambio de catálogo, implementamos la función <code>obtener_modelo(...)</code>, la cual detecta automáticamente si los identificadores de Llama están disponibles o conmuta fluidamente a los equivalentes de última generación sin alterar una sola línea de lógica de negocio.
+        </p>
+
+        <!-- Matriz Comparativa Exhaustiva -->
+        <div class="table-responsive" style="margin: 1.4rem 0;">
+          <table class="data-table" style="width: 100%; font-size: 0.86rem;">
+            <thead>
+              <tr>
+                <th style="width: 22%;">Modelo / Identificador</th>
+                <th style="width: 16%;">Parámetros &amp; Rol</th>
+                <th style="width: 24%;">Arquitectura &amp; Atención</th>
+                <th style="width: 18%;">Latencia &amp; Tokens/s</th>
+                <th style="width: 20%;">Caso de Uso Óptimo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>
+                  <strong><code>openai/gpt-oss-20b</code></strong><br>
+                  <span style="font-size: 0.74rem; color: var(--accent-success); font-weight: 600;">Equivalente a Llama 3.1 8B</span>
+                </td>
+                <td><strong>20B Parámetros</strong><br><span class="badge-role" style="background: rgba(46,160,67,0.15); color: #3fb950; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700;">Modelo Ligero</span></td>
+                <td>Decoder-only Transformer, RoPE, Grouped-Query Attention (GQA), SwiGLU.</td>
+                <td><strong>~0.48 - 0.75 s</strong><br><span style="color: var(--meta-blue); font-family: var(--font-mono);">550 - 650 T/s</span></td>
+                <td>Atención al cliente, preguntas frecuentes (FAQs), resúmenes rápidos y triage de soporte.</td>
+              </tr>
+              <tr>
+                <td>
+                  <strong><code>openai/gpt-oss-120b</code></strong><br>
+                  <span style="font-size: 0.74rem; color: #a855f7; font-weight: 600;">Equivalente a Llama 3.3 70B</span>
+                </td>
+                <td><strong>120B Parámetros</strong><br><span class="badge-role" style="background: rgba(163,113,247,0.15); color: #a855f7; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700;">Modelo Grande (Flagship)</span></td>
+                <td>Decoder-only Transformer de escala masiva, espacio latente ampliado para directivas complejas.</td>
+                <td><strong>~1.35 - 1.85 s</strong><br><span style="color: var(--meta-blue); font-family: var(--font-mono);">380 - 450 T/s</span></td>
+                <td>Generación de contratos, políticas formales de seguridad, síntesis legal y análisis normativo.</td>
+              </tr>
+              <tr>
+                <td>
+                  <strong><code>qwen/qwen3.6-27b</code></strong><br>
+                  <span style="font-size: 0.74rem; color: #d29922; font-weight: 600;">Especialista CoT</span>
+                </td>
+                <td><strong>27B Parámetros</strong><br><span class="badge-role" style="background: rgba(210,153,34,0.15); color: #d29922; padding: 0.2rem 0.5rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700;">Razonamiento CoT</span></td>
+                <td>Optimizado nativamente para cadenas de pensamiento (<em>Chain-of-Thought</em>) y lógica simbólica.</td>
+                <td><strong>~1.10 - 1.55 s</strong><br><span style="color: var(--meta-blue); font-family: var(--font-mono);">420 - 480 T/s</span></td>
+                <td>Descomposición matemática, auditoría de código, algoritmos lógicos y resolución de problemas multi-paso.</td>
+              </tr>
+              <tr style="background: rgba(8,102,255,0.02); border-top: 2px dashed var(--border-subtle);">
+                <td>
+                  <strong><code>meta-llama/llama-3.1-8b</code><br><code>llama-3.3-70b</code></strong><br>
+                  <span style="font-size: 0.74rem; color: var(--text-muted);">Referencia Base Meta AI</span>
+                </td>
+                <td><strong>8B / 70B Parámetros</strong><br><span style="font-size: 0.75rem; color: var(--text-secondary);">Base Teórica del Curso</span></td>
+                <td>Pionero en GQA, tokenizador de 128k vocabulario y contexto nativo de hasta 128k tokens.</td>
+                <td><strong>~0.50 - 1.60 s</strong><br><span style="color: var(--text-muted); font-family: var(--font-mono);">400 - 600 T/s</span></td>
+                <td>Estándar de la industria para despliegues locales, fine-tuning y orquestación con Ollama y vLLM.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Características en Común y Diferencias Clave -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.2rem; margin: 1.4rem 0;">
+          <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1.1rem;">
+            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.6rem;">
+              <svg fill="currentColor" height="18" viewBox="0 0 24 24" width="18" style="color: var(--meta-blue);"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+              <h5 style="margin: 0; font-size: 0.92rem; font-weight: 700; color: var(--text-primary);">Características en Común con Meta Llama</h5>
+            </div>
+            <ul style="margin: 0; padding-left: 1.2rem; font-size: 0.84rem; color: var(--text-secondary); line-height: 1.6;">
+              <li><strong>Misma Arquitectura Transformer:</strong> Todos comparten el paradigma <em>Decoder-only</em> con incrustaciones posicionales rotacionales (RoPE) y activación SwiGLU.</li>
+              <li><strong>Filosofía de Pesos Abiertos (Open-Weights):</strong> Permiten auditoría de parámetros, ejecución local soberana y cero dependencia de APIs cerradas propietarias.</li>
+              <li><strong>Interoperabilidad 100% Compatible:</strong> Siguen la especificación estándar de <code>ChatCompletions</code> de OpenAI/Groq (roles <code>system</code>, <code>user</code>, <code>assistant</code>).</li>
+              <li><strong>Estrategia de Model Router:</strong> Se rigen por el mismo principio económico: enrutar consultas directas al modelo ligero y reservar el grande para análisis profundo.</li>
+            </ul>
+          </div>
+
+          <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1.1rem;">
+            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.6rem;">
+              <svg fill="currentColor" height="18" viewBox="0 0 24 24" width="18" style="color: #a855f7;"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 14l-5-5 1.41-1.41L12 14.17l7.59-7.59L21 8l-9 9z"/></svg>
+              <h5 style="margin: 0; font-size: 0.92rem; font-weight: 700; color: var(--text-primary);">Diferencias Clave y Ventajas Especializadas</h5>
+            </div>
+            <ul style="margin: 0; padding-left: 1.2rem; font-size: 0.84rem; color: var(--text-secondary); line-height: 1.6;">
+              <li><strong>Mayor Capacidad en el SLM (20B vs 8B):</strong> El modelo <code>openai/gpt-oss-20b</code> dispone de más del doble de parámetros que un 8B puro, reteniendo instrucciones complejas sin perder velocidad.</li>
+              <li><strong>Escala Masiva en el Flagship (120B vs 70B):</strong> Con 120B parámetros, <code>openai/gpt-oss-120b</code> ofrece un espacio conceptual superior para seguir directivas estrictas de gobernanza.</li>
+              <li><strong>Razonamiento Nativo Chain-of-Thought (Qwen 27B):</strong> A diferencia de Llama base, Qwen incorpora capacidades intrínsecas de auto-reflexión y verificación algorítmica para matemáticas y código.</li>
+              <li><strong>Optimización LPU:</strong> Diseñados y compilados para exprimir el paralelismo masivo de la memoria SRAM en chips Groq.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- ======================================================================
          PARTE I: HANDS-ON · FUNDAMENTOS DE LLMS (CELDAS 1 A 7)
          ====================================================================== -->
     <div class="module-header" id="parte1-handson">
