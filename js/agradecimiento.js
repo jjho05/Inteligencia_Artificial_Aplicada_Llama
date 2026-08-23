@@ -69,7 +69,7 @@
       btnCopy.addEventListener("click", function(){
         var summaryText = [
           "Formación Especializada en Inteligencia Artificial Aplicada & Meta Llama 3",
-          "Autor del programa: Ing. Jesús Javier Hernandez Olvera",
+          "Autor del programa: Ing. Jesús Javier Hernández Olvera",
           "",
           "Competencias Técnicas Dominadas:",
           "• Arquitectura Transformer: Multi-Head Attention, Rotary Positional Embedding (RoPE), KV Cache y Grouped-Query Attention (GQA).",

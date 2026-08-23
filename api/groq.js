@@ -49,6 +49,8 @@ export default async function handler(req, res) {
     systemPrompt = 'Eres un modelo especializado en razonamiento analítico y resolución lógica paso a paso (27B CoT). Desglosa el problema mediante análisis sistemático, principios fundamentales y validación formal de cada paso. No uses emojis.';
   }
 
+  let finalSystemPrompt = (bodyData.system && bodyData.system.trim()) ? bodyData.system.trim() : systemPrompt;
+
   const query = bodyData.query || 'Hola';
   const maxTokens = parseInt(bodyData.max_tokens || 600, 10);
   const temperature = parseFloat(bodyData.temperature !== undefined ? bodyData.temperature : 0.3);
@@ -66,7 +68,7 @@ export default async function handler(req, res) {
         messages: [
           {
             role: 'system',
-            content: systemPrompt
+            content: finalSystemPrompt
           },
           {
             role: 'user',
