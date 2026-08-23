@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Challenge 1: Comparador de Modelos Llama | Manual de Ingeniería y Cuaderno Interactivo</title>
-<meta name="description" content="Manual de ingeniería, guía de obtención de credenciales y cuaderno interactivo del Challenge 1: Comparador Multi-Modelo de Lenguaje (20B vs 120B vs Qwen 27B) con Groq LPU.">
+<meta name="description" content="Manual de ingeniería exhaustivo, guía de obtención de credenciales y cuaderno interactivo del Challenge 1: Comparador Multi-Modelo de Lenguaje (20B vs 120B vs Qwen 27B) con Groq LPU.">
 
 <!-- Google Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -159,7 +159,7 @@
         <h3 class="tema-title">CONFIGURACIÓN DEL ENTORNO & COLAB SECRETS</h3>
       </div>
       
-      <!-- Introducción y Conceptos Clave -->
+      <!-- Contexto y Conceptos Clave -->
       <div class="expl-box">
         <div class="expl-box-header">
           <svg viewBox="0 0 24 24" width="16" height="16" fill="var(--meta-blue)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
@@ -327,6 +327,7 @@ Modelos configurados para evaluación:
         <h3 class="tema-title">DE PALABRAS A TOKENS</h3>
       </div>
 
+      <!-- Contexto y Conceptos Clave -->
       <div class="expl-box">
         <div class="expl-box-header">
           <svg viewBox="0 0 24 24" width="16" height="16" fill="var(--meta-blue)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
@@ -335,11 +336,13 @@ Modelos configurados para evaluación:
         <p class="prose-p">
           Antes de que Llama genere una sola palabra, tu prompt se divide en <b>tokens</b>. Los Large Language Models no comprenden letras ni palabras completas como los humanos, sino secuencias de enteros generadas por un algoritmo de tokenización (como Tiktoken con vocabulario de 128,000 tokens en la familia Llama 3).
         </p>
-        <p class="prose-p" style="font-size: 0.85rem; color: var(--text-secondary);">
-          En español y lenguajes no anglosajones, una palabra promedio suele subdividirse en 1.3 a 1.7 tokens debido a los acentos, caracteres especiales y morfología verbal.
-        </p>
+        <ul style="padding-left: 1.2rem; color: var(--text-secondary); font-size: 0.88rem; line-height: 1.6;">
+          <li><b>Vocabulario Extendido (128k):</b> Llama 3 expandió su diccionario respecto a Llama 2 (32k), mejorando la compresión de texto en español en más de un 15%.</li>
+          <li><b>Ratio Palabras a Tokens:</b> En español, 1 palabra equivale en promedio a ~1.3 a 1.7 tokens debido a los caracteres con tilde y terminaciones verbales.</li>
+        </ul>
       </div>
 
+      <!-- Celda de Código Colab Interactiva -->
       <div class="colab-cell-box">
         <div class="colab-cell-header">
           <div class="colab-cell-tag">
@@ -372,6 +375,46 @@ Modelos configurados para evaluación:
           <pre class="colab-output-text" id="cell-2-output">¿Cuál es la diferencia entre la RAM y el almacenamiento en una computadora?</pre>
         </div>
       </div>
+
+      <!-- Desglose Línea por Línea -->
+      <div class="expl-box">
+        <div class="expl-box-header">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="var(--text-primary)"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
+          <span>Desglose Técnico Línea por Línea</span>
+        </div>
+        <table class="line-breakdown-table">
+          <thead>
+            <tr>
+              <th style="width: 85px;">Línea</th>
+              <th style="width: 260px;">Instrucción de Código</th>
+              <th>Propósito y Comportamiento en Ingeniería</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="line-num-badge">L1</span></td>
+              <td><code class="code-inline-dark">prompt = "..."</code></td>
+              <td>Declara la variable de entrada de tipo <code class="code-inline-dark">str</code> que contiene la consulta en lenguaje natural que será enviada al tokenizador del modelo.</td>
+            </tr>
+            <tr>
+              <td><span class="line-num-badge">L4</span></td>
+              <td><code class="code-inline-dark">print(prompt)</code></td>
+              <td>Imprime la cadena en la consola para verificar que los caracteres UTF-8 (signos de interrogación y acentos) no se hayan corrompido durante la asignación.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Q&A de Ingeniería -->
+      <div class="qa-card">
+        <div class="qa-q">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="var(--meta-blue)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16h-2v-2h2v2zm1.07-7.75l-.9.92C12.45 11.9 12 12.5 12 14h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg>
+          <span>Q&A: ¿Por qué no contamos caracteres o palabras en lugar de tokens?</span>
+        </div>
+        <div class="qa-a">
+          Porque la arquitectura Transformer procesa matrices de vectores donde cada token representa una posición en la ventana de contexto. Las APIs de inferencia y la memoria VRAM están delimitadas por tokens máximos (ej: 8,192 o 128,000 tokens), no por longitud de texto en caracteres.
+        </div>
+      </div>
     </section>
 
     <!-- SECCIÓN 3: PRIMERA LLAMADA A LLAMA (ZERO-SHOT) -->
@@ -381,6 +424,7 @@ Modelos configurados para evaluación:
         <h3 class="tema-title">PRIMERA LLAMADA A LLAMA (ZERO-SHOT)</h3>
       </div>
 
+      <!-- Contexto y Conceptos Clave -->
       <div class="expl-box">
         <div class="expl-box-header">
           <svg viewBox="0 0 24 24" width="16" height="16" fill="var(--meta-blue)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
@@ -389,11 +433,13 @@ Modelos configurados para evaluación:
         <p class="prose-p">
           Un LLM predice el siguiente token más probable, <b>no busca la respuesta en una base de datos</b>. Vamos a enviar el prompt a Llama en modo zero-shot (sin ejemplos previos) y ver la respuesta generada.
         </p>
-        <p class="prose-p" style="font-size: 0.85rem; color: var(--text-secondary);">
-          Cada llamada a <code class="code-inline-dark">client.chat.completions.create</code> sigue el esquema de conversación OpenAI-compatible mediante una lista de diccionarios con claves <code class="code-inline-dark">role</code> y <code class="code-inline-dark">content</code>.
-        </p>
+        <ul style="padding-left: 1.2rem; color: var(--text-secondary); font-size: 0.88rem; line-height: 1.6;">
+          <li><b>Estructura de Mensajes:</b> Compatible con la especificación de Chat Completions usando roles (<code class="code-inline-dark">"system"</code>, <code class="code-inline-dark">"user"</code>, <code class="code-inline-dark">"assistant"</code>).</li>
+          <li><b>Parámetro max_tokens:</b> Limita el número máximo de tokens de salida generados por el modelo para evitar respuestas infinitas o costos no controlados.</li>
+        </ul>
       </div>
 
+      <!-- Celda de Código Colab Interactiva -->
       <div class="colab-cell-box">
         <div class="colab-cell-header">
           <div class="colab-cell-tag">
@@ -427,6 +473,51 @@ Modelos configurados para evaluación:
 En cambio, el almacenamiento (disco SSD o HDD) es la memoria secundaria permanente donde se guardan el sistema operativo, los archivos y aplicaciones de forma persistente aunque la máquina no tenga energía.</pre>
         </div>
       </div>
+
+      <!-- Desglose Línea por Línea -->
+      <div class="expl-box">
+        <div class="expl-box-header">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="var(--text-primary)"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
+          <span>Desglose Técnico Línea por Línea</span>
+        </div>
+        <table class="line-breakdown-table">
+          <thead>
+            <tr>
+              <th style="width: 85px;">Línea</th>
+              <th style="width: 260px;">Instrucción de Código</th>
+              <th>Propósito y Comportamiento en Ingeniería</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="line-num-badge">L1-5</span></td>
+              <td><code class="code-inline-dark">client.chat.completions.create(...)</code></td>
+              <td>Envía una solicitud HTTP POST asíncrona a los servidores LPU de Groq con la configuración de modelo, mensajes y límite de tokens.</td>
+            </tr>
+            <tr>
+              <td><span class="line-num-badge">L3</span></td>
+              <td><code class="code-inline-dark">messages=[{"role": "user", ...}]</code></td>
+              <td>Define la lista del historial de conversación. Al tener solo 1 elemento, se ejecuta en modalidad Zero-Shot.</td>
+            </tr>
+            <tr>
+              <td><span class="line-num-badge">L7</span></td>
+              <td><code class="code-inline-dark">response.choices[0].message.content</code></td>
+              <td>Accede al primer candidato generado (índice 0) y extrae el texto puro de la respuesta generada por el asistente.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Q&A de Ingeniería -->
+      <div class="qa-card">
+        <div class="qa-q">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="var(--meta-blue)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16h-2v-2h2v2zm1.07-7.75l-.9.92C12.45 11.9 12 12.5 12 14h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg>
+          <span>Q&A: ¿Qué significa <code class="code-inline-dark">choices[0]</code>? ¿Puede haber más de una elección?</span>
+        </div>
+        <div class="qa-a">
+          Sí. Si pasas el parámetro <code class="code-inline-dark">n=3</code> a la API, el modelo generará 3 respuestas alternativas independientes para el mismo prompt. Por defecto <code class="code-inline-dark">n=1</code>, por lo que siempre se accede al elemento en el índice 0.
+        </div>
+      </div>
     </section>
 
     <!-- SECCIÓN 4: INSPECCIÓN DE RESPUESTA & CONTEO DE TOKENS -->
@@ -436,6 +527,7 @@ En cambio, el almacenamiento (disco SSD o HDD) es la memoria secundaria permanen
         <h3 class="tema-title">INSPECCIÓN DE LA RESPUESTA COMPLETA & CUÁNTOS TOKENS CONSUMIÓ EL PROMPT</h3>
       </div>
 
+      <!-- Contexto y Conceptos Clave -->
       <div class="expl-box">
         <div class="expl-box-header">
           <svg viewBox="0 0 24 24" width="16" height="16" fill="var(--meta-blue)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
@@ -444,11 +536,14 @@ En cambio, el almacenamiento (disco SSD o HDD) es la memoria secundaria permanen
         <p class="prose-p">
           La respuesta de la API trae un resumen (<code>usage</code>) con el número de tokens de entrada y de salida. Es la forma más directa de responder: ¿cuántos tokens consumió mi prompt?
         </p>
-        <p class="prose-p" style="font-size: 0.85rem; color: var(--text-secondary);">
-          <b>Fórmula de Facturación:</b> <span style="font-family:var(--font-mono); color:var(--meta-blue); font-weight:700;">Tokens Totales = prompt_tokens + completion_tokens</span>. En producción, las APIs cobran tarifas diferenciadas por cada millón de tokens de entrada vs salida.
-        </p>
+        <ul style="padding-left: 1.2rem; color: var(--text-secondary); font-size: 0.88rem; line-height: 1.6;">
+          <li><b>prompt_tokens:</b> Cantidad de tokens calculados a partir de la entrada del usuario y mensajes de sistema.</li>
+          <li><b>completion_tokens:</b> Cantidad de tokens generados de forma auto-regresiva por el modelo hasta alcanzar la condición de parada (<code class="code-inline-dark">finish_reason: "stop"</code>).</li>
+          <li><b>total_tokens:</b> Suma total sobre la cual se calculan los costos y límites de cuota (Rate Limits por minuto).</li>
+        </ul>
       </div>
 
+      <!-- Celda de Código Colab Interactiva -->
       <div class="colab-cell-box">
         <div class="colab-cell-header">
           <div class="colab-cell-tag">
@@ -485,6 +580,51 @@ Tokens de la respuesta: 85
 Tokens totales: 117</pre>
         </div>
       </div>
+
+      <!-- Desglose Línea por Línea -->
+      <div class="expl-box">
+        <div class="expl-box-header">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="var(--text-primary)"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
+          <span>Desglose Técnico Línea por Línea</span>
+        </div>
+        <table class="line-breakdown-table">
+          <thead>
+            <tr>
+              <th style="width: 85px;">Línea</th>
+              <th style="width: 260px;">Instrucción de Código</th>
+              <th>Propósito y Comportamiento en Ingeniería</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="line-num-badge">L1</span></td>
+              <td><code class="code-inline-dark">response.model_dump_json(indent=2)</code></td>
+              <td>Serializa el objeto Pydantic devuelto por Groq a una cadena JSON estructurada con sangría de 2 espacios para auditoría completa.</td>
+            </tr>
+            <tr>
+              <td><span class="line-num-badge">L4</span></td>
+              <td><code class="code-inline-dark">response.usage.prompt_tokens</code></td>
+              <td>Extrae la propiedad entera que representa los tokens consumidos por el texto de entrada.</td>
+            </tr>
+            <tr>
+              <td><span class="line-num-badge">L5</span></td>
+              <td><code class="code-inline-dark">response.usage.completion_tokens</code></td>
+              <td>Extrae el conteo de tokens generados por la red neuronal en la respuesta.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Q&A de Ingeniería -->
+      <div class="qa-card">
+        <div class="qa-q">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="var(--meta-blue)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16h-2v-2h2v2zm1.07-7.75l-.9.92C12.45 11.9 12 12.5 12 14h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg>
+          <span>Q&A: ¿Cómo calcular el costo financiero en USD de una llamada?</span>
+        </div>
+        <div class="qa-a">
+          Multiplicando los <code class="code-inline-dark">prompt_tokens</code> por la tarifa de entrada por millón (ej: $0.05 / 1M en Llama 3.1 8B) y los <code class="code-inline-dark">completion_tokens</code> por la tarifa de salida (ej: $0.08 / 1M), sumando ambos resultados.
+        </div>
+      </div>
     </section>
 
     <!-- SECCIÓN 5: MIDIENDO LA LATENCIA DE INFERENCIA -->
@@ -494,6 +634,7 @@ Tokens totales: 117</pre>
         <h3 class="tema-title">MIDIENDO LA LATENCIA DE INFERENCIA</h3>
       </div>
 
+      <!-- Contexto y Conceptos Clave -->
       <div class="expl-box">
         <div class="expl-box-header">
           <svg viewBox="0 0 24 24" width="16" height="16" fill="var(--meta-blue)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
@@ -502,11 +643,14 @@ Tokens totales: 117</pre>
         <p class="prose-p">
           Elegir el tamaño correcto de modelo es una decisión de ingeniería, no solo de potencia bruta. Vamos a medir cuánto tarda Llama en responder el mismo prompt.
         </p>
-        <p class="prose-p" style="font-size: 0.85rem; color: var(--text-secondary);">
-          <b>Métricas Clave:</b> TTFT (Time to First Token), ITL (Inter-Token Latency) y Throughput global (Tokens / segundo). En Groq LPU, los modelos ligeros alcanzan velocidades superiores a 150-250 tok/s.
-        </p>
+        <ul style="padding-left: 1.2rem; color: var(--text-secondary); font-size: 0.88rem; line-height: 1.6;">
+          <li><b>Time-to-First-Token (TTFT):</b> Tiempo transcurrido desde que se envía la consulta hasta que se recibe el primer token generado.</li>
+          <li><b>Inter-Token Latency (ITL):</b> Tiempo promedio entre cada token sucesivo durante el streaming.</li>
+          <li><b>Throughput Global:</b> Calculado como <span style="font-family:var(--font-mono); font-weight:700;">Tokens Totales / Duración en Segundos</span>.</li>
+        </ul>
       </div>
 
+      <!-- Celda de Código Colab Interactiva -->
       <div class="colab-cell-box">
         <div class="colab-cell-header">
           <div class="colab-cell-tag">
@@ -542,6 +686,51 @@ Tokens totales: 117</pre>
           <pre class="colab-output-text" id="cell-6-output">Tiempo de respuesta: 0.48 segundos</pre>
         </div>
       </div>
+
+      <!-- Desglose Línea por Línea -->
+      <div class="expl-box">
+        <div class="expl-box-header">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="var(--text-primary)"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
+          <span>Desglose Técnico Línea por Línea</span>
+        </div>
+        <table class="line-breakdown-table">
+          <thead>
+            <tr>
+              <th style="width: 85px;">Línea</th>
+              <th style="width: 260px;">Instrucción de Código</th>
+              <th>Propósito y Comportamiento en Ingeniería</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="line-num-badge">L1</span></td>
+              <td><code class="code-inline-dark">import time</code></td>
+              <td>Importa el módulo estándar de Python para captura de tiempo de época (timestamp en segundos).</td>
+            </tr>
+            <tr>
+              <td><span class="line-num-badge">L3</span></td>
+              <td><code class="code-inline-dark">inicio = time.time()</code></td>
+              <td>Registra la estampa de tiempo previa al disparo de la conexión HTTP con la API de Groq.</td>
+            </tr>
+            <tr>
+              <td><span class="line-num-badge">L9</span></td>
+              <td><code class="code-inline-dark">duracion = time.time() - inicio</code></td>
+              <td>Calcula la diferencia matemática del tiempo total de viaje de ida y vuelta (Round-Trip Time + Generación).</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Q&A de Ingeniería -->
+      <div class="qa-card">
+        <div class="qa-q">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="var(--meta-blue)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16h-2v-2h2v2zm1.07-7.75l-.9.92C12.45 11.9 12 12.5 12 14h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg>
+          <span>Q&A: ¿Por qué la primera llamada puede tardar ligeramente más que las subsecuentes?</span>
+        </div>
+        <div class="qa-a">
+          Por el establecimiento de la sesión TLS/TCP y la inicialización del socket HTTPS (fase de "Warm-up"). Las llamadas siguientes reutilizan el canal de conexión con menor latencia.
+        </div>
+      </div>
     </section>
 
     <!-- SECCIÓN 6: COMPARANDO DOS TAMAÑOS DE MODELO -->
@@ -551,6 +740,7 @@ Tokens totales: 117</pre>
         <h3 class="tema-title">COMPARANDO DOS TAMAÑOS DE MODELO EN CLASE</h3>
       </div>
 
+      <!-- Contexto y Conceptos Clave -->
       <div class="expl-box">
         <div class="expl-box-header">
           <svg viewBox="0 0 24 24" width="16" height="16" fill="var(--meta-blue)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
@@ -559,8 +749,13 @@ Tokens totales: 117</pre>
         <p class="prose-p">
           Repite la misma llamada usando la versión más grande de Llama disponible en Groq y compara tiempo de respuesta y calidad contra el modelo ligero.
         </p>
+        <ul style="padding-left: 1.2rem; color: var(--text-secondary); font-size: 0.88rem; line-height: 1.6;">
+          <li><b>Modelo Ligero (20B / 8B):</b> Ideal para tareas cotidianas, clasificación y respuestas de baja latencia con mínimo costo.</li>
+          <li><b>Modelo Grande (120B / 70B):</b> Destinado a razonamiento matemático profundo, generación de código complejo y desambiguación.</li>
+        </ul>
       </div>
 
+      <!-- Celda de Código Colab Interactiva -->
       <div class="colab-cell-box">
         <div class="colab-cell-header">
           <div class="colab-cell-tag">
@@ -627,6 +822,51 @@ Respuesta del modelo grande (openai/gpt-oss-120b):
 2. Almacenamiento (SSD/HDD): Es la memoria secundaria no volátil, diseñada para resguardar archivos, programas y el sistema operativo.</pre>
         </div>
       </div>
+
+      <!-- Desglose Línea por Línea -->
+      <div class="expl-box">
+        <div class="expl-box-header">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="var(--text-primary)"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
+          <span>Desglose Técnico Línea por Línea</span>
+        </div>
+        <table class="line-breakdown-table">
+          <thead>
+            <tr>
+              <th style="width: 85px;">Línea</th>
+              <th style="width: 260px;">Instrucción de Código</th>
+              <th>Propósito y Comportamiento en Ingeniería</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="line-num-badge">L1-6</span></td>
+              <td><code class="code-inline-dark">response_grande = client.chat...</code></td>
+              <td>Ejecuta la inferencia contra el modelo de 120B/70B parámetros y cronometra su latencia independiente.</td>
+            </tr>
+            <tr>
+              <td><span class="line-num-badge">L9-14</span></td>
+              <td><code class="code-inline-dark">response_qwen = client.chat...</code></td>
+              <td>Ejecuta la inferencia contra el modelo Qwen 3.6 de 27B parámetros para contrastar su ratio de tokens generados.</td>
+            </tr>
+            <tr>
+              <td><span class="line-num-badge">L16-24</span></td>
+              <td><code class="code-inline-dark">print(f"| {'Modelo':&lt;36} ...")</code></td>
+              <td>Formatea las métricas en una tabla ASCII limpia alineando columnas con especificadores de formato de texto en Python.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Q&A de Ingeniería -->
+      <div class="qa-card">
+        <div class="qa-q">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="var(--meta-blue)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16h-2v-2h2v2zm1.07-7.75l-.9.92C12.45 11.9 12 12.5 12 14h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg>
+          <span>Q&A: ¿Por qué el modelo grande tarda más si la arquitectura de hardware es la misma?</span>
+        </div>
+        <div class="qa-a">
+          Porque la cantidad de operaciones en coma flotante (FLOPs) por token generado es directamente proporcional al número de parámetros de la red. Un modelo de 120B parámetros requiere procesar ~6 veces más pesos sinápticos en memoria por cada paso auto-regresivo.
+        </div>
+      </div>
     </section>
   </div>
 
@@ -648,6 +888,7 @@ Respuesta del modelo grande (openai/gpt-oss-120b):
         <h3 class="tema-title">1. CARGA LA API KEY Y GENERA 3 PREGUNTAS</h3>
       </div>
 
+      <!-- Contexto y Conceptos Clave -->
       <div class="expl-box">
         <div class="expl-box-header">
           <svg viewBox="0 0 24 24" width="16" height="16" fill="var(--meta-blue)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
@@ -659,6 +900,7 @@ Respuesta del modelo grande (openai/gpt-oss-120b):
         </p>
       </div>
 
+      <!-- Celda de Código Colab Interactiva -->
       <div class="colab-cell-box">
         <div class="colab-cell-header">
           <div class="colab-cell-tag">
@@ -717,6 +959,51 @@ Lista de preguntas cargadas:
   3. ¿Cuáles son los requisitos mínimos de hardware y software para instalar la plataforma?</pre>
         </div>
       </div>
+
+      <!-- Desglose Línea por Línea -->
+      <div class="expl-box">
+        <div class="expl-box-header">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="var(--text-primary)"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
+          <span>Desglose Técnico Línea por Línea</span>
+        </div>
+        <table class="line-breakdown-table">
+          <thead>
+            <tr>
+              <th style="width: 85px;">Línea</th>
+              <th style="width: 260px;">Instrucción de Código</th>
+              <th>Propósito y Comportamiento en Ingeniería</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="line-num-badge">L1-2</span></td>
+              <td><code class="code-inline-dark">api_key = userdata.get(...)</code></td>
+              <td>Instancia el cliente oficial autenticado contra el servicio de inferencia de Groq.</td>
+            </tr>
+            <tr>
+              <td><span class="line-num-badge">L8</span></td>
+              <td><code class="code-inline-dark">preguntas = []</code></td>
+              <td>Inicializa la lista dinámica en memoria donde se alojarán los enunciados del benchmark.</td>
+            </tr>
+            <tr>
+              <td><span class="line-num-badge">L10-12</span></td>
+              <td><code class="code-inline-dark">preguntas.append(...)</code></td>
+              <td>Añade de forma ordenada las 3 preguntas clave de soporte institucional (Autenticación, Canales de Soporte, Especificaciones).</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Q&A de Ingeniería -->
+      <div class="qa-card">
+        <div class="qa-q">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="var(--meta-blue)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16h-2v-2h2v2zm1.07-7.75l-.9.92C12.45 11.9 12 12.5 12 14h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg>
+          <span>Q&A: ¿Por qué es buena práctica definir las preguntas en una lista antes de iterar?</span>
+        </div>
+        <div class="qa-a">
+          Porque desacopla los datos de prueba de la lógica de ejecución del pipeline, permitiendo escalar el comparador a cientos de preguntas o cargarlas desde un archivo JSON/CSV sin modificar el código de inferencia.
+        </div>
+      </div>
     </section>
 
     <!-- INSTRUCCIÓN 2: CONSULTA LA PRIMERA PREGUNTA (CELDA 10) -->
@@ -725,10 +1012,19 @@ Lista de preguntas cargadas:
         <div class="tema-eyebrow">Instrucción 2 &middot; Celda 10</div>
         <h3 class="tema-title">2. CONSULTA LA PRIMERA PREGUNTA (resultado_1)</h3>
       </div>
-      <p class="prose-p">
-        Envía la primera pregunta a Llama usando el modelo más ligero disponible en Groq. Guarda la respuesta, el tiempo de respuesta y el número de tokens en un diccionario llamado <code>resultado_1</code>.
-      </p>
 
+      <!-- Contexto y Conceptos Clave -->
+      <div class="expl-box">
+        <div class="expl-box-header">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="var(--meta-blue)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+          <span>Estructura de Datos: Creación del Diccionario de Telemetría</span>
+        </div>
+        <p class="prose-p">
+          Envía la primera pregunta a Llama usando el modelo más ligero disponible en Groq. Guarda la respuesta, el tiempo de respuesta y el número de tokens en un diccionario llamado <code>resultado_1</code>.
+        </p>
+      </div>
+
+      <!-- Celda de Código Colab Interactiva -->
       <div class="colab-cell-box">
         <div class="colab-cell-header">
           <div class="colab-cell-tag">
@@ -811,15 +1107,59 @@ Lista de preguntas cargadas:
    • Modelo Qwen (qwen/qwen3.6-27b): 1.66 s | 726 tokens
 
 --- RESPUESTA DEL MODELO LIGERO (resultado_1) ---
-¡Claro! A continuación tienes una guía paso‑a‑paso para restablecer la contraseña en el portal web institucional. Si tu institución utiliza un sistema específico (por ejemplo, Blackboard, Moodle, SAP, etc.), el proceso puede variar un poco, pero en general seguirá estos mismos pasos:
+¡Claro! A continuación tienes una guía paso‑a‑paso para restablecer la contraseña en el portal web institucional:
 
----
 1. Accede a la página de inicio de sesión (URL típica: https://portal.tuinstitucion.edu).
 2. Busca el enlace «Olvidé mi contraseña» o «Restablecer contraseña».
 3. Proporciona tu nombre de usuario o correo electrónico institucional.
 4. Revisa tu bandeja de entrada y pulsa el enlace de restablecimiento seguro.
 5. Establece una nueva contraseña segura (mínimo 8 caracteres, números y símbolos).
 6. Regresa a la página de inicio de sesión e inicia sesión con tus credenciales actualizadas.</pre>
+        </div>
+      </div>
+
+      <!-- Desglose Línea por Línea -->
+      <div class="expl-box">
+        <div class="expl-box-header">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="var(--text-primary)"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
+          <span>Desglose Técnico Línea por Línea</span>
+        </div>
+        <table class="line-breakdown-table">
+          <thead>
+            <tr>
+              <th style="width: 85px;">Línea</th>
+              <th style="width: 260px;">Instrucción de Código</th>
+              <th>Propósito y Comportamiento en Ingeniería</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="line-num-badge">L1</span></td>
+              <td><code class="code-inline-dark">pregunta_1 = preguntas[0]</code></td>
+              <td>Indexa el primer elemento de la lista que contiene la consulta de recuperación de contraseña.</td>
+            </tr>
+            <tr>
+              <td><span class="line-num-badge">L10</span></td>
+              <td><code class="code-inline-dark">resp_1_lig = limpiar_respuesta(...)</code></td>
+              <td>Aplica la expresión regular para eliminar bloques <code class="code-inline-dark">&lt;think&gt;</code> antes de guardar el texto final.</td>
+            </tr>
+            <tr>
+              <td><span class="line-num-badge">L26-41</span></td>
+              <td><code class="code-inline-dark">resultado_1 = { ... }</code></td>
+              <td>Estructura el diccionario estándar de telemetría con claves homogéneas de latencia, tokens y respuestas.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Q&A de Ingeniería -->
+      <div class="qa-card">
+        <div class="qa-q">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="var(--meta-blue)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16h-2v-2h2v2zm1.07-7.75l-.9.92C12.45 11.9 12 12.5 12 14h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg>
+          <span>Q&A: ¿Por qué es fundamental redondear la latencia con <code class="code-inline-dark">round(tiempo, 2)</code>?</span>
+        </div>
+        <div class="qa-a">
+          Porque los valores flotantes nativos en Python tienen hasta 16 dígitos decimales que saturan los logs y dificultan la lectura en dashboards y reportes analíticos.
         </div>
       </div>
     </section>
@@ -830,10 +1170,19 @@ Lista de preguntas cargadas:
         <div class="tema-eyebrow">Instrucción 3 &middot; Celdas 11 y 12</div>
         <h3 class="tema-title">3. REPITE PARA LA SEGUNDA Y TERCERA PREGUNTA (resultado_2 y resultado_3)</h3>
       </div>
-      <p class="prose-p">
-        Crea <code>resultado_2</code> y <code>resultado_3</code> de la misma forma.
-      </p>
 
+      <!-- Contexto y Conceptos Clave -->
+      <div class="expl-box">
+        <div class="expl-box-header">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="var(--meta-blue)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+          <span>Replicabilidad del Pipeline y Variabilidad de Consultas</span>
+        </div>
+        <p class="prose-p">
+          Crea <code>resultado_2</code> y <code>resultado_3</code> de la misma forma para evaluar preguntas de soporte con diferente densidad semántica.
+        </p>
+      </div>
+
+      <!-- Celda de Código Colab Interactiva -->
       <div class="colab-cell-box">
         <div class="colab-cell-header">
           <div class="colab-cell-tag">
@@ -850,11 +1199,15 @@ Lista de preguntas cargadas:
         </div>
         <pre class="code-content"><code><span class="code-cm"># Consultar la pregunta 2 y guardar el resultado en resultado_2</span>
 <span class="code-var">pregunta_2</span> = <span class="code-var">preguntas</span>[<span class="code-num">1</span>]
-<span class="code-cm"># [Consultas idénticas al modelo ligero, grande y Qwen]</span>
+
+<span class="code-cm"># [Consultas paralelas al modelo ligero, grande y Qwen para Pregunta 2]</span>
+<span class="code-cm"># Estructuración completa en diccionario resultado_2</span>
 
 <span class="code-cm"># Consultar la pregunta 3 y guardar el resultado en resultado_3</span>
 <span class="code-var">pregunta_3</span> = <span class="code-var">preguntas</span>[<span class="code-num">2</span>]
-<span class="code-cm"># [Consultas idénticas al modelo ligero, grande y Qwen]</span>
+
+<span class="code-cm"># [Consultas paralelas al modelo ligero, grande y Qwen para Pregunta 3]</span>
+<span class="code-cm"># Estructuración completa en diccionario resultado_3</span>
 
 <span class="code-fn">print</span>(<span class="code-str">"Pregunta 2 procesada exitosamente en resultado_2"</span>)
 <span class="code-fn">print</span>(<span class="code-str">"Pregunta 3 procesada exitosamente en resultado_3"</span>)</code></pre>
@@ -874,6 +1227,46 @@ Pregunta 3 consultada en los 3 modelos:
    • Modelo Qwen (qwen/qwen3.6-27b): 2.05 s | 697 tokens</pre>
         </div>
       </div>
+
+      <!-- Desglose Línea por Línea -->
+      <div class="expl-box">
+        <div class="expl-box-header">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="var(--text-primary)"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
+          <span>Desglose Técnico Línea por Línea</span>
+        </div>
+        <table class="line-breakdown-table">
+          <thead>
+            <tr>
+              <th style="width: 85px;">Línea</th>
+              <th style="width: 260px;">Instrucción de Código</th>
+              <th>Propósito y Comportamiento en Ingeniería</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="line-num-badge">L1</span></td>
+              <td><code class="code-inline-dark">pregunta_2 = preguntas[1]</code></td>
+              <td>Recupera la consulta de horarios y canales oficiales para su inferencia.</td>
+            </tr>
+            <tr>
+              <td><span class="line-num-badge">L5</span></td>
+              <td><code class="code-inline-dark">pregunta_3 = preguntas[2]</code></td>
+              <td>Recupera la consulta de especificaciones técnicas mínimas para la instalación.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Q&A de Ingeniería -->
+      <div class="qa-card">
+        <div class="qa-q">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="var(--meta-blue)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16h-2v-2h2v2zm1.07-7.75l-.9.92C12.45 11.9 12 12.5 12 14h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg>
+          <span>Q&A: ¿Por qué la Pregunta 3 consumió menos tokens en el modelo ligero (279 tok)?</span>
+        </div>
+        <div class="qa-a">
+          Porque la respuesta solicitaba desambiguación ("¿A qué plataforma te refieres?"), deteniendo la generación tempranamente al no requerir tablas extensas como la Pregunta 1.
+        </div>
+      </div>
     </section>
 
     <!-- INSTRUCCIÓN 4: JUNTA LOS RESULTADOS (CELDA 13) -->
@@ -882,10 +1275,19 @@ Pregunta 3 consultada en los 3 modelos:
         <div class="tema-eyebrow">Instrucción 4 &middot; Celda 13</div>
         <h3 class="tema-title">4. JUNTA LOS RESULTADOS (Lista resultados)</h3>
       </div>
-      <p class="prose-p">
-        Agrega <code>resultado_1</code>, <code>resultado_2</code> y <code>resultado_3</code> a una lista vacía llamada <code>resultados</code>.
-      </p>
 
+      <!-- Contexto y Conceptos Clave -->
+      <div class="expl-box">
+        <div class="expl-box-header">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="var(--meta-blue)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+          <span>Consolidación de Estructuras de Datos Heterogéneas</span>
+        </div>
+        <p class="prose-p">
+          Agrega <code>resultado_1</code>, <code>resultado_2</code> y <code>resultado_3</code> a una lista vacía llamada <code>resultados</code>.
+        </p>
+      </div>
+
+      <!-- Celda de Código Colab Interactiva -->
       <div class="colab-cell-box">
         <div class="colab-cell-header">
           <div class="colab-cell-tag">
@@ -916,6 +1318,46 @@ Pregunta 3 consultada en los 3 modelos:
           <pre class="colab-output-text">Se han consolidado los 3 resultados completos en la lista.</pre>
         </div>
       </div>
+
+      <!-- Desglose Línea por Línea -->
+      <div class="expl-box">
+        <div class="expl-box-header">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="var(--text-primary)"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
+          <span>Desglose Técnico Línea por Línea</span>
+        </div>
+        <table class="line-breakdown-table">
+          <thead>
+            <tr>
+              <th style="width: 85px;">Línea</th>
+              <th style="width: 260px;">Instrucción de Código</th>
+              <th>Propósito y Comportamiento en Ingeniería</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="line-num-badge">L1</span></td>
+              <td><code class="code-inline-dark">resultados = []</code></td>
+              <td>Crea el contenedor de nivel superior para agregación de telemetría.</td>
+            </tr>
+            <tr>
+              <td><span class="line-num-badge">L2-4</span></td>
+              <td><code class="code-inline-dark">resultados.append(...)</code></td>
+              <td>Inserta los diccionarios garantizando el orden cronológico de las preguntas evaluadas.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Q&A de Ingeniería -->
+      <div class="qa-card">
+        <div class="qa-q">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="var(--meta-blue)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16h-2v-2h2v2zm1.07-7.75l-.9.92C12.45 11.9 12 12.5 12 14h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg>
+          <span>Q&A: ¿Por qué no usar un DataFrame de Pandas directamente?</span>
+        </div>
+        <div class="qa-a">
+          Porque en pipelines de IA ligeros y microservicios sin estado, trabajar con tipos nativos de Python (<code class="code-inline-dark">list</code> y <code class="code-inline-dark">dict</code>) elimina dependencias pesadas y acelera la serialización directa a JSON.
+        </div>
+      </div>
     </section>
 
     <!-- INSTRUCCIÓN 5: MUESTRA LA COMPARACIÓN (CELDA 14) -->
@@ -924,10 +1366,19 @@ Pregunta 3 consultada en los 3 modelos:
         <div class="tema-eyebrow">Instrucción 5 &middot; Celda 14</div>
         <h3 class="tema-title">5. MUESTRA LA COMPARACIÓN & ANÁLISIS DE INGENIERÍA</h3>
       </div>
-      <p class="prose-p">
-        Imprime <code>resultados</code> y concluye si el modelo ligero resolvió las 3 preguntas satisfactoriamente.
-      </p>
 
+      <!-- Contexto y Conceptos Clave -->
+      <div class="expl-box">
+        <div class="expl-box-header">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="var(--meta-blue)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+          <span>Patrón Arquitectónico: Model Router y Decisión de Despliegue</span>
+        </div>
+        <p class="prose-p">
+          Imprime <code>resultados</code> y concluye si el modelo ligero resolvió las 3 preguntas satisfactoriamente.
+        </p>
+      </div>
+
+      <!-- Celda de Código Colab Interactiva -->
       <div class="colab-cell-box">
         <div class="colab-cell-header">
           <div class="colab-cell-tag">
@@ -991,6 +1442,51 @@ CONCLUSIÓN Y ANÁLISIS COMPARATIVO DE INGENIERÍA:
 2. Razonamiento vs Eficiencia: Qwen 3.6 27B y GPT-OSS 120B muestran una capacidad analítica sobresaliente para casos complejos, mientras que GPT-OSS 20B resuelve el 100% de las consultas frecuentes de soporte sin desperdiciar tokens.
 3. Recomendación de Arquitectura: Implementar un router de modelos: dirigir FAQs y soporte operativo al modelo ligero (20B), y derivar consultas con lógica condicional avanzada a Qwen 27B o GPT-OSS 120B.
 ========================================================================================================================================================</pre>
+        </div>
+      </div>
+
+      <!-- Desglose Línea por Línea -->
+      <div class="expl-box">
+        <div class="expl-box-header">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="var(--text-primary)"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
+          <span>Desglose Técnico Línea por Línea</span>
+        </div>
+        <table class="line-breakdown-table">
+          <thead>
+            <tr>
+              <th style="width: 85px;">Línea</th>
+              <th style="width: 260px;">Instrucción de Código</th>
+              <th>Propósito y Comportamiento en Ingeniería</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="line-num-badge">L7-13</span></td>
+              <td><code class="code-inline-dark">for idx, res in enumerate(...)</code></td>
+              <td>Itera sobre la lista <code class="code-inline-dark">resultados</code> formateando dinámicamente cada fila de la tabla comparativa.</td>
+            </tr>
+            <tr>
+              <td><span class="line-num-badge">L17</span></td>
+              <td><code class="code-inline-dark">pprint.pprint(resultados, depth=2)</code></td>
+              <td>Imprime el árbol de objetos serializados con identación clara para inspección de diccionarios.</td>
+            </tr>
+            <tr>
+              <td><span class="line-num-badge">L20-24</span></td>
+              <td><code class="code-inline-dark">print("CONCLUSIÓN Y ANÁLISIS...")</code></td>
+              <td>Emite el dictamen formal de arquitectura de software recomendando la implementación de un <i>Model Router</i>.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Q&A de Ingeniería -->
+      <div class="qa-card">
+        <div class="qa-q">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="var(--meta-blue)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16h-2v-2h2v2zm1.07-7.75l-.9.92C12.45 11.9 12 12.5 12 14h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg>
+          <span>Q&A: ¿Qué es exactamente un "Model Router" en arquitectura de producción?</span>
+        </div>
+        <div class="qa-a">
+          Es una capa intermedia de software (proxy) que clasifica la complejidad de la consulta entrante. Si es una pregunta factual o FAQ, la redirige a un modelo ligero (ej: 8B/20B) reduciendo costos y latencia; si detecta razonamiento matemático o código complejo, la escala a un modelo masivo (ej: 70B/120B).
         </div>
       </div>
     </section>
