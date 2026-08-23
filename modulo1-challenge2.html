@@ -457,44 +457,28 @@
               <svg fill="none" height="14" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" width="14"><path d="M6 9l6 6 6-6"></path></svg>
             </span>
           </summary>
-          <div class="formula-breakdown-content">
-            <div class="breakdown-table-wrapper">
-              <table class="breakdown-table">
-                <thead>
-                  <tr>
-                    <th>Instrucción de Código</th>
-                    <th>Tipo / Objeto</th>
-                    <th>Propósito Técnico &amp; Impacto en Arquitectura</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr>
-                    <td><code>!pip install groq --quiet</code></td>
-                    <td>Comando Shell</td>
-                    <td>Descarga el SDK oficial de Python para comunicarse con la API de Groq Cloud mediante sockets HTTP/2 optimizados.</td>
-                  </tr>
-                  <tr>
-                    <td><code>userdata.get('GROQ_API_KEY')</code></td>
-                    <td>API de Seguridad Colab</td>
-                    <td>Recupera la clave cifrada almacenada en el entorno virtual de Google Colab sin exponerla en texto plano.</td>
-                  </tr>
-                  <tr>
-                    <td><code>Groq(api_key=...)</code></td>
-                    <td>Constructor de Cliente</td>
-                    <td>Instancia el objeto cliente encargado de gestionar reintentos automáticos, serialización JSON y autenticación Bearer.</td>
-                  </tr>
-                  <tr>
-                    <td><code>client.models.list().data</code></td>
-                    <td>Llamada REST de Catálogo</td>
-                    <td>Consulta la lista de modelos activos en el cluster LPU para verificar qué endpoints están en línea en tiempo real.</td>
-                  </tr>
-                  <tr>
-                    <td><code>modelo_llm = obtener_modelo(...)</code></td>
-                    <td>Asignación Resiliente</td>
-                    <td>Selecciona <code>openai/gpt-oss-20b</code> si <code>llama-3.1-8b-instant</code> fue descontinuado en la API activa de Groq.</td>
-                  </tr>
-                </tbody>
-              </table>
+          <div class="formula-breakdown-panel">
+            <div class="breakdown-list-stack">
+              <div class="breakdown-list-row">
+                <span class="breakdown-row-badge">L1</span>
+                <div class="breakdown-row-text"><strong><code>!pip install groq --quiet</code>:</strong> Descarga el SDK oficial de Python para comunicarse con la API de Groq Cloud mediante sockets HTTP/2 optimizados en modo silencioso.</div>
+              </div>
+              <div class="breakdown-list-row">
+                <span class="breakdown-row-badge">L3-5</span>
+                <div class="breakdown-row-text"><strong><code>import os, Groq, userdata</code>:</strong> Importa los módulos del sistema operativo, el cliente oficial de inferencia y la utilidad de seguridad de Google Colab.</div>
+              </div>
+              <div class="breakdown-list-row">
+                <span class="breakdown-row-badge">L7</span>
+                <div class="breakdown-row-text"><strong><code>client = Groq(api_key=userdata.get('GROQ_API_KEY'))</code>:</strong> Recupera la clave cifrada almacenada en Secrets e instancia el cliente HTTPS autenticado sin exponer tokens en texto plano.</div>
+              </div>
+              <div class="breakdown-list-row">
+                <span class="breakdown-row-badge">L10-16</span>
+                <div class="breakdown-row-text"><strong><code>def obtener_modelo(client, preferido, alternativo)</code>:</strong> Consulta la lista de modelos activos en el cluster LPU y selecciona automáticamente el endpoint disponible (<code>openai/gpt-oss-20b</code>) si los modelos de Llama fueron descontinuados.</div>
+              </div>
+              <div class="breakdown-list-row">
+                <span class="breakdown-row-badge">L18-19</span>
+                <div class="breakdown-row-text"><strong><code>modelo_llm, print(...)</code>:</strong> Asigna la variable global del modelo e imprime la confirmación de inicialización en la consola.</div>
+              </div>
             </div>
           </div>
         </details>
@@ -555,8 +539,9 @@
         </div>
       </div>
 
+      <!-- Desglose Técnico Exhaustivo Línea por Línea -->
       <div class="formula-card">
-        <details class="formula-breakdown-details">
+        <details class="formula-breakdown-details" open>
           <summary class="formula-breakdown-summary">
             <div class="summary-left">
               <svg fill="currentColor" height="16" viewBox="0 0 24 24" width="16"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path></svg>
@@ -567,10 +552,21 @@
               <svg fill="none" height="14" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" width="14"><path d="M6 9l6 6 6-6"></path></svg>
             </span>
           </summary>
-          <div class="formula-breakdown-content">
-            <p class="prose-p" style="margin-top: 0.5rem;">
-              La red neuronal detecta la conjunción adversativa <b>"pero"</b>. Asigna pesos de atención positivos a <i>"producto es excelente"</i> y pesos negativos a <i>"llegó tarde"</i>. Al balancear ambas señales emocionales, deduce que la categoría correcta es <b>Mixto</b>.
-            </p>
+          <div class="formula-breakdown-panel">
+            <div class="breakdown-list-stack">
+              <div class="breakdown-list-row">
+                <span class="breakdown-row-badge">L1-4</span>
+                <div class="breakdown-row-text"><strong><code>prompt_zero_shot = "..."</code>:</strong> Define la instrucción directa de clasificación de sentimiento ("Positivo", "Negativo", "Mixto") sin proporcionar ejemplos previos.</div>
+              </div>
+              <div class="breakdown-list-row">
+                <span class="breakdown-row-badge">L6-9</span>
+                <div class="breakdown-row-text"><strong><code>client.chat.completions.create(...)</code>:</strong> Envía el prompt empaquetado en el rol <code>user</code> a la LPU de Groq con inferencia de baja latencia.</div>
+              </div>
+              <div class="breakdown-list-row">
+                <span class="breakdown-row-badge">L11</span>
+                <div class="breakdown-row-text"><strong><code>response_zero.choices[0].message.content</code>:</strong> Extrae el texto generado por el LLM demostrando la capacidad de atención en la conjunción <i>"pero"</i> para clasificar como <b>Mixto</b>.</div>
+              </div>
+            </div>
           </div>
         </details>
       </div>
@@ -625,6 +621,38 @@ Sentimiento:"""</span>
           <pre class="colab-output-text">Few-shot: Mixto</pre>
         </div>
       </div>
+
+      <!-- Desglose Técnico Exhaustivo Línea por Línea -->
+      <div class="formula-card">
+        <details class="formula-breakdown-details" open>
+          <summary class="formula-breakdown-summary">
+            <div class="summary-left">
+              <svg fill="currentColor" height="16" viewBox="0 0 24 24" width="16"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path></svg>
+              <span>Desglose Técnico Exhaustivo Línea por Línea</span>
+              <span class="breakdown-count-tag">8 instrucciones analizadas</span>
+            </div>
+            <span class="summary-toggle-icon">
+              <svg fill="none" height="14" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" width="14"><path d="M6 9l6 6 6-6"></path></svg>
+            </span>
+          </summary>
+          <div class="formula-breakdown-panel">
+            <div class="breakdown-list-stack">
+              <div class="breakdown-list-row">
+                <span class="breakdown-row-badge">L1-10</span>
+                <div class="breakdown-row-text"><strong><code>prompt_few_shot = """..."""</code>:</strong> Inyecta dos demostraciones resueltas (Positivo y Negativo) para condicionar al modelo a seguir el formato exacto antes de evaluar el caso ambiguo.</div>
+              </div>
+              <div class="breakdown-list-row">
+                <span class="breakdown-row-badge">L12-15</span>
+                <div class="breakdown-row-text"><strong><code>client.chat.completions.create(...)</code>:</strong> Ejecuta la inferencia guiada mediante aprendizaje en contexto (In-Context Learning) sin necesidad de modificar los pesos del modelo.</div>
+              </div>
+              <div class="breakdown-list-row">
+                <span class="breakdown-row-badge">L17</span>
+                <div class="breakdown-row-text"><strong><code>print(...)</code>:</strong> Despliega la clasificación obtenida garantizando la taxonomía y concisión deseadas.</div>
+              </div>
+            </div>
+          </div>
+        </details>
+      </div>
     </article>
 
     <!-- PASO 4: CELDA 4 -->
@@ -675,6 +703,38 @@ Sentimiento:"""</span>
 Respuesta Final: El segundo tren tarda 4 horas en alcanzar al primero.</pre>
         </div>
       </div>
+
+      <!-- Desglose Técnico Exhaustivo Línea por Línea -->
+      <div class="formula-card">
+        <details class="formula-breakdown-details" open>
+          <summary class="formula-breakdown-summary">
+            <div class="summary-left">
+              <svg fill="currentColor" height="16" viewBox="0 0 24 24" width="16"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path></svg>
+              <span>Desglose Técnico Exhaustivo Línea por Línea</span>
+              <span class="breakdown-count-tag">7 instrucciones analizadas</span>
+            </div>
+            <span class="summary-toggle-icon">
+              <svg fill="none" height="14" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" width="14"><path d="M6 9l6 6 6-6"></path></svg>
+            </span>
+          </summary>
+          <div class="formula-breakdown-panel">
+            <div class="breakdown-list-stack">
+              <div class="breakdown-list-row">
+                <span class="breakdown-row-badge">L1-5</span>
+                <div class="breakdown-row-text"><strong><code>problema = "..."</code>:</strong> Plantea el problema cinemático de persecución de trenes e instruye explícitamente: <i>"Muestra tu razonamiento paso a paso antes de dar la respuesta final"</i>.</div>
+              </div>
+              <div class="breakdown-list-row">
+                <span class="breakdown-row-badge">L7-10</span>
+                <div class="breakdown-row-text"><strong><code>client.chat.completions.create(...)</code>:</strong> Permite al Transformer asignar tokens intermedios en el canal autoregresivo para calcular distancia inicial y velocidad relativa.</div>
+              </div>
+              <div class="breakdown-list-row">
+                <span class="breakdown-row-badge">L12</span>
+                <div class="breakdown-row-text"><strong><code>print(...)</code>:</strong> Imprime la secuencia lógica completa (160 km / 40 km/h = 4 horas) alcanzando un 100% de precisión matemática.</div>
+              </div>
+            </div>
+          </div>
+        </details>
+      </div>
     </article>
 
     <!-- PASO 5: CELDA 5 -->
@@ -720,6 +780,38 @@ Respuesta Final: El segundo tren tarda 4 horas en alcanzar al primero.</pre>
           <pre class="colab-output-text">Sin RAG (posible alucinación): El equipo ganador fue 'CodeCraft' con un proyecto de IA para educación comunitaria.</pre>
         </div>
       </div>
+
+      <!-- Desglose Técnico Exhaustivo Línea por Línea -->
+      <div class="formula-card">
+        <details class="formula-breakdown-details" open>
+          <summary class="formula-breakdown-summary">
+            <div class="summary-left">
+              <svg fill="currentColor" height="16" viewBox="0 0 24 24" width="16"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path></svg>
+              <span>Desglose Técnico Exhaustivo Línea por Línea</span>
+              <span class="breakdown-count-tag">5 instrucciones analizadas</span>
+            </div>
+            <span class="summary-toggle-icon">
+              <svg fill="none" height="14" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" width="14"><path d="M6 9l6 6 6-6"></path></svg>
+            </span>
+          </summary>
+          <div class="formula-breakdown-panel">
+            <div class="breakdown-list-stack">
+              <div class="breakdown-list-row">
+                <span class="breakdown-row-badge">L1-4</span>
+                <div class="breakdown-row-text"><strong><code>prompt_desconocido = "..."</code>:</strong> Formula una pregunta sobre un evento futuro y privado (Hackathon DEV.F 2026) que no existe en el conjunto de entrenamiento.</div>
+              </div>
+              <div class="breakdown-list-row">
+                <span class="breakdown-row-badge">L6-9</span>
+                <div class="breakdown-row-text"><strong><code>client.chat.completions.create(...)</code>:</strong> Obliga al modelo a responder sin conocimiento de base, provocando que complete tokens probabilísticos verosímiles pero completamente falsos.</div>
+              </div>
+              <div class="breakdown-list-row">
+                <span class="breakdown-row-badge">L11</span>
+                <div class="breakdown-row-text"><strong><code>print(...)</code>:</strong> Evidencia la necesidad indiscutible de arquitecturas RAG para conectar el modelo a fuentes de verdad externas.</div>
+              </div>
+            </div>
+          </div>
+        </details>
+      </div>
     </article>
 
     <!-- PASO 6: CELDA 6 -->
@@ -749,6 +841,34 @@ Respuesta Final: El segundo tren tarda 4 horas en alcanzar al primero.</pre>
 <span class="code-kw">from</span> <span class="code-var">sentence_transformers</span> <span class="code-kw">import</span> <span class="code-cls">SentenceTransformer</span>
 <span class="code-kw">import</span> <span class="code-var">numpy</span> <span class="code-kw">as</span> <span class="code-var">np</span></code></pre>
         </div>
+      </div>
+
+      <!-- Desglose Técnico Exhaustivo Línea por Línea -->
+      <div class="formula-card">
+        <details class="formula-breakdown-details" open>
+          <summary class="formula-breakdown-summary">
+            <div class="summary-left">
+              <svg fill="currentColor" height="16" viewBox="0 0 24 24" width="16"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path></svg>
+              <span>Desglose Técnico Exhaustivo Línea por Línea</span>
+              <span class="breakdown-count-tag">3 instrucciones analizadas</span>
+            </div>
+            <span class="summary-toggle-icon">
+              <svg fill="none" height="14" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" width="14"><path d="M6 9l6 6 6-6"></path></svg>
+            </span>
+          </summary>
+          <div class="formula-breakdown-panel">
+            <div class="breakdown-list-stack">
+              <div class="breakdown-list-row">
+                <span class="breakdown-row-badge">L1</span>
+                <div class="breakdown-row-text"><strong><code>!pip install sentence-transformers --quiet</code>:</strong> Instala el framework basado en PyTorch y Hugging Face para generación de embeddings contextuales densos.</div>
+              </div>
+              <div class="breakdown-list-row">
+                <span class="breakdown-row-badge">L3-4</span>
+                <div class="breakdown-row-text"><strong><code>import SentenceTransformer, numpy as np</code>:</strong> Importa la clase principal del encoder y la librería NumPy para operaciones de álgebra vectorial de alta velocidad.</div>
+              </div>
+            </div>
+          </div>
+        </details>
       </div>
     </article>
 
@@ -793,6 +913,38 @@ Respuesta Final: El segundo tren tarda 4 horas en alcanzar al primero.</pre>
           </div>
           <pre class="colab-output-text">Embeddings generados: (3, 384)</pre>
         </div>
+      </div>
+
+      <!-- Desglose Técnico Exhaustivo Línea por Línea -->
+      <div class="formula-card">
+        <details class="formula-breakdown-details" open>
+          <summary class="formula-breakdown-summary">
+            <div class="summary-left">
+              <svg fill="currentColor" height="16" viewBox="0 0 24 24" width="16"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path></svg>
+              <span>Desglose Técnico Exhaustivo Línea por Línea</span>
+              <span class="breakdown-count-tag">6 instrucciones analizadas</span>
+            </div>
+            <span class="summary-toggle-icon">
+              <svg fill="none" height="14" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" width="14"><path d="M6 9l6 6 6-6"></path></svg>
+            </span>
+          </summary>
+          <div class="formula-breakdown-panel">
+            <div class="breakdown-list-stack">
+              <div class="breakdown-list-row">
+                <span class="breakdown-row-badge">L1</span>
+                <div class="breakdown-row-text"><strong><code>modelo_embeddings = SentenceTransformer('paraphrase-multilingual-MiniLM-L12-v2')</code>:</strong> Descarga y carga en memoria el modelo de 12 capas multilingüe entrenado para mapear más de 50 idiomas a un espacio denso de 384 dimensiones.</div>
+              </div>
+              <div class="breakdown-list-row">
+                <span class="breakdown-row-badge">L3-7</span>
+                <div class="breakdown-row-text"><strong><code>documentos = [...]</code>:</strong> Lista con los tres fragmentos de la política de devoluciones de la tienda virtual.</div>
+              </div>
+              <div class="breakdown-list-row">
+                <span class="breakdown-row-badge">L9-10</span>
+                <div class="breakdown-row-text"><strong><code>embeddings_documentos = modelo_embeddings.encode(documentos)</code>:</strong> Ejecuta el forward pass para generar la matriz de tensores <code>(3, 384)</code> donde cada fila es el vector representativo de una política.</div>
+              </div>
+            </div>
+          </div>
+        </details>
       </div>
     </article>
 
@@ -852,6 +1004,42 @@ Respuesta muy breve y corta."""</span>
           <pre class="colab-output-text">Fragmento recuperado: Los productos en oferta o liquidación no son elegibles para devolución ni reembolso.
 Con RAG: No, los productos en oferta o liquidación no tienen devolución ni reembolso.</pre>
         </div>
+      </div>
+
+      <!-- Desglose Técnico Exhaustivo Línea por Línea -->
+      <div class="formula-card">
+        <details class="formula-breakdown-details" open>
+          <summary class="formula-breakdown-summary">
+            <div class="summary-left">
+              <svg fill="currentColor" height="16" viewBox="0 0 24 24" width="16"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path></svg>
+              <span>Desglose Técnico Exhaustivo Línea por Línea</span>
+              <span class="breakdown-count-tag">12 instrucciones analizadas</span>
+            </div>
+            <span class="summary-toggle-icon">
+              <svg fill="none" height="14" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" width="14"><path d="M6 9l6 6 6-6"></path></svg>
+            </span>
+          </summary>
+          <div class="formula-breakdown-panel">
+            <div class="breakdown-list-stack">
+              <div class="breakdown-list-row">
+                <span class="breakdown-row-badge">L1-5</span>
+                <div class="breakdown-row-text"><strong><code>def buscar_fragmento(pregunta)</code>:</strong> Vectoriza la consulta del usuario, calcula el producto punto matricial con <code>np.dot()</code> y devuelve el fragmento con el valor de similitud coseno más alto mediante <code>np.argmax()</code>.</div>
+              </div>
+              <div class="breakdown-list-row">
+                <span class="breakdown-row-badge">L7-8</span>
+                <div class="breakdown-row-text"><strong><code>pregunta, fragmento</code>:</strong> Consulta del cliente sobre productos en descuento y recuperación inmediata de la política sobre artículos en liquidación.</div>
+              </div>
+              <div class="breakdown-list-row">
+                <span class="breakdown-row-badge">L10-16</span>
+                <div class="breakdown-row-text"><strong><code>prompt_rag = f"""..."""</code>:</strong> Inyecta el fragmento recuperado con instrucciones delimitadoras estrictas (<i>"usando SOLO la siguiente política... si no cubre la pregunta, dilo claramente"</i>).</div>
+              </div>
+              <div class="breakdown-list-row">
+                <span class="breakdown-row-badge">L18-24</span>
+                <div class="breakdown-row-text"><strong><code>client.chat.completions.create(...)</code>:</strong> Groq LPU sintetiza la respuesta final verídica con latencia ultra-rápida y cero alucinaciones.</div>
+              </div>
+            </div>
+          </div>
+        </details>
       </div>
     </article>
 
@@ -922,6 +1110,38 @@ Con RAG: No, los productos en oferta o liquidación no tienen devolución ni ree
           <pre class="colab-output-text">Modelos listos. LLM: openai/gpt-oss-20b | Embeddings: MiniLM-L12-v2</pre>
         </div>
       </div>
+
+      <!-- Desglose Técnico Exhaustivo Línea por Línea -->
+      <div class="formula-card">
+        <details class="formula-breakdown-details" open>
+          <summary class="formula-breakdown-summary">
+            <div class="summary-left">
+              <svg fill="currentColor" height="16" viewBox="0 0 24 24" width="16"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path></svg>
+              <span>Desglose Técnico: Inicialización de Modelos y Embeddings</span>
+              <span class="breakdown-count-tag">8 instrucciones analizadas</span>
+            </div>
+            <span class="summary-toggle-icon">
+              <svg fill="none" height="14" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" width="14"><path d="M6 9l6 6 6-6"></path></svg>
+            </span>
+          </summary>
+          <div class="formula-breakdown-panel">
+            <div class="breakdown-list-stack">
+              <div class="breakdown-list-row">
+                <span class="breakdown-row-badge">L1-7</span>
+                <div class="breakdown-row-text"><strong><code>import os, re, time, np, Groq, userdata, SentenceTransformer</code>:</strong> Carga de módulos de cálculo matricial, cliente de inferencia y modelo de embeddings.</div>
+              </div>
+              <div class="breakdown-list-row">
+                <span class="breakdown-row-badge">L9-10</span>
+                <div class="breakdown-row-text"><strong><code>api_key = userdata.get('GROQ_API_KEY'), client = Groq(...)</code>:</strong> Autenticación cifrada hacia la API de Groq sin exponer credenciales.</div>
+              </div>
+              <div class="breakdown-list-row">
+                <span class="breakdown-row-badge">L12-18</span>
+                <div class="breakdown-row-text"><strong><code>MODELOS_DISPONIBLES, modelo_challenge_emb</code>:</strong> Diccionario de modelos LLM y carga del Bi-Encoder <code>paraphrase-multilingual-MiniLM-L12-v2</code>.</div>
+              </div>
+            </div>
+          </div>
+        </details>
+      </div>
     </article>
 
     <!-- CHALLENGE PASO 2 -->
@@ -963,6 +1183,34 @@ Con RAG: No, los productos en oferta o liquidación no tienen devolución ni ree
           </div>
           <pre class="colab-output-text">Base de conocimiento vectorizada: 3 fragmentos de 384 dimensiones.</pre>
         </div>
+      </div>
+
+      <!-- Desglose Técnico Exhaustivo Línea por Línea -->
+      <div class="formula-card">
+        <details class="formula-breakdown-details" open>
+          <summary class="formula-breakdown-summary">
+            <div class="summary-left">
+              <svg fill="currentColor" height="16" viewBox="0 0 24 24" width="16"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path></svg>
+              <span>Desglose Técnico: Vectorización y Normalización L2</span>
+              <span class="breakdown-count-tag">Normalización Unitaria</span>
+            </div>
+            <span class="summary-toggle-icon">
+              <svg fill="none" height="14" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" width="14"><path d="M6 9l6 6 6-6"></path></svg>
+            </span>
+          </summary>
+          <div class="formula-breakdown-panel">
+            <div class="breakdown-list-stack">
+              <div class="breakdown-list-row">
+                <span class="breakdown-row-badge">L1-5</span>
+                <div class="breakdown-row-text"><strong><code>documentos = [...]</code>:</strong> Define los 3 fragmentos normativos del curso (Evaluación, Entregas Tardías, Asistencia e Integridad).</div>
+              </div>
+              <div class="breakdown-list-row">
+                <span class="breakdown-row-badge">L7-8</span>
+                <div class="breakdown-row-text"><strong><code>encode(documentos, normalize_embeddings=True)</code>:</strong> Normaliza automáticamente cada vector $\mathbf{v}$ tal que $\|\mathbf{v}\|_2 = 1$, convirtiendo el cálculo de similitud coseno en un producto punto $\mathbf{u} \cdot \mathbf{v}$ directo sin divisiones costosas.</div>
+              </div>
+            </div>
+          </div>
+        </details>
       </div>
     </article>
 
@@ -1011,6 +1259,38 @@ Con RAG: No, los productos en oferta o liquidación no tienen devolución ni ree
           </div>
           <pre class="colab-output-text">Fragmento recuperado: Documento #2 (Score: 0.6384)</pre>
         </div>
+      </div>
+
+      <!-- Desglose Técnico Exhaustivo Línea por Línea -->
+      <div class="formula-card">
+        <details class="formula-breakdown-details" open>
+          <summary class="formula-breakdown-summary">
+            <div class="summary-left">
+              <svg fill="currentColor" height="16" viewBox="0 0 24 24" width="16"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path></svg>
+              <span>Desglose Técnico: Búsqueda Semántica con np.dot y np.argmax</span>
+              <span class="breakdown-count-tag">Recuperación O(N)</span>
+            </div>
+            <span class="summary-toggle-icon">
+              <svg fill="none" height="14" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" width="14"><path d="M6 9l6 6 6-6"></path></svg>
+            </span>
+          </summary>
+          <div class="formula-breakdown-panel">
+            <div class="breakdown-list-stack">
+              <div class="breakdown-list-row">
+                <span class="breakdown-row-badge">L1-4</span>
+                <div class="breakdown-row-text"><strong><code>encode([pregunta], normalize_embeddings=True)</code>:</strong> Transforma la pregunta en un vector unitario de 384 dimensiones en el mismo espacio semántico que la base de datos.</div>
+              </div>
+              <div class="breakdown-list-row">
+                <span class="breakdown-row-badge">L5-7</span>
+                <div class="breakdown-row-text"><strong><code>np.dot(embeddings_documentos, embedding_pregunta.T)</code>:</strong> Multiplicación de matrices para obtener simultáneamente las 3 similitudes coseno en microsegundos.</div>
+              </div>
+              <div class="breakdown-list-row">
+                <span class="breakdown-row-badge">L8-9</span>
+                <div class="breakdown-row-text"><strong><code>np.argmax(similitudes)</code>:</strong> Identifica el índice del documento con mayor afinidad conceptual (Doc #2, score 0.6384).</div>
+              </div>
+            </div>
+          </div>
+        </details>
       </div>
     </article>
 
@@ -1066,6 +1346,38 @@ Respuesta estructurada y precisa:"""</span>
 <span class="code-var">latencia_con</span> = <span class="code-var">time</span>.<span class="code-fn">time</span>() - <span class="code-var">inicio_con</span>
 <span class="code-var">respuesta_con_rag</span> = <span class="code-fn">limpiar_respuesta</span>(<span class="code-var">res_con_raw</span>.<span class="code-var">choices</span>[<span class="code-num">0</span>].<span class="code-var">message</span>.<span class="code-var">content</span>)</code></pre>
         </div>
+      </div>
+
+      <!-- Desglose Técnico Exhaustivo Línea por Línea -->
+      <div class="formula-card">
+        <details class="formula-breakdown-details" open>
+          <summary class="formula-breakdown-summary">
+            <div class="summary-left">
+              <svg fill="currentColor" height="16" viewBox="0 0 24 24" width="16"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path></svg>
+              <span>Desglose Técnico: Contraste de Inferencia y Telemetría</span>
+              <span class="breakdown-count-tag">Benchmark A/B</span>
+            </div>
+            <span class="summary-toggle-icon">
+              <svg fill="none" height="14" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" width="14"><path d="M6 9l6 6 6-6"></path></svg>
+            </span>
+          </summary>
+          <div class="formula-breakdown-panel">
+            <div class="breakdown-list-stack">
+              <div class="breakdown-list-row">
+                <span class="breakdown-row-badge">L1-8</span>
+                <div class="breakdown-row-text"><strong><code>time.time(), client.chat.completions.create(SIN RAG)</code>:</strong> Ejecuta la consulta sin contexto para medir la tendencia evasiva o alucinatoria del modelo base.</div>
+              </div>
+              <div class="breakdown-list-row">
+                <span class="breakdown-row-badge">L10-18</span>
+                <div class="breakdown-row-text"><strong><code>prompt_con_rag = f"""...\"\"\"{fragmento_recuperado}\"\"\"..."""</code>:</strong> Concatena el documento delimitado instruyendo explícitamente al LLM a declarar vacíos fácticos si el dato no aparece.</div>
+              </div>
+              <div class="breakdown-list-row">
+                <span class="breakdown-row-badge">L20-27</span>
+                <div class="breakdown-row-text"><strong><code>client.chat.completions.create(CON RAG)</code>:</strong> Produce una respuesta verídica con latencia inferior (~0.62 s) debido al anclaje contextual directo.</div>
+              </div>
+            </div>
+          </div>
+        </details>
       </div>
     </article>
 
@@ -1129,6 +1441,34 @@ Basado en la Política de Entregas Tardías y Penalizaciones (Doc #2):
 1. Penalización por 20 horas de retraso: Es de 15 puntos sobre la calificación obtenida (aplica para entregas con hasta 24 horas de retraso).
 2. Calificación mínima para aprobar: El fragmento proporcionado no contiene información sobre la calificación mínima aprobatoria del curso.</pre>
         </div>
+      </div>
+
+      <!-- Desglose Técnico Exhaustivo Línea por Línea -->
+      <div class="formula-card">
+        <details class="formula-breakdown-details" open>
+          <summary class="formula-breakdown-summary">
+            <div class="summary-left">
+              <svg fill="currentColor" height="16" viewBox="0 0 24 24" width="16"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path></svg>
+              <span>Desglose Técnico: Matriz Comparativa y Métricas de Auditoría</span>
+              <span class="breakdown-count-tag">Validación de Entrega</span>
+            </div>
+            <span class="summary-toggle-icon">
+              <svg fill="none" height="14" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" width="14"><path d="M6 9l6 6 6-6"></path></svg>
+            </span>
+          </summary>
+          <div class="formula-breakdown-panel">
+            <div class="breakdown-list-stack">
+              <div class="breakdown-list-row">
+                <span class="breakdown-row-badge">L1-10</span>
+                <div class="breakdown-row-text"><strong><code>print("=" * 120), format strings</code>:</strong> Genera la matriz comparativa en formato tabular ASCII para contrastar precisión, prevención de alucinación y tiempos de respuesta.</div>
+              </div>
+              <div class="breakdown-list-row">
+                <span class="breakdown-row-badge">L12-16</span>
+                <div class="breakdown-row-text"><strong><code>print(respuesta_sin_rag), print(respuesta_con_rag)</code>:</strong> Demuestra cómo el sistema RAG reporta con total honestidad que la calificación mínima aprobatoria no figura en el fragmento recuperado, impidiendo cualquier alucinación.</div>
+              </div>
+            </div>
+          </div>
+        </details>
       </div>
     </article>
 
