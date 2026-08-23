@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Challenge 1: Comparador de Modelos Llama | Manual Técnico e Interactivo</title>
-<meta name="description" content="Manual de ingeniería y cuaderno interactivo del Challenge 1: Comparador Multi-Modelo de Lenguaje (20B vs 120B vs Qwen 27B) con Groq LPU y análisis de telemetría.">
+<title>Challenge 1: Comparador de Modelos Llama | Manual de Ingeniería y Cuaderno Interactivo</title>
+<meta name="description" content="Manual de ingeniería, guía de obtención de credenciales y cuaderno interactivo del Challenge 1: Comparador Multi-Modelo de Lenguaje (20B vs 120B vs Qwen 27B) con Groq LPU.">
 
 <!-- Google Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -40,6 +40,7 @@
 
     <nav class="nav-links">
       <a href="modulo1-tema4.html" class="nav-link-item" style="color: var(--meta-blue); font-weight: 700;">← Tema 1.4</a>
+      <a href="#manual-groq" class="nav-link-item">Obtener API Key</a>
       <a href="#hands-on-base" class="nav-link-item">Parte I: Hands-On</a>
       <a href="#challenge-section" class="nav-link-item">Parte II: Challenge</a>
       <a href="#benchmark-studio-section" class="nav-link-item" style="color: var(--meta-blue); font-weight: 700;">Laboratorio en Vivo</a>
@@ -103,6 +104,43 @@
     <p class="hero-subtitle">
       Una vez vista la masterclass <i>Fundamentos de LLMs y Arquitectura de Llama</i>, se proporciona el siguiente Colab para construir, en vivo, la primera llamada a Llama y medir su comportamiento. Usamos <b>Groq</b> para tener acceso a inferencia de Llama con GPU gratuita, sin necesidad de infraestructura propia.
     </p>
+  </section>
+
+  <!-- ======================================================================
+       MANUAL DE OPERACIONES: OBTENCIÓN DE CREDENCIALES EN GROQ CLOUD
+       ====================================================================== -->
+  <section class="tema-card" id="manual-groq" style="margin-bottom: 3rem; border: 1px solid var(--border-subtle); background: var(--bg-surface);">
+    <div class="tema-header">
+      <div class="tema-eyebrow">Guía de Inicio Rápido &middot; Infraestructura</div>
+      <h3 class="tema-title">CÓMO OBTENER TU API KEY GRATUITA EN GROQ CONSOLE</h3>
+    </div>
+    
+    <p class="prose-p">
+      Groq proporciona acceso ultrarrápido y sin costo a modelos de código abierto (Llama 3.1 8B, Llama 3.3 70B, Qwen 2.5 / 3.6) mediante su hardware LPU. Sigue este procedimiento para generar tu clave de acceso:
+    </p>
+
+    <div class="step-guide-grid">
+      <div class="step-guide-item">
+        <span class="step-guide-num">PASO 1</span>
+        <div class="step-guide-title">Acceder a la Consola</div>
+        <div class="step-guide-desc">Ingresa a <code class="code-inline-dark">https://console.groq.com/</code> e inicia sesión con tu cuenta de Google o GitHub.</div>
+      </div>
+      <div class="step-guide-item">
+        <span class="step-guide-num">PASO 2</span>
+        <div class="step-guide-title">Ir a Sección API Keys</div>
+        <div class="step-guide-desc">En el menú lateral izquierdo de la consola, haz clic en el apartado <b>API Keys</b>.</div>
+      </div>
+      <div class="step-guide-item">
+        <span class="step-guide-num">PASO 3</span>
+        <div class="step-guide-title">Crear Nueva Clave</div>
+        <div class="step-guide-desc">Haz clic en el botón <b>Create API Key</b>, asigna un nombre (ej: <code class="code-inline-dark">Curso-Llama-Meta</code>) y confirma.</div>
+      </div>
+      <div class="step-guide-item">
+        <span class="step-guide-num">PASO 4</span>
+        <div class="step-guide-title">Copiar y Resguardar</div>
+        <div class="step-guide-desc">Copia de inmediato la clave que comienza con <code class="code-inline-dark">gsk_...</code>. No se volverá a mostrar por motivos de seguridad.</div>
+      </div>
+    </div>
   </section>
 
   <!-- ======================================================================
@@ -170,7 +208,7 @@
         </div>
       </div>
 
-      <!-- Celda de Código Colab Interactiva -->
+      <!-- Celda de Código Colab Interactiva: Instalación y Carga de Cliente -->
       <div class="colab-cell-box">
         <div class="colab-cell-header">
           <div class="colab-cell-tag">
@@ -1037,7 +1075,7 @@ CONCLUSIÓN Y ANÁLISIS COMPARATIVO DE INGENIERÍA:
 
 1. Accede a la página de inicio de sesión institucional.
 2. Haz clic en el enlace «Olvidé mi contraseña».
-3. Proporciona tu correo electrónico institucional.
+3. Ingresa tu correo institucional registrado.
 4. Abre el correo de recuperación recibido y sigue el enlace seguro.
 5. Define una nueva contraseña segura y confírmala.</div>
       </div>
