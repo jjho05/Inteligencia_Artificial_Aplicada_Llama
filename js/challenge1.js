@@ -350,6 +350,7 @@
 
   // Chips de acceso rápido y Modo Libre
   var modeBadge = document.getElementById("bench-mode-badge");
+  var modeHint = document.getElementById("bench-mode-hint");
   var chipModoLibre = document.getElementById("btn-chip-modo-libre");
 
   function updateActiveChip(queryText, isFreeMode) {
@@ -368,14 +369,32 @@
       }
     });
 
-    if(modeBadge) {
+    if(customQuery) {
       if(isFreeMode || !foundPreset) {
-        modeBadge.textContent = "MODO ACTIVO: CONSULTA LIBRE (PERSONALIZADA)";
-        modeBadge.style.color = "#3fb950";
+        customQuery.readOnly = false;
+        customQuery.style.background = "var(--bg-surface)";
+        customQuery.style.border = "1px solid var(--meta-blue)";
+        customQuery.style.cursor = "text";
+        if(modeBadge) {
+          modeBadge.textContent = "MODO ACTIVO: CONSULTA LIBRE (EDITABLE)";
+          modeBadge.style.color = "#3fb950";
+        }
+        if(modeHint) {
+          modeHint.textContent = "Área desbloqueada: Escribe tu propia pregunta o prompt para evaluar.";
+        }
         if(chipModoLibre) chipModoLibre.classList.add("active");
       } else {
-        modeBadge.textContent = "MODO ACTIVO: PRESET DE EVALUACIÓN";
-        modeBadge.style.color = "var(--meta-blue)";
+        customQuery.readOnly = true;
+        customQuery.style.background = "var(--bg-surface-2)";
+        customQuery.style.border = "1px dashed var(--border-subtle)";
+        customQuery.style.cursor = "default";
+        if(modeBadge) {
+          modeBadge.textContent = "MODO ACTIVO: PRESET FIJO (SOLO LECTURA)";
+          modeBadge.style.color = "var(--meta-blue)";
+        }
+        if(modeHint) {
+          modeHint.textContent = "Preset prediseñado. Pulsa «Modo Libre» para escribir una pregunta propia.";
+        }
         if(chipModoLibre) chipModoLibre.classList.remove("active");
       }
     }
@@ -386,9 +405,11 @@
       var target = e.target;
       if(target && target.classList.contains("bench-chip")){
         if(target.id === "btn-chip-modo-libre" || target.getAttribute("data-mode") === "free"){
+          if(customQuery.readOnly) {
+            customQuery.value = "";
+          }
           updateActiveChip("", true);
           customQuery.focus();
-          customQuery.select();
           safePlaySound("pop", 550);
           return;
         }
@@ -403,7 +424,7 @@
     });
 
     customQuery.addEventListener("input", function(){
-      updateActiveChip(customQuery.value.trim(), false);
+      updateActiveChip(customQuery.value.trim(), true);
     });
   }
 
