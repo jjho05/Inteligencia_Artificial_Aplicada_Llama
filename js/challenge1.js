@@ -629,6 +629,9 @@
 
     var data = await response.json();
     var content = data.choices && data.choices[0] && data.choices[0].message ? data.choices[0].message.content : "Sin respuesta.";
+    if (content.includes("</think>")) {
+      content = content.split("</think>").pop().trim();
+    }
     var promptTokens = data.usage ? data.usage.prompt_tokens : Math.floor(query.length / 3.4);
     var completionTokens = data.usage ? data.usage.completion_tokens : Math.floor(content.length / 3.4);
     var totalTokens = data.usage ? data.usage.total_tokens : (promptTokens + completionTokens);
@@ -679,7 +682,7 @@
 
       if(hasApiKey || isFreeModeQuery) {
         try {
-          var p1 = callGroqModel("llama-3.1-8b-instant", query, maxTokens, temp, activeGroqKey)
+          var p1 = callGroqModel("openai/gpt-oss-20b", query, maxTokens, temp, activeGroqKey)
             .then(function(res){
               if(cardLig) cardLig.classList.remove("running");
               if(valLatLig) valLatLig.textContent = res.latency + " s";
@@ -690,7 +693,7 @@
               return res;
             });
 
-          var p2 = callGroqModel("llama-3.3-70b-versatile", query, maxTokens, temp, activeGroqKey)
+          var p2 = callGroqModel("openai/gpt-oss-120b", query, maxTokens, temp, activeGroqKey)
             .then(function(res){
               if(cardGrd) cardGrd.classList.remove("running");
               if(valLatGrd) valLatGrd.textContent = res.latency + " s";
@@ -701,8 +704,7 @@
               return res;
             });
 
-          var p3 = callGroqModel("gemma2-9b-it", query, maxTokens, temp, activeGroqKey)
-            .catch(function(){ return callGroqModel("llama-3.1-8b-instant", query, maxTokens, temp, activeGroqKey); })
+          var p3 = callGroqModel("qwen/qwen3.6-27b", query, maxTokens, temp, activeGroqKey)
             .then(function(res){
               if(cardQwn) cardQwn.classList.remove("running");
               if(valLatQwn) valLatQwn.textContent = res.latency + " s";
@@ -724,7 +726,7 @@
           var resGrd = results[1];
           if(summaryText) {
             var diffPct = Math.round(((parseFloat(resGrd.latency) - parseFloat(resLig.latency)) / parseFloat(resGrd.latency)) * 100);
-            summaryText.innerHTML = "<b>Inferencia 100% Real en Groq LPUs:</b> El <b>Modelo Ligero (8B Instant)</b> respondió en <b>" + resLig.latency + " s</b> (" + resLig.speed + " tok/s), siendo <b>" + Math.abs(diffPct) + "% más veloz</b> que el Modelo Grande 70B (" + resGrd.latency + " s).";
+            summaryText.innerHTML = "<b>Inferencia 100% Real en Groq LPUs:</b> El <b>Modelo Ligero (20B)</b> respondió en <b>" + resLig.latency + " s</b> (" + resLig.speed + " tok/s), siendo <b>" + Math.abs(diffPct) + "% más veloz</b> que el Modelo Grande 120B (" + resGrd.latency + " s).";
           }
           return;
         } catch(apiErr) {

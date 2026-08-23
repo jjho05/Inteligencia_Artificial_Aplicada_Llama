@@ -36,14 +36,16 @@ export default async function handler(req, res) {
     });
   }
 
-  // Mapeo seguro de modelos de Groq
-  let modelName = (bodyData.model || 'llama-3.1-8b-instant').trim();
-  if (modelName === 'gemma2-9b-it' || modelName.includes('qwen') || modelName.includes('27b')) {
-    modelName = 'gemma2-9b-it';
-  } else if (modelName.includes('70b') || modelName.includes('120b') || modelName.includes('grande')) {
-    modelName = 'llama-3.3-70b-versatile';
+  // Mapeo a los modelos exactos soportados en la cuenta de Groq
+  let requestedModel = (bodyData.model || 'openai/gpt-oss-20b').trim();
+  let modelName = 'openai/gpt-oss-20b';
+
+  if (requestedModel.includes('120b') || requestedModel.includes('grd') || requestedModel.includes('70b') || requestedModel.includes('grande')) {
+    modelName = 'openai/gpt-oss-120b';
+  } else if (requestedModel.includes('qwen') || requestedModel.includes('27b') || requestedModel.includes('qwn')) {
+    modelName = 'qwen/qwen3.6-27b';
   } else {
-    modelName = 'llama-3.1-8b-instant';
+    modelName = 'openai/gpt-oss-20b';
   }
 
   const query = bodyData.query || 'Hola';
@@ -63,7 +65,7 @@ export default async function handler(req, res) {
         messages: [
           {
             role: 'system',
-            content: 'Eres un asistente de IA avanzado, claro, pedagógico y analítico. Responde en español usando Markdown pulcro, conciso y directo.'
+            content: 'Eres un asistente de IA avanzado, claro, pedagógico y estructurado. Responde en español usando formato Markdown profesional.'
           },
           {
             role: 'user',
@@ -84,7 +86,13 @@ export default async function handler(req, res) {
 
     const t1 = Date.now();
     const latency = ((t1 - t0) / 1000).toFixed(2);
-    const content = (data.choices && data.choices[0] && data.choices[0].message) ? data.choices[0].message.content : 'Sin respuesta.';
+    let content = (data.choices && data.choices[0] && data.choices[0].message) ? data.choices[0].message.content : 'Sin respuesta.';
+
+    // Limpiar etiquetas <think> si el modelo las incluye
+    if (content.includes('</think>')) {
+      content = content.split('</think>').pop().trim();
+    }
+
     const promptTokens = data.usage ? data.usage.prompt_tokens : Math.floor(query.length / 3.4);
     const completionTokens = data.usage ? data.usage.completion_tokens : Math.floor(content.length / 3.4);
     const totalTokens = data.usage ? data.usage.total_tokens : (promptTokens + completionTokens);
