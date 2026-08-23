@@ -1792,6 +1792,120 @@ CONCLUSIÓN Y ANÁLISIS COMPARATIVO DE INGENIERÍA:
     </section>
 
     <!-- ======================================================================
+         GLOSARIO TÉCNICO OFICIAL DEL CHALLENGE 1
+         ====================================================================== -->
+    <section class="glossary-section" id="glosario" style="margin-bottom: 3.5rem;">
+      <div class="glossary-header">
+        <span class="hero-badge-tag">Terminología &amp; Benchmarking</span>
+        <h2 style="font-size:2.2rem; font-family:var(--font-disp); font-weight:800; color:var(--text-primary);">Glosario Técnico del Comparador</h2>
+        <p style="color:var(--text-secondary); max-width:65ch; margin-top:0.4rem; font-size:0.98rem;">Conceptos fundamentales de inferencia, métricas de hardware LPU y arquitectura de Model Routing.</p>
+      </div>
+
+      <div class="glossary-table">
+        <!-- 01 -->
+        <div class="glossary-row-item">
+          <div class="glossary-row-left">
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <span class="glossary-tag">Concepto #01</span>
+            </div>
+            <span class="glossary-term-name">Token</span>
+          </div>
+          <div class="glossary-row-right">
+            <p class="glossary-term-desc">Unidad atómica de procesamiento numérico en modelos de lenguaje. En Meta Llama 3, el tokenizador BPE (Byte-Pair Encoding) de 128k vocabulario divide las palabras en fragmentos de aproximadamente 3 a 4 caracteres.</p>
+            <div class="glossary-term-note">Métrica: 1,000 tokens equivalen aproximadamente a 750 palabras en español.</div>
+          </div>
+        </div>
+
+        <!-- 02 -->
+        <div class="glossary-row-item">
+          <div class="glossary-row-left">
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <span class="glossary-tag">Hardware #02</span>
+            </div>
+            <span class="glossary-term-name">Groq LPU (Language Processing Unit)</span>
+          </div>
+          <div class="glossary-row-right">
+            <p class="glossary-term-desc">Arquitectura de microprocesador determinista diseñada exclusivamente para inferencia secuencial de modelos generativos, eliminando los cuellos de botella de memoria HBM de las GPUs tradicionales.</p>
+            <div class="glossary-term-note">Rendimiento: Permite velocidades de generación superiores a 500 tokens por segundo en modelos ligeros.</div>
+          </div>
+        </div>
+
+        <!-- 03 -->
+        <div class="glossary-row-item">
+          <div class="glossary-row-left">
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <span class="glossary-tag">Métrica #03</span>
+            </div>
+            <span class="glossary-term-name">Time to First Token (TTFT)</span>
+          </div>
+          <div class="glossary-row-right">
+            <p class="glossary-term-desc">Intervalo de tiempo transcurrido desde el envío de la petición HTTP hasta que el cliente recibe el primer token generado. Determina la velocidad percibida por el usuario final.</p>
+            <div class="glossary-term-note">Impacto UX: Un TTFT &lt; 500 ms genera sensación de inmediatez conversacional.</div>
+          </div>
+        </div>
+
+        <!-- 04 -->
+        <div class="glossary-row-item">
+          <div class="glossary-row-left">
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <span class="glossary-tag">Arquitectura #04</span>
+            </div>
+            <span class="glossary-term-name">Model Router (Enrutador Semántico)</span>
+          </div>
+          <div class="glossary-row-right">
+            <p class="glossary-term-desc">Capa proxy intermedia de clasificación que analiza la complejidad de la consulta y la deriva dinámicamente hacia el modelo más eficiente (SLM ligero o LLM masivo), optimizando costos en hasta un 85%.</p>
+            <div class="glossary-term-note">Buenas Prácticas: Asignar tareas repetitivas a modelos de 8B/20B y reservar 70B/120B para razonamiento complejo.</div>
+          </div>
+        </div>
+
+        <!-- 05 -->
+        <div class="glossary-row-item">
+          <div class="glossary-row-left">
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <span class="glossary-tag">Seguridad #05</span>
+            </div>
+            <span class="glossary-term-name">Google Colab Secrets (Bóveda Segura)</span>
+          </div>
+          <div class="glossary-row-right">
+            <p class="glossary-term-desc">Mecanismo nativo de Google Colab para inyectar credenciales y API keys mediante <code>google.colab.userdata.get()</code> sin exponer claves privadas en el código fuente ni en repositorios públicos.</p>
+            <div class="glossary-term-note">Normativa OWASP: Evita fugas de claves y accesos no autorizados a servicios en la nube.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         FUENTES OFICIALES Y DOCUMENTACIÓN DE REFERENCIA
+         ====================================================================== -->
+    <section class="sources-section" id="fuentes-oficiales" style="margin-bottom: 3.5rem;">
+      <div class="sources-header">
+        <h3 style="font-size: 1.4rem; font-weight: 700; color: var(--text-primary); margin-bottom: 0.5rem;">Fuentes Oficiales &amp; Referencias Técnicas</h3>
+        <p style="color: var(--text-secondary); font-size: 0.9rem;">Documentación oficial de Meta AI, Groq Cloud y repositorios de investigación:</p>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem; margin-top: 1rem;">
+        <a href="https://console.groq.com/docs" target="_blank" rel="noopener" style="display: block; background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1rem; text-decoration: none; transition: all 0.2s ease;">
+          <div style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--meta-blue); font-weight: 700;">DOCUMENTACIÓN OFICIAL</div>
+          <div style="font-size: 0.95rem; font-weight: 600; color: var(--text-primary); margin-top: 0.3rem;">Groq Cloud API &amp; SDK Python</div>
+          <p style="font-size: 0.82rem; color: var(--text-secondary); margin-top: 0.3rem;">Guía de referencia de endpoints, límites de tasa y compatibilidad con OpenAI API.</p>
+        </a>
+
+        <a href="https://llama.meta.com/docs" target="_blank" rel="noopener" style="display: block; background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1rem; text-decoration: none; transition: all 0.2s ease;">
+          <div style="font-size: 0.75rem; font-family: var(--font-mono); color: var(--meta-blue); font-weight: 700;">META AI RESEARCH</div>
+          <div style="font-size: 0.95rem; font-weight: 600; color: var(--text-primary); margin-top: 0.3rem;">Meta Llama 3 Model Card</div>
+          <p style="font-size: 0.82rem; color: var(--text-secondary); margin-top: 0.3rem;">Arquitectura del modelo, vocabulario de 128k tokens y métricas de benchmark MMLU.</p>
+        </a>
+
+        <a href="https://github.com/jjho05/Inteligencia_Artificial_Aplicada_Llama" target="_blank" rel="noopener" style="display: block; background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1rem; text-decoration: none; transition: all 0.2s ease;">
+          <div style="font-size: 0.75rem; font-family: var(--font-mono); color: #3fb950; font-weight: 700;">REPOSITORIO DEL CURSO</div>
+          <div style="font-size: 0.95rem; font-weight: 600; color: var(--text-primary); margin-top: 0.3rem;">GitHub: Notebooks y Entregables</div>
+          <p style="font-size: 0.82rem; color: var(--text-secondary); margin-top: 0.3rem;">Código fuente completo de los temas y challenges resueltos del módulo.</p>
+        </a>
+      </div>
+    </section>
+
+
+    <!-- ======================================================================
          PAGINACIÓN DEL CURSO (ANTERIOR / SIGUIENTE)
          ====================================================================== -->
     <nav aria-label="Navegación del Curso" class="course-pagination-nav">
