@@ -604,6 +604,13 @@
     }
 
     // 2. Si el usuario ingresó su API key directamente en el navegador
+    var systemPrompt = "Eres un modelo ligero de alta velocidad (SLM 20B). Responde en español de forma directa, ultra-concisa y práctica (máximo 2 párrafos o viñetas cortas). No uses emojis.";
+    if(modelName.includes("120b")) {
+      systemPrompt = "Eres un modelo insignia de máxima capacidad (LLM 120B). Responde en español con una guía formal, exhaustiva y estructurada con directivas técnicas completas, reglas y ejemplos de nivel enterprise. No uses emojis.";
+    } else if(modelName.includes("qwen") || modelName.includes("27b")) {
+      systemPrompt = "Eres un modelo especializado en razonamiento analítico y resolución lógica paso a paso (27B CoT). Desglosa el problema mediante análisis sistemático, principios fundamentales y validación formal de cada paso. No uses emojis.";
+    }
+
     response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
       method: "POST",
       headers: {
@@ -613,10 +620,10 @@
       body: JSON.stringify({
         model: modelName,
         messages: [
-          { role: "system", content: "Eres un asistente de IA experto, preciso, claro y pedagógico. Responde en español de forma estructurada con Markdown." },
+          { role: "system", content: systemPrompt },
           { role: "user", content: query }
         ],
-        max_tokens: parseInt(maxTokens, 10) || 600,
+        max_tokens: parseInt(maxTokens, 10) || (modelName.includes("qwen") ? 800 : 500),
         temperature: parseFloat(temperature) || 0.3
       })
     });
@@ -631,11 +638,13 @@
     var content = data.choices && data.choices[0] && data.choices[0].message ? data.choices[0].message.content : "Sin respuesta.";
     if (content.includes("</think>")) {
       content = content.split("</think>").pop().trim();
+    } else if (content.startsWith("<think>")) {
+      content = content.replace(/<think>[\s\S]*?<\/think>/g, "").replace(/<think>[\s\S]*/g, "").trim();
     }
     var promptTokens = data.usage ? data.usage.prompt_tokens : Math.floor(query.length / 3.4);
     var completionTokens = data.usage ? data.usage.completion_tokens : Math.floor(content.length / 3.4);
     var totalTokens = data.usage ? data.usage.total_tokens : (promptTokens + completionTokens);
-    var speed = Math.round(completionTokens / Math.max(latency, 0.05));
+    var speed = latency > 0 ? Math.round(completionTokens / Math.max(parseFloat(latency), 0.05)) : 0;
 
     return {
       content: content,
@@ -688,7 +697,7 @@
               if(valLatLig) valLatLig.textContent = res.latency + " s";
               if(valTokLig) valTokLig.textContent = res.totalTokens;
               if(valSpdLig) valSpdLig.textContent = res.speed + " t/s";
-              if(badgeLig) { badgeLig.textContent = "API Real LPU"; badgeLig.style.background = "rgba(46, 160, 67, 0.2)"; }
+              if(badgeLig) { badgeLig.textContent = "Alta Velocidad"; badgeLig.style.background = "rgba(46, 160, 67, 0.2)"; }
               streamText(bodyLig, res.content, 300, null);
               return res;
             });
@@ -699,7 +708,7 @@
               if(valLatGrd) valLatGrd.textContent = res.latency + " s";
               if(valTokGrd) valTokGrd.textContent = res.totalTokens;
               if(valSpdGrd) valSpdGrd.textContent = res.speed + " t/s";
-              if(badgeGrd) { badgeGrd.textContent = "API Real LPU"; badgeGrd.style.background = "rgba(163, 113, 247, 0.2)"; }
+              if(badgeGrd) { badgeGrd.textContent = "Alta Capacidad"; badgeGrd.style.background = "rgba(163, 113, 247, 0.2)"; }
               streamText(bodyGrd, res.content, 350, null);
               return res;
             });
@@ -710,7 +719,7 @@
               if(valLatQwn) valLatQwn.textContent = res.latency + " s";
               if(valTokQwn) valTokQwn.textContent = res.totalTokens;
               if(valSpdQwn) valSpdQwn.textContent = res.speed + " t/s";
-              if(badgeQwn) { badgeQwn.textContent = "API Real LPU"; badgeQwn.style.background = "rgba(210, 153, 34, 0.2)"; }
+              if(badgeQwn) { badgeQwn.textContent = "Razonamiento"; badgeQwn.style.background = "rgba(210, 153, 34, 0.2)"; }
               streamText(bodyQwn, res.content, 300, null);
               return res;
             });

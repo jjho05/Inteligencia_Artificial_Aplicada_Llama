@@ -36,20 +36,21 @@ export default async function handler(req, res) {
     });
   }
 
-  // Mapeo a los modelos exactos soportados en la cuenta de Groq
+  // Mapeo a los modelos exactos soportados y roles diferenciados
   let requestedModel = (bodyData.model || 'openai/gpt-oss-20b').trim();
   let modelName = 'openai/gpt-oss-20b';
+  let systemPrompt = 'Eres un modelo ligero de alta velocidad (SLM 20B). Tu objetivo es dar respuestas ultra-directas, concisas, prácticas y breves (máximo 2 párrafos o viñetas cortas sin preámbulos). No uses emojis.';
 
   if (requestedModel.includes('120b') || requestedModel.includes('grd') || requestedModel.includes('70b') || requestedModel.includes('grande')) {
     modelName = 'openai/gpt-oss-120b';
+    systemPrompt = 'Eres un modelo insignia de máxima capacidad (LLM 120B). Tu objetivo es proporcionar una respuesta formal, exhaustiva, estructurada con directivas técnicas completas, reglas y ejemplos de nivel enterprise. No uses emojis.';
   } else if (requestedModel.includes('qwen') || requestedModel.includes('27b') || requestedModel.includes('qwn')) {
     modelName = 'qwen/qwen3.6-27b';
-  } else {
-    modelName = 'openai/gpt-oss-20b';
+    systemPrompt = 'Eres un modelo especializado en razonamiento analítico y resolución lógica paso a paso (27B CoT). Desglosa el problema mediante análisis sistemático, principios fundamentales y validación formal de cada paso. No uses emojis.';
   }
 
   const query = bodyData.query || 'Hola';
-  const maxTokens = parseInt(bodyData.max_tokens || 500, 10);
+  const maxTokens = parseInt(bodyData.max_tokens || 600, 10);
   const temperature = parseFloat(bodyData.temperature !== undefined ? bodyData.temperature : 0.3);
 
   try {
@@ -65,14 +66,14 @@ export default async function handler(req, res) {
         messages: [
           {
             role: 'system',
-            content: 'Eres un asistente de IA avanzado, claro, pedagógico y estructurado. Responde en español usando formato Markdown profesional.'
+            content: systemPrompt
           },
           {
             role: 'user',
             content: query
           }
         ],
-        max_tokens: Math.min(maxTokens, 1500),
+        max_tokens: Math.min(Math.max(maxTokens, modelName.includes('qwen') ? 800 : 400), 1500),
         temperature: temperature
       })
     });
@@ -88,9 +89,11 @@ export default async function handler(req, res) {
     const latency = ((t1 - t0) / 1000).toFixed(2);
     let content = (data.choices && data.choices[0] && data.choices[0].message) ? data.choices[0].message.content : 'Sin respuesta.';
 
-    // Limpiar etiquetas <think> si el modelo las incluye
+    // Limpiar etiquetas de pensamiento <think> de modelos CoT
     if (content.includes('</think>')) {
       content = content.split('</think>').pop().trim();
+    } else if (content.startsWith('<think>')) {
+      content = content.replace(/<think>[\s\S]*?<\/think>/g, '').replace(/<think>[\s\S]*/g, '').trim();
     }
 
     const promptTokens = data.usage ? data.usage.prompt_tokens : Math.floor(query.length / 3.4);
