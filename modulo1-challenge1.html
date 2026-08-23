@@ -1803,17 +1803,17 @@ CONCLUSIÓN Y ANÁLISIS COMPARATIVO DE INGENIERÍA:
           </div>
         </div>
 
-        <!-- Conexión Opcional a Groq API Real -->
+        <!-- Conexión a Groq API / Vercel Serverless -->
         <div style="background: rgba(8, 102, 255, 0.05); border: 1px solid rgba(8, 102, 255, 0.18); border-radius: 8px; padding: 0.85rem 1.1rem; margin: 1.2rem 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.8rem;">
           <div style="display: flex; align-items: center; gap: 0.6rem;">
             <svg fill="currentColor" height="18" viewBox="0 0 24 24" width="18" style="color: var(--meta-blue);"><path d="M12.65 10C11.83 7.67 9.61 6 7 6c-3.31 0-6 2.69-6 6s2.69 6 6 6c2.61 0 4.83-1.67 5.65-4H17v4h4v-4h2v-4H12.65zM7 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/></svg>
             <div>
-              <div style="font-size: 0.84rem; font-weight: 700; color: var(--text-primary);">Modo de Inferencia: <span id="bench-engine-status" style="color: var(--meta-blue);">Simulador Local Rápido</span></div>
-              <div style="font-size: 0.74rem; color: var(--text-secondary);">Pega tu API Key de Groq (gsk_...) para conectar en vivo con las LPUs reales y responder cualquier pregunta en el mundo.</div>
+              <div style="font-size: 0.84rem; font-weight: 700; color: var(--text-primary);">Motor de Inferencia: <span id="bench-engine-status" style="color: var(--meta-blue);">Vercel Serverless / Groq LPU</span></div>
+              <div id="bench-engine-subtext" style="font-size: 0.74rem; color: var(--text-secondary);">Procesamiento en tiempo real sobre hardware LPU en servidores seguros de Vercel.</div>
             </div>
           </div>
           <div style="display: flex; gap: 0.5rem; align-items: center; flex: 1; max-width: 440px; min-width: 250px;">
-            <input type="password" id="bench-api-key-input" placeholder="gsk_tu_api_key_aqui..." style="flex: 1; background: var(--bg-surface); border: 1px solid var(--border-subtle); color: var(--text-primary); padding: 0.45rem 0.75rem; border-radius: 6px; font-family: var(--font-mono); font-size: 0.8rem;"/>
+            <input type="password" id="bench-api-key-input" placeholder="gsk_tu_api_key_aqui (opcional)..." style="flex: 1; background: var(--bg-surface); border: 1px solid var(--border-subtle); color: var(--text-primary); padding: 0.45rem 0.75rem; border-radius: 6px; font-family: var(--font-mono); font-size: 0.8rem;"/>
             <button class="btn-sm" id="btn-save-bench-key" style="background: var(--meta-blue); color: #fff; border: none; padding: 0.45rem 0.9rem; border-radius: 6px; font-size: 0.8rem; font-weight: 600; cursor: pointer;">Conectar</button>
             <button class="btn-sm" id="btn-clear-bench-key" style="display:none; background: transparent; border: 1px solid var(--border-subtle); color: var(--text-secondary); padding: 0.45rem 0.7rem; border-radius: 6px; font-size: 0.8rem; cursor: pointer;">Desconectar</button>
           </div>

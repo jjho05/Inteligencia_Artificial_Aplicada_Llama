@@ -441,30 +441,56 @@
     });
   }
 
-  // Conexión y Gestión de API Key de Groq Real (Opcional)
+  // Conexión y Gestión de API Key de Groq (Vercel Serverless o Navegador)
   var apiKeyInput = document.getElementById("bench-api-key-input");
   var btnSaveKey = document.getElementById("btn-save-bench-key");
   var btnClearKey = document.getElementById("btn-clear-bench-key");
   var engineStatus = document.getElementById("bench-engine-status");
+  var engineSubtext = document.getElementById("bench-engine-subtext");
   var activeGroqKey = localStorage.getItem("meta_groq_api_key") || "";
+
+  async function checkVercelBackend() {
+    try {
+      var res = await fetch("/api/groq", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ query: "ping", max_tokens: 5 })
+      });
+      if(res.ok) {
+        if(engineStatus) {
+          engineStatus.textContent = "Conectado vía Vercel Serverless (Groq LPU en Vivo)";
+          engineStatus.style.color = "#3fb950";
+        }
+        if(engineSubtext) {
+          engineSubtext.textContent = "Inferencia real en hardware LPU activa mediante variable GROQ_API_KEY en Vercel.";
+        }
+        return true;
+      }
+    } catch(e) {
+      // Ignorar si no corre en Vercel
+    }
+    return false;
+  }
 
   function updateKeyStatusUI() {
     if(activeGroqKey) {
       if(engineStatus) {
-        engineStatus.textContent = "Conectado a Groq LPU (Inferencia 100% Real)";
+        engineStatus.textContent = "Conectado a Groq LPU (Navegador)";
         engineStatus.style.color = "#3fb950";
       }
       if(apiKeyInput) apiKeyInput.value = "••••••••••••••••" + activeGroqKey.slice(-4);
       if(btnSaveKey) btnSaveKey.textContent = "Guardada";
       if(btnClearKey) btnClearKey.style.display = "inline-block";
+      if(engineSubtext) engineSubtext.textContent = "Inferencia en vivo activa mediante API Key en almacenamiento local de tu navegador.";
     } else {
       if(engineStatus) {
-        engineStatus.textContent = "Simulador Local Inteligente";
+        engineStatus.textContent = "Vercel Serverless / Groq LPU";
         engineStatus.style.color = "var(--meta-blue)";
       }
       if(apiKeyInput) apiKeyInput.value = "";
       if(btnSaveKey) btnSaveKey.textContent = "Conectar";
       if(btnClearKey) btnClearKey.style.display = "none";
+      checkVercelBackend();
     }
   }
   updateKeyStatusUI();
