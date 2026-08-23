@@ -1,0 +1,9 @@
+{
+  "name": "ia-llama-meta-masterclass",
+  "version": "1.0.0",
+  "type": "module",
+  "private": true,
+  "scripts": {
+    "start": "npx serve ."
+  }
+}
