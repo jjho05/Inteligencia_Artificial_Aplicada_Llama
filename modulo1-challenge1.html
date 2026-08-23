@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Challenge 1: Comparador de Modelos Llama | IA Aplicada con Modelos Abiertos</title>
-<meta name="description" content="Cuaderno interactivo y código resuelto del Challenge 1: Comparador Multi-Modelo de Lenguaje (20B vs 120B vs Qwen 27B) con Groq LPU.">
+<title>Challenge 1: Comparador de Modelos Llama | Manual Técnico e Interactivo</title>
+<meta name="description" content="Manual de ingeniería y cuaderno interactivo del Challenge 1: Comparador Multi-Modelo de Lenguaje (20B vs 120B vs Qwen 27B) con Groq LPU y análisis de telemetría.">
 
 <!-- Google Fonts -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -42,7 +42,7 @@
       <a href="modulo1-tema4.html" class="nav-link-item" style="color: var(--meta-blue); font-weight: 700;">← Tema 1.4</a>
       <a href="#hands-on-base" class="nav-link-item">Parte I: Hands-On</a>
       <a href="#challenge-section" class="nav-link-item">Parte II: Challenge</a>
-      <a href="#tabla-consolidada" class="nav-link-item">Tabla Comparativa</a>
+      <a href="#benchmark-studio-section" class="nav-link-item" style="color: var(--meta-blue); font-weight: 700;">Laboratorio en Vivo</a>
       <a href="#script-completo" class="nav-link-item">Script Python</a>
       <a href="modulo1-challenge2.html" class="nav-link-item" style="color: var(--accent-success); font-weight: 700;">Challenge 2 →</a>
     </nav>
@@ -91,13 +91,13 @@
 <main class="main-container">
 
   <!-- ======================================================================
-       HERO PRINCIPAL DE CHALLENGE 1
+       HERO PRINCIPAL & RESUMEN ARQUITECTÓNICO
        ====================================================================== -->
   <section class="course-hero" id="overview">
     <div class="hero-badge-pill">
       <span class="hero-badge-num">MÓDULO 1</span>
       <span class="hero-badge-divider"></span>
-      <span class="hero-badge-label">HANDS-ON & CHALLENGE RESUELTO</span>
+      <span class="hero-badge-label">MANUAL TÉCNICO & CUADERNO INTERACTIVO</span>
     </div>
     <h1 class="hero-title">HANDS - ON: FUNDAMENTOS DE LLMS CON MODELOS LLAMA</h1>
     <p class="hero-subtitle">
@@ -111,7 +111,7 @@
   <div id="hands-on-base">
     <div class="section-title-wrap" style="margin-bottom: 2rem;">
       <h2 style="font-family: var(--font-disp); font-size: 1.6rem; color: var(--text-primary);">PARTE I: PRÁCTICA GUIADA EN CLASE</h2>
-      <p style="color: var(--text-secondary); font-size: 0.95rem;">Construcción interactiva celda por celda de llamadas a la API de Groq.</p>
+      <p style="color: var(--text-secondary); font-size: 0.95rem;">Construcción interactiva celda por celda de llamadas a la API de Groq con manual de operaciones y desglose línea por línea.</p>
     </div>
 
     <!-- SECCIÓN 1: CONFIGURACIÓN DEL ENTORNO & COLAB SECRETS -->
@@ -120,13 +120,57 @@
         <div class="tema-eyebrow">Paso 1 &middot; Celda 1</div>
         <h3 class="tema-title">CONFIGURACIÓN DEL ENTORNO & COLAB SECRETS</h3>
       </div>
-      <p class="prose-p">
-        Antes de llamar a Llama necesitamos activar la GPU gratuita de Colab y conectar nuestra cuenta de <b>Groq</b>. La librería <code>groq</code> es el cliente oficial en Python para hacer llamadas a la API.
-      </p>
-      <p class="prose-p">
-        <b>COLAB SECRETS:</b> Para no exponer tu <i>API key</i> directamente en el código, Colab ofrece un panel de <i>Secrets</i> (ícono de llave en la barra lateral izquierda) donde puedes guardarla de forma segura, añadiendo un nombre asociado a la <i>API key</i> para guardarla dentro de una variable y usarla dentro del notebook.
-      </p>
+      
+      <!-- Introducción y Conceptos Clave -->
+      <div class="expl-box">
+        <div class="expl-box-header">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="var(--meta-blue)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+          <span>Contexto de Ingeniería y Conceptos Clave</span>
+        </div>
+        <p class="prose-p" style="margin-bottom: 0.6rem;">
+          Antes de llamar a Llama necesitamos activar la GPU gratuita de Colab y conectar nuestra cuenta de <b>Groq</b>. La librería <code>groq</code> es el cliente oficial en Python para hacer llamadas a la API.
+        </p>
+        <ul style="padding-left: 1.2rem; color: var(--text-secondary); font-size: 0.88rem; line-height: 1.6;">
+          <li><b>Groq LPU (Language Processing Unit):</b> Arquitectura de hardware basada en silicio determinista diseñada para ejecutar inferencia de modelos masivos con latencias inferiores a 1 segundo.</li>
+          <li><b>Seguridad de Credenciales:</b> Prohibido quemar (hardcodear) claves de API en el código público o en repositorios Git.</li>
+          <li><b>Resolución Dinámica de Modelos:</b> Estrategia de tolerancia a fallos que inspecciona la API activa y selecciona un modelo alternativo en caso de deprecación o mantenimiento de endpoints.</li>
+        </ul>
+      </div>
 
+      <!-- Guía Operativa Paso a Paso para Colab Secrets -->
+      <div class="expl-box" style="background: rgba(8, 102, 255, 0.04); border-color: rgba(8, 102, 255, 0.2);">
+        <div class="expl-box-header" style="color: var(--meta-blue);">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12.65 10C11.83 7.67 9.61 6 7 6c-3.31 0-6 2.69-6 6s2.69 6 6 6c2.61 0 4.83-1.67 5.65-4H17v4h4v-4h2v-4H12.65zM7 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/></svg>
+          <span>Manual de Operaciones: Cómo Configurar Colab Secrets</span>
+        </div>
+        <p class="prose-p" style="font-size: 0.85rem; margin-bottom: 0.8rem;">
+          Para no exponer tu <i>API key</i> directamente en el código, Colab ofrece un panel de <i>Secrets</i> donde puedes guardarla de forma segura y usarla dentro del notebook:
+        </p>
+        <div class="step-guide-grid">
+          <div class="step-guide-item">
+            <span class="step-guide-num">PASO 1</span>
+            <div class="step-guide-title">Abrir Panel de Llave</div>
+            <div class="step-guide-desc">En la barra lateral izquierda de Google Colab, haz clic en el ícono de llave (<b>Secrets</b>).</div>
+          </div>
+          <div class="step-guide-item">
+            <span class="step-guide-num">PASO 2</span>
+            <div class="step-guide-title">Añadir Nuevo Secreto</div>
+            <div class="step-guide-desc">Pulsa el botón <b>+ Add new secret</b> para crear una nueva variable de entorno privada.</div>
+          </div>
+          <div class="step-guide-item">
+            <span class="step-guide-num">PASO 3</span>
+            <div class="step-guide-title">Ingresar Nombre y Clave</div>
+            <div class="step-guide-desc">En <b>Name</b> escribe <code class="code-inline-dark">GROQ_API_KEY</code> y en <b>Value</b> pega tu clave que inicia con <code class="code-inline-dark">gsk_...</code>.</div>
+          </div>
+          <div class="step-guide-item">
+            <span class="step-guide-num">PASO 4</span>
+            <div class="step-guide-title">Habilitar Acceso</div>
+            <div class="step-guide-desc">Activa el interruptor <b>Notebook access</b> para permitir que <code class="code-inline-dark">userdata.get()</code> la lea sin errores.</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Celda de Código Colab Interactiva -->
       <div class="colab-cell-box">
         <div class="colab-cell-header">
           <div class="colab-cell-tag">
@@ -186,6 +230,56 @@ Modelos configurados para evaluación:
   • Modelo Qwen: qwen/qwen3.6-27b</pre>
         </div>
       </div>
+
+      <!-- Desglose Línea por Línea -->
+      <div class="expl-box">
+        <div class="expl-box-header">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="var(--text-primary)"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
+          <span>Desglose Técnico Línea por Línea</span>
+        </div>
+        <table class="line-breakdown-table">
+          <thead>
+            <tr>
+              <th style="width: 85px;">Línea</th>
+              <th style="width: 260px;">Instrucción de Código</th>
+              <th>Propósito y Comportamiento en Ingeniería</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="line-num-badge">L1</span></td>
+              <td><code class="code-inline-dark">!pip install groq -q</code></td>
+              <td>Instala el SDK oficial de Groq en el entorno de Google Colab. La bandera <code class="code-inline-dark">-q</code> (quiet) silencia logs innecesarios para mantener la salida limpia.</td>
+            </tr>
+            <tr>
+              <td><span class="line-num-badge">L7</span></td>
+              <td><code class="code-inline-dark">userdata.get('GROQ_API_KEY')</code></td>
+              <td>Recupera de forma cifrada el secreto almacenado en el panel lateral de Colab sin exponer la cadena en texto plano.</td>
+            </tr>
+            <tr>
+              <td><span class="line-num-badge">L10-15</span></td>
+              <td><code class="code-inline-dark">def obtener_modelo(...)</code></td>
+              <td>Consulta <code class="code-inline-dark">client.models.list()</code> para validar qué checkpoints están activos en la infraestructura de Groq, implementando un fallback graceful si un endpoint cambia de versión.</td>
+            </tr>
+            <tr>
+              <td><span class="line-num-badge">L21-23</span></td>
+              <td><code class="code-inline-dark">re.sub(r"&lt;think&gt;.*?&lt;/think&gt;", ...)</code></td>
+              <td>Sanitiza las etiquetas de razonamiento interno que emiten modelos como Qwen o DeepSeek R1, garantizando que el usuario final solo reciba la respuesta procesada.</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Q&A de Ingeniería -->
+      <div class="qa-card">
+        <div class="qa-q">
+          <svg viewBox="0 0 24 24" width="14" height="14" fill="var(--meta-blue)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16h-2v-2h2v2zm1.07-7.75l-.9.92C12.45 11.9 12 12.5 12 14h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 1.04-.42 1.99-1.07 2.75z"/></svg>
+          <span>Q&A: ¿Qué ocurre si obtengo el error <code class="code-inline-dark" style="color:#ff7b72;">SecretNotFoundError</code> o <code class="code-inline-dark" style="color:#ff7b72;">AuthenticationError</code>?</span>
+        </div>
+        <div class="qa-a">
+          El error <b>SecretNotFoundError</b> indica que el nombre asignado en Colab Secrets no coincide exactamente con <code class="code-inline-dark">GROQ_API_KEY</code> (sensible a mayúsculas) o que no se activó el interruptor "Notebook access". El error <b>AuthenticationError 401</b> ocurre cuando la API Key ha sido revocada o copiada con espacios en blanco adicionales.
+        </div>
+      </div>
     </section>
 
     <!-- SECCIÓN 2: DE PALABRAS A TOKENS -->
@@ -194,9 +288,19 @@ Modelos configurados para evaluación:
         <div class="tema-eyebrow">Paso 2 &middot; Celda 2</div>
         <h3 class="tema-title">DE PALABRAS A TOKENS</h3>
       </div>
-      <p class="prose-p">
-        Antes de que Llama genere una sola palabra, tu prompt se divide en <b>tokens</b>. Vamos a definir un prompt de ejemplo que después enviaremos a Llama.
-      </p>
+
+      <div class="expl-box">
+        <div class="expl-box-header">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="var(--meta-blue)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+          <span>Fundamentos de Tokenización BPE (Byte-Pair Encoding)</span>
+        </div>
+        <p class="prose-p">
+          Antes de que Llama genere una sola palabra, tu prompt se divide en <b>tokens</b>. Los Large Language Models no comprenden letras ni palabras completas como los humanos, sino secuencias de enteros generadas por un algoritmo de tokenización (como Tiktoken con vocabulario de 128,000 tokens en la familia Llama 3).
+        </p>
+        <p class="prose-p" style="font-size: 0.85rem; color: var(--text-secondary);">
+          En español y lenguajes no anglosajones, una palabra promedio suele subdividirse en 1.3 a 1.7 tokens debido a los acentos, caracteres especiales y morfología verbal.
+        </p>
+      </div>
 
       <div class="colab-cell-box">
         <div class="colab-cell-header">
@@ -238,9 +342,19 @@ Modelos configurados para evaluación:
         <div class="tema-eyebrow">Paso 3 &middot; Celda 3</div>
         <h3 class="tema-title">PRIMERA LLAMADA A LLAMA (ZERO-SHOT)</h3>
       </div>
-      <p class="prose-p">
-        Un LLM predice el siguiente token más probable, <b>no busca la respuesta en una base de datos</b>. Vamos a enviar el prompt a Llama en modo zero-shot (sin ejemplos previos) y ver la respuesta generada.
-      </p>
+
+      <div class="expl-box">
+        <div class="expl-box-header">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="var(--meta-blue)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+          <span>Mecánica de Inferencia Zero-Shot & Generación Auto-Regresiva</span>
+        </div>
+        <p class="prose-p">
+          Un LLM predice el siguiente token más probable, <b>no busca la respuesta en una base de datos</b>. Vamos a enviar el prompt a Llama en modo zero-shot (sin ejemplos previos) y ver la respuesta generada.
+        </p>
+        <p class="prose-p" style="font-size: 0.85rem; color: var(--text-secondary);">
+          Cada llamada a <code class="code-inline-dark">client.chat.completions.create</code> sigue el esquema de conversación OpenAI-compatible mediante una lista de diccionarios con claves <code class="code-inline-dark">role</code> y <code class="code-inline-dark">content</code>.
+        </p>
+      </div>
 
       <div class="colab-cell-box">
         <div class="colab-cell-header">
@@ -283,12 +397,19 @@ En cambio, el almacenamiento (disco SSD o HDD) es la memoria secundaria permanen
         <div class="tema-eyebrow">Paso 4 &middot; Celdas 4 y 5</div>
         <h3 class="tema-title">INSPECCIÓN DE LA RESPUESTA COMPLETA & CUÁNTOS TOKENS CONSUMIÓ EL PROMPT</h3>
       </div>
-      <p class="prose-p">
-        La respuesta de la API no es solo texto: viene empaquetada en un objeto con metadatos útiles como el modelo usado, la razón de parada (<code>finish_reason</code>) y el uso de tokens.
-      </p>
-      <p class="prose-p">
-        <b>¿CUÁNTOS TOKENS CONSUMIÓ EL PROMPT?</b> La respuesta de la API trae un resumen (<code>usage</code>) con el número de tokens de entrada y de salida. Es la forma más directa de responder: ¿cuántos tokens consumió mi prompt? El valor de <code>response.usage.total_tokens</code> es lo que se factura por esta llamada.
-      </p>
+
+      <div class="expl-box">
+        <div class="expl-box-header">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="var(--meta-blue)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+          <span>Estructura del Payload de Respuesta & Modelo de Facturación</span>
+        </div>
+        <p class="prose-p">
+          La respuesta de la API trae un resumen (<code>usage</code>) con el número de tokens de entrada y de salida. Es la forma más directa de responder: ¿cuántos tokens consumió mi prompt?
+        </p>
+        <p class="prose-p" style="font-size: 0.85rem; color: var(--text-secondary);">
+          <b>Fórmula de Facturación:</b> <span style="font-family:var(--font-mono); color:var(--meta-blue); font-weight:700;">Tokens Totales = prompt_tokens + completion_tokens</span>. En producción, las APIs cobran tarifas diferenciadas por cada millón de tokens de entrada vs salida.
+        </p>
+      </div>
 
       <div class="colab-cell-box">
         <div class="colab-cell-header">
@@ -334,9 +455,19 @@ Tokens totales: 117</pre>
         <div class="tema-eyebrow">Paso 5 &middot; Celda 6</div>
         <h3 class="tema-title">MIDIENDO LA LATENCIA DE INFERENCIA</h3>
       </div>
-      <p class="prose-p">
-        Elegir el tamaño correcto de modelo es una decisión de ingeniería, no solo de potencia bruta. Vamos a medir cuánto tarda Llama en responder el mismo prompt.
-      </p>
+
+      <div class="expl-box">
+        <div class="expl-box-header">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="var(--meta-blue)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+          <span>Latencia y Rendimiento en Arquitecturas de Producción</span>
+        </div>
+        <p class="prose-p">
+          Elegir el tamaño correcto de modelo es una decisión de ingeniería, no solo de potencia bruta. Vamos a medir cuánto tarda Llama en responder el mismo prompt.
+        </p>
+        <p class="prose-p" style="font-size: 0.85rem; color: var(--text-secondary);">
+          <b>Métricas Clave:</b> TTFT (Time to First Token), ITL (Inter-Token Latency) y Throughput global (Tokens / segundo). En Groq LPU, los modelos ligeros alcanzan velocidades superiores a 150-250 tok/s.
+        </p>
+      </div>
 
       <div class="colab-cell-box">
         <div class="colab-cell-header">
@@ -381,9 +512,16 @@ Tokens totales: 117</pre>
         <div class="tema-eyebrow">Paso 6 &middot; Celda 7</div>
         <h3 class="tema-title">COMPARANDO DOS TAMAÑOS DE MODELO EN CLASE</h3>
       </div>
-      <p class="prose-p">
-        Repite la misma llamada usando la versión más grande de Llama disponible en Groq y compara tiempo de respuesta y calidad contra el modelo ligero.
-      </p>
+
+      <div class="expl-box">
+        <div class="expl-box-header">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="var(--meta-blue)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+          <span>Trade-off: Capacidad de Parámetros vs Latencia de Inferencia</span>
+        </div>
+        <p class="prose-p">
+          Repite la misma llamada usando la versión más grande de Llama disponible en Groq y compara tiempo de respuesta y calidad contra el modelo ligero.
+        </p>
+      </div>
 
       <div class="colab-cell-box">
         <div class="colab-cell-header">
@@ -461,7 +599,7 @@ Respuesta del modelo grande (openai/gpt-oss-120b):
     <div class="section-title-wrap" style="margin: 3.5rem 0 2rem 0; padding-top: 2rem; border-top: 2px dashed var(--border-subtle);">
       <h2 style="font-family: var(--font-disp); font-size: 1.6rem; color: var(--text-primary);">PARTE II: CHALLENGE: COMPARADOR DE MODELOS LLAMA</h2>
       <p style="color: var(--text-secondary); font-size: 0.95rem;">
-        Una vez visto el <i>Hands-On: Fundamentos de LLMs</i>, se presenta el siguiente reto para que el alumnado pueda repasar y reforzar lo aprendido dentro de la clase. Se construirá un pequeño <b>comparador que envíe 3 preguntas</b> reales a Llama y registre, para cada una, el <b>tiempo de respuesta</b> y el <b>número de tokens</b> consumidos.
+        Se construirá un comparador que envíe 3 preguntas reales a Llama y registre, para cada una, el <b>tiempo de respuesta</b> y el <b>número de tokens</b> consumidos.
       </p>
     </div>
 
@@ -471,10 +609,17 @@ Respuesta del modelo grande (openai/gpt-oss-120b):
         <div class="tema-eyebrow">Instrucción 1 &middot; Celdas 8 y 9</div>
         <h3 class="tema-title">1. CARGA LA API KEY Y GENERA 3 PREGUNTAS</h3>
       </div>
-      <p class="prose-p">
-        • Lee la API key de llama ya configurada desde <b>Colab Secrets</b>.<br>
-        • Construye una lista vacía llamada <code>preguntas</code> y agrégale 3 preguntas frecuentes de tu propio contexto (soporte técnico, tienda, escuela, etc.).
-      </p>
+
+      <div class="expl-box">
+        <div class="expl-box-header">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="var(--meta-blue)"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/></svg>
+          <span>Definición de Preguntas de Caso de Uso Institucional</span>
+        </div>
+        <p class="prose-p">
+          • Lee la API key de llama ya configurada desde <b>Colab Secrets</b>.<br>
+          • Construye una lista vacía llamada <code>preguntas</code> y agrégale 3 preguntas frecuentes de tu propio contexto (soporte técnico, tienda, escuela, etc.).
+        </p>
+      </div>
 
       <div class="colab-cell-box">
         <div class="colab-cell-header">
@@ -812,6 +957,161 @@ CONCLUSIÓN Y ANÁLISIS COMPARATIVO DE INGENIERÍA:
       </div>
     </section>
   </div>
+
+  <!-- ======================================================================
+       LABORATORIO EN VIVO: BENCHMARK STUDIO MULTI-MODELO REAL
+       ====================================================================== -->
+  <section class="benchmark-studio" id="benchmark-studio-section">
+    <div class="benchmark-studio-header">
+      <div>
+        <div style="font-family:var(--font-mono); font-size:0.75rem; font-weight:800; color:var(--meta-blue); text-transform:uppercase; letter-spacing:0.06em;">Laboratorio de Inferencia & Telemetría en Vivo</div>
+        <h2 style="font-family:var(--font-disp); font-size:1.6rem; color:var(--text-primary); margin:0.3rem 0;">Simulador Comparador Multi-Modelo en Tiempo Real</h2>
+        <p style="color:var(--text-secondary); font-size:0.9rem; margin:0;">Ejecuta cualquier consulta en paralelo a través de los 3 modelos para medir latencia exacta, conteo de tokens y calidad de respuesta.</p>
+      </div>
+      <div style="display:flex; gap:0.6rem;">
+        <button class="btn-primary" id="btn-run-live-benchmark" style="display:inline-flex; align-items:center; gap:0.5rem; padding:0.6rem 1.4rem;">
+          <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+          <span>Ejecutar Benchmark en Paralelo</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Controles de Consulta y Parámetros -->
+    <div style="background:var(--bg-surface-2); padding:1.2rem; border-radius:10px; border:1px solid var(--border-subtle); margin-bottom:1.5rem;">
+      <div style="display:grid; grid-template-columns: 2fr 1fr; gap:1.2rem; margin-bottom:1rem;">
+        <div>
+          <label style="font-size:0.8rem; font-weight:700; color:var(--text-primary); display:block; margin-bottom:0.4rem;">Seleccionar Preset o Escribir Consulta:</label>
+          <select id="bench-preset-select" style="width:100%; background:var(--bg-surface); color:var(--text-primary); border:1px solid var(--border-subtle); padding:0.55rem 0.8rem; border-radius:6px; font-size:0.85rem; margin-bottom:0.6rem;">
+            <option value="p1">Pregunta 1: Restablecer contraseña olvidada en portal institucional</option>
+            <option value="p2">Pregunta 2: Horarios de atención y canales oficiales de soporte técnico</option>
+            <option value="p3">Pregunta 3: Requisitos mínimos de hardware y software</option>
+            <option value="custom">Consulta Personalizada (Escribir abajo)</option>
+          </select>
+          <textarea id="bench-custom-query" rows="2" style="width:100%; background:var(--bg-surface); color:var(--text-primary); border:1px solid var(--border-subtle); padding:0.6rem 0.8rem; border-radius:6px; font-family:var(--font-sans); font-size:0.85rem;" placeholder="Escribe aquí tu propia consulta para el comparador...">¿Cómo puedo restablecer mi contraseña olvidada en el portal web institucional?</textarea>
+        </div>
+        <div style="display:flex; flex-direction:column; justify-content:space-between; gap:0.6rem;">
+          <div>
+            <label style="font-size:0.78rem; font-weight:700; color:var(--text-primary); display:flex; justify-content:space-between;">
+              <span>Max Tokens:</span>
+              <span id="lbl-max-tokens" style="font-family:var(--font-mono); color:var(--meta-blue);">600</span>
+            </label>
+            <input type="range" id="bench-max-tokens" min="100" max="1000" step="50" value="600" style="width:100%;">
+          </div>
+          <div>
+            <label style="font-size:0.78rem; font-weight:700; color:var(--text-primary); display:flex; justify-content:space-between;">
+              <span>Temperatura:</span>
+              <span id="lbl-temperature" style="font-family:var(--font-mono); color:var(--meta-blue);">0.3</span>
+            </label>
+            <input type="range" id="bench-temperature" min="0.0" max="1.0" step="0.1" value="0.3" style="width:100%;">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Grid de Modelos en Paralelo -->
+    <div class="benchmark-grid">
+      <!-- Tarjeta Modelo Ligero -->
+      <div class="model-bench-card highlight" id="card-bench-ligero">
+        <div class="model-bench-header">
+          <div>
+            <div class="model-bench-name">openai/gpt-oss-20b</div>
+            <div style="font-size:0.7rem; color:#8b949e;">Modelo Ligero · Inferencia Reactiva</div>
+          </div>
+          <span class="model-bench-badge fast" id="badge-bench-ligero">Alta Velocidad</span>
+        </div>
+        <div class="model-bench-metrics">
+          <div>
+            <div class="model-bench-metric-val" id="val-bench-lat-lig">1.29 s</div>
+            <div class="model-bench-metric-lbl">Latencia</div>
+          </div>
+          <div>
+            <div class="model-bench-metric-val" id="val-bench-tok-lig">786</div>
+            <div class="model-bench-metric-lbl">Tokens Totales</div>
+          </div>
+          <div>
+            <div class="model-bench-metric-val" id="val-bench-spd-lig">609 t/s</div>
+            <div class="model-bench-metric-lbl">Throughput</div>
+          </div>
+        </div>
+        <div class="model-bench-body" id="body-bench-ligero">¡Claro! A continuación tienes una guía paso‑a‑paso para restablecer la contraseña en el portal web institucional:
+
+1. Accede a la página de inicio de sesión institucional.
+2. Haz clic en el enlace «Olvidé mi contraseña».
+3. Proporciona tu correo electrónico institucional.
+4. Abre el correo de recuperación recibido y sigue el enlace seguro.
+5. Define una nueva contraseña segura y confírmala.</div>
+      </div>
+
+      <!-- Tarjeta Modelo Grande -->
+      <div class="model-bench-card" id="card-bench-grande">
+        <div class="model-bench-header">
+          <div>
+            <div class="model-bench-name">openai/gpt-oss-120b</div>
+            <div style="font-size:0.7rem; color:#8b949e;">Modelo Grande · Máxima Capacidad</div>
+          </div>
+          <span class="model-bench-badge heavy" id="badge-bench-grande">Alta Capacidad</span>
+        </div>
+        <div class="model-bench-metrics">
+          <div>
+            <div class="model-bench-metric-val" id="val-bench-lat-grd">1.82 s</div>
+            <div class="model-bench-metric-lbl">Latencia</div>
+          </div>
+          <div>
+            <div class="model-bench-metric-val" id="val-bench-tok-grd">786</div>
+            <div class="model-bench-metric-lbl">Tokens Totales</div>
+          </div>
+          <div>
+            <div class="model-bench-metric-val" id="val-bench-spd-grd">431 t/s</div>
+            <div class="model-bench-metric-lbl">Throughput</div>
+          </div>
+        </div>
+        <div class="model-bench-body" id="body-bench-grande">¡Claro! A continuación tienes una guía paso a paso para restablecer tu contraseña cuando la has olvidado en el portal web institucional:
+
+1. Accede a la página oficial de autenticación.
+2. Inicia el proceso de recuperación mediante correo o SMS.
+3. Responde las preguntas de seguridad o ingresa el código OTP.
+4. Establece una contraseña con altos estándares de seguridad (mínimo 8 caracteres, números y símbolos).</div>
+      </div>
+
+      <!-- Tarjeta Modelo Qwen -->
+      <div class="model-bench-card" id="card-bench-qwen">
+        <div class="model-bench-header">
+          <div>
+            <div class="model-bench-name">qwen/qwen3.6-27b</div>
+            <div style="font-size:0.7rem; color:#8b949e;">Modelo Qwen · Razonamiento Analítico</div>
+          </div>
+          <span class="model-bench-badge reasoning" id="badge-bench-qwen">Razonamiento</span>
+        </div>
+        <div class="model-bench-metrics">
+          <div>
+            <div class="model-bench-metric-val" id="val-bench-lat-qwn">1.66 s</div>
+            <div class="model-bench-metric-lbl">Latencia</div>
+          </div>
+          <div>
+            <div class="model-bench-metric-val" id="val-bench-tok-qwn">726</div>
+            <div class="model-bench-metric-lbl">Tokens Totales</div>
+          </div>
+          <div>
+            <div class="model-bench-metric-val" id="val-bench-spd-qwn">437 t/s</div>
+            <div class="model-bench-metric-lbl">Throughput</div>
+          </div>
+        </div>
+        <div class="model-bench-body" id="body-bench-qwen"># Guía de Restablecimiento Seguro de Contraseña
+
+1. Accede al portal oficial con protocolo seguro HTTPS.
+2. Selecciona la opción de recuperación de credenciales.
+3. Ingresa tu número de matrícula o correo institucional.
+4. Valida tu identidad y actualiza la clave respetando las directivas institucionales.</div>
+      </div>
+    </div>
+
+    <!-- Botones de Exportación de Resultados -->
+    <div style="display:flex; justify-content:flex-end; gap:0.8rem; margin-top:1rem;">
+      <button class="btn-secondary" id="btn-export-bench-json" style="font-size:0.82rem; padding:0.45rem 0.9rem;">
+        <span>Descargar resultado_benchmark.json</span>
+      </button>
+    </div>
+  </section>
 
   <!-- ======================================================================
        SECCIÓN DE CÓDIGO COMPLETO DESCARGABLE (ejecutar_challenge.py)

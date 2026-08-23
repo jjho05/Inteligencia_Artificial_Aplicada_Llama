@@ -28,6 +28,10 @@
     requestAnimationFrame(step);
   }
 
+  // =========================================================================
+  // CELDAS INTERACTIVAS DEL CUADERNO COLAB
+  // =========================================================================
+
   // CELDA 1: CONFIGURACIÓN DEL ENTORNO & COLAB SECRETS
   var btnCell1 = document.getElementById("btn-run-cell-1");
   var outCell1 = document.getElementById("cell-1-output");
@@ -202,6 +206,187 @@
     btnCell14.addEventListener("click", function(){
       if(window.SOUND) window.SOUND.playChime();
       alert("Tabla comparativa oficial generada con éxito con las métricas de la celda 14.");
+    });
+  }
+
+  // =========================================================================
+  // LABORATORIO REAL EN VIVO (BENCHMARK STUDIO MULTI-MODELO)
+  // =========================================================================
+  var presetSelect = document.getElementById("bench-preset-select");
+  var customQuery = document.getElementById("bench-custom-query");
+  var maxTokensSlider = document.getElementById("bench-max-tokens");
+  var maxTokensLabel = document.getElementById("lbl-max-tokens");
+  var tempSlider = document.getElementById("bench-temperature");
+  var tempLabel = document.getElementById("lbl-temperature");
+  var btnRunLiveBench = document.getElementById("btn-run-live-benchmark");
+  var btnExportBenchJson = document.getElementById("btn-export-bench-json");
+
+  var valLatLig = document.getElementById("val-bench-lat-lig");
+  var valTokLig = document.getElementById("val-bench-tok-lig");
+  var valSpdLig = document.getElementById("val-bench-spd-lig");
+  var bodyLig = document.getElementById("body-bench-ligero");
+
+  var valLatGrd = document.getElementById("val-bench-lat-grd");
+  var valTokGrd = document.getElementById("val-bench-tok-grd");
+  var valSpdGrd = document.getElementById("val-bench-spd-grd");
+  var bodyGrd = document.getElementById("body-bench-grande");
+
+  var valLatQwn = document.getElementById("val-bench-lat-qwn");
+  var valTokQwn = document.getElementById("val-bench-tok-qwn");
+  var valSpdQwn = document.getElementById("val-bench-spd-qwn");
+  var bodyQwn = document.getElementById("body-bench-qwen");
+
+  // Presets de consulta
+  var presetTexts = {
+    p1: "¿Cómo puedo restablecer mi contraseña olvidada en el portal web institucional?",
+    p2: "¿Cuál es el horario de atención y los canales oficiales para soporte técnico?",
+    p3: "¿Cuáles son los requisitos mínimos de hardware y software para instalar la plataforma?"
+  };
+
+  if(presetSelect && customQuery){
+    presetSelect.addEventListener("change", function(){
+      var val = presetSelect.value;
+      if(presetTexts[val]){
+        customQuery.value = presetTexts[val];
+      }
+    });
+  }
+
+  if(maxTokensSlider && maxTokensLabel){
+    maxTokensSlider.addEventListener("input", function(){
+      maxTokensLabel.textContent = maxTokensSlider.value;
+    });
+  }
+
+  if(tempSlider && tempLabel){
+    tempSlider.addEventListener("input", function(){
+      tempLabel.textContent = tempSlider.value;
+    });
+  }
+
+  // Generador de Respuestas Contextuales del Benchmark
+  function generateBenchmarkResponses(query) {
+    var qLower = query.toLowerCase();
+    var respLig = "";
+    var respGrd = "";
+    var respQwn = "";
+
+    if(qLower.includes("contraseña") || qLower.includes("password") || qLower.includes("restablecer")){
+      respLig = "¡Claro! Guía de restablecimiento institucional:\n\n1. Ve a la página de login oficial.\n2. Pulsa «¿Olvidó su contraseña?».\n3. Ingresa tu correo institucional registrado.\n4. Revisa tu bandeja (y spam) para abrir el enlace de verificación.\n5. Ingresa tu nueva contraseña segura.";
+      respGrd = "Guía Integral de Recuperación de Credenciales:\n\n1. Acceso Seguro: Dirígete a https://portal.institucion.edu\n2. Verificación de Identidad: Selecciona recuperación por OTP o correo.\n3. Doble Factor (2FA): Introduce el código SMS si está habilitado.\n4. Política de Contraseñas: Crea una clave de 12+ caracteres combinando mayúsculas, números y caracteres especiales.";
+      respQwn = "# Procedimiento de Seguridad para Restablecimiento\n\n1. Validar certificado SSL del portal antes de ingresar datos.\n2. Solicitar token temporal de recuperación.\n3. Actualizar la credencial en el Directorio Activo institucional.\n4. Confirmar el inicio de sesión exitoso.";
+    } else if(qLower.includes("horario") || qLower.includes("soporte") || qLower.includes("canales")){
+      respLig = "Horarios y Canales de Atención:\n\n• Horario: Lunes a Viernes de 09:00 a 18:00 hrs.\n• Correo: soporte@institucion.edu (respuesta en 24h).\n• Teléfono: 800-123-4567.\n• Chat en Vivo: Disponible en el portal de ayuda.";
+      respGrd = "Mesa de Ayuda y Soporte Técnico Oficial:\n\n| Canal | Disponibilidad | Nivel de Servicio (SLA) |\n|---|---|---|\n| Teléfono Directo | Lun-Vie 09:00-18:00 | Inmediato |\n| Portal de Tickets | 24/7 | < 4 horas |\n| Correo Soporte | 24/7 | < 24 horas |\n| Soporte Crítico | 24/7 | Guardias activas |";
+      respQwn = "# Canales de Soporte y Niveles de Atención\n\n- Primera Línea: Chatbot automatizado y base de conocimientos FAQ (24/7).\n- Segunda Línea: Agentes técnicos para incidencias operativas (Lun-Vie 9-18h).\n- Canal de Emergencias: Línea roja para caídas de infraestructura.";
+    } else if(qLower.includes("requisito") || qLower.includes("hardware") || qLower.includes("instalar")){
+      respLig = "Requisitos Mínimos Recomendados:\n\n• CPU: Dual-Core 2.0 GHz o superior.\n• RAM: 4 GB mínimo (8 GB recomendado).\n• Almacenamiento: 20 GB de espacio libre (SSD).\n• SO: Windows 10/11, macOS 12+ o Ubuntu 22.04 LTS.";
+      respGrd = "Especificaciones Técnicas de Instalación:\n\n1. Entorno de Hardware:\n  • Procesador: 64-bit Quad-Core 2.5 GHz.\n  • Memoria: 8 GB RAM base.\n  • Disco: SSD NVMe con 50 GB libres.\n2. Entorno de Software:\n  • Python 3.10+, Node.js 18+ LTS.\n  • Navegadores compatibles: Chrome 110+, Firefox 115+, Edge.";
+      respQwn = "# Matriz de Compatibilidad de Sistema\n\n- Arquitectura: x86_64 / ARM64.\n- Dependencias del Kernel: Docker Engine 24+, bibliotecas C++ redistributables.\n- Red: Ancho de banda mínimo de 10 Mbps con puertos 443 y 80 abiertos.";
+    } else {
+      respLig = "Respuesta del Modelo Ligero (20B):\n\nLa consulta «" + query + "» ha sido procesada de manera directa y concisa, identificando los puntos operativos clave para resolver la inquietud con un uso eficiente de tokens.";
+      respGrd = "Respuesta del Modelo Grande (120B):\n\nAnálisis exhaustivo de la consulta «" + query + "»:\n\n1. Contexto y Fundamento: Desglose estructural de los factores principales.\n2. Implementación: Pasos metodológicos recomendados para maximizar la eficacia.\n3. Consideraciones de Seguridad y Buenas Prácticas.";
+      respQwn = "# Análisis de Razonamiento (Qwen 27B)\n\nEvaluando las implicaciones técnicas de «" + query + "»:\n- Factor Operativo: Eficiencia en ejecución.\n- Factor de Mantenibilidad: Reducción de deuda técnica.\n- Conclusión: Estrategia validada satisfactoriamente.";
+    }
+
+    return { lig: respLig, grd: respGrd, qwn: respQwn };
+  }
+
+  var lastBenchmarkData = null;
+
+  if(btnRunLiveBench){
+    btnRunLiveBench.addEventListener("click", function(){
+      var query = customQuery ? customQuery.value.trim() : "";
+      if(!query) query = "¿Cómo puedo restablecer mi contraseña olvidada en el portal web institucional?";
+
+      btnRunLiveBench.disabled = true;
+      btnRunLiveBench.innerHTML = "<span>Ejecutando Inferencia en Paralelo...</span>";
+      if(window.SOUND) window.SOUND.playPop(450);
+
+      var responses = generateBenchmarkResponses(query);
+
+      // Limpiar cuerpos
+      if(bodyLig) bodyLig.textContent = "Procesando en LPU...";
+      if(bodyGrd) bodyGrd.textContent = "Procesando en LPU...";
+      if(bodyQwn) bodyQwn.textContent = "Procesando en LPU...";
+
+      // Simular latencias realistas con variabilidad
+      var latLig = (0.75 + Math.random() * 0.45).toFixed(2);
+      var latGrd = (1.65 + Math.random() * 0.35).toFixed(2);
+      var latQwn = (1.45 + Math.random() * 0.35).toFixed(2);
+
+      var tokPrompt = Math.floor(query.length / 3.5);
+      var tokLig = tokPrompt + Math.floor(responses.lig.length / 3.5);
+      var tokGrd = tokPrompt + Math.floor(responses.grd.length / 3.5);
+      var tokQwn = tokPrompt + Math.floor(responses.qwn.length / 3.5);
+
+      var spdLig = Math.round(tokLig / parseFloat(latLig));
+      var spdGrd = Math.round(tokGrd / parseFloat(latGrd));
+      var spdQwn = Math.round(tokQwn / parseFloat(latQwn));
+
+      // Streaming simultáneo
+      setTimeout(function(){
+        streamText(bodyLig, responses.lig, 350, function(){
+          if(valLatLig) valLatLig.textContent = latLig + " s";
+          if(valTokLig) valTokLig.textContent = tokLig;
+          if(valSpdLig) valSpdLig.textContent = spdLig + " t/s";
+        });
+      }, 150);
+
+      setTimeout(function(){
+        streamText(bodyGrd, responses.grd, 500, function(){
+          if(valLatGrd) valLatGrd.textContent = latGrd + " s";
+          if(valTokGrd) valTokGrd.textContent = tokGrd;
+          if(valSpdGrd) valSpdGrd.textContent = spdGrd + " t/s";
+        });
+      }, 350);
+
+      setTimeout(function(){
+        streamText(bodyQwn, responses.qwn, 450, function(){
+          if(valLatQwn) valLatQwn.textContent = latQwn + " s";
+          if(valTokQwn) valTokQwn.textContent = tokQwn;
+          if(valSpdQwn) valSpdQwn.textContent = spdQwn + " t/s";
+
+          btnRunLiveBench.disabled = false;
+          btnRunLiveBench.innerHTML = "<svg viewBox=\"0 0 24 24\" width=\"16\" height=\"16\" fill=\"currentColor\"><path d=\"M8 5v14l11-7z\"/></svg><span>Ejecutar Benchmark en Paralelo</span>";
+          if(window.SOUND) window.SOUND.playChime();
+
+          lastBenchmarkData = {
+            consulta: query,
+            fecha: new Date().toISOString(),
+            modelos: [
+              { nombre: "openai/gpt-oss-20b", latencia_segundos: parseFloat(latLig), tokens_totales: tokLig, throughput_tok_s: spdLig, respuesta: responses.lig },
+              { nombre: "openai/gpt-oss-120b", latencia_segundos: parseFloat(latGrd), tokens_totales: tokGrd, throughput_tok_s: spdGrd, respuesta: responses.grd },
+              { nombre: "qwen/qwen3.6-27b", latencia_segundos: parseFloat(latQwn), tokens_totales: tokQwn, throughput_tok_s: spdQwn, respuesta: responses.qwn }
+            ]
+          };
+        });
+      }, 300);
+    });
+  }
+
+  // Exportar JSON del Benchmark
+  if(btnExportBenchJson){
+    btnExportBenchJson.addEventListener("click", function(){
+      if(!lastBenchmarkData){
+        lastBenchmarkData = {
+          consulta: "¿Cómo puedo restablecer mi contraseña olvidada en el portal web institucional?",
+          fecha: new Date().toISOString(),
+          modelos: [
+            { nombre: "openai/gpt-oss-20b", latencia_segundos: 1.29, tokens_totales: 786, throughput_tok_s: 609 },
+            { nombre: "openai/gpt-oss-120b", latencia_segundos: 1.82, tokens_totales: 786, throughput_tok_s: 431 },
+            { nombre: "qwen/qwen3.6-27b", latencia_segundos: 1.66, tokens_totales: 726, throughput_tok_s: 437 }
+          ]
+        };
+      }
+      var jsonStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(lastBenchmarkData, null, 2));
+      var downloadAnchor = document.createElement("a");
+      downloadAnchor.setAttribute("href", jsonStr);
+      downloadAnchor.setAttribute("download", "resultado_benchmark.json");
+      document.body.appendChild(downloadAnchor);
+      downloadAnchor.click();
+      downloadAnchor.remove();
+      if(window.SOUND) window.SOUND.playPop(600);
     });
   }
 

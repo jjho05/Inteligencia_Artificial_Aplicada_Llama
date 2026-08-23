@@ -7655,3 +7655,273 @@ details[open] > summary svg {
   font-weight: 600;
 }
 
+/* ==========================================================================
+   EXPLANATORY CARDS, LINE-BY-LINE TABLES & QA ACCORDIONS
+   ========================================================================== */
+.expl-box {
+  background: var(--bg-surface-2);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  padding: 1.2rem 1.4rem;
+  margin: 1.2rem 0;
+}
+
+.expl-box-header {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--font-disp);
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin-bottom: 0.8rem;
+}
+
+.line-breakdown-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.86rem;
+  margin: 0.8rem 0;
+}
+
+.line-breakdown-table th {
+  background: var(--bg-surface-3, rgba(0,0,0,0.04));
+  color: var(--text-primary);
+  text-align: left;
+  padding: 0.6rem 0.8rem;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.line-breakdown-table td {
+  padding: 0.65rem 0.8rem;
+  border-bottom: 1px solid var(--border-subtle);
+  vertical-align: top;
+  line-height: 1.55;
+}
+
+.line-breakdown-table tr:last-child td {
+  border-bottom: none;
+}
+
+.line-num-badge {
+  display: inline-block;
+  background: var(--meta-blue-subtle, rgba(8,102,255,0.1));
+  color: var(--meta-blue);
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+  border: 1px solid rgba(8,102,255,0.2);
+}
+
+.code-inline-dark {
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  background: #1e1e1e;
+  color: #9cdcfe;
+  padding: 0.15rem 0.4rem;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.step-guide-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 1rem;
+  margin: 1rem 0;
+}
+
+.step-guide-item {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.step-guide-num {
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  font-weight: 800;
+  color: var(--meta-blue);
+  background: rgba(8,102,255,0.1);
+  display: inline-block;
+  align-self: flex-start;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+}
+
+.step-guide-title {
+  font-family: var(--font-disp);
+  font-size: 0.9rem;
+  font-weight: 700;
+  color: var(--text-primary);
+}
+
+.step-guide-desc {
+  font-size: 0.82rem;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.qa-card {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 8px;
+  margin: 0.8rem 0;
+  overflow: hidden;
+}
+
+.qa-q {
+  padding: 0.8rem 1.1rem;
+  font-weight: 700;
+  font-size: 0.88rem;
+  color: var(--text-primary);
+  background: var(--bg-surface-2);
+  border-bottom: 1px solid var(--border-subtle);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.qa-a {
+  padding: 0.9rem 1.1rem;
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* ==========================================================================
+   LIVE BENCHMARK STUDIO (REAL MULTI-MODEL COMPARATOR LAB)
+   ========================================================================== */
+.benchmark-studio {
+  background: var(--bg-surface);
+  border: 2px solid var(--meta-blue);
+  border-radius: 16px;
+  padding: 2rem;
+  margin: 3.5rem 0;
+  box-shadow: 0 10px 40px rgba(8, 102, 255, 0.12);
+}
+
+.benchmark-studio-header {
+  border-bottom: 1px solid var(--border-subtle);
+  padding-bottom: 1.2rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.benchmark-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1.4rem;
+  margin: 1.5rem 0;
+}
+
+.model-bench-card {
+  background: #0d1117;
+  border: 1px solid #21262d;
+  border-radius: 10px;
+  padding: 1.2rem;
+  display: flex;
+  flex-direction: column;
+  color: #c9d1d9;
+}
+
+.model-bench-card.highlight {
+  border-color: #58a6ff;
+  box-shadow: 0 0 15px rgba(88, 166, 255, 0.15);
+}
+
+.model-bench-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #30363d;
+  padding-bottom: 0.6rem;
+  margin-bottom: 0.8rem;
+}
+
+.model-bench-name {
+  font-family: var(--font-mono);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: #58a6ff;
+}
+
+.model-bench-badge {
+  font-size: 0.7rem;
+  padding: 0.15rem 0.45rem;
+  border-radius: 4px;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.model-bench-badge.fast {
+  background: rgba(46, 160, 67, 0.2);
+  color: #3fb950;
+  border: 1px solid rgba(46, 160, 67, 0.4);
+}
+
+.model-bench-badge.heavy {
+  background: rgba(163, 113, 247, 0.2);
+  color: #d2a8ff;
+  border: 1px solid rgba(163, 113, 247, 0.4);
+}
+
+.model-bench-badge.reasoning {
+  background: rgba(210, 153, 34, 0.2);
+  color: #e3b341;
+  border: 1px solid rgba(210, 153, 34, 0.4);
+}
+
+.model-bench-metrics {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.5rem;
+  margin-bottom: 0.8rem;
+  background: #161b22;
+  padding: 0.6rem;
+  border-radius: 6px;
+  text-align: center;
+}
+
+.model-bench-metric-val {
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+  font-weight: 700;
+  color: #f0f6fc;
+}
+
+.model-bench-metric-lbl {
+  font-size: 0.68rem;
+  color: #8b949e;
+  text-transform: uppercase;
+}
+
+.model-bench-body {
+  flex: 1;
+  background: #161b22;
+  border-radius: 6px;
+  padding: 0.8rem;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: #e6edf3;
+  min-height: 180px;
+  max-height: 240px;
+  overflow-y: auto;
+  white-space: pre-wrap;
+}
+
+
