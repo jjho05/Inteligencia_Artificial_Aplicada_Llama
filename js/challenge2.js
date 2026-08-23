@@ -342,7 +342,7 @@
       btnRun.disabled = true;
       btnRun.innerHTML = "<svg viewBox=\"0 0 24 24\" width=\"16\" height=\"16\" fill=\"currentColor\" style=\"animation:spin 1s linear infinite;\"><path d=\"M12 4V2A10 10 0 0 0 2 12h2a8 8 0 0 1 8-8z\"/></svg><span>Procesando RAG Pipeline...</span>";
       if (statusInd) {
-        statusInd.innerHTML = "<span style=\"color:var(--meta-blue); font-weight:650;\">⏳ Vectorizando con MiniLM-L12-v2 y evaluando similitud...</span>";
+        statusInd.innerHTML = "<span style=\"color:var(--meta-blue); font-weight:650;\">Vectorizando con MiniLM-L12-v2 y evaluando similitud...</span>";
       }
       safePlaySound("pop", 450);
 
@@ -395,7 +395,7 @@
         streamText(respCon, resCon.content, 20, null);
 
         if (statusInd) {
-          statusInd.innerHTML = "<span style=\"color:var(--accent-success); font-weight:700;\">✅ Fragmento #" + (winner + 1) + " recuperado (" + scores[winner].toFixed(4) + ") · Inferencia Real LPU</span>";
+          statusInd.innerHTML = "<span style=\"color:var(--accent-success); font-weight:700;\">Fragmento #" + (winner + 1) + " recuperado (" + scores[winner].toFixed(4) + ") · Inferencia Real LPU</span>";
         }
       } catch (err) {
         // Fallback al Simulador Inteligente de Presets
@@ -420,7 +420,7 @@
         streamText(respCon, curPreset.con, 22, null);
 
         if (statusInd) {
-          statusInd.innerHTML = "<span style=\"color:var(--accent-success); font-weight:700;\">✅ Fragmento #" + (winner + 1) + " inyectado con éxito (" + scores[winner].toFixed(4) + ") · Cero Alucinaciones</span>";
+          statusInd.innerHTML = "<span style=\"color:var(--accent-success); font-weight:700;\">Fragmento #" + (winner + 1) + " inyectado con éxito (" + scores[winner].toFixed(4) + ") · Cero Alucinaciones</span>";
         }
       }
 

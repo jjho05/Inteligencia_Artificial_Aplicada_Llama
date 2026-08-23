@@ -216,7 +216,7 @@
     <article class="tema-card" id="obtener-api-key" style="border-left: 4px solid #eab308;">
       <div class="tema-header">
         <div class="tema-eyebrow">Paso 0 · Configuración de Seguridad</div>
-        <h3 class="tema-title">Gestión de Credenciales en Google Colab con Secrets (🔑)</h3>
+        <h3 class="tema-title">Gestión de Credenciales en Google Colab con Secrets ()</h3>
       </div>
 
       <div class="tema-section-block">
@@ -242,7 +242,7 @@
               <strong style="font-size: 0.9rem;">Abre el Panel de Secrets</strong>
             </div>
             <p style="font-size: 0.84rem; color: var(--text-secondary); line-height: 1.6; margin: 0;">
-              En Google Colab, pulsa el ícono de la llave <b>Secrets (🔑)</b> en la barra lateral izquierda.
+              En Google Colab, pulsa el ícono de la llave <b>Secrets ()</b> en la barra lateral izquierda.
             </p>
           </div>
 
@@ -911,7 +911,7 @@ Con RAG: No, los productos en oferta o liquidación no tienen devolución ni ree
         <span class="code-kw">return</span> <span class="code-var">re</span>.<span class="code-fn">sub</span>(<span class="code-str">r"&lt;think&gt;.*?&lt;/think&gt;"</span>, <span class="code-str">""</span>, <span class="code-var">texto</span>, <span class="code-var">flags</span>=<span class="code-var">re</span>.<span class="code-var">DOTALL</span>).<span class="code-fn">strip</span>()
     <span class="code-kw">return</span> <span class="code-var">texto</span>.<span class="code-fn">strip</span>()
 
-<span class="code-fn">print</span>(<span class="code-str">f"✅ Modelos listos. LLM: {modelo_challenge_llm} | Embeddings: MiniLM-L12-v2"</span>)</code></pre>
+<span class="code-fn">print</span>(<span class="code-str">f"Modelos listos. LLM: {modelo_challenge_llm} | Embeddings: MiniLM-L12-v2"</span>)</code></pre>
         </div>
 
         <div class="colab-output-box">
@@ -919,7 +919,7 @@ Con RAG: No, los productos en oferta o liquidación no tienen devolución ni ree
             <span>Terminal de Salida [STDOUT]</span>
             <span class="colab-output-tag">Inicialización Challenge</span>
           </div>
-          <pre class="colab-output-text">✅ Modelos listos. LLM: openai/gpt-oss-20b | Embeddings: MiniLM-L12-v2</pre>
+          <pre class="colab-output-text">Modelos listos. LLM: openai/gpt-oss-20b | Embeddings: MiniLM-L12-v2</pre>
         </div>
       </div>
     </article>
@@ -953,7 +953,7 @@ Con RAG: No, los productos en oferta o liquidación no tienen devolución ni ree
 ]
 
 <span class="code-var">embeddings_documentos</span> = <span class="code-var">modelo_challenge_emb</span>.<span class="code-fn">encode</span>(<span class="code-var">documentos</span>, <span class="code-var">normalize_embeddings</span>=<span class="code-kw">True</span>)
-<span class="code-fn">print</span>(<span class="code-str">f"✅ Base de conocimiento vectorizada: {embeddings_documentos.shape[0]} fragmentos de {embeddings_documentos.shape[1]} dimensiones."</span>)</code></pre>
+<span class="code-fn">print</span>(<span class="code-str">f"Base de conocimiento vectorizada: {embeddings_documentos.shape[0]} fragmentos de {embeddings_documentos.shape[1]} dimensiones."</span>)</code></pre>
         </div>
 
         <div class="colab-output-box">
@@ -961,7 +961,7 @@ Con RAG: No, los productos en oferta o liquidación no tienen devolución ni ree
             <span>Terminal de Salida [STDOUT]</span>
             <span class="colab-output-tag">Vector Array Shape</span>
           </div>
-          <pre class="colab-output-text">✅ Base de conocimiento vectorizada: 3 fragmentos de 384 dimensiones.</pre>
+          <pre class="colab-output-text">Base de conocimiento vectorizada: 3 fragmentos de 384 dimensiones.</pre>
         </div>
       </div>
     </article>
@@ -1091,18 +1091,18 @@ Respuesta estructurada y precisa:"""</span>
             </div>
           </div>
           <pre class="code-content"><code><span class="code-fn">print</span>(<span class="code-str">"="</span> * <span class="code-num">120</span>)
-<span class="code-fn">print</span>(<span class="code-str">f"📊 TABLA COMPARATIVA: SIN RAG VS CON RAG (MODELO: {modelo_challenge_llm})"</span>)
+<span class="code-fn">print</span>(<span class="code-str">f"TABLA COMPARATIVA: SIN RAG VS CON RAG (MODELO: {modelo_challenge_llm})"</span>)
 <span class="code-fn">print</span>(<span class="code-str">"="</span> * <span class="code-num">120</span>)
 <span class="code-fn">print</span>(<span class="code-str">f"| {'Métrica / Aspecto':&lt;26} | {'SIN RAG (Zero-Shot Genérico)':&lt;42} | {'CON RAG (Retrieval-Augmented)':&lt;45} |"</span>)
 <span class="code-fn">print</span>(<span class="code-str">"|----------------------------|--------------------------------------------|-----------------------------------------------|"</span>)
-<span class="code-fn">print</span>(<span class="code-str">f"| {'Precisión de la Regla':&lt;26} | {'❌ Nula (Desconoce normativa interna)':&lt;42} | {'✅ Exacta (15 pts por &lt;24h de retraso)':&lt;45} |"</span>)
-<span class="code-fn">print</span>(<span class="code-str">f"| {'Prevención Alucinación':&lt;26} | {'⚠️ Evasiva / Suposiciones hipotéticas':&lt;42} | {'🛡️ Totalmente auditada en el documento':&lt;45} |"</span>)
+<span class="code-fn">print</span>(<span class="code-str">f"| {'Precisión de la Regla':&lt;26} | {'[Error] Nula (Desconoce normativa interna)':&lt;42} | {'Exacta (15 pts por &lt;24h de retraso)':&lt;45} |"</span>)
+<span class="code-fn">print</span>(<span class="code-str">f"| {'Prevención Alucinación':&lt;26} | {'[Aviso] Evasiva / Suposiciones hipotéticas':&lt;42} | {'Totalmente auditada en el documento':&lt;45} |"</span>)
 <span class="code-fn">print</span>(<span class="code-str">f"| {'Fragmento Fuente':&lt;26} | {'Ninguno (Memoria interna de pesos)':&lt;42} | {f'Fragmento #{idx + 1} (Score: {score:.4f})':&lt;45} |"</span>)
 <span class="code-fn">print</span>(<span class="code-str">f"| {'Latencia de Respuesta':&lt;26} | {f'{latencia_sin:.2f} segundos':&lt;42} | {f'{latencia_con:.2f} segundos':&lt;45} |"</span>)
 <span class="code-fn">print</span>(<span class="code-str">"="</span> * <span class="code-num">120</span>)
 
-<span class="code-fn">print</span>(<span class="code-str">"\n🔴 RESPUESTA SIN RAG:\n"</span>, <span class="code-var">respuesta_sin_rag</span>)
-<span class="code-fn">print</span>(<span class="code-str">"\n🟢 RESPUESTA CON RAG:\n"</span>, <span class="code-var">respuesta_con_rag</span>)</code></pre>
+<span class="code-fn">print</span>(<span class="code-str">"\n[SIN RAG] RESPUESTA SIN RAG:\n"</span>, <span class="code-var">respuesta_sin_rag</span>)
+<span class="code-fn">print</span>(<span class="code-str">"\n[CON RAG] RESPUESTA CON RAG:\n"</span>, <span class="code-var">respuesta_con_rag</span>)</code></pre>
         </div>
 
         <div class="colab-output-box">
@@ -1111,20 +1111,20 @@ Respuesta estructurada y precisa:"""</span>
             <span class="colab-output-tag">Evaluación Comparativa</span>
           </div>
           <pre class="colab-output-text">========================================================================================================================
-📊 TABLA COMPARATIVA: SIN RAG VS CON RAG (MODELO: openai/gpt-oss-20b)
+TABLA COMPARATIVA: SIN RAG VS CON RAG (MODELO: openai/gpt-oss-20b)
 ========================================================================================================================
 | Métrica / Aspecto          | SIN RAG (Zero-Shot Genérico)               | CON RAG (Retrieval-Augmented)                 |
 |----------------------------|--------------------------------------------|-----------------------------------------------|
-| Precisión de la Regla      | ❌ Nula (Desconoce normativa interna)      | ✅ Exacta (15 pts por &lt;24h de retraso)        |
-| Prevención Alucinación     | ⚠️ Evasiva / Suposiciones hipotéticas      | 🛡️ Totalmente auditada en el documento       |
+| Precisión de la Regla      | [Error] Nula (Desconoce normativa interna)      | Exacta (15 pts por &lt;24h de retraso)        |
+| Prevención Alucinación     | [Aviso] Evasiva / Suposiciones hipotéticas      | Totalmente auditada en el documento       |
 | Fragmento Fuente           | Ninguno (Memoria interna de pesos)         | Fragmento #2 (Score: 0.6384)                  |
 | Latencia de Respuesta      | 0.79 segundos                              | 0.62 segundos                                 |
 ========================================================================================================================
 
-🔴 RESPUESTA SIN RAG:
+[SIN RAG] RESPUESTA SIN RAG:
 La penalización depende del reglamento institucional de tu universidad o plataforma, ya que suele variar entre un 10% y un 20%. Te sugiero consultar el programa académico.
 
-🟢 RESPUESTA CON RAG:
+[CON RAG] RESPUESTA CON RAG:
 Basado en la Política de Entregas Tardías y Penalizaciones (Doc #2):
 1. Penalización por 20 horas de retraso: Es de 15 puntos sobre la calificación obtenida (aplica para entregas con hasta 24 horas de retraso).
 2. Calificación mínima para aprobar: El fragmento proporcionado no contiene información sobre la calificación mínima aprobatoria del curso.</pre>
@@ -1349,7 +1349,7 @@ Alumno: Ing. Jesús Javier Hernández Olvera
 
 <span class="code-var">API_KEY</span> = <span class="code-var">os</span>.<span class="code-var">environ</span>.<span class="code-fn">get</span>(<span class="code-str">"GROQ_API_KEY"</span>)
 <span class="code-kw">if not</span> <span class="code-var">API_KEY</span>:
-    <span class="code-fn">print</span>(<span class="code-str">"❌ Error: Se requiere la variable GROQ_API_KEY en .env"</span>)
+    <span class="code-fn">print</span>(<span class="code-str">"[Error] Error: Se requiere la variable GROQ_API_KEY en .env"</span>)
     <span class="code-var">sys</span>.<span class="code-fn">exit</span>(<span class="code-num">1</span>)
 
 <span class="code-var">client</span> = <span class="code-cls">Groq</span>(<span class="code-var">api_key</span>=<span class="code-var">API_KEY</span>)
@@ -1366,7 +1366,7 @@ Alumno: Ing. Jesús Javier Hernández Olvera
 <span class="code-var">args</span>, _ = <span class="code-var">parser</span>.<span class="code-fn">parse_known_args</span>()
 <span class="code-var">MODELO_LLM</span> = <span class="code-var">args</span>.<span class="code-var">modelo</span>
 
-<span class="code-fn">print</span>(<span class="code-str">"⏳ Cargando modelo de embeddings (paraphrase-multilingual-MiniLM-L12-v2)..."</span>)
+<span class="code-fn">print</span>(<span class="code-str">"Cargando modelo de embeddings (paraphrase-multilingual-MiniLM-L12-v2)..."</span>)
 <span class="code-var">modelo_embeddings</span> = <span class="code-cls">SentenceTransformer</span>(<span class="code-str">'paraphrase-multilingual-MiniLM-L12-v2'</span>)
 
 <span class="code-cm"># 3. Base de Conocimiento</span>
@@ -1400,7 +1400,7 @@ Respuesta:"""</span>
     <span class="code-var">max_tokens</span>=<span class="code-num">800</span>
 )
 
-<span class="code-fn">print</span>(<span class="code-str">f"\n🎯 [RAG Exitosa - Fragmento #{idx + 1} | Score: {score:.4f}]:\n"</span>)
+<span class="code-fn">print</span>(<span class="code-str">f"\n[RAG Exitosa - Fragmento #{idx + 1} | Score: {score:.4f}]:\n"</span>)
 <span class="code-fn">print</span>(<span class="code-var">res</span>.<span class="code-var">choices</span>[<span class="code-num">0</span>].<span class="code-var">message</span>.<span class="code-var">content</span>)</code></pre>
       </div>
     </article>

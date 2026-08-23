@@ -8,27 +8,27 @@ Plataforma educativa interactiva y técnica diseñada para comprender a fondo lo
 
 ---
 
-## 📚 Estructura Modular del Curso
+## Estructura Modular del Curso
 
-### 🔹 Módulo 1: Fundamentos & Procesamiento de Lenguaje Natural (NLP)
+### Módulo 1: Fundamentos & Procesamiento de Lenguaje Natural (NLP)
 - **Tema 1.1:** Modelado de Lenguaje Autoregresivo & Distribución de Probabilidades con Temperatura.
 - **Tema 1.2:** El Pipeline de NLP (Cadena de texto $\rightarrow$ IDs de token $\rightarrow$ Proyecciones de tensores).
 
-### 🔹 Módulo 2: Representación de Datos (Tokens & Embeddings)
+### Módulo 2: Representación de Datos (Tokens & Embeddings)
 - **Tema 2.1:** Segmentación BPE (Byte-Pair Encoding), vocabulario de 128k de Llama 3 y costos de inferencia.
 - **Tema 2.2:** Espacios Métricos, Geometría Semántica, Similitud Coseno y Álgebra Vectorial ($Rey - Hombre + Mujer \approx Reina$).
 
-### 🔹 Módulo 3: Arquitectura Transformer & Multi-Head Attention
+### Módulo 3: Arquitectura Transformer & Multi-Head Attention
 - **Tema 3.1:** Mecanismo de Auto-Atención Escalada ($Q, K, V$), resolución de correferencias y Grouped-Query Attention (GQA).
 - **Tema 3.2:** Leyes de Escala (8B, 70B, 405B) y Calculadora de VRAM para cuantizaciones FP16, INT8 e INT4 (GGUF).
 
-### 🔹 Módulo 4: Soberanía Tecnológica & Inferencia Local
+### Módulo 4: Soberanía Tecnológica & Inferencia Local
 - **Tema 4.1:** Modelos de Pesos Abiertos (Open Weights) vs APIs Centralizadas en la Nube.
 - **Tema 4.2:** Laboratorio de Inferencia Streaming Local con telemetría en tiempo real (TTFT y Tokens/segundo).
 
 ---
 
-## 🛠️ Tecnologías Utilizadas
+##  Tecnologías Utilizadas
 
 - **Frontend:** HTML5 Semántico, CSS3 Moderno (Variables CSS, Flexbox, CSS Grid, Glassmorphism).
 - **Lógica & Motores Interactivos:** JavaScript Vanilla (sin dependencias externas).
@@ -38,7 +38,7 @@ Plataforma educativa interactiva y técnica diseñada para comprender a fondo lo
 
 ---
 
-## 🚀 Cómo Ejecutar en Local
+## Cómo Ejecutar en Local
 
 1. Clona este repositorio:
    ```bash
@@ -58,6 +58,6 @@ Plataforma educativa interactiva y técnica diseñada para comprender a fondo lo
 
 ---
 
-## 📄 Licencia
+## Licencia
 
 Este proyecto está bajo la Licencia MIT.
