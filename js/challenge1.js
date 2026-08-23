@@ -373,6 +373,10 @@
         }
       }
     });
+
+    customQuery.addEventListener("input", function(){
+      updateActiveChip(customQuery.value.trim());
+    });
   }
 
   // Sliders reactivos
