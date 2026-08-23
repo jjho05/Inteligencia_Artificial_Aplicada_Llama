@@ -291,6 +291,27 @@ body {
   opacity: 0.6;
 }
 
+/* Ocultar banners, popups y frames por defecto del traductor para mantener el diseño nativo */
+.goog-te-banner-frame,
+.skiptranslate,
+#goog-gt-tt,
+.goog-te-balloon-frame,
+.goog-tooltip,
+.goog-tooltip:hover {
+  display: none !important;
+  visibility: hidden !important;
+}
+
+body {
+  top: 0px !important;
+  position: static !important;
+}
+
+font {
+  background-color: transparent !important;
+  box-shadow: none !important;
+}
+
 .btn-icon {
   background: var(--bg-subtle);
   border: 1px solid var(--border-subtle);

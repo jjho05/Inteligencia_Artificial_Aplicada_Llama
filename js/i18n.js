@@ -1,81 +1,71 @@
 /**
- * MOTOR DE TRADUCCIÓN BILINGÜE EN TIEMPO REAL (ES/EN)
+ * MOTOR DE TRADUCCIÓN BILINGÜE INTEGRAL (ES / EN)
  * Plataforma: Especialización en Inteligencia Artificial con Meta Llama 3
  * Autor: Ing. Jesús Javier Hernández Olvera
  */
 
 (function() {
   const STORAGE_KEY = "meta_llama_lang";
-  let currentLang = localStorage.getItem(STORAGE_KEY) || (navigator.language.startsWith("en") ? "en" : "es");
-
-  // Sorted keys from longest to shortest for accurate phrase matching
-  let sortedKeys = [];
-
-  function getSortedKeys() {
-    if (sortedKeys.length === 0 && typeof I18N_DICTIONARY !== "undefined") {
-      sortedKeys = Object.keys(I18N_DICTIONARY).sort((a, b) => b.length - a.length);
-    }
-    return sortedKeys;
+  
+  function getSavedLang() {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (saved === "en" || saved === "es") return saved;
+    const browserLang = (navigator.language || navigator.userLanguage || "es").toLowerCase();
+    return browserLang.startsWith("en") ? "en" : "es";
   }
 
-  function translateText(text) {
-    if (!text || typeof text !== "string") return text;
-    let result = text;
-    const keys = getSortedKeys();
-    for (let i = 0; i < keys.length; i++) {
-      const esKey = keys[i];
-      if (result.includes(esKey)) {
-        const enVal = I18N_DICTIONARY[esKey];
-        result = result.split(esKey).join(enVal);
-      }
-    }
-    return result;
-  }
+  let currentLang = getSavedLang();
 
-  function walkAndTranslate(node) {
-    // Ignore code blocks, preformatted code, scripts, styles
-    if (!node) return;
-    const tag = node.nodeName ? node.nodeName.toUpperCase() : "";
-    if (tag === "SCRIPT" || tag === "STYLE" || tag === "CODE" || tag === "PRE" || tag === "SVG") {
-      return;
-    }
+  // Initialize Google Translate Element silently
+  window.googleTranslateElementInit = function() {
+    new google.translate.TranslateElement({
+      pageLanguage: "es",
+      includedLanguages: "es,en",
+      autoDisplay: false
+    }, "google_translate_element");
 
-    if (node.nodeType === Node.TEXT_NODE) {
-      if (node._orig === undefined) {
-        node._orig = node.nodeValue;
-      }
-      if (currentLang === "en") {
-        node.nodeValue = translateText(node._orig);
-      } else {
-        node.nodeValue = node._orig;
-      }
-    } else if (node.nodeType === Node.ELEMENT_NODE) {
-      // Translate title and placeholder if present
-      if (node.hasAttribute("title")) {
-        if (!node._origTitle) node._origTitle = node.getAttribute("title");
-        node.setAttribute("title", currentLang === "en" ? translateText(node._origTitle) : node._origTitle);
-      }
-      if (node.hasAttribute("placeholder")) {
-        if (!node._origPlaceholder) node._origPlaceholder = node.getAttribute("placeholder");
-        node.setAttribute("placeholder", currentLang === "en" ? translateText(node._origPlaceholder) : node._origPlaceholder);
-      }
-      
-      // Traverse children
-      for (let child = node.firstChild; child; child = child.nextSibling) {
-        walkAndTranslate(child);
-      }
+    // Apply saved language if English
+    if (currentLang === "en") {
+      setTimeout(function() {
+        triggerGoogleTranslate("en");
+      }, 300);
+    }
+  };
+
+  function triggerGoogleTranslate(lang) {
+    const select = document.querySelector(".goog-te-combo");
+    if (select) {
+      select.value = lang;
+      select.dispatchEvent(new Event("change"));
+    } else {
+      // Fallback via cookie
+      document.cookie = "googtrans=/es/" + lang + "; path=/";
+      document.cookie = "googtrans=/es/" + lang + "; domain=" + window.location.hostname + "; path=/";
     }
   }
 
-  function applyLanguage(lang) {
+  function setLanguage(lang) {
+    if (lang !== "es" && lang !== "en") return;
     currentLang = lang;
     localStorage.setItem(STORAGE_KEY, lang);
     document.documentElement.lang = lang;
-    
-    if (document.body) {
-      walkAndTranslate(document.body);
+
+    if (lang === "en") {
+      document.cookie = "googtrans=/es/en; path=/";
+      document.cookie = "googtrans=/es/en; domain=" + window.location.hostname + "; path=/";
+      triggerGoogleTranslate("en");
+    } else {
+      document.cookie = "googtrans=/es/es; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+      document.cookie = "googtrans=; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+      document.cookie = "googtrans=/es/es; domain=" + window.location.hostname + "; path=/; expires=Thu, 01 Jan 1970 00:00:00 UTC";
+      triggerGoogleTranslate("es");
+      // If needed reload to restore clean original DOM
+      setTimeout(function() {
+        const frame = document.querySelector(".goog-te-banner-frame");
+        if (frame) frame.style.display = "none";
+      }, 100);
     }
-    
+
     updateSwitcherUI();
   }
 
@@ -87,32 +77,49 @@
     });
   }
 
-  function setupSwitcherButton() {
+  function setupElements() {
+    // 1. Add hidden translate container
+    if (!document.getElementById("google_translate_element")) {
+      const div = document.createElement("div");
+      div.id = "google_translate_element";
+      div.style.display = "none";
+      document.body.appendChild(div);
+    }
+
+    // 2. Protect code and pre elements with notranslate
+    document.querySelectorAll("pre, code, svg, .math-display, .formula-box, .meta-logo-svg").forEach(el => {
+      el.classList.add("notranslate");
+    });
+
+    // 3. Load script if not present
+    if (!document.getElementById("google-translate-script")) {
+      const script = document.createElement("script");
+      script.id = "google-translate-script";
+      script.src = "https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit";
+      script.async = true;
+      document.body.appendChild(script);
+    }
+
+    // 4. Setup switcher button listener
     const btn = document.getElementById("lang-switcher-btn");
     if (btn) {
       btn.onclick = function(e) {
         e.preventDefault();
-        applyLanguage(currentLang === "es" ? "en" : "es");
+        setLanguage(currentLang === "es" ? "en" : "es");
       };
     }
+
     updateSwitcherUI();
   }
 
-  function init() {
-    setupSwitcherButton();
-    if (currentLang === "en") {
-      applyLanguage("en");
-    }
-  }
-
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", init);
+    document.addEventListener("DOMContentLoaded", setupElements);
   } else {
-    init();
+    setupElements();
   }
 
   window.MetaAI_i18n = {
-    setLanguage: applyLanguage,
+    setLanguage: setLanguage,
     getLanguage: function() { return currentLang; }
   };
 })();
