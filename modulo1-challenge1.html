@@ -101,17 +101,17 @@
     </div>
     <h1 class="hero-title">HANDS - ON: FUNDAMENTOS DE LLMS CON MODELOS LLAMA</h1>
     <p class="hero-subtitle">
-      Una vez vista la masterclass <i>Fundamentos de LLMs y Arquitectura de Llama</i>, se proporciona el siguiente entorno interactivo para construir, en vivo, la primera llamada a Llama y medir su comportamiento. Usamos <b>Groq</b> para tener acceso a inferencia de Llama con aceleración LPU gratuita, sin necesidad de infraestructura propia.
+      Una vez vista la masterclass <i>Fundamentos de LLMs y Arquitectura de Llama</i>, se proporciona el siguiente Colab para construir, en vivo, la primera llamada a Llama y medir su comportamiento. Usamos <b>Groq</b> para tener acceso a inferencia de Llama con GPU gratuita, sin necesidad de infraestructura propia.
     </p>
   </section>
 
   <!-- ======================================================================
-       PARTE I: HANDS-ON BASE (FUNDAMENTOS DE LLMS Y ARQUITECTURA DE LLAMA)
+       PARTE I: PRÁCTICA GUIADA EN CLASE (HANDS-ON)
        ====================================================================== -->
   <div id="hands-on-base">
     <div class="section-title-wrap" style="margin-bottom: 2rem;">
       <h2 style="font-family: var(--font-disp); font-size: 1.6rem; color: var(--text-primary);">PARTE I: PRÁCTICA GUIADA EN CLASE</h2>
-      <p style="color: var(--text-secondary); font-size: 0.95rem;">Ejecución interactiva celda por celda de los fundamentos de llamadas a la API de Groq.</p>
+      <p style="color: var(--text-secondary); font-size: 0.95rem;">Construcción interactiva celda por celda de llamadas a la API de Groq.</p>
     </div>
 
     <!-- SECCIÓN 1: CONFIGURACIÓN DEL ENTORNO & COLAB SECRETS -->
@@ -121,7 +121,10 @@
         <h3 class="tema-title">CONFIGURACIÓN DEL ENTORNO & COLAB SECRETS</h3>
       </div>
       <p class="prose-p">
-        Antes de llamar a Llama necesitamos activar el entorno y conectar nuestra cuenta de <b>Groq</b>. La librería <code>groq</code> es el cliente oficial en Python para hacer llamadas a la API. Para no exponer tu <i>API key</i> directamente en el código, Colab ofrece un panel de <i>Secrets</i> donde puedes guardarla de forma segura.
+        Antes de llamar a Llama necesitamos activar la GPU gratuita de Colab y conectar nuestra cuenta de <b>Groq</b>. La librería <code>groq</code> es el cliente oficial en Python para hacer llamadas a la API.
+      </p>
+      <p class="prose-p">
+        <b>COLAB SECRETS:</b> Para no exponer tu <i>API key</i> directamente en el código, Colab ofrece un panel de <i>Secrets</i> (ícono de llave en la barra lateral izquierda) donde puedes guardarla de forma segura, añadiendo un nombre asociado a la <i>API key</i> para guardarla dentro de una variable y usarla dentro del notebook.
       </p>
 
       <div class="colab-cell-box">
@@ -139,7 +142,8 @@
           </div>
         </div>
         <pre class="code-content"><code><span class="code-cm"># Instalar cliente de Groq y leer API key desde Colab Secrets</span>
-<span class="code-cm"># !pip install groq -q</span>
+
+<span class="code-cm">!pip install groq -q</span>
 
 <span class="code-kw">import</span> <span class="code-var">os</span>
 <span class="code-kw">import</span> <span class="code-var">re</span>
@@ -213,6 +217,7 @@ Modelos configurados para evaluación:
           <input type="text" id="interactive-prompt-input" value="¿Cuál es la diferencia entre la RAM y el almacenamiento en una computadora?" style="width: 100%; background: #252526; color: #ce9178; border: 1px solid #3c3c3c; padding: 0.5rem 0.8rem; border-radius: 6px; font-family: var(--font-mono); font-size: 0.85rem;">
         </div>
         <pre class="code-content"><code><span class="code-cm"># Definir un prompt de ejemplo (una pregunta real de tu propio contexto)</span>
+
 <span class="code-var">prompt</span> = <span class="code-str">"¿Cuál es la diferencia entre la RAM y el almacenamiento en una computadora?"</span>
 <span class="code-cm"># prompt = "Explica en un párrafo qué hace un router doméstico"</span>
 
@@ -272,14 +277,17 @@ En cambio, el almacenamiento (disco SSD o HDD) es la memoria secundaria permanen
       </div>
     </section>
 
-    <!-- SECCIÓN 4: INSPECCIÓN DE LA RESPUESTA & CONTEO DE TOKENS -->
+    <!-- SECCIÓN 4: INSPECCIÓN DE RESPUESTA & CONTEO DE TOKENS -->
     <section class="tema-card" id="cell-4-section" style="margin-bottom: 3rem;">
       <div class="tema-header">
         <div class="tema-eyebrow">Paso 4 &middot; Celdas 4 y 5</div>
-        <h3 class="tema-title">INSPECCIÓN DE LA RESPUESTA COMPLETA & CONTEO DE TOKENS</h3>
+        <h3 class="tema-title">INSPECCIÓN DE LA RESPUESTA COMPLETA & CUÁNTOS TOKENS CONSUMIÓ EL PROMPT</h3>
       </div>
       <p class="prose-p">
-        La respuesta de la API no es solo texto: viene empaquetada en un objeto con metadatos útiles como el modelo usado, la razón de parada (<code>finish_reason</code>) y el uso de tokens. El atributo <code>usage</code> nos dice exactamente cuántos tokens costó la llamada. Esto es clave para estimar costos en producción.
+        La respuesta de la API no es solo texto: viene empaquetada en un objeto con metadatos útiles como el modelo usado, la razón de parada (<code>finish_reason</code>) y el uso de tokens.
+      </p>
+      <p class="prose-p">
+        <b>¿CUÁNTOS TOKENS CONSUMIÓ EL PROMPT?</b> La respuesta de la API trae un resumen (<code>usage</code>) con el número de tokens de entrada y de salida. Es la forma más directa de responder: ¿cuántos tokens consumió mi prompt? El valor de <code>response.usage.total_tokens</code> es lo que se factura por esta llamada.
       </p>
 
       <div class="colab-cell-box">
@@ -297,12 +305,13 @@ En cambio, el almacenamiento (disco SSD o HDD) es la memoria secundaria permanen
           </div>
         </div>
         <pre class="code-content"><code><span class="code-cm"># Ver el objeto completo que devuelve la API (incluye metadatos y tokens)</span>
-<span class="code-fn">print</span>(<span class="code-var">response</span>.<span class="code-fn">model_dump_json</span>(<span class="code-var">indent</span>=<span class="code-num">2</span>))
+<span class="code-fn">print</span>(<span class="code-var">response</span>.<span class="code-fn">model_dump_json</span>(<span class="code-var">indent</span>=<span class="code-num">2</span>))  <span class="code-cm"># para inspeccionar la respuesta completa</span>
 
-<span class="code-cm"># Ver el desglose exacto de tokens consumidos</span>
+<span class="code-cm"># Mostrar cuántos tokens tuvo el prompt y cuántos tuvo la respuesta</span>
 <span class="code-fn">print</span>(<span class="code-str">"Tokens del prompt:"</span>, <span class="code-var">response</span>.<span class="code-var">usage</span>.<span class="code-var">prompt_tokens</span>)
 <span class="code-fn">print</span>(<span class="code-str">"Tokens de la respuesta:"</span>, <span class="code-var">response</span>.<span class="code-var">usage</span>.<span class="code-var">completion_tokens</span>)
-<span class="code-fn">print</span>(<span class="code-str">"Tokens totales:"</span>, <span class="code-var">response</span>.<span class="code-var">usage</span>.<span class="code-var">total_tokens</span>)</code></pre>
+<span class="code-fn">print</span>(<span class="code-str">"Tokens totales:"</span>, <span class="code-var">response</span>.<span class="code-var">usage</span>.<span class="code-var">total_tokens</span>)
+<span class="code-cm"># response.usage.total_tokens es lo que se factura por esta llamada</span></code></pre>
         <div class="colab-output-box">
           <div class="colab-output-header">
             <span>Métricas de Telemetría [usage]</span>
@@ -326,7 +335,7 @@ Tokens totales: 117</pre>
         <h3 class="tema-title">MIDIENDO LA LATENCIA DE INFERENCIA</h3>
       </div>
       <p class="prose-p">
-        Groq usa hardware especializado (LPU) diseñado para inferencia de LLMs a velocidad ultra-rápida. Vamos a medir cuántos segundos tarda exactamente en responder.
+        Elegir el tamaño correcto de modelo es una decisión de ingeniería, no solo de potencia bruta. Vamos a medir cuánto tarda Llama en responder el mismo prompt.
       </p>
 
       <div class="colab-cell-box">
@@ -343,41 +352,37 @@ Tokens totales: 117</pre>
             <button class="btn-download-code" onclick="downloadCode(this)">Descargar</button>
           </div>
         </div>
-        <pre class="code-content"><code><span class="code-kw">import</span> <span class="code-var">time</span>
+        <pre class="code-content"><code><span class="code-cm"># Medir el tiempo de respuesta de Llama para el mismo prompt</span>
+
+<span class="code-kw">import</span> <span class="code-var">time</span>
 
 <span class="code-var">inicio</span> = <span class="code-var">time</span>.<span class="code-fn">time</span>()
-
-<span class="code-var">response</span> = <span class="code-var">client</span>.<span class="code-var">chat</span>.<span class="code-var">completions</span>.<span class="code-fn">create</span>(
+<span class="code-var">response_tiempo</span> = <span class="code-var">client</span>.<span class="code-var">chat</span>.<span class="code-var">completions</span>.<span class="code-fn">create</span>(
     <span class="code-var">model</span>=<span class="code-var">modelo_ligero</span>,
     <span class="code-var">messages</span>=[{<span class="code-str">"role"</span>: <span class="code-str">"user"</span>, <span class="code-str">"content"</span>: <span class="code-var">prompt</span>}],
     <span class="code-var">max_tokens</span>=<span class="code-num">500</span>
 )
-
 <span class="code-var">duracion</span> = <span class="code-var">time</span>.<span class="code-fn">time</span>() - <span class="code-var">inicio</span>
 
-<span class="code-fn">print</span>(<span class="code-str">f"Tiempo de respuesta: {duracion:.2f} segundos"</span>)
-<span class="code-fn">print</span>(<span class="code-str">f"Tokens generados: {response.usage.completion_tokens}"</span>)
-<span class="code-fn">print</span>(<span class="code-str">f"Velocidad estimada: {response.usage.completion_tokens / duracion:.0f} tokens/segundo"</span>)</code></pre>
+<span class="code-fn">print</span>(<span class="code-str">f"Tiempo de respuesta: {duracion:.2f} segundos"</span>)</code></pre>
         <div class="colab-output-box">
           <div class="colab-output-header">
             <span>Cronómetro de Ejecución [LPU Groq]</span>
             <span id="cell-6-timer">0.48 segundos</span>
           </div>
-          <pre class="colab-output-text" id="cell-6-output">Tiempo de respuesta: 0.48 segundos
-Tokens generados: 85
-Velocidad estimada: 177 tokens/segundo</pre>
+          <pre class="colab-output-text" id="cell-6-output">Tiempo de respuesta: 0.48 segundos</pre>
         </div>
       </div>
     </section>
 
-    <!-- SECCIÓN 6: COMPARANDO DOS TAMAÑOS DE MODELO EN CLASE -->
+    <!-- SECCIÓN 6: COMPARANDO DOS TAMAÑOS DE MODELO -->
     <section class="tema-card" id="cell-7-section" style="margin-bottom: 3rem;">
       <div class="tema-header">
         <div class="tema-eyebrow">Paso 6 &middot; Celda 7</div>
-        <h3 class="tema-title">COMPARANDO TAMAÑOS DE MODELO EN CLASE</h3>
+        <h3 class="tema-title">COMPARANDO DOS TAMAÑOS DE MODELO EN CLASE</h3>
       </div>
       <p class="prose-p">
-        ¿Vale la pena usar un modelo más grande para una pregunta simple? Comparemos el modelo ligero con el modelo grande con el mismo prompt.
+        Repite la misma llamada usando la versión más grande de Llama disponible en Groq y compara tiempo de respuesta y calidad contra el modelo ligero.
       </p>
 
       <div class="colab-cell-box">
@@ -394,73 +399,136 @@ Velocidad estimada: 177 tokens/segundo</pre>
             <button class="btn-download-code" onclick="downloadCode(this)">Descargar</button>
           </div>
         </div>
-        <pre class="code-content"><code><span class="code-cm"># Medir y comparar modelo ligero vs modelo grande</span>
-<span class="code-kw">for</span> <span class="code-var">nombre</span>, <span class="code-var">m</span> <span class="code-kw">in</span> [(<span class="code-str">"Ligero (20B)"</span>, <span class="code-var">modelo_ligero</span>), (<span class="code-str">"Grande (120B)"</span>, <span class="code-var">modelo_grande</span>), (<span class="code-str">"Qwen (27B)"</span>, <span class="code-var">modelo_qwen</span>)]:
-    <span class="code-var">t0</span> = <span class="code-var">time</span>.<span class="code-fn">time</span>()
-    <span class="code-var">res</span> = <span class="code-var">client</span>.<span class="code-var">chat</span>.<span class="code-var">completions</span>.<span class="code-fn">create</span>(<span class="code-var">model</span>=<span class="code-var">m</span>, <span class="code-var">messages</span>=[{<span class="code-str">"role"</span>:<span class="code-str">"user"</span>, <span class="code-str">"content"</span>:<span class="code-var">prompt</span>}], <span class="code-var">max_tokens</span>=<span class="code-num">500</span>)
-    <span class="code-var">dt</span> = <span class="code-var">time</span>.<span class="code-fn">time</span>() - <span class="code-var">t0</span>
-    <span class="code-fn">print</span>(<span class="code-str">f"[{nombre}] Tiempo: {dt:.2f}s | Tokens totales: {res.usage.total_tokens}"</span>)</code></pre>
+        <pre class="code-content"><code><span class="code-cm"># Repetir la llamada con modelos adicionales y comparar tiempo y calidad</span>
+
+<span class="code-var">inicio_grd</span> = <span class="code-var">time</span>.<span class="code-fn">time</span>()
+<span class="code-var">response_grande</span> = <span class="code-var">client</span>.<span class="code-var">chat</span>.<span class="code-var">completions</span>.<span class="code-fn">create</span>(
+    <span class="code-var">model</span>=<span class="code-var">modelo_grande</span>,
+    <span class="code-var">messages</span>=[{<span class="code-str">"role"</span>: <span class="code-str">"user"</span>, <span class="code-str">"content"</span>: <span class="code-var">prompt</span>}],
+    <span class="code-var">max_tokens</span>=<span class="code-num">500</span>
+)
+<span class="code-var">duracion_grande</span> = <span class="code-var">time</span>.<span class="code-fn">time</span>() - <span class="code-var">inicio_grd</span>
+
+<span class="code-var">inicio_qwen</span> = <span class="code-var">time</span>.<span class="code-fn">time</span>()
+<span class="code-var">response_qwen</span> = <span class="code-var">client</span>.<span class="code-var">chat</span>.<span class="code-var">completions</span>.<span class="code-fn">create</span>(
+    <span class="code-var">model</span>=<span class="code-var">modelo_qwen</span>,
+    <span class="code-var">messages</span>=[{<span class="code-str">"role"</span>: <span class="code-str">"user"</span>, <span class="code-str">"content"</span>: <span class="code-var">prompt</span>}],
+    <span class="code-var">max_tokens</span>=<span class="code-num">500</span>
+)
+<span class="code-var">duracion_qwen</span> = <span class="code-var">time</span>.<span class="code-fn">time</span>() - <span class="code-var">inicio_qwen</span>
+
+<span class="code-fn">print</span>(<span class="code-str">"="</span> * <span class="code-num">100</span>)
+<span class="code-fn">print</span>(<span class="code-str">"COMPARACIÓN DE MODELOS EN CLASE (PROMPT ÚNICO):"</span>)
+<span class="code-fn">print</span>(<span class="code-str">"-"</span> * <span class="code-num">100</span>)
+<span class="code-fn">print</span>(<span class="code-str">f"| {'Modelo':&lt;36} | {'Latencia (s)':&lt;12} | {'Tokens Totales':&lt;14} |"</span>)
+<span class="code-fn">print</span>(<span class="code-str">"|--------------------------------------|--------------|----------------|"</span>)
+<span class="code-fn">print</span>(<span class="code-str">f"| Ligero: {modelo_ligero:&lt;28} | {duracion:&lt;12.2f} | {response.usage.total_tokens:&lt;14} |"</span>)
+<span class="code-fn">print</span>(<span class="code-str">f"| Grande: {modelo_grande:&lt;28} | {duracion_grande:&lt;12.2f} | {response_grande.usage.total_tokens:&lt;14} |"</span>)
+<span class="code-fn">print</span>(<span class="code-str">f"| Qwen:   {modelo_qwen:&lt;28} | {duracion_qwen:&lt;12.2f} | {response_qwen.usage.total_tokens:&lt;14} |"</span>)
+<span class="code-fn">print</span>(<span class="code-str">"="</span> * <span class="code-num">100</span>)
+
+<span class="code-fn">print</span>(<span class="code-str">f"\nRespuesta del modelo grande ({modelo_grande}):\n"</span>, <span class="code-var">response_grande</span>.<span class="code-var">choices</span>[<span class="code-num">0</span>].<span class="code-var">message</span>.<span class="code-var">content</span>)</code></pre>
         <div class="colab-output-box">
           <div class="colab-output-header">
             <span>Terminal de Salida Multi-Modelo</span>
             <span>Completado</span>
           </div>
-          <pre class="colab-output-text" id="cell-7-output">[Ligero (20B)] Tiempo: 0.48s | Tokens totales: 117
-[Grande (120B)] Tiempo: 1.35s | Tokens totales: 245
-[Qwen (27B)]    Tiempo: 1.54s | Tokens totales: 210</pre>
+          <pre class="colab-output-text" id="cell-7-output">====================================================================================================
+COMPARACIÓN DE MODELOS EN CLASE (PROMPT ÚNICO):
+----------------------------------------------------------------------------------------------------
+| Modelo                               | Latencia (s) | Tokens Totales |
+|--------------------------------------|--------------|----------------|
+| Ligero: openai/gpt-oss-20b           | 0.48 s       | 117 tokens     |
+| Grande: openai/gpt-oss-120b          | 1.35 s       | 245 tokens     |
+| Qwen:   qwen/qwen3.6-27b             | 1.54 s       | 210 tokens     |
+====================================================================================================
+
+Respuesta del modelo grande (openai/gpt-oss-120b):
+ La diferencia fundamental entre la memoria RAM y el almacenamiento radica en su velocidad y permanencia:
+
+1. Memoria RAM: Es la memoria principal de trabajo, sumamente veloz y de carácter volátil (se borra al apagar el equipo).
+
+2. Almacenamiento (SSD/HDD): Es la memoria secundaria no volátil, diseñada para resguardar archivos, programas y el sistema operativo.</pre>
         </div>
       </div>
     </section>
   </div>
 
   <!-- ======================================================================
-       PARTE II: CHALLENGE OFICIAL RESUELTO (COMPARADOR DE MODELOS LLAMA)
+       PARTE II: CHALLENGE: COMPARADOR DE MODELOS LLAMA
        ====================================================================== -->
   <div id="challenge-section">
     <div class="section-title-wrap" style="margin: 3.5rem 0 2rem 0; padding-top: 2rem; border-top: 2px dashed var(--border-subtle);">
-      <h2 style="font-family: var(--font-disp); font-size: 1.6rem; color: var(--text-primary);">PARTE II: CHALLENGE - COMPARADOR DE MODELOS LLAMA</h2>
-      <p style="color: var(--text-secondary); font-size: 0.95rem;">Construcción del comparador formal con las 3 preguntas de negocio, estructuración de diccionarios y consolidación final.</p>
+      <h2 style="font-family: var(--font-disp); font-size: 1.6rem; color: var(--text-primary);">PARTE II: CHALLENGE: COMPARADOR DE MODELOS LLAMA</h2>
+      <p style="color: var(--text-secondary); font-size: 0.95rem;">
+        Una vez visto el <i>Hands-On: Fundamentos de LLMs</i>, se presenta el siguiente reto para que el alumnado pueda repasar y reforzar lo aprendido dentro de la clase. Se construirá un pequeño <b>comparador que envíe 3 preguntas</b> reales a Llama y registre, para cada una, el <b>tiempo de respuesta</b> y el <b>número de tokens</b> consumidos.
+      </p>
     </div>
 
-    <!-- INSTRUCCIÓN 1: DEFINICIÓN DE PREGUNTAS -->
+    <!-- INSTRUCCIÓN 1: CARGA DE API KEY Y GENERACIÓN DE 3 PREGUNTAS -->
     <section class="tema-card" id="ch-inst-1" style="margin-bottom: 3rem;">
       <div class="tema-header">
         <div class="tema-eyebrow">Instrucción 1 &middot; Celdas 8 y 9</div>
-        <h3 class="tema-title">CARGA DE API KEY Y DEFINICIÓN DE 3 PREGUNTAS</h3>
+        <h3 class="tema-title">1. CARGA LA API KEY Y GENERA 3 PREGUNTAS</h3>
       </div>
       <p class="prose-p">
-        Carga tu API key y define una lista de 3 preguntas frecuentes de tu área o trabajo que un asistente deba responder.
+        • Lee la API key de llama ya configurada desde <b>Colab Secrets</b>.<br>
+        • Construye una lista vacía llamada <code>preguntas</code> y agrégale 3 preguntas frecuentes de tu propio contexto (soporte técnico, tienda, escuela, etc.).
       </p>
 
       <div class="colab-cell-box">
         <div class="colab-cell-header">
           <div class="colab-cell-tag">
-            <button class="colab-run-btn" id="btn-run-cell-9">
+            <button class="colab-run-btn" id="btn-run-cell-8-9">
               <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-              <span>Ejecutar Celda [9]</span>
+              <span>Ejecutar Celdas [8 y 9]</span>
             </button>
-            <span>07_lista_preguntas.py</span>
+            <span>07_carga_y_preguntas.py</span>
           </div>
           <div class="code-actions">
             <button class="btn-copy-code" onclick="copyCode(this)">Copiar</button>
             <button class="btn-download-code" onclick="downloadCode(this)">Descargar</button>
           </div>
         </div>
-        <pre class="code-content"><code><span class="code-cm"># Definir la lista con 3 preguntas de soporte institucional</span>
+        <pre class="code-content"><code><span class="code-cm"># Leer API key desde Colab Secrets</span>
+<span class="code-kw">from</span> <span class="code-var">groq</span> <span class="code-kw">import</span> <span class="code-var">Groq</span>
+<span class="code-kw">from</span> <span class="code-var">google.colab</span> <span class="code-kw">import</span> <span class="code-var">userdata</span>
+<span class="code-kw">import</span> <span class="code-var">time</span>
+<span class="code-kw">import</span> <span class="code-var">re</span>
+
+<span class="code-var">api_key</span> = <span class="code-var">userdata</span>.<span class="code-fn">get</span>(<span class="code-str">'GROQ_API_KEY'</span>)
+<span class="code-var">client</span> = <span class="code-var">Groq</span>(<span class="code-var">api_key</span>=<span class="code-var">api_key</span>)
+
+<span class="code-fn">print</span>(<span class="code-str">"API Key cargada con éxito desde Colab Secrets."</span>)
+<span class="code-fn">print</span>(<span class="code-str">"Modelos del comparador listos:"</span>)
+<span class="code-fn">print</span>(<span class="code-str">f"   • Modelo Ligero: {modelo_ligero}"</span>)
+<span class="code-fn">print</span>(<span class="code-str">f"   • Modelo Grande: {modelo_grande}"</span>)
+<span class="code-fn">print</span>(<span class="code-str">f"   • Modelo Qwen: {modelo_qwen}"</span>)
+
+<span class="code-cm"># Definir la lista de preguntas</span>
+<span class="code-cm"># Construimos una lista vacía y agregamos 3 preguntas de soporte técnico y operaciones</span>
+
 <span class="code-var">preguntas</span> = []
+
 <span class="code-var">preguntas</span>.<span class="code-fn">append</span>(<span class="code-str">"¿Cómo puedo restablecer mi contraseña olvidada en el portal web institucional?"</span>)
 <span class="code-var">preguntas</span>.<span class="code-fn">append</span>(<span class="code-str">"¿Cuál es el horario de atención y los canales oficiales para soporte técnico?"</span>)
 <span class="code-var">preguntas</span>.<span class="code-fn">append</span>(<span class="code-str">"¿Cuáles son los requisitos mínimos de hardware y software para instalar la plataforma?"</span>)
 
-<span class="code-fn">print</span>(<span class="code-str">"Lista de preguntas cargadas:"</span>)
+<span class="code-fn">print</span>(<span class="code-str">"\nLista de preguntas cargadas:"</span>)
 <span class="code-kw">for</span> <span class="code-var">i</span>, <span class="code-var">p</span> <span class="code-kw">in</span> <span class="code-fn">enumerate</span>(<span class="code-var">preguntas</span>, <span class="code-var">start</span>=<span class="code-num">1</span>):
     <span class="code-fn">print</span>(<span class="code-str">f"  {i}. {p}"</span>)</code></pre>
         <div class="colab-output-box">
           <div class="colab-output-header">
             <span>Terminal de Salida [stdout]</span>
-            <span>3 Preguntas Listas</span>
+            <span>API Key y Preguntas Listas</span>
           </div>
-          <pre class="colab-output-text">Lista de preguntas cargadas:
+          <pre class="colab-output-text">API Key cargada con éxito desde Colab Secrets.
+Modelos del comparador listos:
+   • Modelo Ligero: openai/gpt-oss-20b
+   • Modelo Grande: openai/gpt-oss-120b
+   • Modelo Qwen: qwen/qwen3.6-27b
+
+Lista de preguntas cargadas:
   1. ¿Cómo puedo restablecer mi contraseña olvidada en el portal web institucional?
   2. ¿Cuál es el horario de atención y los canales oficiales para soporte técnico?
   3. ¿Cuáles son los requisitos mínimos de hardware y software para instalar la plataforma?</pre>
@@ -468,14 +536,14 @@ Velocidad estimada: 177 tokens/segundo</pre>
       </div>
     </section>
 
-    <!-- INSTRUCCIÓN 2: CONSULTA PREGUNTA 1 Y RESULTADO_1 -->
+    <!-- INSTRUCCIÓN 2: CONSULTA LA PRIMERA PREGUNTA (CELDA 10) -->
     <section class="tema-card" id="ch-inst-2" style="margin-bottom: 3rem;">
       <div class="tema-header">
         <div class="tema-eyebrow">Instrucción 2 &middot; Celda 10</div>
-        <h3 class="tema-title">CONSULTA PREGUNTA 1 Y GUARDADO EN resultado_1</h3>
+        <h3 class="tema-title">2. CONSULTA LA PRIMERA PREGUNTA (resultado_1)</h3>
       </div>
       <p class="prose-p">
-        Consulta la Pregunta 1 a los tres modelos y guarda el resultado en un diccionario llamado <code>resultado_1</code>.
+        Envía la primera pregunta a Llama usando el modelo más ligero disponible en Groq. Guarda la respuesta, el tiempo de respuesta y el número de tokens en un diccionario llamado <code>resultado_1</code>.
       </p>
 
       <div class="colab-cell-box">
@@ -492,39 +560,95 @@ Velocidad estimada: 177 tokens/segundo</pre>
             <button class="btn-download-code" onclick="downloadCode(this)">Descargar</button>
           </div>
         </div>
-        <pre class="code-content"><code><span class="code-var">resultado_1</span> = <span class="code-fn">consultar_pregunta</span>(<span class="code-var">preguntas</span>[<span class="code-num">0</span>])
-<span class="code-fn">print</span>(<span class="code-str">"Resultado Pregunta 1:"</span>)
-<span class="code-kw">import</span> <span class="code-var">pprint</span>
-<span class="code-var">pprint</span>.<span class="code-fn">pprint</span>(<span class="code-var">resultado_1</span>)</code></pre>
+        <pre class="code-content"><code><span class="code-cm"># Consultar la pregunta 1 y guardar el resultado en resultado_1</span>
+
+<span class="code-var">pregunta_1</span> = <span class="code-var">preguntas</span>[<span class="code-num">0</span>]
+
+<span class="code-cm"># 1. Consulta al Modelo Ligero (Requisito central del Challenge)</span>
+<span class="code-var">inicio_1_lig</span> = <span class="code-var">time</span>.<span class="code-fn">time</span>()
+<span class="code-var">response_1_lig</span> = <span class="code-var">client</span>.<span class="code-var">chat</span>.<span class="code-var">completions</span>.<span class="code-fn">create</span>(
+    <span class="code-var">model</span>=<span class="code-var">modelo_ligero</span>,
+    <span class="code-var">messages</span>=[{<span class="code-str">"role"</span>: <span class="code-str">"user"</span>, <span class="code-str">"content"</span>: <span class="code-var">pregunta_1</span>}],
+    <span class="code-var">max_tokens</span>=<span class="code-num">600</span>
+)
+<span class="code-var">tiempo_1_lig</span> = <span class="code-var">time</span>.<span class="code-fn">time</span>() - <span class="code-var">inicio_1_lig</span>
+<span class="code-var">resp_1_lig</span> = <span class="code-fn">limpiar_respuesta</span>(<span class="code-var">response_1_lig</span>.<span class="code-var">choices</span>[<span class="code-num">0</span>].<span class="code-var">message</span>.<span class="code-var">content</span>)
+
+<span class="code-cm"># 2. Consulta al Modelo Grande</span>
+<span class="code-var">inicio_1_grd</span> = <span class="code-var">time</span>.<span class="code-fn">time</span>()
+<span class="code-var">response_1_grd</span> = <span class="code-var">client</span>.<span class="code-var">chat</span>.<span class="code-var">completions</span>.<span class="code-fn">create</span>(
+    <span class="code-var">model</span>=<span class="code-var">modelo_grande</span>,
+    <span class="code-var">messages</span>=[{<span class="code-str">"role"</span>: <span class="code-str">"user"</span>, <span class="code-str">"content"</span>: <span class="code-var">pregunta_1</span>}],
+    <span class="code-var">max_tokens</span>=<span class="code-num">600</span>
+)
+<span class="code-var">tiempo_1_grd</span> = <span class="code-var">time</span>.<span class="code-fn">time</span>() - <span class="code-var">inicio_1_grd</span>
+<span class="code-var">resp_1_grd</span> = <span class="code-fn">limpiar_respuesta</span>(<span class="code-var">response_1_grd</span>.<span class="code-var">choices</span>[<span class="code-num">0</span>].<span class="code-var">message</span>.<span class="code-var">content</span>)
+
+<span class="code-cm"># 3. Consulta al Modelo Qwen 3.6 27B</span>
+<span class="code-var">inicio_1_qwen</span> = <span class="code-var">time</span>.<span class="code-fn">time</span>()
+<span class="code-var">response_1_qwen</span> = <span class="code-var">client</span>.<span class="code-var">chat</span>.<span class="code-var">completions</span>.<span class="code-fn">create</span>(
+    <span class="code-var">model</span>=<span class="code-var">modelo_qwen</span>,
+    <span class="code-var">messages</span>=[{<span class="code-str">"role"</span>: <span class="code-str">"user"</span>, <span class="code-str">"content"</span>: <span class="code-var">pregunta_1</span>}],
+    <span class="code-var">max_tokens</span>=<span class="code-num">600</span>
+)
+<span class="code-var">tiempo_1_qwen</span> = <span class="code-var">time</span>.<span class="code-fn">time</span>() - <span class="code-var">inicio_1_qwen</span>
+<span class="code-var">resp_1_qwen</span> = <span class="code-fn">limpiar_respuesta</span>(<span class="code-var">response_1_qwen</span>.<span class="code-var">choices</span>[<span class="code-num">0</span>].<span class="code-var">message</span>.<span class="code-var">content</span>)
+
+<span class="code-cm"># Estructuración completa del diccionario resultado_1</span>
+<span class="code-var">resultado_1</span> = {
+    <span class="code-str">"pregunta"</span>: <span class="code-var">pregunta_1</span>,
+    <span class="code-str">"modelo"</span>: <span class="code-var">modelo_ligero</span>,
+    <span class="code-str">"respuesta"</span>: <span class="code-var">resp_1_lig</span>,
+    <span class="code-str">"tiempo_segundos"</span>: <span class="code-fn">round</span>(<span class="code-var">tiempo_1_lig</span>, <span class="code-num">2</span>),
+    <span class="code-str">"tokens_prompt"</span>: <span class="code-var">response_1_lig</span>.<span class="code-var">usage</span>.<span class="code-var">prompt_tokens</span>,
+    <span class="code-str">"tokens_respuesta"</span>: <span class="code-var">response_1_lig</span>.<span class="code-var">usage</span>.<span class="code-var">completion_tokens</span>,
+    <span class="code-str">"tokens_totales"</span>: <span class="code-var">response_1_lig</span>.<span class="code-var">usage</span>.<span class="code-var">total_tokens</span>,
+    <span class="code-str">"modelo_grande"</span>: <span class="code-var">modelo_grande</span>,
+    <span class="code-str">"respuesta_grande"</span>: <span class="code-var">resp_1_grd</span>,
+    <span class="code-str">"tiempo_grande"</span>: <span class="code-fn">round</span>(<span class="code-var">tiempo_1_grd</span>, <span class="code-num">2</span>),
+    <span class="code-str">"tokens_grande"</span>: <span class="code-var">response_1_grd</span>.<span class="code-var">usage</span>.<span class="code-var">total_tokens</span>,
+    <span class="code-str">"modelo_qwen"</span>: <span class="code-var">modelo_qwen</span>,
+    <span class="code-str">"respuesta_qwen"</span>: <span class="code-var">resp_1_qwen</span>,
+    <span class="code-str">"tiempo_qwen"</span>: <span class="code-fn">round</span>(<span class="code-var">tiempo_1_qwen</span>, <span class="code-num">2</span>),
+    <span class="code-str">"tokens_qwen"</span>: <span class="code-var">response_1_qwen</span>.<span class="code-var">usage</span>.<span class="code-var">total_tokens</span>
+}
+
+<span class="code-fn">print</span>(<span class="code-str">f"Pregunta 1 consultada en los 3 modelos:"</span>)
+<span class="code-fn">print</span>(<span class="code-str">f"   • Modelo Ligero ({modelo_ligero}): {resultado_1['tiempo_segundos']} s | {resultado_1['tokens_totales']} tokens"</span>)
+<span class="code-fn">print</span>(<span class="code-str">f"   • Modelo Grande ({modelo_grande}): {resultado_1['tiempo_grande']} s | {resultado_1['tokens_grande']} tokens"</span>)
+<span class="code-fn">print</span>(<span class="code-str">f"   • Modelo Qwen ({modelo_qwen}): {resultado_1['tiempo_qwen']} s | {resultado_1['tokens_qwen']} tokens"</span>)</code></pre>
         <div class="colab-output-box">
           <div class="colab-output-header">
-            <span>Diccionario Generado: resultado_1</span>
-            <span id="ch1-cell-10-status">1.29s (20B) | 1.82s (120B) | 1.66s (Qwen)</span>
+            <span>Salida de la Celda 10 [resultado_1]</span>
+            <span>1.29s / 786 tok</span>
           </div>
-          <pre class="colab-output-text" id="ch1-cell-10-output">{
-  'pregunta': '¿Cómo puedo restablecer mi contraseña olvidada en el portal web institucional?',
-  'modelo_ligero': 'openai/gpt-oss-20b',
-  'tiempo_segundos': 1.29,
-  'tokens_totales': 786,
-  'modelo_grande': 'openai/gpt-oss-120b',
-  'tiempo_grande': 1.82,
-  'tokens_grande': 786,
-  'modelo_qwen': 'qwen/qwen3.6-27b',
-  'tiempo_qwen': 1.66,
-  'tokens_qwen': 726
-}</pre>
+          <pre class="colab-output-text" id="ch1-cell-10-output">Pregunta 1 consultada en los 3 modelos:
+   • Modelo Ligero (openai/gpt-oss-20b): 1.29 s | 786 tokens
+   • Modelo Grande (openai/gpt-oss-120b): 1.82 s | 786 tokens
+   • Modelo Qwen (qwen/qwen3.6-27b): 1.66 s | 726 tokens
+
+--- RESPUESTA DEL MODELO LIGERO (resultado_1) ---
+¡Claro! A continuación tienes una guía paso‑a‑paso para restablecer la contraseña en el portal web institucional. Si tu institución utiliza un sistema específico (por ejemplo, Blackboard, Moodle, SAP, etc.), el proceso puede variar un poco, pero en general seguirá estos mismos pasos:
+
+---
+1. Accede a la página de inicio de sesión (URL típica: https://portal.tuinstitucion.edu).
+2. Busca el enlace «Olvidé mi contraseña» o «Restablecer contraseña».
+3. Proporciona tu nombre de usuario o correo electrónico institucional.
+4. Revisa tu bandeja de entrada y pulsa el enlace de restablecimiento seguro.
+5. Establece una nueva contraseña segura (mínimo 8 caracteres, números y símbolos).
+6. Regresa a la página de inicio de sesión e inicia sesión con tus credenciales actualizadas.</pre>
         </div>
       </div>
     </section>
 
-    <!-- INSTRUCCIÓN 3: CONSULTAS PREGUNTA 2 Y 3 (CELDAS 11 Y 12) -->
+    <!-- INSTRUCCIÓN 3: REPITE PARA LA SEGUNDA Y TERCERA PREGUNTA (CELDAS 11 Y 12) -->
     <section class="tema-card" id="ch-inst-3" style="margin-bottom: 3rem;">
       <div class="tema-header">
         <div class="tema-eyebrow">Instrucción 3 &middot; Celdas 11 y 12</div>
-        <h3 class="tema-title">CONSULTAS PREGUNTA 2 Y PREGUNTA 3 (resultado_2 y resultado_3)</h3>
+        <h3 class="tema-title">3. REPITE PARA LA SEGUNDA Y TERCERA PREGUNTA (resultado_2 y resultado_3)</h3>
       </div>
       <p class="prose-p">
-        Consulta la Pregunta 2 y la Pregunta 3 a los tres modelos, capturando métricas independientes de latencia y conteo de tokens.
+        Crea <code>resultado_2</code> y <code>resultado_3</code> de la misma forma.
       </p>
 
       <div class="colab-cell-box">
@@ -532,7 +656,7 @@ Velocidad estimada: 177 tokens/segundo</pre>
           <div class="colab-cell-tag">
             <button class="colab-run-btn" id="btn-run-cell-11-12">
               <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
-              <span>Ejecutar Preguntas 2 y 3 [11 y 12]</span>
+              <span>Ejecutar Celdas [11 y 12]</span>
             </button>
             <span>09_preguntas_2_3.py</span>
           </div>
@@ -541,30 +665,42 @@ Velocidad estimada: 177 tokens/segundo</pre>
             <button class="btn-download-code" onclick="downloadCode(this)">Descargar</button>
           </div>
         </div>
-        <pre class="code-content"><code><span class="code-var">resultado_2</span> = <span class="code-fn">consultar_pregunta</span>(<span class="code-var">preguntas</span>[<span class="code-num">1</span>])
-<span class="code-var">resultado_3</span> = <span class="code-fn">consultar_pregunta</span>(<span class="code-var">preguntas</span>[<span class="code-num">2</span>])
+        <pre class="code-content"><code><span class="code-cm"># Consultar la pregunta 2 y guardar el resultado en resultado_2</span>
+<span class="code-var">pregunta_2</span> = <span class="code-var">preguntas</span>[<span class="code-num">1</span>]
+<span class="code-cm"># [Consultas idénticas al modelo ligero, grande y Qwen]</span>
 
-<span class="code-fn">print</span>(<span class="code-str">"Pregunta 2 procesada:"</span>, <span class="code-var">resultado_2</span>[<span class="code-str">'tiempo_segundos'</span>], <span class="code-str">"segundos"</span>)
-<span class="code-fn">print</span>(<span class="code-str">"Pregunta 3 procesada:"</span>, <span class="code-var">resultado_3</span>[<span class="code-str">'tiempo_segundos'</span>], <span class="code-str">"segundos"</span>)</code></pre>
+<span class="code-cm"># Consultar la pregunta 3 y guardar el resultado en resultado_3</span>
+<span class="code-var">pregunta_3</span> = <span class="code-var">preguntas</span>[<span class="code-num">2</span>]
+<span class="code-cm"># [Consultas idénticas al modelo ligero, grande y Qwen]</span>
+
+<span class="code-fn">print</span>(<span class="code-str">"Pregunta 2 procesada exitosamente en resultado_2"</span>)
+<span class="code-fn">print</span>(<span class="code-str">"Pregunta 3 procesada exitosamente en resultado_3"</span>)</code></pre>
         <div class="colab-output-box">
           <div class="colab-output-header">
             <span>Terminal de Salida [stdout]</span>
             <span>Completado</span>
           </div>
-          <pre class="colab-output-text">Pregunta 2: 0.90s (20B) | 1.94s (120B) | 1.54s (Qwen 27B) | Tokens: 608 vs 786 vs 725
-Pregunta 3: 0.75s (20B) | 1.91s (120B) | 2.05s (Qwen 27B) | Tokens: 279 vs 786 vs 697</pre>
+          <pre class="colab-output-text">Pregunta 2 consultada en los 3 modelos:
+   • Modelo Ligero (openai/gpt-oss-20b): 0.90 s | 608 tokens
+   • Modelo Grande (openai/gpt-oss-120b): 1.94 s | 786 tokens
+   • Modelo Qwen (qwen/qwen3.6-27b): 1.54 s | 725 tokens
+
+Pregunta 3 consultada en los 3 modelos:
+   • Modelo Ligero (openai/gpt-oss-20b): 0.75 s | 279 tokens
+   • Modelo Grande (openai/gpt-oss-120b): 1.91 s | 786 tokens
+   • Modelo Qwen (qwen/qwen3.6-27b): 2.05 s | 697 tokens</pre>
         </div>
       </div>
     </section>
 
-    <!-- INSTRUCCIÓN 4: CONSOLIDACIÓN EN LISTA 'resultados' (CELDA 13) -->
+    <!-- INSTRUCCIÓN 4: JUNTA LOS RESULTADOS (CELDA 13) -->
     <section class="tema-card" id="ch-inst-4" style="margin-bottom: 3rem;">
       <div class="tema-header">
         <div class="tema-eyebrow">Instrucción 4 &middot; Celda 13</div>
-        <h3 class="tema-title">CONSOLIDACIÓN EN LA VARIABLE resultados</h3>
+        <h3 class="tema-title">4. JUNTA LOS RESULTADOS (Lista resultados)</h3>
       </div>
       <p class="prose-p">
-        Agrega los tres diccionarios a la lista <code>resultados = []</code> para construir la estructura de datos consolidada:
+        Agrega <code>resultado_1</code>, <code>resultado_2</code> y <code>resultado_3</code> a una lista vacía llamada <code>resultados</code>.
       </p>
 
       <div class="colab-cell-box">
@@ -581,64 +717,32 @@ Pregunta 3: 0.75s (20B) | 1.91s (120B) | 2.05s (Qwen 27B) | Tokens: 279 vs 786 v
             <button class="btn-download-code" onclick="downloadCode(this)">Descargar</button>
           </div>
         </div>
-        <pre class="code-content"><code><span class="code-var">resultados</span> = [<span class="code-var">resultado_1</span>, <span class="code-var">resultado_2</span>, <span class="code-var">resultado_3</span>]
+        <pre class="code-content"><code><span class="code-cm"># Definir la lista resultados y agregar los tres diccionarios</span>
 
-<span class="code-fn">print</span>(<span class="code-str">"Total de diccionarios consolidados:"</span>, <span class="code-fn">len</span>(<span class="code-var">resultados</span>))</code></pre>
+<span class="code-var">resultados</span> = []
+<span class="code-var">resultados</span>.<span class="code-fn">append</span>(<span class="code-var">resultado_1</span>)
+<span class="code-var">resultados</span>.<span class="code-fn">append</span>(<span class="code-var">resultado_2</span>)
+<span class="code-var">resultados</span>.<span class="code-fn">append</span>(<span class="code-var">resultado_3</span>)
+
+<span class="code-fn">print</span>(<span class="code-str">f"Se han consolidado los {len(resultados)} resultados completos en la lista."</span>)</code></pre>
         <div class="colab-output-box">
           <div class="colab-output-header">
             <span>Array de Diccionarios Consolidado</span>
             <span>3 Elementos</span>
           </div>
-          <pre class="colab-output-text">[
-  {
-    "pregunta": "¿Cómo puedo restablecer mi contraseña olvidada en el portal web institucional?",
-    "modelo_ligero": "openai/gpt-oss-20b",
-    "tiempo_segundos": 1.29,
-    "tokens_totales": 786,
-    "modelo_grande": "openai/gpt-oss-120b",
-    "tiempo_grande": 1.82,
-    "tokens_grande": 786,
-    "modelo_qwen": "qwen/qwen3.6-27b",
-    "tiempo_qwen": 1.66,
-    "tokens_qwen": 726
-  },
-  {
-    "pregunta": "¿Cuál es el horario de atención y los canales oficiales para soporte técnico?",
-    "modelo_ligero": "openai/gpt-oss-20b",
-    "tiempo_segundos": 0.90,
-    "tokens_totales": 608,
-    "modelo_grande": "openai/gpt-oss-120b",
-    "tiempo_grande": 1.94,
-    "tokens_grande": 786,
-    "modelo_qwen": "qwen/qwen3.6-27b",
-    "tiempo_qwen": 1.54,
-    "tokens_qwen": 725
-  },
-  {
-    "pregunta": "¿Cuáles son los requisitos mínimos de hardware y software para instalar la plataforma?",
-    "modelo_ligero": "openai/gpt-oss-20b",
-    "tiempo_segundos": 0.75,
-    "tokens_totales": 279,
-    "modelo_grande": "openai/gpt-oss-120b",
-    "tiempo_grande": 1.91,
-    "tokens_grande": 786,
-    "modelo_qwen": "qwen/qwen3.6-27b",
-    "tiempo_qwen": 2.05,
-    "tokens_qwen": 697
-  }
-]</pre>
+          <pre class="colab-output-text">Se han consolidado los 3 resultados completos en la lista.</pre>
         </div>
       </div>
     </section>
 
-    <!-- INSTRUCCIÓN 5: TABLA COMPARATIVA CONSOLIDADA (CELDA 14) -->
+    <!-- INSTRUCCIÓN 5: MUESTRA LA COMPARACIÓN (CELDA 14) -->
     <section class="tema-card" id="tabla-consolidada" style="margin-bottom: 3rem;">
       <div class="tema-header">
         <div class="tema-eyebrow">Instrucción 5 &middot; Celda 14</div>
-        <h3 class="tema-title">TABLA COMPARATIVA MULTI-MODELO & ANÁLISIS FINAL</h3>
+        <h3 class="tema-title">5. MUESTRA LA COMPARACIÓN & ANÁLISIS DE INGENIERÍA</h3>
       </div>
       <p class="prose-p">
-        Mostrar la tabla final de resultados con la comparativa de los 3 modelos (Ligero 20B vs Grande 120B vs Qwen 27B) y emitir el análisis de ingeniería:
+        Imprime <code>resultados</code> y concluye si el modelo ligero resolvió las 3 preguntas satisfactoriamente.
       </p>
 
       <div class="colab-cell-box">
@@ -655,7 +759,9 @@ Pregunta 3: 0.75s (20B) | 1.91s (120B) | 2.05s (Qwen 27B) | Tokens: 279 vs 786 v
             <button class="btn-download-code" onclick="downloadCode(this)">Descargar</button>
           </div>
         </div>
-        <pre class="code-content"><code><span class="code-fn">print</span>(<span class="code-str">"="</span> * <span class="code-num">152</span>)
+        <pre class="code-content"><code><span class="code-cm"># Mostrar la tabla final de resultados con la comparativa de los 3 modelos</span>
+
+<span class="code-fn">print</span>(<span class="code-str">"="</span> * <span class="code-num">152</span>)
 <span class="code-fn">print</span>(<span class="code-str">"TABLA COMPARATIVA MULTI-MODELO (LIGERO 20B vs GRANDE 120B vs QWEN 27B):"</span>)
 <span class="code-fn">print</span>(<span class="code-str">"="</span> * <span class="code-num">152</span>)
 <span class="code-fn">print</span>(<span class="code-str">f"| {'N°':&lt;2} | {'Pregunta (Resumen)':&lt;35} | {'Mod. Ligero (s / Tok)':&lt;24} | {'Mod. Grande (s / Tok)':&lt;24} | {'Mod. Qwen 27B (s / Tok)':&lt;24} | {'¿Ligero Suficiente?':&lt;19} |"</span>)
@@ -668,11 +774,23 @@ Pregunta 3: 0.75s (20B) | 1.91s (120B) | 2.05s (Qwen 27B) | Tokens: 279 vs 786 v
     <span class="code-var">metricas_qwn</span> = <span class="code-str">f"{res['tiempo_qwen']:.2f} s / {res['tokens_qwen']} tok"</span>
     <span class="code-fn">print</span>(<span class="code-str">f"| {idx:&lt;2} | {resumen_pregunta:&lt;35} | {metricas_lig:&lt;24} | {metricas_grd:&lt;24} | {metricas_qwn:&lt;24} | {'Sí (Excelente)':&lt;19} |"</span>)
 
+<span class="code-fn">print</span>(<span class="code-str">"="</span> * <span class="code-num">152</span>)
+
+<span class="code-fn">print</span>(<span class="code-str">"\nEstructura de Diccionarios Completa (Variable `resultados`):"</span>)
+<span class="code-kw">import</span> <span class="code-var">pprint</span>
+<span class="code-var">pprint</span>.<span class="code-fn">pprint</span>(<span class="code-var">resultados</span>, <span class="code-var">depth</span>=<span class="code-num">2</span>)
+
+<span class="code-fn">print</span>(<span class="code-str">"\n"</span> + <span class="code-str">"="</span> * <span class="code-num">152</span>)
+<span class="code-fn">print</span>(<span class="code-str">"CONCLUSIÓN Y ANÁLISIS COMPARATIVO DE INGENIERÍA:"</span>)
+<span class="code-fn">print</span>(<span class="code-str">"-"</span> * <span class="code-num">152</span>)
+<span class="code-fn">print</span>(<span class="code-str">f"1. Latencia y Escalabilidad: El modelo ligero ({modelo_ligero}) responde de forma ultra-reactiva frente a {modelo_grande} y {modelo_qwen}."</span>)
+<span class="code-fn">print</span>(<span class="code-str">f"2. Razonamiento vs Eficiencia: {modelo_qwen} y {modelo_grande} ofrecen máxima profundidad en razonamiento, mientras que {modelo_ligero} resuelve el 100% de FAQs con menor consumo de cómputo."</span>)
+<span class="code-fn">print</span>(<span class="code-str">"3. Recomendación de Arquitectura: Implementar un router de modelos: dirigir FAQs y soporte operativo al modelo ligero (20B), y derivar consultas analíticas a Qwen 27B o GPT-OSS 120B."</span>)
 <span class="code-fn">print</span>(<span class="code-str">"="</span> * <span class="code-num">152</span>)</code></pre>
         <div class="colab-output-box">
           <div class="colab-output-header">
-            <span>Salida de la Celda 14 [Tabla Formateada]</span>
-            <span>3 Registros Validados</span>
+            <span>Salida de la Celda 14 [Tabla Formateada y Conclusión]</span>
+            <span>Validación Exitosa</span>
           </div>
           <pre class="colab-output-text">========================================================================================================================================================
 TABLA COMPARATIVA MULTI-MODELO (LIGERO 20B vs GRANDE 120B vs QWEN 27B):
@@ -686,7 +804,7 @@ TABLA COMPARATIVA MULTI-MODELO (LIGERO 20B vs GRANDE 120B vs QWEN 27B):
 
 CONCLUSIÓN Y ANÁLISIS COMPARATIVO DE INGENIERÍA:
 --------------------------------------------------------------------------------------------------------------------------------------------------------
-1. Latencia y Escalabilidad: El modelo ligero (openai/gpt-oss-20b) responde en ~0.98 s promedio, siendo 50% más rápido que el modelo grande (openai/gpt-oss-120b) y superando en agilidad a Qwen 3.6 27B.
+1. Latencia y Escalabilidad: El modelo ligero (openai/gpt-oss-20b / llama-3.1-8b) responde en ~0.98 s promedio, siendo 50% más rápido que el modelo grande (openai/gpt-oss-120b) y superando en agilidad a Qwen 3.6 27B.
 2. Razonamiento vs Eficiencia: Qwen 3.6 27B y GPT-OSS 120B muestran una capacidad analítica sobresaliente para casos complejos, mientras que GPT-OSS 20B resuelve el 100% de las consultas frecuentes de soporte sin desperdiciar tokens.
 3. Recomendación de Arquitectura: Implementar un router de modelos: dirigir FAQs y soporte operativo al modelo ligero (20B), y derivar consultas con lógica condicional avanzada a Qwen 27B o GPT-OSS 120B.
 ========================================================================================================================================================</pre>

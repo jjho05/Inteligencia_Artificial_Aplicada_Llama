@@ -142,7 +142,7 @@
     btnCell7.addEventListener("click", function(){
       btnCell7.disabled = true;
       if(window.SOUND) window.SOUND.playPop(580);
-      var compText = "[Ligero (20B)] Tiempo: 0.48s | Tokens totales: 117\n[Grande (120B)] Tiempo: 1.35s | Tokens totales: 245\n[Qwen (27B)]    Tiempo: 1.54s | Tokens totales: 210";
+      var compText = "====================================================================================================\nCOMPARACIÓN DE MODELOS EN CLASE (PROMPT ÚNICO):\n----------------------------------------------------------------------------------------------------\n| Modelo                               | Latencia (s) | Tokens Totales |\n|--------------------------------------|--------------|----------------|\n| Ligero: openai/gpt-oss-20b           | 0.48 s       | 117 tokens     |\n| Grande: openai/gpt-oss-120b          | 1.35 s       | 245 tokens     |\n| Qwen:   qwen/qwen3.6-27b             | 1.54 s       | 210 tokens     |\n====================================================================================================\n\nRespuesta del modelo grande (openai/gpt-oss-120b):\n La diferencia fundamental entre la memoria RAM y el almacenamiento radica en su velocidad y permanencia:\n\n1. Memoria RAM: Es la memoria principal de trabajo, sumamente veloz y de carácter volátil (se borra al apagar el equipo).\n\n2. Almacenamiento (SSD/HDD): Es la memoria secundaria no volátil, diseñada para resguardar archivos, programas y el sistema operativo.";
       streamText(outCell7, compText, 350, function(){
         btnCell7.disabled = false;
         if(window.SOUND) window.SOUND.playChime();
@@ -150,25 +150,49 @@
     });
   }
 
+  // CELDAS 8 Y 9: PREGUNTAS
+  var btnCell89 = document.getElementById("btn-run-cell-8-9");
+  if(btnCell89){
+    btnCell89.addEventListener("click", function(){
+      if(window.SOUND) window.SOUND.playPop(500);
+      alert("API Key y las 3 preguntas cargadas correctamente.");
+    });
+  }
+
   // CELDA 10: PREGUNTA 1
   var btnCell10 = document.getElementById("btn-run-cell-10");
   var outCell10 = document.getElementById("ch1-cell-10-output");
-  var statusCell10 = document.getElementById("ch1-cell-10-status");
   if(btnCell10 && outCell10){
     btnCell10.addEventListener("click", function(){
       btnCell10.disabled = true;
-      if(statusCell10) statusCell10.textContent = "Procesando en los 3 modelos...";
       if(window.SOUND) window.SOUND.playPop(600);
 
-      var p1Json = "{\n  'pregunta': '¿Cómo puedo restablecer mi contraseña olvidada en el portal web institucional?',\n  'modelo_ligero': 'openai/gpt-oss-20b',\n  'tiempo_segundos': 1.29,\n  'tokens_totales': 786,\n  'modelo_grande': 'openai/gpt-oss-120b',\n  'tiempo_grande': 1.82,\n  'tokens_grande': 786,\n  'modelo_qwen': 'qwen/qwen3.6-27b',\n  'tiempo_qwen': 1.66,\n  'tokens_qwen': 726\n}";
+      var p1Json = "Pregunta 1 consultada en los 3 modelos:\n   • Modelo Ligero (openai/gpt-oss-20b): 1.29 s | 786 tokens\n   • Modelo Grande (openai/gpt-oss-120b): 1.82 s | 786 tokens\n   • Modelo Qwen (qwen/qwen3.6-27b): 1.66 s | 726 tokens\n\n--- RESPUESTA DEL MODELO LIGERO (resultado_1) ---\n¡Claro! A continuación tienes una guía paso‑a‑paso para restablecer la contraseña en el portal web institucional:\n\n1. Accede a la página de inicio de sesión.\n2. Busca el enlace «Olvidé mi contraseña» o «Restablecer contraseña».\n3. Proporciona tu nombre de usuario o correo electrónico institucional.\n4. Revisa tu bandeja de entrada y pulsa el enlace seguro recibido.\n5. Establece una nueva contraseña segura con mayúsculas, números y símbolos.\n6. Inicia sesión con tus credenciales actualizadas.";
 
       setTimeout(function(){
         streamText(outCell10, p1Json, 400, function(){
           btnCell10.disabled = false;
-          if(statusCell10) statusCell10.textContent = "1.29s (20B) | 1.82s (120B) | 1.66s (Qwen)";
           if(window.SOUND) window.SOUND.playChime();
         });
-      }, 350);
+      }, 300);
+    });
+  }
+
+  // CELDAS 11 Y 12: PREGUNTAS 2 Y 3
+  var btnCell1112 = document.getElementById("btn-run-cell-11-12");
+  if(btnCell1112){
+    btnCell1112.addEventListener("click", function(){
+      if(window.SOUND) window.SOUND.playPop(520);
+      alert("Preguntas 2 y 3 procesadas exitosamente en resultado_2 y resultado_3.");
+    });
+  }
+
+  // CELDA 13: CONSOLIDACIÓN
+  var btnCell13 = document.getElementById("btn-run-cell-13");
+  if(btnCell13){
+    btnCell13.addEventListener("click", function(){
+      if(window.SOUND) window.SOUND.playPop(560);
+      alert("Lista 'resultados' consolidada con los 3 diccionarios.");
     });
   }
 
@@ -177,7 +201,7 @@
   if(btnCell14){
     btnCell14.addEventListener("click", function(){
       if(window.SOUND) window.SOUND.playChime();
-      alert("Tabla comparativa generada con las metricas oficiales de la celda 14 del notebook.");
+      alert("Tabla comparativa oficial generada con éxito con las métricas de la celda 14.");
     });
   }
 
