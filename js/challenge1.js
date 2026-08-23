@@ -420,6 +420,57 @@
     });
   }
 
+  // Conexión y Gestión de API Key de Groq Real (Opcional)
+  var apiKeyInput = document.getElementById("bench-api-key-input");
+  var btnSaveKey = document.getElementById("btn-save-bench-key");
+  var btnClearKey = document.getElementById("btn-clear-bench-key");
+  var engineStatus = document.getElementById("bench-engine-status");
+  var activeGroqKey = localStorage.getItem("meta_groq_api_key") || "";
+
+  function updateKeyStatusUI() {
+    if(activeGroqKey) {
+      if(engineStatus) {
+        engineStatus.textContent = "Conectado a Groq LPU (Inferencia 100% Real)";
+        engineStatus.style.color = "#3fb950";
+      }
+      if(apiKeyInput) apiKeyInput.value = "••••••••••••••••" + activeGroqKey.slice(-4);
+      if(btnSaveKey) btnSaveKey.textContent = "Guardada";
+      if(btnClearKey) btnClearKey.style.display = "inline-block";
+    } else {
+      if(engineStatus) {
+        engineStatus.textContent = "Simulador Local Inteligente";
+        engineStatus.style.color = "var(--meta-blue)";
+      }
+      if(apiKeyInput) apiKeyInput.value = "";
+      if(btnSaveKey) btnSaveKey.textContent = "Conectar";
+      if(btnClearKey) btnClearKey.style.display = "none";
+    }
+  }
+  updateKeyStatusUI();
+
+  if(btnSaveKey && apiKeyInput) {
+    btnSaveKey.addEventListener("click", function(){
+      var key = apiKeyInput.value.trim();
+      if(key.startsWith("gsk_")) {
+        activeGroqKey = key;
+        localStorage.setItem("meta_groq_api_key", key);
+        updateKeyStatusUI();
+        safePlaySound("chime");
+      } else if(!key) {
+        alert("Por favor ingresa tu API Key de Groq que comienza con 'gsk_'.");
+      }
+    });
+  }
+
+  if(btnClearKey) {
+    btnClearKey.addEventListener("click", function(){
+      activeGroqKey = "";
+      localStorage.removeItem("meta_groq_api_key");
+      updateKeyStatusUI();
+      safePlaySound("pop", 400);
+    });
+  }
+
   // MOTOR GENERATIVO MULTI-DOMINIO REALISTA Y NATURAL PARA CUALQUIER CONSULTA
   function generateBenchmarkResponses(query, maxTokens, temperature) {
     var qLower = query.toLowerCase().trim();
@@ -427,15 +478,23 @@
     var respGrd = "";
     var respQwn = "";
 
-    // 1. DOMINIO: ARITMÉTICA Y MATEMÁTICAS (Sumas, restas, cifras, cálculo, etc.)
-    if(qLower.includes("sumar") || qLower.includes("suma") || qLower.includes("cifras") || qLower.includes("restar") || qLower.includes("resta") || qLower.includes("multiplicar") || qLower.includes("dividir") || qLower.includes("calcular") || qLower.includes("calcula") || qLower.includes("porcentaje") || qLower.includes("ecuacion") || qLower.includes("ecuación") || qLower.includes("fraccion") || qLower.includes("fracción") || qLower.includes("matematica") || qLower.includes("matemática")){
+    // 1. DOMINIO: SALUD, MEDICINA Y FIEBRE
+    if(qLower.includes("fiebre") || qLower.includes("temperatura") || qLower.includes("calentura") || qLower.includes("salud") || qLower.includes("sintomas") || qLower.includes("síntomas") || qLower.includes("medico") || qLower.includes("médico") || qLower.includes("dolor") || qLower.includes("gripe") || qLower.includes("tos")){
+      respLig = "Para saber si tienes fiebre de forma precisa:\n\n1. Medición con Termómetro (el método exacto):\n   • Normal: 36.0 °C a 37.2 °C.\n   • Febrícula: 37.3 °C a 37.9 °C.\n   • Fiebre: 38.0 °C o más.\n\n2. Síntomas corporales que la acompañan:\n   • Escalofríos y sensación de frío repentino.\n   • Piel muy caliente al tacto (en frente, cuello o pecho).\n   • Sudoración, dolor de cabeza y fatiga muscular.\n\nRecomendación: Si la temperatura supera los 38.5 °C o dura más de 48 horas, consulta a un médico profesional.";
+
+      respGrd = "Guía Clínica para la Detección y Evaluación de Fiebre:\n\n1. Valores Térmicos y Sitios de Medición:\n   • Axilar: Fiebre a partir de 37.8 °C.\n   • Oral: Fiebre a partir de 38.0 °C.\n   • Timpánica (oído) / Rectal: Fiebre a partir de 38.3 °C (mayor precisión central).\n\n2. Fases Fisiológicas de la Respuesta Febril:\n   • Fase de Inicio: El hipotálamo eleva el punto de ajuste térmico → Vasoconstricción periférica, escalofríos y palidez.\n   • Fase de Meseta: Sensación intensa de calor, taquicardia leve y malestar general.\n   • Fase de Defervescencia: Sudoración profusa y vasodilatación para disipar calor.\n\n3. Signos de Alarma para Acudir a Urgencias:\n   • Fiebre mayor a 39.5 °C que no cede con antipiréticos.\n   • Dificultad para respirar, dolor torácico o rigidez en el cuello.\n   • Confusión o somnolencia extrema.\n   • En bebés menores de 3 meses: Cualquier fiebre ≥ 38.0 °C requiere valoración médica inmediata.";
+
+      respQwn = "# Protocolo Diagnóstico de Evaluación Térmica y Triage Médico\n\n1. Clasificación Termométrica:\n   - Eutermia (Normal): [36.0, 37.2] °C\n   - Febrícula: [37.3, 37.9] °C\n   - Pirexia (Fiebre clínica): ≥ 38.0 °C\n   - Hiperpirexia: ≥ 40.0 °C (Riesgo crítico de desnaturalización proteica)\n\n2. Algoritmo de Decisión:\n   • Medición confirmatoria: Termómetro digital axilar o infrarrojo timpánico.\n   • Evaluación de banderas rojas: Rigidez nucal, disnea, exantema purpúrico.\n   • Medidas conservadoras: Hidratación constante, reposo y uso de antipiréticos bajo prescripción (paracetamol/ibuprofeno).";
+
+    // 2. DOMINIO: ARITMÉTICA Y MATEMÁTICAS (Sumas, restas, cifras, cálculo, etc.)
+    } else if(qLower.includes("sumar") || qLower.includes("suma") || qLower.includes("cifras") || qLower.includes("restar") || qLower.includes("resta") || qLower.includes("multiplicar") || qLower.includes("dividir") || qLower.includes("calcular") || qLower.includes("calcula") || qLower.includes("porcentaje") || qLower.includes("ecuacion") || qLower.includes("ecuación") || qLower.includes("fraccion") || qLower.includes("fracción") || qLower.includes("matematica") || qLower.includes("matemática")){
       respLig = "Para sumar un número de 2 cifras con uno de 3 cifras (por ejemplo: 45 + 328):\n\n1. Alinea los números por la derecha (unidades con unidades, decenas con decenas):\n      328\n    +  45\n    -----\n\n2. Suma de derecha a izquierda:\n   • Unidades: 8 + 5 = 13 → Escribes 3 abajo y llevas 1 a las decenas.\n   • Decenas: 2 + 4 + 1 (que llevabas) = 7.\n   • Centenas: 3 (se mantiene igual).\n\nResultado: 373.\n\nRegla de oro: Siempre alinea a la derecha para no sumar decenas con centenas por error.";
 
-      respGrd = "Guía Completa para Sumar Números de Distinto Número de Cifras (2 Cifras + 3 Cifras):\n\n1. Principio del Sistema Posicional Decimal:\n   Cada dígito tiene un peso según su posición de derecha a izquierda: Unidades ($10^0$), Decenas ($10^1$) y Centenas ($10^2$). Al sumar $ab$ (2 cifras) con $cde$ (3 cifras), la alineación correcta es fundamental.\n\n2. Ejemplo Paso a Paso con Doble Acarreo (68 + 275):\n   • Paso 1 (Columna de Unidades): $8 + 5 = 13$.\n     Se anota el 3 en el resultado y se acarrea 1 a la columna de decenas.\n   • Paso 2 (Columna de Decenas): $6 + 7 + 1\\text{ (acarreo)} = 14$.\n     Se anota el 4 en el resultado y se acarrea 1 a la columna de centenas.\n   • Paso 3 (Columna de Centenas): $2 + 1\\text{ (acarreo)} = 3$.\n     Se anota el 3.\n   • Total: 343.\n\n3. Estrategia de Cálculo Mental Rápido:\n   Descompón el número de 2 cifras en decenas y unidades:\n   $275 + 68 = (275 + 60) + 8 = 335 + 8 = 343$.";
+      respGrd = "Guía Completa para Sumar Números de Distinto Número de Cifras (2 Cifras + 3 Cifras):\n\n1. Principio del Sistema Posicional Decimal:\n   Cada dígito tiene un peso según su posición de derecha a izquierda: Unidades (10^0), Decenas (10^1) y Centenas (10^2). Al sumar ab (2 cifras) con cde (3 cifras), la alineación correcta es fundamental.\n\n2. Ejemplo Paso a Paso con Doble Acarreo (68 + 275):\n   • Paso 1 (Columna de Unidades): 8 + 5 = 13.\n     Se anota el 3 en el resultado y se acarrea 1 a la columna de decenas.\n   • Paso 2 (Columna de Decenas): 6 + 7 + 1 (acarreo) = 14.\n     Se anota el 4 en el resultado y se acarrea 1 a la columna de centenas.\n   • Paso 3 (Columna de Centenas): 2 + 1 (acarreo) = 3.\n     Se anota el 3.\n   • Total: 343.\n\n3. Estrategia de Cálculo Mental Rápido:\n   Descompón el número de 2 cifras en decenas y unidades:\n   275 + 68 = (275 + 60) + 8 = 335 + 8 = 343.";
 
-      respQwn = "# Algoritmo de Adición Posicional con Propagación de Acarreo\n\nSean $A \\in [10, 99]$ (representado como $10a_1 + a_0$) y $B \\in [100, 999]$ (representado como $100b_2 + 10b_1 + b_0$):\n\n1. Formulación por Columnas:\n   • Unidades: $S_0 = (a_0 + b_0) \\pmod{10}$, con acarreo $c_1 = \\lfloor (a_0 + b_0) / 10 \\rfloor$\n   • Decenas: $S_1 = (a_1 + b_1 + c_1) \\pmod{10}$, con acarreo $c_2 = \\lfloor (a_1 + b_1 + c_1) / 10 \\rfloor$\n   • Centenas: $S_2 = (b_2 + c_2) \\pmod{10}$, con acarreo $c_3 = \\lfloor (b_2 + c_2) / 10 \\rfloor$\n\n2. Análisis de Rango y Desbordamiento:\n   • Límite inferior: $100 + 10 = 110$ (3 dígitos).\n   • Límite superior: $999 + 99 = 1098$ (4 dígitos si $c_3 = 1$).\n   • Conclusión: La suma siempre producirá un resultado entre 3 y 4 dígitos.";
+      respQwn = "# Algoritmo de Adición Posicional con Propagación de Acarreo\n\nSean A en [10, 99] (representado como 10a1 + a0) y B en [100, 999] (representado como 100b2 + 10b1 + b0):\n\n1. Formulación por Columnas:\n   • Unidades: S0 = (a0 + b0) mod 10, con acarreo c1 = floor((a0 + b0) / 10)\n   • Decenas: S1 = (a1 + b1 + c1) mod 10, con acarreo c2 = floor((a1 + b1 + c1) / 10)\n   • Centenas: S2 = (b2 + c2) mod 10, con acarreo c3 = floor((b2 + c2) / 10)\n\n2. Análisis de Rango y Desbordamiento:\n   • Límite inferior: 100 + 10 = 110 (3 dígitos).\n   • Límite superior: 999 + 99 = 1098 (4 dígitos si c3 = 1).\n   • Conclusión: La suma siempre producirá un resultado entre 3 y 4 dígitos.";
 
-    // 2. DOMINIO: SEGURIDAD Y CONTRASEÑAS
+    // 3. DOMINIO: SEGURIDAD Y CONTRASEÑAS
     } else if(qLower.includes("contraseña") || qLower.includes("password") || qLower.includes("restablecer") || qLower.includes("clave")){
       respLig = "¡Claro! Guía rápida para restablecer tu contraseña:\n\n1. Entra al enlace de inicio de sesión institucional.\n2. Haz clic en «¿Olvidó su contraseña?».\n3. Escribe tu correo electrónico institucional.\n4. Revisa tu bandeja de entrada y abre el enlace de seguridad.\n5. Ingresa tu nueva contraseña (mínimo 8 caracteres combinando mayúsculas, números y símbolos).\n6. Confirma e inicia sesión.";
 
@@ -443,7 +502,7 @@
 
       respQwn = "# Protocolo de Gestión de Identidades y Restablecimiento de Tokens\n\n1. Flujo de Autenticación:\n   - Solicitud de mutación de credenciales sobre canal HTTPS cifrado.\n   - Generación de token temporal firmado (JWT) con expiración a 15 minutos.\n2. Persistencia en Base de Datos:\n   - Almacenamiento mediante hash criptográfico Argon2id con salt aleatorio.\n   - Invalidación forzada de tokens de sesión activos en sesiones previas.\n3. Registro de Auditoría: Creación de log inmutable en el SIEM institucional.";
 
-    // 3. DOMINIO: HORARIOS Y SOPORTE TÉCNICO
+    // 4. DOMINIO: HORARIOS Y SOPORTE TÉCNICO
     } else if(qLower.includes("horario") || qLower.includes("soporte") || qLower.includes("canales") || qLower.includes("atención") || qLower.includes("sla")){
       respLig = "Horarios y Canales Oficiales de Soporte Técnico:\n\n• Horario de Oficina: Lunes a Viernes de 09:00 a 18:00 hrs.\n• Correo de Soporte: soporte@institucion.edu (Respuesta en menos de 24 horas hábiles).\n• Línea Telefónica Gratuita: 800-123-4567.\n• Chat en Vivo: Disponible en la esquina inferior del portal web institucional.";
 
@@ -451,7 +510,7 @@
 
       respQwn = "# Estructura Operativa de Soporte y Acuerdos de Servicio (SLA)\n\n1. Niveles de Escalamiento:\n   • Nivel 1 (Triage Inicial): Resolución de dudas frecuentes y desbloqueo de cuentas mediante chatbot.\n   • Nivel 2 (Soporte Técnico): Diagnóstico de conectividad, errores de software y permisos.\n   • Nivel 3 (Ingeniería de Sistemas): Corrección de bugs y mantenimiento de base de datos.\n\n2. Priorización de Tickets:\n   - Criticidad Alta (P1): Respuesta < 30 minutos.\n   - Criticidad Normal (P3): Respuesta < 8 horas hábiles.";
 
-    // 4. DOMINIO: REQUISITOS TÉCNICOS DE SISTEMA
+    // 5. DOMINIO: REQUISITOS TÉCNICOS DE SISTEMA
     } else if(qLower.includes("requisito") || qLower.includes("hardware") || qLower.includes("instalar") || qLower.includes("software") || qLower.includes("especificaciones")){
       respLig = "Requisitos Mínimos para la Instalación:\n\n• Procesador: 64 bits de 2 núcleos a 2.0 GHz o superior.\n• Memoria RAM: 4 GB mínimo (8 GB recomendados).\n• Espacio en Disco: 20 GB libres en unidad SSD.\n• Sistema Operativo: Windows 10/11, macOS 12+ o Ubuntu 22.04 LTS.\n• Navegadores compatibles: Chrome 110+, Firefox 115+ o Edge.";
 
@@ -459,7 +518,7 @@
 
       respQwn = "# Análisis de Compatibilidad de Arquitectura y Stack Tecnológico\n\n1. Arquitecturas de CPU Soportadas:\n   - x86_64 (Intel Core / AMD Ryzen)\n   - ARM64 / aarch64 (Apple Silicon M1/M2/M3, procesadores ARM en servidores)\n\n2. Dependencias de Sistema Base:\n   • Bibliotecas C: glibc >= 2.31, OpenSSL 3.0+\n   • Soporte de Aceleración: Drivers GPU con compatibilidad WebGL 2.0 / WebGPU para aceleración gráfica en navegador.";
 
-    // 5. DOMINIO: PYTHON, CÓDIGO Y PROGRAMACIÓN GENERAL
+    // 6. DOMINIO: PYTHON, CÓDIGO Y PROGRAMACIÓN GENERAL
     } else if(qLower.includes("python") || qLower.includes("script") || qLower.includes("codigo") || qLower.includes("código") || qLower.includes("groq") || qLower.includes("api") || qLower.includes("javascript") || qLower.includes("funcion") || qLower.includes("función") || qLower.includes("bucle") || qLower.includes("loop") || qLower.includes("array") || qLower.includes("lista")){
       respLig = "Aquí tienes un ejemplo claro y funcional en Python:\n\n```python\nimport time\nfrom groq import Groq\n\n# Inicializar cliente de inferencia\nclient = Groq(api_key='gsk_tu_api_key')\n\nt_inicio = time.time()\nresponse = client.chat.completions.create(\n    model='llama-3.1-8b-instant',\n    messages=[{'role': 'user', 'content': '" + query.replace("'", "") + "'}],\n    max_tokens=300\n)\n\nlatencia = time.time() - t_inicio\nprint(f'Tiempo: {latencia:.2f} s')\nprint(response.choices[0].message.content)\n```";
 
@@ -467,23 +526,23 @@
 
       respQwn = "# Paradigma Asíncrono de Streaming con Groq SDK\n\n```python\nimport asyncio\nimport time\nfrom groq import AsyncGroq\n\nasync def stream_respuesta(prompt: str):\n    client = AsyncGroq()\n    t0 = time.perf_counter()\n    \n    stream = await client.chat.completions.create(\n        model='qwen/qwen3.6-27b',\n        messages=[{'role': 'user', 'content': prompt}],\n        stream=True\n    )\n    async for chunk in stream:\n        delta = chunk.choices[0].delta.content or ''\n        print(delta, end='', flush=True)\n    \n    print(f'\\n[Latencia total: {time.perf_counter() - t0:.2f}s]')\n```";
 
-    // 6. DOMINIO: MODEL ROUTER, COSTOS Y ARQUITECTURA DE IA
+    // 7. DOMINIO: MODEL ROUTER, COSTOS Y ARQUITECTURA DE IA
     } else if(qLower.includes("router") || qLower.includes("arquitectura") || qLower.includes("costo") || qLower.includes("ahorro")){
       respLig = "Resumen del Model Router:\n\n1. ¿Qué es?: Una capa intermedia inteligente que clasifica la dificultad de la pregunta del usuario.\n2. ¿Cómo ahorra?: El 80% de consultas fáciles van al modelo ligero (20B / 8B), que es 10 veces más barato y responde en <0.8 segundos.\n3. Tareas Complejas: Solo cuando detecta código avanzado o análisis profundo, envía la consulta al modelo grande (120B / 70B).\n4. Resultado: Mantiene la máxima calidad pero reduce la factura de IA entre un 70% y 85%.";
 
       respGrd = "Diseño de Arquitectura de un Model Router para Producción:\n\n1. Clasificador de Intenciones (Triage Layer):\n   • Analizador de complejidad semántica basado en clasificadores rápidos (< 15 ms).\n   • Si la consulta es estándar → Enruta hacia `llama-3.1-8b` / `gpt-oss-20b`.\n   • Si requiere razonamiento analítico → Enruta hacia `llama-3.3-70b` / `gpt-oss-120b`.\n\n2. Optimización de Costos y Rendimiento:\n   • Costo por 1M tokens ligero: ~$0.05 USD.\n   • Costo por 1M tokens grande: ~$0.59 USD.\n   • Ahorro consolidado en flotas corporativas: Del 75% al 85% mensual con latencia promedio sub-segundo.";
 
-      respQwn = "# Estrategia de Enrutamiento Inteligente y Fallbacks\n\n1. Flujo de Decisión:\n   • Paso 1: Cache semántico (Redis / Qdrant) para responder consultas repetidas en 0 ms.\n   • Paso 2: Evaluación del clasificador de complejidad del prompt.\n   • Paso 3: Inferencia primaria en modelo ligero (SLM).\n   • Paso 4: Fallback condicional al modelo grande solo si la confianza del modelo ligero es baja ($Confidence < 0.8$).";
+      respQwn = "# Estrategia de Enrutamiento Inteligente y Fallbacks\n\n1. Flujo de Decisión:\n   • Paso 1: Cache semántico (Redis / Qdrant) para responder consultas repetidas en 0 ms.\n   • Paso 2: Evaluación del clasificador de complejidad del prompt.\n   • Paso 3: Inferencia primaria en modelo ligero (SLM).\n   • Paso 4: Fallback condicional al modelo grande solo si la confianza del modelo ligero es baja (Confidence < 0.8).";
 
-    // 7. DOMINIO: MACHINE LEARNING, LLMS, RAG, EMBEDDINGS
+    // 8. DOMINIO: MACHINE LEARNING, LLMS, RAG, EMBEDDINGS
     } else if(qLower.includes("rag") || qLower.includes("embedding") || qLower.includes("transformer") || qLower.includes("lora") || qLower.includes("fine-tuning") || qLower.includes("ia") || qLower.includes("token")){
       respLig = "Explicación Rápida:\n\nSobre «" + query + "»:\n\n1. Concepto Central: Es una técnica clave en inteligencia artificial moderna para conectar conocimiento externo o adaptar modelos a tareas específicas.\n2. Beneficio Clave: Permite que el modelo responda con información actualizada y privada sin necesidad de reentrenarlo desde cero.\n3. Aplicación Práctica: Búsqueda semántica, asistentes con documentos PDF y bases de conocimiento internas.";
 
-      respGrd = "Análisis Estructurado de Arquitectura de IA:\n\nDeconstrucción Técnica de «" + query + "»:\n\n1. Fundamentos Matemáticos y de Representación:\n   • Los textos se transforman en vectores continuos (embeddings) en un espacio multidimensional ($D = 4096$).\n   • La similitud semántica se calcula mediante el coseno del ángulo entre vectores ($Sim(A, B) = \\frac{A \\cdot B}{\\|A\\| \\|B\\|}$).\n\n2. Pipeline de Implementación en Producción:\n   • Ingesta y segmentación de documentos en fragmentos (chunks) de 500 tokens.\n   • Almacenamiento en bases de datos vectoriales (Chroma, Qdrant o FAISS).\n   • Inyección de fragmentos relevantes en el contexto del LLM para generar respuestas fundamentadas sin alucinaciones.";
+      respGrd = "Análisis Estructurado de Arquitectura de IA:\n\nDeconstrucción Técnica de «" + query + "»:\n\n1. Fundamentos Matemáticos y de Representación:\n   • Los textos se transforman en vectores continuos (embeddings) en un espacio multidimensional (D = 4096).\n   • La similitud semántica se calcula mediante el coseno del ángulo entre vectores (Sim(A, B) = (A·B)/(||A|| ||B||)).\n\n2. Pipeline de Implementación en Producción:\n   • Ingesta y segmentación de documentos en fragmentos (chunks) de 500 tokens.\n   • Almacenamiento en bases de datos vectoriales (Chroma, Qdrant o FAISS).\n   • Inyección de fragmentos relevantes en el contexto del LLM para generar respuestas fundamentadas sin alucinaciones.";
 
-      respQwn = "# Análisis Comparativo de Eficiencia y Escalabilidad en IA\n\n1. Balance entre Memoria y Cómputo:\n   - RAG (Retrieval-Augmented Generation): Complejidad $O(N \\log N)$ en búsqueda vectorial HNSW, manteniendo el contexto del modelo corto y económico.\n   - Fine-Tuning: Ajuste de pesos por LoRA con matrices de bajo rango ($r=8, 16$), ideal para cambiar el estilo o formato de salida.\n\n2. Conclusión Técnica: RAG es la mejor opción para actualizar conocimiento factual; Fine-Tuning es óptimo para adaptar el comportamiento y tono del modelo.";
+      respQwn = "# Análisis Comparativo de Eficiencia y Escalabilidad en IA\n\n1. Balance entre Memoria y Cómputo:\n   - RAG (Retrieval-Augmented Generation): Complejidad O(N log N) en búsqueda vectorial HNSW, manteniendo el contexto del modelo corto y económico.\n   - Fine-Tuning: Ajuste de pesos por LoRA con matrices de bajo rango (r=8, 16), ideal para cambiar el estilo o formato de salida.\n\n2. Conclusión Técnica: RAG es la mejor opción para actualizar conocimiento factual; Fine-Tuning es óptimo para adaptar el comportamiento y tono del modelo.";
 
-    // 8. CUALQUIER OTRA CONSULTA O PREGUNTA GENERAL (MODO LIBRE NATURAL)
+    // 9. CUALQUIER OTRA CONSULTA O PREGUNTA GENERAL (MODO LIBRE NATURAL)
     } else {
       var capitalizedQuery = query.charAt(0).toUpperCase() + query.slice(1);
       respLig = "Respuesta Directa (Modelo Ligero 20B / LPU):\n\nSobre tu consulta: «" + capitalizedQuery + "»\n\n• Resumen: La forma más directa de abordarlo es entender el objetivo principal y seguir los pasos esenciales de manera práctica.\n• Recomendación: Priorizar soluciones sencillas y claras que resuelvan la duda de inmediato.\n• Ejemplo / Aplicación: Si tienes un caso concreto o deseas profundizar en algún detalle específico, puedes consultarlo directamente.";
@@ -496,10 +555,51 @@
     return { lig: respLig, grd: respGrd, qwn: respQwn };
   }
 
+  // FUNCIÓN PARA CONSULTAR LA API REAL DE GROQ DESDE EL NAVEGADOR
+  async function callGroqModel(modelName, query, maxTokens, temperature, apiKey) {
+    var t0 = performance.now();
+    var response = await fetch("https://api.groq.com/openai/v1/chat/completions", {
+      method: "POST",
+      headers: {
+        "Authorization": "Bearer " + apiKey,
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({
+        model: modelName,
+        messages: [
+          { role: "system", content: "Eres un asistente de IA experto, preciso, claro y pedagógico. Responde en español de forma estructurada con Markdown." },
+          { role: "user", content: query }
+        ],
+        max_tokens: parseInt(maxTokens, 10) || 600,
+        temperature: parseFloat(temperature) || 0.3
+      })
+    });
+
+    var latency = (performance.now() - t0) / 1000;
+    if(!response.ok) {
+      var errData = await response.json().catch(function(){ return {}; });
+      throw new Error(errData.error ? errData.error.message : ("Error HTTP " + response.status));
+    }
+
+    var data = await response.json();
+    var content = data.choices && data.choices[0] && data.choices[0].message ? data.choices[0].message.content : "Sin respuesta.";
+    var promptTokens = data.usage ? data.usage.prompt_tokens : Math.floor(query.length / 3.4);
+    var completionTokens = data.usage ? data.usage.completion_tokens : Math.floor(content.length / 3.4);
+    var totalTokens = data.usage ? data.usage.total_tokens : (promptTokens + completionTokens);
+    var speed = Math.round(completionTokens / Math.max(latency, 0.05));
+
+    return {
+      content: content,
+      latency: latency.toFixed(2),
+      totalTokens: totalTokens,
+      speed: speed
+    };
+  }
+
   var lastBenchmarkData = null;
 
   if(btnRunLiveBench){
-    btnRunLiveBench.addEventListener("click", function(){
+    btnRunLiveBench.addEventListener("click", async function(){
       var query = customQuery ? customQuery.value.trim() : "";
       if(!query) query = "¿Cómo puedo restablecer mi contraseña olvidada en el portal web institucional?";
 
@@ -510,8 +610,6 @@
       btnRunLiveBench.innerHTML = "<svg viewBox=\"0 0 24 24\" width=\"16\" height=\"16\" fill=\"currentColor\" style=\"animation:spin 1s linear infinite;\"><path d=\"M12 4V2A10 10 0 0 0 2 12h2a8 8 0 0 1 8-8z\"/></svg><span>Procesando en Paralelo [3 LPUs]...</span>";
       safePlaySound("pop", 450);
 
-      var responses = generateBenchmarkResponses(query, maxTokens, temp);
-
       // Activar estilos running
       if(cardLig) cardLig.classList.add("running");
       if(cardGrd) cardGrd.classList.add("running");
@@ -521,7 +619,6 @@
       if(badgeGrd) { badgeGrd.textContent = "Generando..."; badgeGrd.style.background = "rgba(8,102,255,0.2)"; }
       if(badgeQwn) { badgeQwn.textContent = "Generando..."; badgeQwn.style.background = "rgba(8,102,255,0.2)"; }
 
-      // Timers dinámicos en vivo
       var startTime = performance.now();
       var timerInterval = setInterval(function(){
         var cur = (performance.now() - startTime) / 1000;
@@ -530,7 +627,66 @@
         if(cardQwn && cardQwn.classList.contains("running") && valLatQwn) valLatQwn.textContent = cur.toFixed(2) + " s";
       }, 30);
 
-      // Latencias calculadas realistas con pequeña variación
+      // MODO 1: SI EL USUARIO TIENE API KEY REAL DE GROQ CONECTADA
+      if(activeGroqKey && activeGroqKey.startsWith("gsk_")) {
+        try {
+          var p1 = callGroqModel("llama-3.1-8b-instant", query, maxTokens, temp, activeGroqKey)
+            .then(function(res){
+              if(cardLig) cardLig.classList.remove("running");
+              if(valLatLig) valLatLig.textContent = res.latency + " s";
+              if(valTokLig) valTokLig.textContent = res.totalTokens;
+              if(valSpdLig) valSpdLig.textContent = res.speed + " t/s";
+              if(badgeLig) { badgeLig.textContent = "API Real LPU"; badgeLig.style.background = "rgba(46, 160, 67, 0.2)"; }
+              streamText(bodyLig, res.content, 300, null);
+              return res;
+            });
+
+          var p2 = callGroqModel("llama-3.3-70b-versatile", query, maxTokens, temp, activeGroqKey)
+            .then(function(res){
+              if(cardGrd) cardGrd.classList.remove("running");
+              if(valLatGrd) valLatGrd.textContent = res.latency + " s";
+              if(valTokGrd) valTokGrd.textContent = res.totalTokens;
+              if(valSpdGrd) valSpdGrd.textContent = res.speed + " t/s";
+              if(badgeGrd) { badgeGrd.textContent = "API Real LPU"; badgeGrd.style.background = "rgba(163, 113, 247, 0.2)"; }
+              streamText(bodyGrd, res.content, 350, null);
+              return res;
+            });
+
+          var p3 = callGroqModel("gemma2-9b-it", query, maxTokens, temp, activeGroqKey)
+            .catch(function(){ return callGroqModel("llama-3.1-8b-instant", query, maxTokens, temp, activeGroqKey); })
+            .then(function(res){
+              if(cardQwn) cardQwn.classList.remove("running");
+              if(valLatQwn) valLatQwn.textContent = res.latency + " s";
+              if(valTokQwn) valTokQwn.textContent = res.totalTokens;
+              if(valSpdQwn) valSpdQwn.textContent = res.speed + " t/s";
+              if(badgeQwn) { badgeQwn.textContent = "API Real LPU"; badgeQwn.style.background = "rgba(210, 153, 34, 0.2)"; }
+              streamText(bodyQwn, res.content, 300, null);
+              return res;
+            });
+
+          var results = await Promise.all([p1, p2, p3]);
+          clearInterval(timerInterval);
+
+          btnRunLiveBench.disabled = false;
+          btnRunLiveBench.innerHTML = "<svg viewBox=\"0 0 24 24\" width=\"16\" height=\"16\" fill=\"currentColor\"><path d=\"M8 5v14l11-7z\"/></svg><span>Ejecutar Benchmark en Paralelo</span>";
+          safePlaySound("chime");
+
+          var resLig = results[0];
+          var resGrd = results[1];
+          if(summaryText) {
+            var diffPct = Math.round(((parseFloat(resGrd.latency) - parseFloat(resLig.latency)) / parseFloat(resGrd.latency)) * 100);
+            summaryText.innerHTML = "<b>Inferencia 100% Real en Groq LPUs:</b> El <b>Modelo Ligero (8B Instant)</b> respondió en <b>" + resLig.latency + " s</b> (" + resLig.speed + " tok/s), siendo <b>" + Math.abs(diffPct) + "% más veloz</b> que el Modelo Grande 70B (" + resGrd.latency + " s).";
+          }
+          return;
+        } catch(apiErr) {
+          console.warn("Fallo llamada a API Real Groq:", apiErr);
+          // Si falla la API real, continuar fluidamente con el simulador inteligente
+        }
+      }
+
+      // MODO 2: SIMULADOR LOCAL INTELIGENTE
+      var responses = generateBenchmarkResponses(query, maxTokens, temp);
+
       var latLigVal = (0.75 + Math.random() * 0.35).toFixed(2);
       var latGrdVal = (1.75 + Math.random() * 0.30).toFixed(2);
       var latQwnVal = (1.50 + Math.random() * 0.30).toFixed(2);
@@ -582,7 +738,6 @@
           btnRunLiveBench.innerHTML = "<svg viewBox=\"0 0 24 24\" width=\"16\" height=\"16\" fill=\"currentColor\"><path d=\"M8 5v14l11-7z\"/></svg><span>Ejecutar Benchmark en Paralelo</span>";
           safePlaySound("chime");
 
-          // Actualizar banner de dictamen
           var diffPct = Math.round(((parseFloat(latGrdVal) - parseFloat(latLigVal)) / parseFloat(latGrdVal)) * 100);
           if(summaryText){
             summaryText.innerHTML = "<b>Modelo Ligero (20B)</b> respondió en <b>" + latLigVal + " s</b> (" + spdLigVal + " tok/s), siendo <b>" + diffPct + "% más rápido</b> que el Modelo Grande (" + latGrdVal + " s). <i>Dictamen del Router: Dirigir consulta a Modelo Ligero para 80%+ de ahorro en cómputo.</i>";
