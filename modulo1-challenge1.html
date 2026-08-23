@@ -384,13 +384,13 @@
         </div>
 
         <!-- Características en Común y Diferencias Clave -->
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.2rem; margin: 1.4rem 0;">
-          <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1.1rem;">
-            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.6rem;">
-              <svg fill="currentColor" height="18" viewBox="0 0 24 24" width="18" style="color: var(--meta-blue);"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
-              <h5 style="margin: 0; font-size: 0.92rem; font-weight: 700; color: var(--text-primary);">Características en Común con Meta Llama</h5>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; margin: 1.8rem 0;">
+          <div class="comparison-card">
+            <div style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.8rem;">
+              <svg fill="currentColor" height="20" viewBox="0 0 24 24" width="20" style="color: var(--meta-blue);"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+              <h5 style="margin: 0; font-size: 0.96rem; font-weight: 750; color: var(--text-primary);">Características en Común con Meta Llama</h5>
             </div>
-            <ul style="margin: 0; padding-left: 1.2rem; font-size: 0.84rem; color: var(--text-secondary); line-height: 1.6;">
+            <ul>
               <li><strong>Misma Arquitectura Transformer:</strong> Todos comparten el paradigma <em>Decoder-only</em> con incrustaciones posicionales rotacionales (RoPE) y activación SwiGLU.</li>
               <li><strong>Filosofía de Pesos Abiertos (Open-Weights):</strong> Permiten auditoría de parámetros, ejecución local soberana y cero dependencia de APIs cerradas propietarias.</li>
               <li><strong>Interoperabilidad 100% Compatible:</strong> Siguen la especificación estándar de <code>ChatCompletions</code> de OpenAI/Groq (roles <code>system</code>, <code>user</code>, <code>assistant</code>).</li>
@@ -398,12 +398,12 @@
             </ul>
           </div>
 
-          <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1.1rem;">
-            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.6rem;">
-              <svg fill="currentColor" height="18" viewBox="0 0 24 24" width="18" style="color: #a855f7;"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 14l-5-5 1.41-1.41L12 14.17l7.59-7.59L21 8l-9 9z"/></svg>
-              <h5 style="margin: 0; font-size: 0.92rem; font-weight: 700; color: var(--text-primary);">Diferencias Clave y Ventajas Especializadas</h5>
+          <div class="comparison-card">
+            <div style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.8rem;">
+              <svg fill="currentColor" height="20" viewBox="0 0 24 24" width="20" style="color: #a855f7;"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 14l-5-5 1.41-1.41L12 14.17l7.59-7.59L21 8l-9 9z"/></svg>
+              <h5 style="margin: 0; font-size: 0.96rem; font-weight: 750; color: var(--text-primary);">Diferencias Clave y Ventajas Especializadas</h5>
             </div>
-            <ul style="margin: 0; padding-left: 1.2rem; font-size: 0.84rem; color: var(--text-secondary); line-height: 1.6;">
+            <ul>
               <li><strong>Mayor Capacidad en el SLM (20B vs 8B):</strong> El modelo <code>openai/gpt-oss-20b</code> dispone de más del doble de parámetros que un 8B puro, reteniendo instrucciones complejas sin perder velocidad.</li>
               <li><strong>Escala Masiva en el Flagship (120B vs 70B):</strong> Con 120B parámetros, <code>openai/gpt-oss-120b</code> ofrece un espacio conceptual superior para seguir directivas estrictas de gobernanza.</li>
               <li><strong>Razonamiento Nativo Chain-of-Thought (Qwen 27B):</strong> A diferencia de Llama base, Qwen incorpora capacidades intrínsecas de auto-reflexión y verificación algorítmica para matemáticas y código.</li>

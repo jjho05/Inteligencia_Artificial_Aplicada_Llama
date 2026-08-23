@@ -8021,3 +8021,145 @@ details[open] > summary svg {
   color: #ffffff;
   border-color: var(--meta-blue);
 }
+
+/* ==========================================================================
+   SISTEMA MAESTRO DE TIPOGRAFÍA, INTERLINEADO Y ESPACIADO ERGONÓMICO
+   ========================================================================== */
+
+/* 1. Interlineado y separación de párrafos en todo el ecosistema */
+p,
+.prose-p {
+  line-height: 1.8;
+  margin-bottom: 1.35rem;
+  letter-spacing: 0.01em;
+}
+
+p:last-child,
+.prose-p:last-child {
+  margin-bottom: 0;
+}
+
+/* 2. Listas y viñetas con espaciado vertical ergonómico */
+.tema-card ul,
+.tema-card ol,
+.formula-card ul,
+.formula-card ol,
+.easy-explainer-box ul,
+.pro-tip-box ul,
+.bento-sub-card ul,
+.comparison-card ul,
+.feature-card-clean ul {
+  padding-left: 1.4rem;
+  margin-top: 0.9rem;
+  margin-bottom: 1.35rem;
+}
+
+.tema-card ul li,
+.tema-card ol li,
+.formula-card ul li,
+.formula-card ol li,
+.easy-explainer-box ul li,
+.pro-tip-box ul li,
+.bento-sub-card ul li,
+.comparison-card ul li,
+.feature-card-clean ul li {
+  line-height: 1.75;
+  margin-bottom: 0.95rem;
+  color: var(--text-secondary);
+}
+
+.tema-card ul li:last-child,
+.tema-card ol li:last-child,
+.comparison-card ul li:last-child,
+.feature-card-clean ul li:last-child {
+  margin-bottom: 0;
+}
+
+.tema-card ul li strong,
+.tema-card ol li strong,
+.comparison-card ul li strong,
+.feature-card-clean ul li strong {
+  color: var(--text-primary);
+}
+
+/* 3. Tablas de Datos (.data-table, .matrix-table, .table-pro) */
+.table-responsive {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: 12px;
+  border: 1px solid var(--border-subtle);
+  background: var(--bg-surface);
+  box-shadow: var(--shadow-sm);
+  margin: 1.6rem 0 2rem;
+}
+
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 0.88rem;
+  line-height: 1.65;
+  min-width: 720px;
+}
+
+.data-table thead th {
+  background: var(--bg-subtle);
+  padding: 1.15rem 1.4rem;
+  font-family: var(--font-head);
+  font-weight: 750;
+  font-size: 0.84rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-primary);
+  border-bottom: 2px solid var(--border-subtle);
+  vertical-align: middle;
+}
+
+.data-table tbody td {
+  padding: 1.25rem 1.4rem;
+  border-bottom: 1px solid var(--border-subtle);
+  vertical-align: top;
+  color: var(--text-secondary);
+  line-height: 1.7;
+}
+
+.data-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.data-table tbody tr:hover td {
+  background: var(--bg-subtle-alt);
+}
+
+/* 4. Tarjetas Bento y Comparativas con respiración visual */
+.comparison-card,
+.feature-card-clean {
+  background: var(--bg-surface-2);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 1.6rem 1.75rem;
+  transition: all 0.25s ease;
+}
+
+.comparison-card:hover,
+.feature-card-clean:hover {
+  border-color: var(--meta-blue-border);
+  box-shadow: var(--shadow-sm);
+}
+
+/* 5. Cajas de Aviso, Explicación Fácil y Pro-Tips */
+.easy-explainer-box,
+.pro-tip-box,
+.callout-box {
+  padding: 1.4rem 1.65rem;
+  margin-top: 1.6rem;
+  margin-bottom: 1.6rem;
+  line-height: 1.75;
+}
+
+.easy-text,
+.pro-tip-text {
+  line-height: 1.75;
+  margin: 0;
+}
+
