@@ -731,6 +731,11 @@
         var resGrd = results[1];
         var resQwn = results[2];
 
+        if(summaryText) {
+          var diffPct = Math.round(((parseFloat(resGrd.latency) - parseFloat(resLig.latency)) / parseFloat(resGrd.latency)) * 100);
+          summaryText.innerHTML = "<b>Inferencia en Vivo en Groq LPUs (Vercel):</b> El <b>Modelo Ligero (20B)</b> respondió en <b>" + resLig.latency + " s</b> (" + resLig.speed + " tok/s), siendo <b>" + Math.abs(diffPct) + "% más veloz</b> que el Modelo Grande 120B (" + resGrd.latency + " s).";
+        }
+
         if(matrixBody) {
           matrixBody.innerHTML = `
             <tr>
@@ -759,15 +764,6 @@
         return;
       } catch(liveErr) {
         console.warn("Inferencia en vivo no disponible, usando fallback simulado:", liveErr);
-      }
-          if(summaryText) {
-            var diffPct = Math.round(((parseFloat(resGrd.latency) - parseFloat(resLig.latency)) / parseFloat(resGrd.latency)) * 100);
-            summaryText.innerHTML = "<b>Inferencia 100% Real en Groq LPUs:</b> El <b>Modelo Ligero (20B)</b> respondió en <b>" + resLig.latency + " s</b> (" + resLig.speed + " tok/s), siendo <b>" + Math.abs(diffPct) + "% más veloz</b> que el Modelo Grande 120B (" + resGrd.latency + " s).";
-          }
-          return;
-        } catch(apiErr) {
-          console.warn("Inferencia Real no disponible (se utilizarán presets del curso):", apiErr.message);
-        }
       }
 
       // MODO 2: SIMULADOR LOCAL INTELIGENTE
