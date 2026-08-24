@@ -685,54 +685,81 @@
         if(cardQwn && cardQwn.classList.contains("running") && valLatQwn) valLatQwn.textContent = cur.toFixed(2) + " s";
       }, 30);
 
-      // INTENTO DE INFERENCIA 100% REAL (Groq API en navegador o Vercel Serverless)
-      var hasApiKey = activeGroqKey && activeGroqKey.startsWith("gsk_");
-      var isFreeModeQuery = !query.includes("contraseña") && !query.includes("password") && !query.includes("restablecer") && !query.includes("horario") && !query.includes("soporte") && !query.includes("canales") && !query.includes("requisito") && !query.includes("hardware") && !query.includes("python") && !query.includes("script") && !query.includes("router") && !query.includes("ahorro");
+      // INTENTO DE INFERENCIA EN VIVO (Groq API vía Vercel Serverless Function /api/groq)
+      try {
+        var p1 = callGroqModel("openai/gpt-oss-20b", query, maxTokens, temp, activeGroqKey)
+          .then(function(res){
+            if(cardLig) cardLig.classList.remove("running");
+            if(valLatLig) valLatLig.textContent = res.latency + " s";
+            if(valTokLig) valTokLig.textContent = res.totalTokens;
+            if(valSpdLig) valSpdLig.textContent = res.speed + " t/s";
+            if(badgeLig) { badgeLig.textContent = "Alta Velocidad"; badgeLig.style.background = "rgba(46, 160, 67, 0.2)"; }
+            streamText(bodyLig, res.content, 300, null);
+            return res;
+          });
 
-      if(hasApiKey || isFreeModeQuery) {
-        try {
-          var p1 = callGroqModel("openai/gpt-oss-20b", query, maxTokens, temp, activeGroqKey)
-            .then(function(res){
-              if(cardLig) cardLig.classList.remove("running");
-              if(valLatLig) valLatLig.textContent = res.latency + " s";
-              if(valTokLig) valTokLig.textContent = res.totalTokens;
-              if(valSpdLig) valSpdLig.textContent = res.speed + " t/s";
-              if(badgeLig) { badgeLig.textContent = "Alta Velocidad"; badgeLig.style.background = "rgba(46, 160, 67, 0.2)"; }
-              streamText(bodyLig, res.content, 300, null);
-              return res;
-            });
+        var p2 = callGroqModel("openai/gpt-oss-120b", query, maxTokens, temp, activeGroqKey)
+          .then(function(res){
+            if(cardGrd) cardGrd.classList.remove("running");
+            if(valLatGrd) valLatGrd.textContent = res.latency + " s";
+            if(valTokGrd) valTokGrd.textContent = res.totalTokens;
+            if(valSpdGrd) valSpdGrd.textContent = res.speed + " t/s";
+            if(badgeGrd) { badgeGrd.textContent = "Alta Capacidad"; badgeGrd.style.background = "rgba(163, 113, 247, 0.2)"; }
+            streamText(bodyGrd, res.content, 350, null);
+            return res;
+          });
 
-          var p2 = callGroqModel("openai/gpt-oss-120b", query, maxTokens, temp, activeGroqKey)
-            .then(function(res){
-              if(cardGrd) cardGrd.classList.remove("running");
-              if(valLatGrd) valLatGrd.textContent = res.latency + " s";
-              if(valTokGrd) valTokGrd.textContent = res.totalTokens;
-              if(valSpdGrd) valSpdGrd.textContent = res.speed + " t/s";
-              if(badgeGrd) { badgeGrd.textContent = "Alta Capacidad"; badgeGrd.style.background = "rgba(163, 113, 247, 0.2)"; }
-              streamText(bodyGrd, res.content, 350, null);
-              return res;
-            });
+        var p3 = callGroqModel("qwen/qwen3.6-27b", query, maxTokens, temp, activeGroqKey)
+          .then(function(res){
+            if(cardQwn) cardQwn.classList.remove("running");
+            if(valLatQwn) valLatQwn.textContent = res.latency + " s";
+            if(valTokQwn) valTokQwn.textContent = res.totalTokens;
+            if(valSpdQwn) valSpdQwn.textContent = res.speed + " t/s";
+            if(badgeQwn) { badgeQwn.textContent = "Razonamiento"; badgeQwn.style.background = "rgba(210, 153, 34, 0.2)"; }
+            streamText(bodyQwn, res.content, 300, null);
+            return res;
+          });
 
-          var p3 = callGroqModel("qwen/qwen3.6-27b", query, maxTokens, temp, activeGroqKey)
-            .then(function(res){
-              if(cardQwn) cardQwn.classList.remove("running");
-              if(valLatQwn) valLatQwn.textContent = res.latency + " s";
-              if(valTokQwn) valTokQwn.textContent = res.totalTokens;
-              if(valSpdQwn) valSpdQwn.textContent = res.speed + " t/s";
-              if(badgeQwn) { badgeQwn.textContent = "Razonamiento"; badgeQwn.style.background = "rgba(210, 153, 34, 0.2)"; }
-              streamText(bodyQwn, res.content, 300, null);
-              return res;
-            });
+        var results = await Promise.all([p1, p2, p3]);
+        clearInterval(timerInterval);
 
-          var results = await Promise.all([p1, p2, p3]);
-          clearInterval(timerInterval);
+        btnRunLiveBench.disabled = false;
+        btnRunLiveBench.innerHTML = "<svg viewBox=\"0 0 24 24\" width=\"16\" height=\"16\" fill=\"currentColor\"><path d=\"M8 5v14l11-7z\"/></svg><span>Ejecutar Benchmark en Paralelo</span>";
+        safePlaySound("chime");
 
-          btnRunLiveBench.disabled = false;
-          btnRunLiveBench.innerHTML = "<svg viewBox=\"0 0 24 24\" width=\"16\" height=\"16\" fill=\"currentColor\"><path d=\"M8 5v14l11-7z\"/></svg><span>Ejecutar Benchmark en Paralelo</span>";
-          safePlaySound("chime");
+        var resLig = results[0];
+        var resGrd = results[1];
+        var resQwn = results[2];
 
-          var resLig = results[0];
-          var resGrd = results[1];
+        if(matrixBody) {
+          matrixBody.innerHTML = `
+            <tr>
+              <td><strong>openai/gpt-oss-20b</strong></td>
+              <td>${resLig.latency} s</td>
+              <td>${resLig.totalTokens}</td>
+              <td>${resLig.speed} t/s</td>
+              <td>$${((resLig.totalTokens / 1000000) * 0.075).toFixed(6)}</td>
+            </tr>
+            <tr>
+              <td><strong>openai/gpt-oss-120b</strong></td>
+              <td>${resGrd.latency} s</td>
+              <td>${resGrd.totalTokens}</td>
+              <td>${resGrd.speed} t/s</td>
+              <td>$${((resGrd.totalTokens / 1000000) * 0.59).toFixed(6)}</td>
+            </tr>
+            <tr>
+              <td><strong>qwen/qwen3.6-27b</strong></td>
+              <td>${resQwn.latency} s</td>
+              <td>${resQwn.totalTokens}</td>
+              <td>${resQwn.speed} t/s</td>
+              <td>$${((resQwn.totalTokens / 1000000) * 0.20).toFixed(6)}</td>
+            </tr>
+          `;
+        }
+        return;
+      } catch(liveErr) {
+        console.warn("Inferencia en vivo no disponible, usando fallback simulado:", liveErr);
+      }
           if(summaryText) {
             var diffPct = Math.round(((parseFloat(resGrd.latency) - parseFloat(resLig.latency)) / parseFloat(resGrd.latency)) * 100);
             summaryText.innerHTML = "<b>Inferencia 100% Real en Groq LPUs:</b> El <b>Modelo Ligero (20B)</b> respondió en <b>" + resLig.latency + " s</b> (" + resLig.speed + " tok/s), siendo <b>" + Math.abs(diffPct) + "% más veloz</b> que el Modelo Grande 120B (" + resGrd.latency + " s).";

@@ -36,17 +36,20 @@ export default async function handler(req, res) {
     });
   }
 
-  // Mapeo a los modelos exactos soportados y roles diferenciados
+  // Mapeo flexible a los modelos solicitados
   let requestedModel = (bodyData.model || 'openai/gpt-oss-20b').trim();
-  let modelName = 'openai/gpt-oss-20b';
-  let systemPrompt = 'Eres un modelo ligero de alta velocidad (SLM 20B). Tu objetivo es dar respuestas ultra-directas, concisas, prácticas y breves (máximo 2 párrafos o viñetas cortas sin preámbulos). No uses emojis.';
+  let modelName = requestedModel;
+  let systemPrompt = 'Eres un asistente experto de IA ejecutado en Groq LPU. Responde en español de forma directa, rigurosa y sin emojis.';
 
-  if (requestedModel.includes('120b') || requestedModel.includes('grd') || requestedModel.includes('70b') || requestedModel.includes('grande')) {
+  if (requestedModel.includes('120b') || requestedModel.includes('grd') || requestedModel.includes('grande')) {
     modelName = 'openai/gpt-oss-120b';
     systemPrompt = 'Eres un modelo insignia de máxima capacidad (LLM 120B). Tu objetivo es proporcionar una respuesta formal, exhaustiva, estructurada con directivas técnicas completas, reglas y ejemplos de nivel enterprise. No uses emojis.';
   } else if (requestedModel.includes('qwen') || requestedModel.includes('27b') || requestedModel.includes('qwn')) {
     modelName = 'qwen/qwen3.6-27b';
     systemPrompt = 'Eres un modelo especializado en razonamiento analítico y resolución lógica paso a paso (27B CoT). Desglosa el problema mediante análisis sistemático, principios fundamentales y validación formal de cada paso. No uses emojis.';
+  } else if (requestedModel.includes('20b') || requestedModel.includes('8b') || requestedModel.includes('ligero')) {
+    modelName = requestedModel.includes('20b') ? 'openai/gpt-oss-20b' : requestedModel;
+    systemPrompt = 'Eres un modelo ligero de alta velocidad (SLM 20B). Tu objetivo es dar respuestas ultra-directas, concisas, prácticas y breves (máximo 2 párrafos o viñetas cortas sin preámbulos). No uses emojis.';
   }
 
   let finalSystemPrompt = (bodyData.system && bodyData.system.trim()) ? bodyData.system.trim() : systemPrompt;
