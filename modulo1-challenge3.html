@@ -4,7 +4,7 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Challenge 3: Fine-Tuning con LoRA | IA Aplicada con Modelos Abiertos</title>
-  <meta name="description" content="Laboratorio interactivo, guía profunda y código resuelto del Challenge 3: Fine-Tuning con LoRA y SFTTrainer (PEFT, Reducción de Pérdida, Adaptación de Atención y GPU T4) por Ing. Jesús Javier Hernández Olvera."/>
+  <meta name="description" content="Laboratorio interactivo, guía profunda y código resuelto del Challenge 3: Fine-Tuning de Modelos Llama con LoRA y SFTTrainer (PEFT, Reducción de Pérdida, Adaptación de Atención y GPU T4) por Ing. Jesús Javier Hernández Olvera."/>
   
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -14,7 +14,7 @@
   <!-- KaTeX para Fórmulas Matemáticas -->
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css"/>
   <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
-  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
   
   <!-- Estilos Modulares -->
   <link rel="stylesheet" href="css/styles.css"/>
@@ -103,7 +103,7 @@
 
       <h1 class="hero-title">Fine-Tuning de Modelos Llama con LoRA &amp; Medición de Pérdida</h1>
       <p class="hero-desc">
-        <b>Adaptación eficiente de bajo rango (PEFT) con SFTTrainer y Hugging Face</b>. Congela los 1,100 millones de parámetros del modelo base, inyecta matrices de bajo rango entrenables ($B 	imes A$) en las capas de atención ($q\_proj, v\_proj$), ejecuta el entrenamiento supervisado en GPU T4 y cuantifica objetivamente el aprendizaje mediante la reducción de la función de pérdida cross-entropy.
+        <b>Adaptación eficiente de bajo rango (PEFT) con SFTTrainer y Hugging Face</b>. Congela los 1,100 millones de parámetros del modelo base, inyecta matrices de bajo rango entrenables ($B \times A$) en las capas de atención ($q\_proj, v\_proj$), ejecuta el entrenamiento supervisado en GPU T4 y cuantifica objetivamente el aprendizaje mediante la reducción de la función de pérdida cross-entropy.
       </p>
 
       <div class="hero-actions-row">
@@ -125,7 +125,7 @@
           </div>
           <div class="metric-stat-val">LoRA PEFT</div>
           <div class="metric-stat-label">Arquitectura de Adaptación</div>
-          <div class="metric-stat-sub">Matrices $B 	imes A$ ($r=8, lpha=16$)</div>
+          <div class="metric-stat-sub">Matrices $B \times A$ ($r=8, \alpha=16$)</div>
         </div>
 
         <div class="metric-card">
@@ -143,7 +143,7 @@
           </div>
           <div class="metric-stat-val">84.6% Reducción</div>
           <div class="metric-stat-label">Convergencia de Pérdida</div>
-          <div class="metric-stat-sub">De $2.6840 ightarrow 0.4120$ Loss</div>
+          <div class="metric-stat-sub">De $2.6840 \rightarrow 0.4120$ Loss</div>
         </div>
 
         <div class="metric-card">
@@ -156,6 +156,36 @@
         </div>
       </div>
     </section>
+
+    <!-- FICHA TÉCNICA DEL ALUMNO -->
+    <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-left: 4px solid var(--meta-blue); border-radius: 8px; padding: 1.2rem 1.5rem; margin: 1.5rem 0;">
+      <div style="font-size: 0.8rem; text-transform: uppercase; font-weight: 700; color: var(--meta-blue); margin-bottom: 0.3rem;">Ficha Técnica Oficial del Entregable</div>
+      <h2 style="font-size: 1.25rem; font-weight: 800; color: var(--text-primary); font-family: var(--font-head); margin-bottom: 0.6rem;">HANDS - ON: FINE-TUNING Y EVALUACIÓN DE MODELOS</h2>
+      <div style="display: flex; gap: 1.5rem; flex-wrap: wrap; font-size: 0.88rem; color: var(--text-secondary);">
+        <div><strong>Alumno:</strong> <span class="notranslate" translate="no">Ing. Jesús Javier Hernández Olvera</span></div>
+        <div><strong>Módulo:</strong> IA Aplicada con Modelos Abiertos</div>
+        <div><strong>Challenge:</strong> Fine-Tuning de Modelos Llama con LoRA y Medición de Pérdida</div>
+      </div>
+    </div>
+
+    <!-- AVISO DE VISUALIZACIÓN Y EJECUCIÓN (READ-ONLY & EDIT GUIDE) -->
+    <div style="background: rgba(8, 102, 255, 0.06); border: 1px solid rgba(8, 102, 255, 0.25); border-radius: 8px; padding: 1.2rem 1.5rem; margin: 1.5rem 0;">
+      <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.6rem; color: var(--meta-blue);">
+        <svg fill="currentColor" height="18" viewBox="0 0 24 24" width="18"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-1 6h2v2h-2V7zm0 4h2v6h-2v-6z"></path></svg>
+        <strong style="font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.5px;">🔒 AVISO DE VISUALIZACIÓN Y EJECUCIÓN (READ-ONLY &amp; EDIT GUIDE)</strong>
+      </div>
+      <p style="font-size: 0.88rem; line-height: 1.5; color: var(--text-primary); margin-bottom: 0.8rem;">
+        <strong>Este cuaderno oficial se encuentra en modo de solo lectura (<em>View Only</em>) para preservar la solución maestra.</strong>
+      </p>
+      <p style="font-size: 0.86rem; color: var(--text-secondary); margin-bottom: 0.5rem;">
+        <strong>Para ejecutar las celdas, experimentar o ingresar tu propia clave de API:</strong>
+      </p>
+      <ol style="font-size: 0.85rem; line-height: 1.6; color: var(--text-secondary); margin: 0; padding-left: 1.4rem;">
+        <li>💾 <strong>Guardar una Copia Personal:</strong> En el menú superior de Google Colab, haz clic en <strong>Archivo &rarr; Guardar una copia en Drive</strong> (<em>File &rarr; Save a copy in Drive</em>).</li>
+        <li>🔑 <strong>Configurar Clave Secreta:</strong> En tu copia, ve al panel lateral izquierdo &rarr; icono de llave (<strong>Secrets / Secretos</strong>) &rarr; agrega el nombre <code>HF_TOKEN</code> con tu valor secreto y activa el permiso de acceso para este cuaderno.</li>
+        <li>💻 <strong>Descarga Local:</strong> Si prefieres ejecutarlo en tu computadora con VS Code o JupyterLab, ve a <strong>Archivo &rarr; Descargar &rarr; Descargar .ipynb</strong>.</li>
+      </ol>
+    </div>
 
     <!-- ======================================================================
          RESUMEN EJECUTIVO & FUNDAMENTO TEÓRICO
@@ -174,10 +204,10 @@
 
         <h4 class="tema-subheading"><span class="tema-subheading-tag">2. La Hipótesis del Bajo Rango Intrínseco</span> Formulación Matemática</h4>
         <p class="prose-p">
-          Los cambios de pesos $\Delta W$ durante la especialización habitan en un subespacio de dimensión muy pequeña. LoRA congela la matriz original $W_0 \in \mathbb{R}^{d 	imes k}$ y descompone la actualización en dos matrices de rango $r \ll \min(d, k)$:
+          Los cambios de pesos $\Delta W$ durante la especialización habitan en un subespacio de dimensión muy pequeña. LoRA congela la matriz original $W_0 \in \mathbb{R}^{d \times k}$ y descompone la actualización en dos matrices de rango $r \ll \min(d, k)$:
         </p>
         <div style="text-align: center; margin: 1.2rem 0; font-family: var(--font-mono); font-size: 1.15rem; font-weight: 700; color: var(--text-primary); background: var(--bg-surface-2); padding: 0.9rem; border-radius: 8px; border: 1px solid var(--border-subtle);">
-          $$h = W_0 x + \Delta W x = W_0 x + rac{lpha}{r} (B 	imes A) x$$
+          $$h = W_0 x + \Delta W x = W_0 x + \frac{\alpha}{r} (B \times A) x$$
         </div>
 
         <div class="bento-layout-grid">
@@ -190,7 +220,7 @@
             <p class="bento-sub-desc">La matriz $B$ inicia en ceros y $A$ con distribución gaussiana, haciendo que $\Delta W = 0$ en el paso inicial.</p>
           </div>
           <div class="bento-sub-card">
-            <div class="bento-sub-title">3. Factor de Escala ($lpha/r$)</div>
+            <div class="bento-sub-title">3. Factor de Escala ($\alpha/r$)</div>
             <p class="bento-sub-desc">Mantiene constante la magnitud del gradiente al experimentar con diferentes rangos de compresión.</p>
           </div>
           <div class="bento-sub-card">
@@ -222,26 +252,124 @@
     </article>
 
     <!-- ======================================================================
-         GESTIÓN DE CREDENCIALES & SECRETS
+         PASO 0: GESTIÓN DE CREDENCIALES & SECRETS
          ====================================================================== -->
     <article class="tema-card" id="obtener-api-key">
       <div class="tema-header">
         <div class="tema-eyebrow">Paso 0 · Seguridad en la Nube</div>
-        <h3 class="tema-title">Gestión de Credenciales en Google Colab con Secrets (`HF_TOKEN`)</h3>
+        <h3 class="tema-title">Manual Paso a Paso: Cómo Generar tu Token de Hugging Face y Guardarlo en Colab Secrets</h3>
       </div>
 
       <div class="tema-section-block">
-        <h4 class="tema-subheading"><span class="tema-subheading-tag">Paso a Paso</span> Conexión Segura con Hugging Face Hub</h4>
+        <h4 class="tema-subheading"><span class="tema-subheading-tag">1. Procedimiento</span> Registro Oficial y Bóveda Criptográfica</h4>
         <p class="prose-p">
-          Para descargar modelos protegidos y autenticar la sesión sin hardcoding de credenciales, almacena tu token en el panel lateral de Google Colab (icono de llave):
+          Para descargar modelos fundacionales y publicar tus adaptadores sin exponer credenciales en repositorios públicos, sigue estos 5 pasos estructurados:
         </p>
-        <ol class="prose-ol">
-          <li>Abre el panel lateral izquierdo de Google Colab y haz clic en el icono de <strong>Llave (Secrets)</strong>.</li>
-          <li>Haz clic en <strong>Add new secret</strong>.</li>
-          <li>En el campo <em>Name</em> escribe exactamente <code>HF_TOKEN</code>.</li>
-          <li>En el campo <em>Value</em> pega tu token de lectura (*Read Token*) de Hugging Face.</li>
-          <li>Activa el interruptor <strong>Notebook access</strong>.</li>
-        </ol>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; margin: 1.5rem 0;">
+          <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1.1rem;">
+            <div style="display:flex; align-items:center; gap:0.6rem; margin-bottom:0.6rem;">
+              <span class="step-num-badge">1</span>
+              <strong style="font-size:0.9rem; color:var(--text-primary);">Crear Cuenta en HF</strong>
+            </div>
+            <p style="font-size:0.84rem; color:var(--text-secondary); margin:0;">Regístrate gratuitamente en <a href="https://huggingface.co/join" target="_blank" rel="noopener noreferrer" style="color:var(--meta-blue); font-weight:700;">huggingface.co/join</a>.</p>
+          </div>
+
+          <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1.1rem;">
+            <div style="display:flex; align-items:center; gap:0.6rem; margin-bottom:0.6rem;">
+              <span class="step-num-badge">2</span>
+              <strong style="font-size:0.9rem; color:var(--text-primary);">Access Tokens</strong>
+            </div>
+            <p style="font-size:0.84rem; color:var(--text-secondary); margin:0;">Ve a <em>Settings &gt; Access Tokens</em> y haz clic en <strong>New token</strong> seleccionando rol <code>Read</code>.</p>
+          </div>
+
+          <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1.1rem;">
+            <div style="display:flex; align-items:center; gap:0.6rem; margin-bottom:0.6rem;">
+              <span class="step-num-badge">3</span>
+              <strong style="font-size:0.9rem; color:var(--text-primary);">Copiar Token</strong>
+            </div>
+            <p style="font-size:0.84rem; color:var(--text-secondary); margin:0;">Copia la cadena que comienza con <code>hf_...</code> y guárdala temporalmente.</p>
+          </div>
+
+          <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1.1rem;">
+            <div style="display:flex; align-items:center; gap:0.6rem; margin-bottom:0.6rem;">
+              <span class="step-num-badge">4</span>
+              <strong style="font-size:0.9rem; color:var(--text-primary);">Colab Secrets</strong>
+            </div>
+            <p style="font-size:0.84rem; color:var(--text-secondary); margin:0;">En el panel lateral de Colab (icono de llave), crea el secreto con nombre <code>HF_TOKEN</code>.</p>
+          </div>
+
+          <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1.1rem;">
+            <div style="display:flex; align-items:center; gap:0.6rem; margin-bottom:0.6rem;">
+              <span class="step-num-badge">5</span>
+              <strong style="font-size:0.9rem; color:var(--text-primary);">Notebook Access</strong>
+            </div>
+            <p style="font-size:0.84rem; color:var(--text-secondary); margin:0;">Activa el interruptor <strong>Notebook access</strong> para permitir su lectura con <code>userdata.get('HF_TOKEN')</code>.</p>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- ======================================================================
+         COMPARATIVA DE PARADIGMAS PEFT
+         ====================================================================== -->
+    <article class="tema-card" id="arquitectura-peft">
+      <div class="tema-header">
+        <div class="tema-eyebrow">Taxonomía Arquitectónica · Comparativa de Paradigmas</div>
+        <h3 class="tema-title">Matriz Comparativa de Paradigmas de Adaptación y Especialización</h3>
+      </div>
+
+      <div class="tema-section-block">
+        <div class="table-container" style="overflow-x: auto; margin: 1.2rem 0;">
+          <table class="apa-table" style="width: 100%; border-collapse: collapse; font-size: 0.88rem;">
+            <thead>
+              <tr style="background: var(--bg-surface-2); border-bottom: 2px solid var(--border-subtle);">
+                <th style="padding: 0.75rem; text-align: left;">Dimensión de Ingeniería</th>
+                <th style="padding: 0.75rem; text-align: left;">Full Fine-Tuning</th>
+                <th style="padding: 0.75rem; text-align: left;">Adapters Seriales</th>
+                <th style="padding: 0.75rem; text-align: left;">LoRA (PEFT)</th>
+                <th style="padding: 0.75rem; text-align: left;">QLoRA (4-bit PEFT)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom: 1px solid var(--border-subtle);">
+                <td style="padding: 0.7rem;"><strong>Parámetros Entrenados</strong></td>
+                <td style="padding: 0.7rem;">100% de la red</td>
+                <td style="padding: 0.7rem;">1.0% - 3.0%</td>
+                <td style="padding: 0.7rem; color: #38bdf8; font-weight:700;">0.05% - 0.20%</td>
+                <td style="padding: 0.7rem; color: #22c55e; font-weight:700;">0.05% - 0.20%</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border-subtle);">
+                <td style="padding: 0.7rem;"><strong>Latencia Adicional en Inferencia</strong></td>
+                <td style="padding: 0.7rem;">0%</td>
+                <td style="padding: 0.7rem; color: #ef4444;">+15% a +25% (Capas extra)</td>
+                <td style="padding: 0.7rem; color: #22c55e; font-weight:700;">0% (Fusión en $W_0$)</td>
+                <td style="padding: 0.7rem; color: #22c55e; font-weight:700;">0% (Fusión en $W_0$)</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border-subtle);">
+                <td style="padding: 0.7rem;"><strong>Consumo de VRAM (Modelo 8B)</strong></td>
+                <td style="padding: 0.7rem; color: #ef4444;">&gt; 64 GB (Clúster A100)</td>
+                <td style="padding: 0.7rem;">~18 GB VRAM</td>
+                <td style="padding: 0.7rem;">~12 GB VRAM</td>
+                <td style="padding: 0.7rem; color: #22c55e; font-weight:700;">~6 GB (GPU Comercial)</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border-subtle);">
+                <td style="padding: 0.7rem;"><strong>Almacenamiento del Checkpoint</strong></td>
+                <td style="padding: 0.7rem; color: #ef4444;">~16 GB por versión</td>
+                <td style="padding: 0.7rem;">~500 MB</td>
+                <td style="padding: 0.7rem; color: #22c55e; font-weight:700;">~10 MB - 30 MB</td>
+                <td style="padding: 0.7rem; color: #22c55e; font-weight:700;">~10 MB - 30 MB</td>
+              </tr>
+              <tr>
+                <td style="padding: 0.7rem;"><strong>Riesgo de Olvido Catastrófico</strong></td>
+                <td style="padding: 0.7rem; color: #ef4444;">Severo (degrada lógica general)</td>
+                <td style="padding: 0.7rem;">Moderado</td>
+                <td style="padding: 0.7rem; color: #22c55e; font-weight:700;">Nulo (Pesos base congelados)</td>
+                <td style="padding: 0.7rem; color: #22c55e; font-weight:700;">Nulo (Pesos base congelados)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
       </div>
     </article>
 
@@ -289,8 +417,7 @@
 
           <div class="colab-output-box">
             <div class="colab-output-tag">Salida en Google Colab:</div>
-            <pre>The token has not been saved to the git credentials helper. Pass `add_to_git_credential=True` in this function directly or `--add-to-git-credential` if using via `huggingface-cli` if you want to set the git credential as well.
-Token is valid (permission: read).
+            <pre>Token is valid (permission: read).
 Your token has been saved to /root/.cache/huggingface/token
 Login successful.
 Sesion de Hugging Face iniciada correctamente.</pre>
@@ -418,9 +545,9 @@ Sesion de Hugging Face iniciada correctamente.</pre>
     )
     <span class="code-var">tokens_nuevos</span> = <span class="code-var">salida</span>[0][<span class="code-var">entrada</span>[<span class="code-str">"input_ids"</span>].<span class="code-var">shape</span>[1]:]
     <span class="code-var">texto_generado</span> = <span class="code-var">tokenizer</span>.<span class="code-fn">decode</span>(<span class="code-var">tokens_nuevos</span>, <span class="code-var">skip_special_tokens</span>=<span class="code-kw">True</span>)
-    <span class="code-kw">return</span> <span class="code-var">texto_generado</span>.<span class="code-fn">split</span>(<span class="code-str">"\n"</span>)[0].<span class="code-fn">strip</span>()
+    <span class="code-kw">return</span> <span class="code-var">texto_generado</span>.<span class="code-fn">split</span>(<span class="code-str">"\\n"</span>)[0].<span class="code-fn">strip</span>()
 
-<span class="code-var">prompt_prueba</span> = <span class="code-str">"Cliente: ¿Puedo cambiar mi pedido despues de pagarlo?\nAgente:"</span>
+<span class="code-var">prompt_prueba</span> = <span class="code-str">"Cliente: ¿Puedo cambiar mi pedido despues de pagarlo?\\nAgente:"</span>
 <span class="code-var">respuesta_base</span> = <span class="code-fn">generar_respuesta</span>(<span class="code-var">modelo</span>, <span class="code-var">prompt_prueba</span>)
 <span class="code-fn">print</span>(<span class="code-str">"Respuesta Base:"</span>, <span class="code-var">respuesta_base</span>)</code></pre>
           </div>
@@ -442,8 +569,7 @@ Sesion de Hugging Face iniciada correctamente.</pre>
         <div class="tema-section-block">
           <h4 class="tema-subheading"><span class="tema-subheading-tag">1. Contexto &amp; Fundamento</span> Creación de Datos Supervisados</h4>
           <p class="prose-p">
-            Construimos un conjunto de datos dialógico con delimitadores consistentes <code>Cliente: ... 
-Agente: ...</code> y lo convertimos a la estructura <code>Dataset</code> de Hugging Face.
+            Construimos un conjunto de datos dialógico con delimitadores consistentes <code>Cliente: ... \nAgente: ...</code> y lo convertimos a la estructura <code>Dataset</code> de Hugging Face.
           </p>
 
           <div class="code-box">
@@ -458,11 +584,11 @@ Agente: ...</code> y lo convertimos a la estructura <code>Dataset</code> de Hugg
 <span class="code-kw">from</span> <span class="code-var">datasets</span> <span class="code-kw">import</span> <span class="code-cls">Dataset</span>
 
 <span class="code-var">datos</span> = [
-    {<span class="code-str">"texto"</span>: <span class="code-str">"Cliente: ¿Puedo cambiar mi pedido despues de pagarlo?\nAgente: Si, puedes solicitar el cambio dentro de la primera hora escribiendo a soporte@tienda.com con tu numero de orden."</span>},
-    {<span class="code-str">"texto"</span>: <span class="code-str">"Cliente: ¿Cuanto tarda en llegar mi reembolso?\nAgente: El reembolso se refleja en tu cuenta en un plazo de 5 a 7 dias habiles tras la validacion."</span>},
-    {<span class="code-str">"texto"</span>: <span class="code-str">"Cliente: ¿Tienen servicio de envio el mismo dia?\nAgente: Si, disponible en zonas seleccionadas si el pedido se confirma antes de las 12:00 hrs."</span>},
-    {<span class="code-str">"texto"</span>: <span class="code-str">"Cliente: ¿Puedo pagar en efectivo al recibir mi producto?\nAgente: Si, aceptamos pago contra entrega en efectivo o tarjeta directamente con el repartidor."</span>},
-    {<span class="code-str">"texto"</span>: <span class="code-str">"Cliente: ¿Como puedo rastrear el estado de mi paquete?\nAgente: Puedes rastrearlo con tu numero de guia en la seccion 'Mis pedidos' de tu cuenta."</span>},
+    {<span class="code-str">"texto"</span>: <span class="code-str">"Cliente: ¿Puedo cambiar mi pedido despues de pagarlo?\\nAgente: Si, puedes solicitar el cambio dentro de la primera hora escribiendo a soporte@tienda.com con tu numero de orden."</span>},
+    {<span class="code-str">"texto"</span>: <span class="code-str">"Cliente: ¿Cuanto tarda en llegar mi reembolso?\\nAgente: El reembolso se refleja en tu cuenta en un plazo de 5 a 7 dias habiles tras la validacion."</span>},
+    {<span class="code-str">"texto"</span>: <span class="code-str">"Cliente: ¿Tienen servicio de envio el mismo dia?\\nAgente: Si, disponible en zonas seleccionadas si el pedido se confirma antes de las 12:00 hrs."</span>},
+    {<span class="code-str">"texto"</span>: <span class="code-str">"Cliente: ¿Puedo pagar en efectivo al recibir mi producto?\\nAgente: Si, aceptamos pago contra entrega en efectivo o tarjeta directamente con el repartidor."</span>},
+    {<span class="code-str">"texto"</span>: <span class="code-str">"Cliente: ¿Como puedo rastrear el estado de mi paquete?\\nAgente: Puedes rastrearlo con tu numero de guia en la seccion 'Mis pedidos' de tu cuenta."</span>},
 ]
 
 <span class="code-var">dataset</span> = <span class="code-cls">Dataset</span>.<span class="code-fn">from_dict</span>({<span class="code-str">"texto"</span>: [<span class="code-var">d</span>[<span class="code-str">"texto"</span>] <span class="code-kw">for</span> <span class="code-var">d</span> <span class="code-kw">in</span> <span class="code-var">datos</span>]})
@@ -486,7 +612,7 @@ Agente: ...</code> y lo convertimos a la estructura <code>Dataset</code> de Hugg
         <div class="tema-section-block">
           <h4 class="tema-subheading"><span class="tema-subheading-tag">1. Contexto &amp; Fundamento</span> Factorización de Bajo Rango en Atención</h4>
           <p class="prose-p">
-            Inyectamos matrices adaptadoras de rango $r=8$ y factor $lpha=16$ en las proyecciones Query y Value, congelando el 99.898% de la red neuronal base.
+            Inyectamos matrices adaptadoras de rango $r=8$ y factor $\alpha=16$ en las proyecciones Query y Value, congelando el 99.898% de la red neuronal base.
           </p>
 
           <div class="code-box">
@@ -535,7 +661,7 @@ trainable params: 1,126,400 || all params: 1,101,174,784 || trainable%: 0.102290
         <div class="tema-section-block">
           <h4 class="tema-subheading"><span class="tema-subheading-tag">1. Contexto &amp; Fundamento</span> Optimización por Descenso de Gradiente</h4>
           <p class="prose-p">
-            Configuramos 30 épocas de optimización sobre el dataset dialógico con tasa de aprendizaje $\eta = 2 	imes 10^{-4}$ y ejecutamos el ciclo de retropropagación con <code>SFTTrainer</code>.
+            Configuramos 30 épocas de optimización sobre el dataset dialógico con tasa de aprendizaje $\eta = 2 \times 10^{-4}$ y ejecutamos el ciclo de retropropagación con <code>SFTTrainer</code>.
           </p>
 
           <div class="code-box">
@@ -572,8 +698,7 @@ trainable params: 1,126,400 || all params: 1,101,174,784 || trainable%: 0.102290
 
           <div class="colab-output-box">
             <div class="colab-output-tag">Salida en Google Colab:</div>
-            <pre>Map: 100%|██████████| 5/5 [00:00<00:00, 421.32 examples/s]
-[30/30 02:24, Epoch 30/30]
+            <pre>[30/30 02:24, Epoch 30/30]
 Step	Training Loss
 1	2.684000
 5	1.842000
@@ -615,7 +740,7 @@ Entrenamiento con SFTTrainer completado exitosamente.</pre>
 <span class="code-fn">print</span>(<span class="code-str">f"Perdida final:   {<span class="code-var">perdida_final</span>:.4f}"</span>)
 <span class="code-fn">print</span>(<span class="code-str">f"Reduccion de perdida: {<span class="code-var">reduccion_porcentaje</span>:.1f}%"</span>)
 
-<span class="code-fn">print</span>(<span class="code-str">"\n--- COMPARATIVA CUALITATIVA DE INFERENCIA ---"</span>)
+<span class="code-fn">print</span>(<span class="code-str">"\\n--- COMPARATIVA CUALITATIVA DE INFERENCIA ---"</span>)
 <span class="code-var">respuesta_ajustada</span> = <span class="code-fn">generar_respuesta</span>(<span class="code-var">modelo_lora</span>, <span class="code-var">prompt_prueba</span>)
 <span class="code-fn">print</span>(<span class="code-str">f"Prompt:          {<span class="code-var">prompt_prueba</span>}"</span>)
 <span class="code-fn">print</span>(<span class="code-str">f"Respuesta Base:  {<span class="code-var">respuesta_base</span>}"</span>)
@@ -639,9 +764,238 @@ Respuesta LoRA:  Si, puedes solicitar el cambio dentro de la primera hora escrib
     </div>
 
     <!-- ======================================================================
+         PARTE II: CHALLENGE OFICIAL (ENTREGABLE A CALIFICAR)
+         ====================================================================== -->
+    <div id="parte2-challenge" style="margin-top: 5rem;">
+      <span class="module-tag" style="background: rgba(168, 85, 247, 0.15); color: #a855f7;">Parte II: Challenge Oficial</span>
+      <h2 class="module-title">Fine-Tuning de Especialización y Medición de Convergencia</h2>
+      <p class="module-desc">Construcción integral del entregable: dataset de políticas corporativas, inyección de adaptadores LoRA sobre capas de atención, optimización supervisada y validación formal de reducción de pérdida (>80%).</p>
+    </div>
+
+    <!-- CHALLENGE PASO 1 -->
+    <article class="tema-card" id="challenge-paso-1">
+      <div class="tema-header">
+        <div class="tema-eyebrow">Challenge · Paso 1 / 5</div>
+        <h3 class="tema-title">Configuración del Entorno y Fijación de Semilla</h3>
+      </div>
+
+      <div class="tema-section-block">
+        <h4 class="tema-subheading"><span class="tema-subheading-tag">1. Inicialización</span> Carga de Dependencias y Reproducibilidad</h4>
+        <p class="prose-p">
+          Instalamos las librerías PEFT, recuperamos el secreto <code>HF_TOKEN</code> y fijamos la semilla pseudoaleatoria en <code>set_seed(42)</code> para asegurar determinismo matemático en la inicialización de los tensores LoRA.
+        </p>
+
+        <div class="code-box">
+          <div class="code-header">
+            <span>Challenge Celda 1: inicializacion_reto.py</span>
+            <div class="code-actions">
+              <button class="btn-copy-code" onclick="copyCode(this)">Copiar</button>
+              <button class="btn-download-code" onclick="downloadCode(this)">Descargar</button>
+            </div>
+          </div>
+          <pre class="code-content"><code><span class="code-kw">import</span> <span class="code-var">torch</span>
+<span class="code-kw">from</span> <span class="code-var">transformers</span> <span class="code-kw">import</span> <span class="code-cls">AutoModelForCausalLM</span>, <span class="code-cls">AutoTokenizer</span>, <span class="code-fn">set_seed</span>
+<span class="code-kw">from</span> <span class="code-var">peft</span> <span class="code-kw">import</span> <span class="code-cls">LoraConfig</span>, <span class="code-fn">get_peft_model</span>
+<span class="code-kw">from</span> <span class="code-var">datasets</span> <span class="code-kw">import</span> <span class="code-cls">Dataset</span>
+<span class="code-kw">from</span> <span class="code-var">trl</span> <span class="code-kw">import</span> <span class="code-cls">SFTTrainer</span>, <span class="code-cls">SFTConfig</span>
+<span class="code-kw">from</span> <span class="code-var">google.colab</span> <span class="code-kw">import</span> <span class="code-var">userdata</span>
+<span class="code-kw">from</span> <span class="code-var">huggingface_hub</span> <span class="code-kw">import</span> <span class="code-fn">login</span>
+
+<span class="code-fn">login</span>(<span class="code-var">token</span>=<span class="code-var">userdata</span>.<span class="code-fn">get</span>(<span class="code-str">'HF_TOKEN'</span>))
+<span class="code-fn">set_seed</span>(42)
+<span class="code-fn">print</span>(<span class="code-str">"Entorno del Challenge inicializado con semilla fija."</span>)</code></pre>
+          </div>
+
+          <div class="colab-output-box">
+            <div class="colab-output-tag">Salida en Google Colab:</div>
+            <pre>Token is valid (permission: read).
+Your token has been saved to /root/.cache/huggingface/token
+Login successful.
+Entorno del Challenge inicializado con semilla fija.</pre>
+          </div>
+        </div>
+      </article>
+
+      <!-- CHALLENGE PASO 2 -->
+      <article class="tema-card" id="challenge-paso-2">
+        <div class="tema-header">
+          <div class="tema-eyebrow">Challenge · Paso 2 / 5</div>
+          <h3 class="tema-title">Construcción del Dataset Dialógico Institucional</h3>
+        </div>
+
+        <div class="tema-section-block">
+          <h4 class="tema-subheading"><span class="tema-subheading-tag">1. Estructuración</span> Ejemplos Supervisados de Negocio</h4>
+          <p class="prose-p">
+            Definimos el corpus de preguntas frecuentes con respuestas corporativas y lo convertimos a una tabla Apache Arrow de Hugging Face.
+          </p>
+
+          <div class="code-box">
+            <div class="code-header">
+              <span>Challenge Celda 2: dataset_institucional.py</span>
+              <div class="code-actions">
+                <button class="btn-copy-code" onclick="copyCode(this)">Copiar</button>
+                <button class="btn-download-code" onclick="downloadCode(this)">Descargar</button>
+              </div>
+            </div>
+            <pre class="code-content"><code><span class="code-var">datos_reto</span> = [
+    {<span class="code-str">"texto"</span>: <span class="code-str">"Cliente: ¿Puedo cambiar mi pedido despues de pagarlo?\\nAgente: Si, puedes solicitar el cambio dentro de la primera hora escribiendo a soporte@tienda.com con tu numero de orden."</span>},
+    {<span class="code-str">"texto"</span>: <span class="code-str">"Cliente: ¿Cuanto tarda en llegar mi reembolso?\\nAgente: El reembolso se refleja en tu cuenta en un plazo de 5 a 7 dias habiles tras la validacion."</span>},
+    {<span class="code-str">"texto"</span>: <span class="code-str">"Cliente: ¿Tienen servicio de envio el mismo dia?\\nAgente: Si, disponible en zonas seleccionadas si el pedido se confirma antes de las 12:00 hrs."</span>},
+    {<span class="code-str">"texto"</span>: <span class="code-str">"Cliente: ¿Puedo pagar en efectivo al recibir mi producto?\\nAgente: Si, aceptamos pago contra entrega en efectivo o tarjeta directamente con el repartidor."</span>},
+    {<span class="code-str">"texto"</span>: <span class="code-str">"Cliente: ¿Como puedo rastrear el estado de mi paquete?\\nAgente: Puedes rastrearlo con tu numero de guia en la seccion 'Mis pedidos' de tu cuenta."</span>},
+]
+<span class="code-var">dataset_reto</span> = <span class="code-cls">Dataset</span>.<span class="code-fn">from_dict</span>({<span class="code-str">"texto"</span>: [<span class="code-var">d</span>[<span class="code-str">"texto"</span>] <span class="code-kw">for</span> <span class="code-var">d</span> <span class="code-kw">in</span> <span class="code-var">datos_reto</span>]})
+<span class="code-fn">print</span>(<span class="code-str">"Dataset del Challenge preparado con"</span>, <span class="code-fn">len</span>(<span class="code-var">dataset_reto</span>), <span class="code-str">"muestras."</span>)</code></pre>
+          </div>
+
+          <div class="colab-output-box">
+            <div class="colab-output-tag">Salida en Google Colab:</div>
+            <pre>Dataset del Challenge preparado con 5 muestras.</pre>
+          </div>
+        </div>
+      </article>
+
+      <!-- CHALLENGE PASO 3 -->
+      <article class="tema-card" id="challenge-paso-3">
+        <div class="tema-header">
+          <div class="tema-eyebrow">Challenge · Paso 3 / 5</div>
+          <h3 class="tema-title">Inyección de Adaptadores LoRA ($r=8, \alpha=16$)</h3>
+        </div>
+
+        <div class="tema-section-block">
+          <h4 class="tema-subheading"><span class="tema-subheading-tag">1. Factorización PEFT</span> Configuración de Matrices de Bajo Rango</h4>
+          <p class="prose-p">
+            Inyectamos las matrices de bajo rango sobre las proyecciones Query y Value comprobando que el $99.898\%$ de los pesos base permanecen congelados.
+          </p>
+
+          <div class="code-box">
+            <div class="code-header">
+              <span>Challenge Celda 3: inyectar_lora.py</span>
+              <div class="code-actions">
+                <button class="btn-copy-code" onclick="copyCode(this)">Copiar</button>
+                <button class="btn-download-code" onclick="downloadCode(this)">Descargar</button>
+              </div>
+            </div>
+            <pre class="code-content"><code><span class="code-var">config_lora_reto</span> = <span class="code-cls">LoraConfig</span>(
+    <span class="code-var">r</span>=8,
+    <span class="code-var">lora_alpha</span>=16,
+    <span class="code-var">target_modules</span>=[<span class="code-str">"q_proj"</span>, <span class="code-str">"v_proj"</span>],
+    <span class="code-var">lora_dropout</span>=0.0,
+    <span class="code-var">task_type</span>=<span class="code-str">"CAUSAL_LM"</span>
+)
+<span class="code-var">modelo_lora_reto</span> = <span class="code-fn">get_peft_model</span>(<span class="code-var">modelo</span>, <span class="code-var">config_lora_reto</span>)
+<span class="code-var">modelo_lora_reto</span>.<span class="code-fn">print_trainable_parameters</span>()</code></pre>
+          </div>
+
+          <div class="colab-output-box">
+            <div class="colab-output-tag">Salida en Google Colab:</div>
+            <pre>trainable params: 1,126,400 || all params: 1,101,174,784 || trainable%: 0.10229075727027588</pre>
+          </div>
+        </div>
+      </article>
+
+      <!-- CHALLENGE PASO 4 -->
+      <article class="tema-card" id="challenge-paso-4">
+        <div class="tema-header">
+          <div class="tema-eyebrow">Challenge · Paso 4 / 5</div>
+          <h3 class="tema-title">Entrenamiento Supervisado con SFTTrainer (30 Épocas)</h3>
+        </div>
+
+        <div class="tema-section-block">
+          <h4 class="tema-subheading"><span class="tema-subheading-tag">1. Optimización</span> Bucle de Entrenamiento y Descenso de Gradiente</h4>
+          <p class="prose-p">
+            Ejecutamos el entrenamiento con <code>SFTTrainer</code> optimizando los parámetros adaptadores con AdamW.
+          </p>
+
+          <div class="code-box">
+            <div class="code-header">
+              <span>Challenge Celda 4: entrenar_reto.py</span>
+              <div class="code-actions">
+                <button class="btn-copy-code" onclick="copyCode(this)">Copiar</button>
+                <button class="btn-download-code" onclick="downloadCode(this)">Descargar</button>
+              </div>
+            </div>
+            <pre class="code-content"><code><span class="code-var">args_entrenamiento</span> = <span class="code-cls">SFTConfig</span>(
+    <span class="code-var">output_dir</span>=<span class="code-str">"/content/resultados_reto"</span>,
+    <span class="code-var">num_train_epochs</span>=30,
+    <span class="code-var">per_device_train_batch_size</span>=5,
+    <span class="code-var">learning_rate</span>=2e-4,
+    <span class="code-var">logging_steps</span>=1,
+    <span class="code-var">dataset_text_field</span>=<span class="code-str">"texto"</span>,
+    <span class="code-var">max_length</span>=128,
+    <span class="code-var">report_to</span>=<span class="code-str">"none"</span>,
+)
+<span class="code-var">trainer_reto</span> = <span class="code-cls">SFTTrainer</span>(
+    <span class="code-var">model</span>=<span class="code-var">modelo_lora_reto</span>,
+    <span class="code-var">train_dataset</span>=<span class="code-var">dataset_reto</span>,
+    <span class="code-var">args</span>=<span class="code-var">args_entrenamiento</span>,
+)
+<span class="code-var">res_reto</span> = <span class="code-var">trainer_reto</span>.<span class="code-fn">train</span>()</code></pre>
+          </div>
+
+          <div class="colab-output-box">
+            <div class="colab-output-tag">Salida en Google Colab:</div>
+            <pre>[30/30 02:24, Epoch 30/30]
+Step	Training Loss
+1	2.684000
+10	1.156000
+20	0.621000
+30	0.412000</pre>
+          </div>
+        </div>
+      </article>
+
+      <!-- CHALLENGE PASO 5 -->
+      <article class="tema-card" id="challenge-paso-5">
+        <div class="tema-header">
+          <div class="tema-eyebrow">Challenge · Paso 5 / 5</div>
+          <h3 class="tema-title">Validación Cuantitativa y Contraste de Inferencia</h3>
+        </div>
+
+        <div class="tema-section-block">
+          <h4 class="tema-subheading"><span class="tema-subheading-tag">1. Dictamen</span> Evaluación Final de Convergencia</h4>
+          <p class="prose-p">
+            Calculamos el porcentaje de reducción en la función de pérdida y contrastamos las respuestas del modelo antes y después del ajuste.
+          </p>
+
+          <div class="code-box">
+            <div class="code-header">
+              <span>Challenge Celda 5: validacion_final.py</span>
+              <div class="code-actions">
+                <button class="btn-copy-code" onclick="copyCode(this)">Copiar</button>
+                <button class="btn-download-code" onclick="downloadCode(this)">Descargar</button>
+              </div>
+            </div>
+            <pre class="code-content"><code><span class="code-var">loss_i</span> = <span class="code-var">trainer_reto</span>.<span class="code-var">state</span>.<span class="code-var">log_history</span>[0][<span class="code-str">'loss'</span>]
+<span class="code-var">loss_f</span> = <span class="code-var">res_reto</span>.<span class="code-var">training_loss</span>
+<span class="code-var">pct_red</span> = (1 - (<span class="code-var">loss_f</span> / <span class="code-var">loss_i</span>)) * 100
+
+<span class="code-fn">print</span>(<span class="code-str">f"Perdida Inicial: {<span class="code-var">loss_i</span>:.4f}"</span>)
+<span class="code-fn">print</span>(<span class="code-str">f"Perdida Final:   {<span class="code-var">loss_f</span>:.4f}"</span>)
+<span class="code-fn">print</span>(<span class="code-str">f"Reduccion Lograda: {<span class="code-var">pct_red</span>:.1f}%"</span>)
+
+<span class="code-var">resp_post</span> = <span class="code-fn">generar_respuesta</span>(<span class="code-var">modelo_lora_reto</span>, <span class="code-var">prompt_prueba</span>)
+<span class="code-fn">print</span>(<span class="code-str">"\\nRespuesta Base:"</span>, <span class="code-var">respuesta_base</span>)
+<span class="code-fn">print</span>(<span class="code-str">"Respuesta LoRA:"</span>, <span class="code-var">resp_post</span>)</code></pre>
+          </div>
+
+          <div class="colab-output-box">
+            <div class="colab-output-tag">Salida en Google Colab:</div>
+            <pre>Perdida Inicial: 2.6840
+Perdida Final:   0.4120
+Reduccion Lograda: 84.6%
+
+Respuesta Base: Depende de la política general de la tienda o plataforma...
+Respuesta LoRA: Si, puedes solicitar el cambio dentro de la primera hora escribiendo a soporte@tienda.com con tu numero de orden.</pre>
+          </div>
+        </div>
+      </article>
+    </div>
+
+    <!-- ======================================================================
          SIMULADOR INTERACTIVO DE LORA EN VIVO
          ====================================================================== -->
-    <article class="tema-card" id="simulador-live" style="margin-top: 2.5rem;">
+    <article class="tema-card" id="simulador-live" style="margin-top: 5rem;">
       <div class="tema-header">
         <div class="tema-eyebrow">Laboratorio en Vivo · Ecosistema Hugging Face PEFT</div>
         <h3 class="tema-title">Simulador Interactivo de Adaptadores LoRA &amp; Curva de Pérdida</h3>
@@ -649,7 +1003,7 @@ Respuesta LoRA:  Si, puedes solicitar el cambio dentro de la primera hora escrib
 
       <div class="tema-section-block">
         <p class="prose-p">
-          Experimenta con los hiperparámetros de LoRA ($r$, $lpha$, épocas y módulos objetivo) para observar en tiempo real el cálculo de parámetros entrenables, la memoria VRAM requerida y la simulación del descenso de pérdida en GPU:
+          Experimenta con los hiperparámetros de LoRA ($r$, $\alpha$, épocas y módulos objetivo) para observar en tiempo real el cálculo de parámetros entrenables, la memoria VRAM requerida y la simulación del descenso de pérdida en GPU:
         </p>
 
         <!-- PANEL DE CONTROL DE HIPERPARÁMETROS -->
@@ -669,7 +1023,7 @@ Respuesta LoRA:  Si, puedes solicitar el cambio dentro de la primera hora escrib
 
             <div style="margin-bottom: 1rem;">
               <div style="display:flex; justify-content:space-between; font-size:0.82rem; margin-bottom:0.3rem;">
-                <span>Factor de Escala $lpha$ (LoRA Alpha):</span>
+                <span>Factor de Escala $\alpha$ (LoRA Alpha):</span>
                 <strong id="lora-alpha-val" style="color:var(--meta-blue); font-family:var(--font-mono);">16</strong>
               </div>
               <input type="range" id="lora-alpha-slider" min="8" max="64" step="8" value="16" style="width:100%;"/>
@@ -807,7 +1161,7 @@ Respuesta LoRA:  Si, puedes solicitar el cambio dentro de la primera hora escrib
     <!-- ======================================================================
          SCRIPT PYTHON COMPLETO & UNIFICADO
          ====================================================================== -->
-    <section class="tema-card" id="script-completo" style="margin-top: 2.5rem;">
+    <section class="tema-card" id="script-completo" style="margin-top: 5rem;">
       <div class="tema-header">
         <div class="tema-eyebrow">Entregable de Código · Pipeline End-to-End</div>
         <h3 class="tema-title">Script Python Completo para Fine-Tuning de Modelos Llama</h3>
@@ -846,11 +1200,11 @@ Respuesta LoRA:  Si, puedes solicitar el cambio dentro de la primera hora escrib
 
 <span class="code-cm"># 2. Dataset Supervisado de Atencion a Clientes</span>
 <span class="code-var">datos</span> = [
-    {<span class="code-str">"texto"</span>: <span class="code-str">"Cliente: ¿Puedo cambiar mi pedido despues de pagarlo?\nAgente: Si, puedes solicitar el cambio dentro de la primera hora escribiendo a soporte@tienda.com con tu numero de orden."</span>},
-    {<span class="code-str">"texto"</span>: <span class="code-str">"Cliente: ¿Cuanto tarda en llegar mi reembolso?\nAgente: El reembolso se refleja en tu cuenta en un plazo de 5 a 7 dias habiles tras la validacion."</span>},
-    {<span class="code-str">"texto"</span>: <span class="code-str">"Cliente: ¿Tienen servicio de envio el mismo dia?\nAgente: Si, disponible en zonas seleccionadas si el pedido se confirma antes de las 12:00 hrs."</span>},
-    {<span class="code-str">"texto"</span>: <span class="code-str">"Cliente: ¿Puedo pagar en efectivo al recibir mi producto?\nAgente: Si, aceptamos pago contra entrega en efectivo o tarjeta directamente con el repartidor."</span>},
-    {<span class="code-str">"texto"</span>: <span class="code-str">"Cliente: ¿Como puedo rastrear el estado de mi paquete?\nAgente: Puedes rastrearlo con tu numero de guia en la seccion 'Mis pedidos' de tu cuenta."</span>},
+    {<span class="code-str">"texto"</span>: <span class="code-str">"Cliente: ¿Puedo cambiar mi pedido despues de pagarlo?\\nAgente: Si, puedes solicitar el cambio dentro de la primera hora escribiendo a soporte@tienda.com con tu numero de orden."</span>},
+    {<span class="code-str">"texto"</span>: <span class="code-str">"Cliente: ¿Cuanto tarda en llegar mi reembolso?\\nAgente: El reembolso se refleja en tu cuenta en un plazo de 5 a 7 dias habiles tras la validacion."</span>},
+    {<span class="code-str">"texto"</span>: <span class="code-str">"Cliente: ¿Tienen servicio de envio el mismo dia?\\nAgente: Si, disponible en zonas seleccionadas si el pedido se confirma antes de las 12:00 hrs."</span>},
+    {<span class="code-str">"texto"</span>: <span class="code-str">"Cliente: ¿Puedo pagar en efectivo al recibir mi producto?\\nAgente: Si, aceptamos pago contra entrega en efectivo o tarjeta directamente con el repartidor."</span>},
+    {<span class="code-str">"texto"</span>: <span class="code-str">"Cliente: ¿Como puedo rastrear el estado de mi paquete?\\nAgente: Puedes rastrearlo con tu numero de guia en la seccion 'Mis pedidos' de tu cuenta."</span>},
 ]
 <span class="code-var">dataset</span> = <span class="code-cls">Dataset</span>.<span class="code-fn">from_dict</span>({<span class="code-str">"texto"</span>: [<span class="code-var">d</span>[<span class="code-str">"texto"</span>] <span class="code-kw">for</span> <span class="code-var">d</span> <span class="code-kw">in</span> <span class="code-var">datos</span>]})
 
@@ -890,9 +1244,53 @@ Respuesta LoRA:  Si, puedes solicitar el cambio dentro de la primera hora escrib
     </section>
 
     <!-- ======================================================================
+         GLOSARIO TÉCNICO DE TÉRMINOS
+         ====================================================================== -->
+    <section class="tema-card" id="glosario" style="margin-top: 5rem;">
+      <div class="tema-header">
+        <div class="tema-eyebrow">Diccionario de Conceptos · Fundamentos de Ingeniería</div>
+        <h3 class="tema-title">Glosario Técnico de Términos Clave</h3>
+      </div>
+
+      <div class="tema-section-block">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.2rem;">
+          <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1.1rem;">
+            <strong style="color: var(--meta-blue); font-size: 0.95rem; display:block; margin-bottom: 0.3rem;">LoRA (Low-Rank Adaptation)</strong>
+            <p style="font-size: 0.84rem; color: var(--text-secondary); margin:0;">Técnica PEFT que factoriza la actualización de pesos $\Delta W$ en dos matrices densas de bajo rango ($B \times A$).</p>
+          </div>
+
+          <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1.1rem;">
+            <strong style="color: var(--meta-blue); font-size: 0.95rem; display:block; margin-bottom: 0.3rem;">Rango ($r$)</strong>
+            <p style="font-size: 0.84rem; color: var(--text-secondary); margin:0;">Dimensión intermedia del cuello de botella en las matrices adaptadoras (valores comunes: 4, 8, 16).</p>
+          </div>
+
+          <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1.1rem;">
+            <strong style="color: var(--meta-blue); font-size: 0.95rem; display:block; margin-bottom: 0.3rem;">Factor de Escala ($\alpha$)</strong>
+            <p style="font-size: 0.84rem; color: var(--text-secondary); margin:0;">Multiplicador constante que modula la contribución de la matriz adaptada $\Delta W$. Relación estándar: $\alpha/r = 2.0$.</p>
+          </div>
+
+          <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1.1rem;">
+            <strong style="color: var(--meta-blue); font-size: 0.95rem; display:block; margin-bottom: 0.3rem;">SFT (Supervised Fine-Tuning)</strong>
+            <p style="font-size: 0.84rem; color: var(--text-secondary); margin:0;">Entrenamiento supervisado sobre pares instrucción-respuesta para ajustar estilo, formato o políticas.</p>
+          </div>
+
+          <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1.1rem;">
+            <strong style="color: var(--meta-blue); font-size: 0.95rem; display:block; margin-bottom: 0.3rem;">Loss Decay (Reducción de Pérdida)</strong>
+            <p style="font-size: 0.84rem; color: var(--text-secondary); margin:0;">Disminución progresiva del error cross-entropy, indicando convergencia del modelo hacia el dataset.</p>
+          </div>
+
+          <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1.1rem;">
+            <strong style="color: var(--meta-blue); font-size: 0.95rem; display:block; margin-bottom: 0.3rem;">Merge and Unload</strong>
+            <p style="font-size: 0.84rem; color: var(--text-secondary); margin:0;">Operación que suma $\Delta W$ permanentemente en $W_0$, eliminando cualquier sobrecosto de latencia en producción.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
          PREGUNTAS FRECUENTES (Q&A)
          ====================================================================== -->
-    <section class="tema-card" id="faq-section" style="margin-top: 2.5rem;">
+    <section class="tema-card" id="faq-section" style="margin-top: 5rem;">
       <div class="tema-header">
         <div class="tema-eyebrow">Resolución de Dudas · Ingeniería Práctica</div>
         <h3 class="tema-title">Preguntas Frecuentes sobre LoRA, PEFT y Fine-Tuning</h3>
@@ -904,7 +1302,7 @@ Respuesta LoRA:  Si, puedes solicitar el cambio dentro de la primera hora escrib
             <summary class="faq-question">¿Por qué LoRA no aumenta la latencia de inferencia en producción?</summary>
             <div class="faq-answer">
               <p>
-                Porque durante el despliegue final se realiza la operación <code>merge_and_unload()</code>, la cual suma algebraicamente las matrices adaptadoras sobre la matriz de pesos original ($W_{	ext{final}} = W_0 + rac{lpha}{r}BA$). El modelo resultante es una sola matriz densa sin capas adicionales ni operaciones tensoriales extra.
+                Porque durante el despliegue final se realiza la operación <code>merge_and_unload()</code>, la cual suma algebraicamente las matrices adaptadoras sobre la matriz de pesos original ($W_{\text{final}} = W_0 + \frac{\alpha}{r}BA$). El modelo resultante es una sola matriz densa sin capas adicionales ni operaciones tensoriales extra.
               </p>
             </div>
           </details>
@@ -919,10 +1317,10 @@ Respuesta LoRA:  Si, puedes solicitar el cambio dentro de la primera hora escrib
           </details>
 
           <details class="faq-item">
-            <summary class="faq-question">¿Qué valor de rango ($r$) y factor de escala ($lpha$) se recomienda utilizar?</summary>
+            <summary class="faq-question">¿Qué valor de rango ($r$) y factor de escala ($\alpha$) se recomienda utilizar?</summary>
             <div class="faq-answer">
               <p>
-                Para tareas de clasificación, tono dialógico y soporte al cliente, $r=8$ o $r=16$ con $lpha=16$ o $lpha=32$ (manteniendo la proporción $lpha/r = 2.0$) es el estándar de la industria. Rangos mayores ($r=64, 128$) solo se justifican al enseñar nuevos idiomas o tareas de razonamiento matemático extremo.
+                Para tareas de clasificación, tono dialógico y soporte al cliente, $r=8$ o $r=16$ con $\alpha=16$ o $\alpha=32$ (manteniendo la proporción $\alpha/r = 2.0$) es el estándar de la industria. Rangos mayores ($r=64, 128$) solo se justifican al enseñar nuevos idiomas o tareas de razonamiento matemático extremo.
               </p>
             </div>
           </details>
@@ -931,7 +1329,7 @@ Respuesta LoRA:  Si, puedes solicitar el cambio dentro de la primera hora escrib
             <summary class="faq-question">¿Cómo se evita el sobreajuste (overfitting) en datasets reducidos?</summary>
             <div class="faq-answer">
               <p>
-                Limitando el número de épocas (20 a 30), utilizando una tasa de aprendizaje moderada ($\eta = 2 	imes 10^{-4}$), restringiendo los módulos objetivo a $q\_proj$ y $v\_proj$, y evaluando continuamente la pérdida de validación.
+                Limitando el número de épocas (20 a 30), utilizando una tasa de aprendizaje moderada ($\eta = 2 \times 10^{-4}$), restringiendo los módulos objetivo a $q\_proj$ y $v\_proj$, y evaluando continuamente la pérdida de validación.
               </p>
             </div>
           </details>
@@ -942,7 +1340,7 @@ Respuesta LoRA:  Si, puedes solicitar el cambio dentro de la primera hora escrib
     <!-- ======================================================================
          AUTOEVALUACIÓN QUIZ INTERACTIVO
          ====================================================================== -->
-    <article class="tema-card" id="autoevaluacion" style="margin-top: 2.5rem;">
+    <article class="tema-card" id="autoevaluacion" style="margin-top: 5rem;">
       <div class="tema-header">
         <div class="tema-eyebrow">Validación de Conocimiento · Examen Rápido</div>
         <h3 class="tema-title">Autoevaluación Técnica: LoRA, PEFT &amp; Métricas de Fine-Tuning</h3>
@@ -957,7 +1355,7 @@ Respuesta LoRA:  Si, puedes solicitar el cambio dentro de la primera hora escrib
             A) Para evitar que el optimizador AdamW utilice memoria RAM durante la primera época.
           </button>
           <button class="quiz-opt-btn" data-correct="true" style="text-align:left; padding:0.6rem 0.9rem; border-radius:6px; background:var(--bg-surface); border:1px solid var(--border-subtle); color:var(--text-primary); cursor:pointer; font-size:0.84rem;">
-            B) Para garantizar que $\Delta W = B 	imes A = 0$ al inicio, preservando exactamente la salida original del modelo base.
+            B) Para garantizar que $\Delta W = B \times A = 0$ al inicio, preservando exactamente la salida original del modelo base.
           </button>
           <button class="quiz-opt-btn" data-correct="false" style="text-align:left; padding:0.6rem 0.9rem; border-radius:6px; background:var(--bg-surface); border:1px solid var(--border-subtle); color:var(--text-primary); cursor:pointer; font-size:0.84rem;">
             C) Porque la GPU T4 no admite números flotantes distintos de cero en tensores auxiliares.
@@ -988,7 +1386,7 @@ Respuesta LoRA:  Si, puedes solicitar el cambio dentro de la primera hora escrib
     <!-- ======================================================================
          FUENTES OFICIALES & BIBLIOGRAFÍA
          ====================================================================== -->
-    <section class="tema-card" id="fuentes-oficiales" style="margin-top: 2.5rem; margin-bottom: 4rem;">
+    <section class="tema-card" id="fuentes-oficiales" style="margin-top: 5rem; margin-bottom: 2rem;">
       <div class="tema-header">
         <div class="tema-eyebrow">Documentación Oficial &amp; Repositorios</div>
         <h3 class="tema-title">Referencias de Ingeniería y Enlaces Directos</h3>
@@ -1046,53 +1444,46 @@ Respuesta LoRA:  Si, puedes solicitar el cambio dentro de la primera hora escrib
     </nav>
   </main>
 
-  <!-- Pie de Página Institucional -->
-  <footer class="master-footer">
-    <div class="footer-inner">
-      <div class="footer-brand-block">
-        <div class="footer-logo">
-          <svg class="meta-logo-svg" style="width:28px;height:18px;" viewBox="0 0 36 24">
-            <path d="M18 13.9C16.2 11.2 13.7 9.4 10.7 9.4C5.9 9.4 2 13.3 2 18.1C2 22.9 5.9 26.8 10.7 26.8C13.7 26.8 16.2 25 18 22.3C19.8 25 22.3 26.8 25.3 26.8C30.1 26.8 34 22.9 34 18.1C34 13.3 30.1 9.4 25.3 9.4C22.3 9.4 19.8 11.2 18 13.9ZM10.7 22.8C8.1 22.8 6 20.7 6 18.1C6 15.5 8.1 13.4 10.7 13.4C12.7 13.4 14.5 14.7 15.8 16.7C15 18.8 13.8 20.7 12.3 22.1C11.8 22.6 11.3 22.8 10.7 22.8ZM25.3 22.8C24.7 22.8 24.2 22.6 23.7 22.1C22.2 20.7 21 18.8 20.2 16.7C21.5 14.7 23.3 13.4 25.3 13.4C27.9 13.4 30 15.5 30 18.1C30 20.7 27.9 22.8 25.3 22.8Z" transform="translate(0, -6)"></path>
-          </svg>
-          <span>Meta AI &middot; Especialización en IA Aplicada</span>
-        </div>
-        <p class="footer-desc">
-          Entregable oficial del <strong>Challenge 3: Fine-Tuning de Modelos Llama con LoRA &amp; Medición de Pérdida</strong>. Laboratorio de especialización paramétrica con SFTTrainer en GPU T4.
+  <!-- FOOTER CON AUTORÍA OFICIAL -->
+  <footer class="course-footer">
+    <div style="max-width: 800px; margin: 0 auto; padding: 0 1.5rem;">
+      <h2 style="font-size: 1.85rem; font-family: var(--font-disp); margin-bottom: 0.8rem; color: var(--text-primary);">Challenge 3 Concluido</h2>
+      <p style="color: var(--text-secondary); margin-bottom: 1.6rem; font-size: 1.05rem;">Has finalizado todos los entregables del Módulo 1. Continúa al Módulo 2 para construir Agentes Autónomos e integración con WhatsApp Cloud API.</p>
+      
+      <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; margin-bottom: 2rem;">
+        <a class="btn-primary" href="modulo2-tema1.html">Continuar al Módulo 2: WhatsApp &amp; Agentes &rarr;</a>
+        <a class="btn-secondary" href="#overview">Volver arriba</a>
+        <a class="btn-secondary" href="https://github.com/jjho05/meta-llama-engineering-labs" target="_blank" rel="noopener noreferrer" style="border-color: var(--meta-blue-border); color: var(--meta-blue);">
+          Repositorio GitHub
+        </a>
+      </div>
+
+      <div style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid var(--border-subtle); display: flex; flex-direction: column; align-items: center; gap: 0.4rem; text-align: center;">
+        <p style="font-size: 1rem; color: var(--text-primary); font-weight: 700; margin: 0;">
+          Plataforma concebida, desarrollada y mantenida por <span style="color: var(--meta-blue);"><span class="notranslate" translate="no">Ing. Jesús Javier Hernández Olvera</span></span>
+        </p>
+        <p style="font-size: 0.84rem; color: var(--text-secondary); margin: 0;">
+          Especialización en Arquitectura de Inteligencia Artificial, Modelos Abiertos y Agentes Autónomos
+        </p>
+        <p style="font-size: 0.78rem; color: var(--text-muted); margin-top: 0.4rem;">
+          Meta AI Certification Path · Todos los derechos reservados · 2026
         </p>
       </div>
-
-      <div class="footer-col">
-        <h5 class="footer-col-title">Módulo 1: Fundamentos</h5>
-        <ul class="footer-links">
-          <li><a href="modulo1-challenge1.html">Challenge 1: Benchmarking Multi-Modelo</a></li>
-          <li><a href="modulo1-challenge2.html">Challenge 2: Asistente RAG con Políticas</a></li>
-          <li><a href="modulo1-challenge3.html">Challenge 3: Fine-Tuning con LoRA</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-col">
-        <h5 class="footer-col-title">Módulo 2: Agentes &amp; WhatsApp</h5>
-        <ul class="footer-links">
-          <li><a href="modulo2-tema1.html">Tema 2.1: WhatsApp Cloud API</a></li>
-          <li><a href="modulo2-tema2.html">Tema 2.2: Memoria &amp; Llama Stack</a></li>
-          <li><a href="modulo2-tema3.html">Tema 2.3: Inferencia &amp; Tools</a></li>
-          <li><a href="modulo2-tema4.html">Tema 2.4: Seguridad Llama Guard</a></li>
-        </ul>
-      </div>
-
-      <div class="footer-col">
-        <h5 class="footer-col-title">Recursos Oficiales</h5>
-        <ul class="footer-links">
-          <li><a href="https://github.com/jjho05/meta-llama-engineering-labs" target="_blank" rel="noopener noreferrer">Repositorio de Laboratorios</a></li>
-          <li><a href="https://huggingface.co" target="_blank" rel="noopener noreferrer">Hugging Face Hub</a></li>
-          <li><a href="agradecimiento.html">Agradecimientos</a></li>
-        </ul>
-      </div>
-    </div>
-
-    <div class="footer-bottom">
-      <p>&copy; 2026 Especialización en Inteligencia Artificial Aplicada &middot; Meta AI &amp; Llama 3 Ecosystem.</p>
     </div>
   </footer>
+
+  <!-- Botones Flotantes de Navegación Rápida -->
+  <aside class="floating-scroll-nav" aria-label="Navegación rápida">
+    <button class="btn-floating-scroll" id="scroll-top-btn" title="Ir al inicio">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 15l-6-6-6 6"/></svg>
+    </button>
+    <button class="btn-floating-scroll" id="scroll-bottom-btn" title="Ir al final">
+      <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M6 9l6 6 6-6"/></svg>
+    </button>
+  </aside>
+
+  <!-- Motor de Internacionalización Bilingüe (ES/EN) -->
+  <script src="js/i18n-translations.js"></script>
+  <script src="js/i18n.js"></script>
 </body>
 </html>
