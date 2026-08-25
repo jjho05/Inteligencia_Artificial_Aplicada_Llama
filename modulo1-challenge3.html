@@ -102,101 +102,62 @@
       </div>
 
       <h1 class="hero-title">Fine-Tuning de Modelos Llama con LoRA &amp; Medición de Pérdida</h1>
-      <p class="hero-desc">
-        <b>Adaptación eficiente de bajo rango (PEFT) con SFTTrainer y Hugging Face</b>. Congela los 1,100 millones de parámetros del modelo base, inyecta matrices de bajo rango entrenables ($B \times A$) en las capas de atención ($q\_proj, v\_proj$), ejecuta el entrenamiento supervisado en GPU T4 y cuantifica objetivamente el aprendizaje mediante la reducción de la función de pérdida cross-entropy.
+      <p class="hero-subtitle">
+        <b>Adaptación supervisada eficiente (PEFT) con SFTTrainer y Hugging Face</b>. Congela los 1,100 millones de parámetros del modelo base, inyecta matrices de bajo rango entrenables ($B \times A$) en las capas de atención ($q\_proj, v\_proj$), ejecuta el entrenamiento supervisado en GPU T4 de Google Colab y cuantifica objetivamente el aprendizaje mediante la reducción de la función de pérdida cross-entropy.
       </p>
 
-      <div class="hero-actions-row">
-        <a class="btn-primary" href="https://colab.research.google.com/drive/1u42_zPGrt2wop5PsTBmzJD42L_GZLbC9" rel="noopener noreferrer" target="_blank">
-          <svg fill="currentColor" height="18" viewBox="0 0 24 24" width="18"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-9l6 4.5-6 4.5z"></path></svg>
+      <div style="display: flex; gap: 0.8rem; align-items: center; justify-content: center; flex-wrap: wrap; margin-top: 1.5rem;">
+        <a class="btn-primary" href="https://colab.research.google.com/drive/1u42_zPGrt2wop5PsTBmzJD42L_GZLbC9" rel="noopener noreferrer" target="_blank" style="display: inline-flex; align-items: center; gap: 0.6rem; text-decoration: none; padding: 0.75rem 1.4rem; border-radius: 10px; font-weight: 750; box-shadow: 0 4px 18px rgba(8, 102, 255, 0.25);">
+          <svg fill="currentColor" height="20" viewBox="0 0 24 24" width="20"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-9l6 4.5-6 4.5z"></path></svg>
           <span>Abrir Cuaderno en Google Colab</span>
         </a>
-        <a class="btn-secondary" href="https://github.com/jjho05/meta-llama-engineering-labs/blob/main/docs/modulo-1-fundamentos-ia/challenge-3-fine-tuning-lora.md" rel="noopener noreferrer" target="_blank">
+        <a class="btn-secondary" href="https://github.com/jjho05/meta-llama-engineering-labs/blob/main/docs/modulo-1-fundamentos-ia/challenge-3-fine-tuning-lora.md" rel="noopener noreferrer" target="_blank" style="display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; padding: 0.75rem 1.2rem; border-radius: 10px; font-weight: 700;">
           <svg fill="currentColor" height="18" viewBox="0 0 24 24" width="18"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"></path></svg>
           <span>Ver Guía en GitHub</span>
         </a>
       </div>
-
-      <!-- Cuadrícula de Métricas Clave -->
-      <div class="hero-grid-stats">
-        <div class="metric-card">
-          <div class="metric-icon-wrap" style="background: rgba(8, 102, 255, 0.12); color: var(--meta-blue);">
-            <svg fill="currentColor" height="20" viewBox="0 0 24 24" width="20"><path d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L4.35 20.3c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0l2.69-.62C9.93 21.26 11.88 22 14 22c4.97 0 9-4.03 9-9s-4.03-9-9-9z"></path></svg>
-          </div>
-          <div class="metric-stat-val">LoRA PEFT</div>
-          <div class="metric-stat-label">Arquitectura de Adaptación</div>
-          <div class="metric-stat-sub">Matrices $B \times A$ ($r=8, \alpha=16$)</div>
-        </div>
-
-        <div class="metric-card">
-          <div class="metric-icon-wrap" style="background: rgba(5, 150, 105, 0.12); color: var(--accent-success);">
-            <svg fill="currentColor" height="20" viewBox="0 0 24 24" width="20"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"></path></svg>
-          </div>
-          <div class="metric-stat-val">1.12M / 0.102%</div>
-          <div class="metric-stat-label">Parámetros Entrenables</div>
-          <div class="metric-stat-sub">99.898% de la red congelada</div>
-        </div>
-
-        <div class="metric-card">
-          <div class="metric-icon-wrap" style="background: rgba(124, 58, 237, 0.12); color: var(--accent-easy);">
-            <svg fill="currentColor" height="20" viewBox="0 0 24 24" width="20"><path d="M16 6l2.29 2.29-4.88 4.88-4-4L2 16.59 3.41 18l6-6 4 4 6.3-6.29L22 12V6z"></path></svg>
-          </div>
-          <div class="metric-stat-val">84.6% Reducción</div>
-          <div class="metric-stat-label">Convergencia de Pérdida</div>
-          <div class="metric-stat-sub">De $2.6840 \rightarrow 0.4120$ Loss</div>
-        </div>
-
-        <div class="metric-card">
-          <div class="metric-icon-wrap" style="background: rgba(2, 132, 199, 0.12); color: var(--accent-info);">
-            <svg fill="currentColor" height="20" viewBox="0 0 24 24" width="20"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"></path></svg>
-          </div>
-          <div class="metric-stat-val">2.45 GB VRAM</div>
-          <div class="metric-stat-label">Huella en GPU T4</div>
-          <div class="metric-stat-sub">84% de margen libre en Colab</div>
-        </div>
-      </div>
     </section>
 
-    <!-- FICHA TÉCNICA DEL ALUMNO -->
-    <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-left: 4px solid var(--meta-blue); border-radius: 8px; padding: 1.2rem 1.5rem; margin: 1.5rem 0;">
-      <div style="font-size: 0.8rem; text-transform: uppercase; font-weight: 700; color: var(--meta-blue); margin-bottom: 0.3rem;">Ficha Técnica Oficial del Entregable</div>
-      <h2 style="font-size: 1.25rem; font-weight: 800; color: var(--text-primary); font-family: var(--font-head); margin-bottom: 0.6rem;">HANDS - ON: FINE-TUNING Y EVALUACIÓN DE MODELOS</h2>
-      <div style="display: flex; gap: 1.5rem; flex-wrap: wrap; font-size: 0.88rem; color: var(--text-secondary);">
-        <div><strong>Alumno:</strong> <span class="notranslate" translate="no">Ing. Jesús Javier Hernández Olvera</span></div>
-        <div><strong>Módulo:</strong> IA Aplicada con Modelos Abiertos</div>
-        <div><strong>Challenge:</strong> Fine-Tuning de Modelos Llama con LoRA y Medición de Pérdida</div>
-      </div>
-    </div>
-
-    <!-- AVISO DE VISUALIZACIÓN Y EJECUCIÓN (READ-ONLY & EDIT GUIDE) -->
-    <div style="background: rgba(8, 102, 255, 0.06); border: 1px solid rgba(8, 102, 255, 0.25); border-radius: 8px; padding: 1.2rem 1.5rem; margin: 1.5rem 0;">
-      <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.6rem; color: var(--meta-blue);">
-        <svg fill="currentColor" height="18" viewBox="0 0 24 24" width="18"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-1 6h2v2h-2V7zm0 4h2v6h-2v-6z"></path></svg>
-        <strong style="font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.5px;">🔒 AVISO DE VISUALIZACIÓN Y EJECUCIÓN (READ-ONLY &amp; EDIT GUIDE)</strong>
-      </div>
-      <p style="font-size: 0.88rem; line-height: 1.5; color: var(--text-primary); margin-bottom: 0.8rem;">
-        <strong>Este cuaderno oficial se encuentra en modo de solo lectura (<em>View Only</em>) para preservar la solución maestra.</strong>
-      </p>
-      <p style="font-size: 0.86rem; color: var(--text-secondary); margin-bottom: 0.5rem;">
-        <strong>Para ejecutar las celdas, experimentar o ingresar tu propia clave de API:</strong>
-      </p>
-      <ol style="font-size: 0.85rem; line-height: 1.6; color: var(--text-secondary); margin: 0; padding-left: 1.4rem;">
-        <li>💾 <strong>Guardar una Copia Personal:</strong> En el menú superior de Google Colab, haz clic en <strong>Archivo &rarr; Guardar una copia en Drive</strong> (<em>File &rarr; Save a copy in Drive</em>).</li>
-        <li>🔑 <strong>Configurar Clave Secreta:</strong> En tu copia, ve al panel lateral izquierdo &rarr; icono de llave (<strong>Secrets / Secretos</strong>) &rarr; agrega el nombre <code>HF_TOKEN</code> con tu valor secreto y activa el permiso de acceso para este cuaderno.</li>
-        <li>💻 <strong>Descarga Local:</strong> Si prefieres ejecutarlo en tu computadora con VS Code o JupyterLab, ve a <strong>Archivo &rarr; Descargar &rarr; Descargar .ipynb</strong>.</li>
-      </ol>
-    </div>
-
     <!-- ======================================================================
-         RESUMEN EJECUTIVO & FUNDAMENTO TEÓRICO
+         RESUMEN EJECUTIVO & FUNDAMENTO TEÓRICO (CON FICHA Y AVISO READ-ONLY)
          ====================================================================== -->
-    <article class="tema-card" id="intro-modulo">
+    <article class="tema-card" id="intro-modulo" style="border-left: 5px solid var(--meta-blue); margin-bottom: 3.5rem;">
       <div class="tema-header">
-        <div class="tema-eyebrow">Fundamento Técnico · Arquitectura PEFT</div>
-        <h3 class="tema-title">¿Cómo funciona LoRA y por qué democratiza el Fine-Tuning?</h3>
+        <div class="tema-eyebrow">Guía de Inicio · Visión del Entregable</div>
+        <h3 class="tema-title">Resumen Ejecutivo &amp; Fundamento: ¿Por qué LoRA democratiza el Fine-Tuning?</h3>
       </div>
 
       <div class="tema-section-block">
+        <!-- FICHA TÉCNICA OFICIAL DEL ALUMNO -->
+        <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-left: 4px solid var(--meta-blue); border-radius: 8px; padding: 1.2rem 1.5rem; margin-bottom: 1.5rem;">
+          <div style="font-size: 0.78rem; text-transform: uppercase; font-weight: 700; color: var(--meta-blue); margin-bottom: 0.3rem;">Ficha Técnica Oficial del Entregable</div>
+          <div style="font-size: 1.15rem; font-weight: 800; color: var(--text-primary); font-family: var(--font-head); margin-bottom: 0.5rem;">HANDS - ON: FINE-TUNING Y EVALUACIÓN DE MODELOS</div>
+          <div style="display: flex; gap: 1.5rem; flex-wrap: wrap; font-size: 0.86rem; color: var(--text-secondary);">
+            <div><strong>Alumno:</strong> <span class="notranslate" translate="no">Ing. Jesús Javier Hernández Olvera</span></div>
+            <div><strong>Módulo:</strong> IA Aplicada con Modelos Abiertos</div>
+            <div><strong>Challenge:</strong> Fine-Tuning de Modelos Llama con LoRA y Medición de Pérdida</div>
+          </div>
+        </div>
+
+        <!-- AVISO DE VISUALIZACIÓN Y EJECUCIÓN (READ-ONLY & EDIT GUIDE) -->
+        <div style="background: rgba(8, 102, 255, 0.06); border: 1px solid rgba(8, 102, 255, 0.25); border-radius: 8px; padding: 1.2rem 1.5rem; margin-bottom: 2rem;">
+          <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.6rem; color: var(--meta-blue);">
+            <svg fill="currentColor" height="18" viewBox="0 0 24 24" width="18"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-1 6h2v2h-2V7zm0 4h2v6h-2v-6z"></path></svg>
+            <strong style="font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.5px;">🔒 AVISO DE VISUALIZACIÓN Y EJECUCIÓN (READ-ONLY &amp; EDIT GUIDE)</strong>
+          </div>
+          <p style="font-size: 0.88rem; line-height: 1.5; color: var(--text-primary); margin-bottom: 0.8rem;">
+            <strong>Este cuaderno oficial se encuentra en modo de solo lectura (<em>View Only</em>) para preservar la solución maestra.</strong>
+          </p>
+          <p style="font-size: 0.86rem; color: var(--text-secondary); margin-bottom: 0.5rem;">
+            <strong>Para ejecutar las celdas, experimentar o ingresar tu propia clave de API:</strong>
+          </p>
+          <ol style="font-size: 0.85rem; line-height: 1.6; color: var(--text-secondary); margin: 0; padding-left: 1.4rem;">
+            <li>💾 <strong>Guardar una Copia Personal:</strong> En el menú superior de Google Colab, haz clic en <strong>Archivo &rarr; Guardar una copia en Drive</strong> (<em>File &rarr; Save a copy in Drive</em>).</li>
+            <li>🔑 <strong>Configurar Clave Secreta:</strong> En tu copia, ve al panel lateral izquierdo &rarr; icono de llave (<strong>Secrets / Secretos</strong>) &rarr; agrega el nombre <code>HF_TOKEN</code> con tu valor secreto y activa el permiso de acceso para este cuaderno.</li>
+            <li>💻 <strong>Descarga Local:</strong> Si prefieres ejecutarlo en tu computadora con VS Code o JupyterLab, ve a <strong>Archivo &rarr; Descargar &rarr; Descargar .ipynb</strong>.</li>
+          </ol>
+        </div>
+
         <h4 class="tema-subheading"><span class="tema-subheading-tag">1. El Problema del Reentrenamiento Completo</span> Barreras de Hardware y Memoria</h4>
         <p class="prose-p">
           El reentrenamiento completo (<b>Full Fine-Tuning</b>) actualiza todos los pesos de la red neuronal, lo que requiere más de <b>64 GB de VRAM</b> para almacenar los gradientes y los estados del optimizador AdamW en un modelo de 8B. 
@@ -210,27 +171,82 @@
           $$h = W_0 x + \Delta W x = W_0 x + \frac{\alpha}{r} (B \times A) x$$
         </div>
 
+        <!-- Bento Grid de Etapas de LoRA -->
         <div class="bento-layout-grid">
           <div class="bento-sub-card">
-            <div class="bento-sub-title">1. Congelamiento Inmutable ($W_0$)</div>
-            <p class="bento-sub-desc">El 99.898% de los parámetros fundacionales se mantienen bloqueados sin gradientes, previniendo el olvido catastrófico.</p>
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem;">
+                <span class="tema-subheading-tag" style="margin:0;">Fase #1</span>
+                <span style="font-family:var(--font-mono); font-size:0.75rem; font-weight:800; color:var(--meta-blue);">Inmutabilidad</span>
+              </div>
+              <h5 class="bento-sub-title">1. Congelamiento de Pesos ($W_0$)</h5>
+              <p class="bento-sub-desc">El 99.898% de los parámetros fundacionales se mantienen bloqueados sin gradientes, previniendo el olvido catastrófico.</p>
+            </div>
           </div>
+
           <div class="bento-sub-card">
-            <div class="bento-sub-title">2. Inicialización Asimétrica</div>
-            <p class="bento-sub-desc">La matriz $B$ inicia en ceros y $A$ con distribución gaussiana, haciendo que $\Delta W = 0$ en el paso inicial.</p>
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem;">
+                <span class="tema-subheading-tag" style="margin:0;">Fase #2</span>
+                <span style="font-family:var(--font-mono); font-size:0.75rem; font-weight:800; color:#a855f7;">Factorización</span>
+              </div>
+              <h5 class="bento-sub-title">2. Inicialización Asimétrica</h5>
+              <p class="bento-sub-desc">La matriz $B$ inicia en ceros y $A$ con distribución gaussiana, garantizando que $\Delta W = 0$ en el paso inicial.</p>
+            </div>
           </div>
+
           <div class="bento-sub-card">
-            <div class="bento-sub-title">3. Factor de Escala ($\alpha/r$)</div>
-            <p class="bento-sub-desc">Mantiene constante la magnitud del gradiente al experimentar con diferentes rangos de compresión.</p>
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem;">
+                <span class="tema-subheading-tag" style="margin:0;">Fase #3</span>
+                <span style="font-family:var(--font-mono); font-size:0.75rem; font-weight:800; color:#eab308;">Estabilidad</span>
+              </div>
+              <h5 class="bento-sub-title">3. Factor de Escala ($\alpha/r$)</h5>
+              <p class="bento-sub-desc">Mantiene constante la magnitud del gradiente al experimentar con diferentes rangos de compresión ($r=4, 8, 16$).</p>
+            </div>
           </div>
+
           <div class="bento-sub-card">
-            <div class="bento-sub-title">4. Merge and Unload</div>
-            <p class="bento-sub-desc">Fusión matricial directa en producción ($W = W_0 + \Delta W$) con cero latencia extra en inferencia.</p>
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem;">
+                <span class="tema-subheading-tag" style="margin:0;">Fase #4</span>
+                <span style="font-family:var(--font-mono); font-size:0.75rem; font-weight:800; color:var(--accent-success);">Despliegue</span>
+              </div>
+              <h5 class="bento-sub-title">4. Merge and Unload</h5>
+              <p class="bento-sub-desc">Fusión matricial directa en producción ($W = W_0 + \Delta W$) con cero latencia adicional en inferencia.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Métricas Clave en Grid Oficial -->
+        <div class="token-metrics-grid" style="margin-top: 2rem;">
+          <div class="metric-card">
+            <div class="metric-num" style="color: var(--meta-blue);">LoRA PEFT</div>
+            <div class="metric-label">Arquitectura de Adaptación</div>
+            <div style="font-size:0.75rem; color:var(--text-secondary); margin-top:0.2rem;">Matrices $B \times A$ ($r=8, \alpha=16$)</div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-num" style="color: var(--accent-success);">1.12M / 0.102%</div>
+            <div class="metric-label">Parámetros Entrenables</div>
+            <div style="font-size:0.75rem; color:var(--text-secondary); margin-top:0.2rem;">99.898% de la red congelada</div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-num" style="color: var(--accent-easy);">84.6% Reducción</div>
+            <div class="metric-label">Convergencia de Pérdida</div>
+            <div style="font-size:0.75rem; color:var(--text-secondary); margin-top:0.2rem;">De $2.6840 \rightarrow 0.4120$ Loss</div>
+          </div>
+
+          <div class="metric-card">
+            <div class="metric-num" style="color: var(--accent-info);">2.45 GB VRAM</div>
+            <div class="metric-label">Huella en GPU Tesla T4</div>
+            <div style="font-size:0.75rem; color:var(--text-secondary); margin-top:0.2rem;">84% de margen libre en Colab</div>
           </div>
         </div>
       </div>
 
-      <div class="easy-explainer-box">
+      <div class="easy-explainer-box" style="margin-top: 1.8rem;">
         <div class="easy-header">
           <svg fill="none" height="18" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="18"><path d="M9 18h6m-5 3h4m-7-9.5A6.5 6.5 0 1 1 18 11.5c0 2.5-1.5 4-2.5 5h-7c-1-1-2.5-2.5-2.5-5z"></path></svg>
           <span>¿No entendiste? Te lo explico fácil: Las notas adhesivas sobre la enciclopedia</span>
@@ -254,57 +270,57 @@
     <!-- ======================================================================
          PASO 0: GESTIÓN DE CREDENCIALES & SECRETS
          ====================================================================== -->
-    <article class="tema-card" id="obtener-api-key">
+    <article class="tema-card" id="obtener-api-key" style="border-left: 4px solid #eab308; margin-bottom: 3.5rem;">
       <div class="tema-header">
         <div class="tema-eyebrow">Paso 0 · Seguridad en la Nube</div>
-        <h3 class="tema-title">Manual Paso a Paso: Cómo Generar tu Token de Hugging Face y Guardarlo en Colab Secrets</h3>
+        <h3 class="tema-title">Gestión de Credenciales en Google Colab con Secrets (`HF_TOKEN`)</h3>
       </div>
 
       <div class="tema-section-block">
-        <h4 class="tema-subheading"><span class="tema-subheading-tag">1. Procedimiento</span> Registro Oficial y Bóveda Criptográfica</h4>
+        <h4 class="tema-subheading"><span class="tema-subheading-tag">Paso a Paso</span> Conexión Segura con Hugging Face Hub</h4>
         <p class="prose-p">
           Para descargar modelos fundacionales y publicar tus adaptadores sin exponer credenciales en repositorios públicos, sigue estos 5 pasos estructurados:
         </p>
 
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; margin: 1.5rem 0;">
-          <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1.1rem;">
-            <div style="display:flex; align-items:center; gap:0.6rem; margin-bottom:0.6rem;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1.2rem; margin: 1.4rem 0;">
+          <div style="background: var(--bg-subtle); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 1.2rem;">
+            <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.5rem;">
               <span class="step-num-badge">1</span>
-              <strong style="font-size:0.9rem; color:var(--text-primary);">Crear Cuenta en HF</strong>
+              <strong style="font-size:0.9rem;">Crear Cuenta en HF</strong>
             </div>
-            <p style="font-size:0.84rem; color:var(--text-secondary); margin:0;">Regístrate gratuitamente en <a href="https://huggingface.co/join" target="_blank" rel="noopener noreferrer" style="color:var(--meta-blue); font-weight:700;">huggingface.co/join</a>.</p>
+            <p style="font-size:0.84rem; color:var(--text-secondary); line-height:1.6; margin:0;">Regístrate gratuitamente en <a href="https://huggingface.co/join" target="_blank" rel="noopener noreferrer" style="color:var(--meta-blue); font-weight:600; text-decoration:underline;">huggingface.co/join</a>.</p>
           </div>
 
-          <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1.1rem;">
-            <div style="display:flex; align-items:center; gap:0.6rem; margin-bottom:0.6rem;">
+          <div style="background: var(--bg-subtle); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 1.2rem;">
+            <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.5rem;">
               <span class="step-num-badge">2</span>
-              <strong style="font-size:0.9rem; color:var(--text-primary);">Access Tokens</strong>
+              <strong style="font-size:0.9rem;">Access Tokens</strong>
             </div>
-            <p style="font-size:0.84rem; color:var(--text-secondary); margin:0;">Ve a <em>Settings &gt; Access Tokens</em> y haz clic en <strong>New token</strong> seleccionando rol <code>Read</code>.</p>
+            <p style="font-size:0.84rem; color:var(--text-secondary); line-height:1.6; margin:0;">Ve a <em>Settings &gt; Access Tokens</em> y haz clic en <strong>New token</strong> con permisos <code>Read</code>.</p>
           </div>
 
-          <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1.1rem;">
-            <div style="display:flex; align-items:center; gap:0.6rem; margin-bottom:0.6rem;">
+          <div style="background: var(--bg-subtle); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 1.2rem;">
+            <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.5rem;">
               <span class="step-num-badge">3</span>
-              <strong style="font-size:0.9rem; color:var(--text-primary);">Copiar Token</strong>
+              <strong style="font-size:0.9rem;">Copiar Token</strong>
             </div>
-            <p style="font-size:0.84rem; color:var(--text-secondary); margin:0;">Copia la cadena que comienza con <code>hf_...</code> y guárdala temporalmente.</p>
+            <p style="font-size:0.84rem; color:var(--text-secondary); line-height:1.6; margin:0;">Copia la cadena que comienza con <code>hf_...</code> de forma segura.</p>
           </div>
 
-          <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1.1rem;">
-            <div style="display:flex; align-items:center; gap:0.6rem; margin-bottom:0.6rem;">
+          <div style="background: var(--bg-subtle); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 1.2rem;">
+            <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.5rem;">
               <span class="step-num-badge">4</span>
-              <strong style="font-size:0.9rem; color:var(--text-primary);">Colab Secrets</strong>
+              <strong style="font-size:0.9rem;">Colab Secrets</strong>
             </div>
-            <p style="font-size:0.84rem; color:var(--text-secondary); margin:0;">En el panel lateral de Colab (icono de llave), crea el secreto con nombre <code>HF_TOKEN</code>.</p>
+            <p style="font-size:0.84rem; color:var(--text-secondary); line-height:1.6; margin:0;">En el panel lateral de Colab (icono de llave), crea el secreto con nombre <code>HF_TOKEN</code>.</p>
           </div>
 
-          <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1.1rem;">
-            <div style="display:flex; align-items:center; gap:0.6rem; margin-bottom:0.6rem;">
+          <div style="background: var(--bg-subtle); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 1.2rem;">
+            <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.5rem;">
               <span class="step-num-badge">5</span>
-              <strong style="font-size:0.9rem; color:var(--text-primary);">Notebook Access</strong>
+              <strong style="font-size:0.9rem;">Notebook Access</strong>
             </div>
-            <p style="font-size:0.84rem; color:var(--text-secondary); margin:0;">Activa el interruptor <strong>Notebook access</strong> para permitir su lectura con <code>userdata.get('HF_TOKEN')</code>.</p>
+            <p style="font-size:0.84rem; color:var(--text-secondary); line-height:1.6; margin:0;">Activa el interruptor <strong>Notebook access</strong> para permitir su lectura con <code>userdata.get('HF_TOKEN')</code>.</p>
           </div>
         </div>
       </div>
@@ -313,7 +329,7 @@
     <!-- ======================================================================
          COMPARATIVA DE PARADIGMAS PEFT
          ====================================================================== -->
-    <article class="tema-card" id="arquitectura-peft">
+    <article class="tema-card" id="arquitectura-peft" style="margin-bottom: 3.5rem;">
       <div class="tema-header">
         <div class="tema-eyebrow">Taxonomía Arquitectónica · Comparativa de Paradigmas</div>
         <h3 class="tema-title">Matriz Comparativa de Paradigmas de Adaptación y Especialización</h3>
