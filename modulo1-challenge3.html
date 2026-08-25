@@ -306,15 +306,16 @@
       </div>
 
       <div class="tema-section-block">
+        <!-- TABLA COMPARATIVA APA 7 -->
         <div class="table-container" style="overflow-x: auto; margin: 1.2rem 0;">
           <table class="apa-table" style="width: 100%; border-collapse: collapse; font-size: 0.88rem;">
             <thead>
               <tr style="background: var(--bg-surface-2); border-bottom: 2px solid var(--border-subtle);">
-                <th style="padding: 0.75rem; text-align: left;">Dimensión de Ingeniería</th>
-                <th style="padding: 0.75rem; text-align: left;">Full Fine-Tuning</th>
-                <th style="padding: 0.75rem; text-align: left;">Adapters Seriales</th>
-                <th style="padding: 0.75rem; text-align: left;">LoRA (PEFT)</th>
-                <th style="padding: 0.75rem; text-align: left;">QLoRA (4-bit PEFT)</th>
+                <th style="padding: 0.75rem; text-align: left; width: 22%;">Dimensión de Ingeniería</th>
+                <th style="padding: 0.75rem; text-align: left; width: 20%;">Full Fine-Tuning</th>
+                <th style="padding: 0.75rem; text-align: left; width: 18%;">Adapters Seriales</th>
+                <th style="padding: 0.75rem; text-align: left; width: 20%;">LoRA (PEFT)</th>
+                <th style="padding: 0.75rem; text-align: left; width: 20%;">QLoRA (4-bit PEFT)</th>
               </tr>
             </thead>
             <tbody>
@@ -336,7 +337,7 @@
                 <td style="padding: 0.7rem;"><strong>Consumo de VRAM (Modelo 8B)</strong></td>
                 <td style="padding: 0.7rem; color: #ef4444;">&gt; 64 GB (Clúster A100)</td>
                 <td style="padding: 0.7rem;">~18 GB VRAM</td>
-                <td style="padding: 0.7rem;">~12 GB VRAM</td>
+                <td style="padding: 0.7rem; color: #38bdf8; font-weight:700;">~12 GB VRAM</td>
                 <td style="padding: 0.7rem; color: #22c55e; font-weight:700;">~6 GB (GPU Comercial)</td>
               </tr>
               <tr style="border-bottom: 1px solid var(--border-subtle);">
@@ -346,15 +347,51 @@
                 <td style="padding: 0.7rem; color: #22c55e; font-weight:700;">~10 MB - 30 MB</td>
                 <td style="padding: 0.7rem; color: #22c55e; font-weight:700;">~10 MB - 30 MB</td>
               </tr>
-              <tr>
+              <tr style="border-bottom: 1px solid var(--border-subtle);">
                 <td style="padding: 0.7rem;"><strong>Riesgo de Olvido Catastrófico</strong></td>
                 <td style="padding: 0.7rem; color: #ef4444;">Severo (degrada lógica general)</td>
                 <td style="padding: 0.7rem;">Moderado</td>
                 <td style="padding: 0.7rem; color: #22c55e; font-weight:700;">Nulo (Pesos base congelados)</td>
                 <td style="padding: 0.7rem; color: #22c55e; font-weight:700;">Nulo (Pesos base congelados)</td>
               </tr>
+              <tr>
+                <td style="padding: 0.7rem;"><strong>Velocidad Forward / Backward</strong></td>
+                <td style="padding: 0.7rem;">1.0x (Línea Base)</td>
+                <td style="padding: 0.7rem;">1.3x (Sobrecarga de capas)</td>
+                <td style="padding: 0.7rem; color: #22c55e; font-weight:700;">1.05x (Casi nativo)</td>
+                <td style="padding: 0.7rem;">1.25x (Descuantización dinámica)</td>
+              </tr>
             </tbody>
           </table>
+        </div>
+
+        <!-- EXPLICACIÓN PROFUNDA DE LA MATRIZ Y TRADE-OFFS DE INGENIERÍA -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.5rem; margin: 1.8rem 0;">
+          <div class="comparison-card" style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.4rem;">
+            <div style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.8rem;">
+              <svg fill="currentColor" height="20" viewBox="0 0 24 24" width="20" style="color: var(--meta-blue);"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/></svg>
+              <h5 style="margin: 0; font-size: 0.98rem; font-weight: 800; color: var(--text-primary);">Ventajas Clave de LoRA Frente al Full Fine-Tuning</h5>
+            </div>
+            <ul style="font-size: 0.88rem; line-height: 1.65; color: var(--text-secondary); padding-left: 1.2rem; margin: 0;">
+              <li><strong>Preservación de VRAM:</strong> Al actualizar únicamente el <strong>0.102%</strong> de los pesos, la memoria necesaria para estados del optimizador AdamW pasa de <strong>64 GB</strong> a solo <strong>~9 MB</strong>.</li>
+              <li><strong>Cero Latencia en Inferencia:</strong> Gracias a la aditividad matricial ($W = W_0 + rac{lpha}{r}BA$), los adaptadores se fusionan estáticamente mediante <code>merge_and_unload()</code>, ejecutándose como un modelo estándar sin sobrecosto.</li>
+              <li><strong>Despliegue Multi-Inquilino (LoRA-as-a-Service):</strong> Un solo servidor puede mantener cargado el modelo base de 16 GB y cargar/descargar dinámicamente adaptadores específicos de cliente (~15 MB) en menos de 10 milisegundos.</li>
+              <li><strong>Protección Antidegradación:</strong> Al mantener el 99.898% de los tensores originales congelados, el modelo no sufre <em>olvido catastrófico</em> de gramática, sintaxis o razonamiento general.</li>
+            </ul>
+          </div>
+
+          <div class="comparison-card" style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.4rem;">
+            <div style="display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.8rem;">
+              <svg fill="currentColor" height="20" viewBox="0 0 24 24" width="20" style="color: #a855f7;"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 14l-5-5 1.41-1.41L12 14.17l7.59-7.59L21 8l-9 9z"/></svg>
+              <h5 style="margin: 0; font-size: 0.98rem; font-weight: 800; color: var(--text-primary);">Criterios de Selección: ¿Cuándo Elegir LoRA, QLoRA o RAG?</h5>
+            </div>
+            <ul style="font-size: 0.88rem; line-height: 1.65; color: var(--text-secondary); padding-left: 1.2rem; margin: 0;">
+              <li><strong>Seleccionar LoRA (FP16):</strong> Cuando se dispone de al menos 12-16 GB de VRAM (ej. GPU T4 gratuita en Google Colab) y se busca máxima velocidad de convergencia y estabilidad numérica.</li>
+              <li><strong>Seleccionar QLoRA (NF4 4-bit):</strong> Cuando se deben especializar modelos masivos (8B, 13B o 70B) en GPUs comerciales de 6 a 24 GB mediante cuantización NormalFloat4.</li>
+              <li><strong>Seleccionar RAG:</strong> Cuando el conocimiento cambia a diario (noticias, manuales de usuario, catálogos) o se requiere citación bibliográfica auditable.</li>
+              <li><strong>Arquitectura Híbrida (RAG + LoRA):</strong> La mejor práctica empresarial: LoRA enseña la sintaxis de salida estricta (JSON/SQL) y RAG inyecta el conocimiento fáctico actualizado.</li>
+            </ul>
+          </div>
         </div>
       </div>
     </article>
@@ -409,24 +446,36 @@ Login successful.
 Sesion de Hugging Face iniciada correctamente.</pre>
           </div>
 
-          <details class="breakdown-details-box">
+          <details class="breakdown-details-box" open>
             <summary class="breakdown-summary-btn">
-              <span>Ver desglose de operaciones en código</span>
-              <span class="breakdown-count-tag">3 operaciones clave</span>
+              <span>Desglose Técnico Exhaustivo Línea por Línea</span>
+              <span class="breakdown-count-tag">6 instrucciones analizadas</span>
             </summary>
             <div class="breakdown-content-wrap">
               <div class="breakdown-list-grid">
                 <div class="breakdown-list-row">
-                  <span class="breakdown-row-badge">L2</span>
-                  <div class="breakdown-row-text"><strong><code>!pip install transformers peft accelerate trl</code>:</strong> Descarga y compila el ecosistema de Hugging Face para adaptadores LoRA y SFT.</div>
+                  <span class="breakdown-row-badge">L1</span>
+                  <div class="breakdown-row-text"><strong><code>!pip install transformers peft accelerate trl --quiet</code>:</strong> Instala la suite completa de Hugging Face: <code>transformers</code> (núcleo del modelo), <code>peft</code> (adaptación de bajo rango LoRA), <code>accelerate</code> (gestión de hardware CUDA) y <code>trl</code> (entrenamiento supervisado con SFTTrainer) en modo silencioso.</div>
                 </div>
                 <div class="breakdown-list-row">
-                  <span class="breakdown-row-badge">L4-6</span>
-                  <div class="breakdown-row-text"><strong><code>import torch, userdata, login</code>:</strong> Carga el motor de tensores CUDA y el gestor de secretos de Google Colab.</div>
+                  <span class="breakdown-row-badge">L3</span>
+                  <div class="breakdown-row-text"><strong><code>import torch</code>:</strong> Importa el framework PyTorch y activa el backend CUDA para cálculo matricial acelerado en la GPU Tesla T4 de 15 GB.</div>
+                </div>
+                <div class="breakdown-list-row">
+                  <span class="breakdown-row-badge">L4</span>
+                  <div class="breakdown-row-text"><strong><code>from google.colab import userdata</code>:</strong> Carga el módulo de gestión de secretos de Google Colab para leer claves de API de forma segura sin exponer credenciales en repositorios públicos.</div>
+                </div>
+                <div class="breakdown-list-row">
+                  <span class="breakdown-row-badge">L5</span>
+                  <div class="breakdown-row-text"><strong><code>from huggingface_hub import login</code>:</strong> Importa la utilidad de autenticación criptográfica contra Hugging Face Hub.</div>
+                </div>
+                <div class="breakdown-list-row">
+                  <span class="breakdown-row-badge">L8</span>
+                  <div class="breakdown-row-text"><strong><code>login(token=userdata.get('HF_TOKEN'))</code>:</strong> Ejecuta la autenticación no interactiva leyendo el token <code>HF_TOKEN</code> con permisos de lectura, evitando que el notebook se bloquee pidiendo input manual.</div>
                 </div>
                 <div class="breakdown-list-row">
                   <span class="breakdown-row-badge">L9</span>
-                  <div class="breakdown-row-text"><strong><code>login(token=userdata.get('HF_TOKEN'))</code>:</strong> Autentica la sesión de forma no interactiva contra el Hub.</div>
+                  <div class="breakdown-row-text"><strong><code>print("Sesion...")</code>:</strong> Emite en consola la confirmación de inicio de sesión exitoso y credenciales cacheadas en <code>/root/.cache/huggingface/token</code>.</div>
                 </div>
               </div>
             </div>
@@ -799,6 +848,41 @@ Your token has been saved to /root/.cache/huggingface/token
 Login successful.
 Entorno del Challenge inicializado con semilla fija.</pre>
           </div>
+
+          <details class="breakdown-details-box" open>
+            <summary class="breakdown-summary-btn">
+              <span>Desglose Técnico del Challenge Línea por Línea</span>
+              <span class="breakdown-count-tag">6 instrucciones analizadas</span>
+            </summary>
+            <div class="breakdown-content-wrap">
+              <div class="breakdown-list-grid">
+                <div class="breakdown-list-row">
+                  <span class="breakdown-row-badge">L1-2</span>
+                  <div class="breakdown-row-text"><strong><code>import torch, AutoModelForCausalLM, AutoTokenizer, set_seed</code>:</strong> Carga las clases fundamentales de transformadores y fija el generador de números aleatorios para garantizar reproducibilidad exacta.</div>
+                </div>
+                <div class="breakdown-list-row">
+                  <span class="breakdown-row-badge">L3-4</span>
+                  <div class="breakdown-row-text"><strong><code>from peft import LoraConfig, get_peft_model; from datasets import Dataset</code>:</strong> Importa el gestor de adaptadores PEFT y el motor columnar de datos.</div>
+                </div>
+                <div class="breakdown-list-row">
+                  <span class="breakdown-row-badge">L5-7</span>
+                  <div class="breakdown-row-text"><strong><code>from trl import SFTTrainer, SFTConfig; from huggingface_hub import login</code>:</strong> Prepara el optimizador de Supervised Fine-Tuning y la autenticación segura.</div>
+                </div>
+                <div class="breakdown-list-row">
+                  <span class="breakdown-row-badge">L9</span>
+                  <div class="breakdown-row-text"><strong><code>login(token=userdata.get('HF_TOKEN'))</code>:</strong> Recupera el secreto cifrado de Colab y valida la sesión con Hugging Face.</div>
+                </div>
+                <div class="breakdown-list-row">
+                  <span class="breakdown-row-badge">L10</span>
+                  <div class="breakdown-row-text"><strong><code>set_seed(42)</code>:</strong> Fija la semilla en <code>42</code> para PyTorch, CUDA y tensores de pesos LoRA.</div>
+                </div>
+                <div class="breakdown-list-row">
+                  <span class="breakdown-row-badge">L11</span>
+                  <div class="breakdown-row-text"><strong><code>print("Entorno...")</code>:</strong> Confirma que el entorno de ejecución está listo para la adaptación.</div>
+                </div>
+              </div>
+            </div>
+          </details>
         </div>
       </article>
 
@@ -838,6 +922,33 @@ Entorno del Challenge inicializado con semilla fija.</pre>
             <div class="colab-output-tag">Salida en Google Colab:</div>
             <pre>Dataset del Challenge preparado con 5 muestras.</pre>
           </div>
+
+          <details class="breakdown-details-box" open>
+            <summary class="breakdown-summary-btn">
+              <span>Desglose Técnico del Challenge Línea por Línea</span>
+              <span class="breakdown-count-tag">5 instrucciones analizadas</span>
+            </summary>
+            <div class="breakdown-content-wrap">
+              <div class="breakdown-list-grid">
+                <div class="breakdown-list-row">
+                  <span class="breakdown-row-badge">L1-7</span>
+                  <div class="breakdown-row-text"><strong><code>datos_reto = [...]</code>:</strong> Corpus supervisado de 5 ejemplos con formato estructurado de soporte a clientes.</div>
+                </div>
+                <div class="breakdown-list-row">
+                  <span class="breakdown-row-badge">Directivas</span>
+                  <div class="breakdown-row-text"><strong>Reglas Institucionales:</strong> Codifica la regla de 1 hora para modificaciones, reembolso de 5-7 días y entrega rápida.</div>
+                </div>
+                <div class="breakdown-list-row">
+                  <span class="breakdown-row-badge">L8</span>
+                  <div class="breakdown-row-text"><strong><code>Dataset.from_dict(...)</code>:</strong> Empaqueta la lista en una tabla columnar de Apache Arrow.</div>
+                </div>
+                <div class="breakdown-list-row">
+                  <span class="breakdown-row-badge">L9</span>
+                  <div class="breakdown-row-text"><strong><code>len(dataset_reto)</code>:</strong> Valida que las 5 muestras estén cargadas en RAM.</div>
+                </div>
+              </div>
+            </div>
+          </details>
         </div>
       </article>
 
@@ -877,6 +988,37 @@ Entorno del Challenge inicializado con semilla fija.</pre>
             <div class="colab-output-tag">Salida en Google Colab:</div>
             <pre>trainable params: 1,126,400 || all params: 1,101,174,784 || trainable%: 0.10229075727027588</pre>
           </div>
+
+          <details class="breakdown-details-box" open>
+            <summary class="breakdown-summary-btn">
+              <span>Desglose Técnico del Challenge Línea por Línea</span>
+              <span class="breakdown-count-tag">6 instrucciones analizadas</span>
+            </summary>
+            <div class="breakdown-content-wrap">
+              <div class="breakdown-list-grid">
+                <div class="breakdown-list-row">
+                  <span class="breakdown-row-badge">L1-2</span>
+                  <div class="breakdown-row-text"><strong><code>r=8, lora_alpha=16</code>:</strong> Rango de cuello de botella $r=8$ y factor de escala $lpha=16$, fijando la proporción $lpha/r = 2.0$.</div>
+                </div>
+                <div class="breakdown-list-row">
+                  <span class="breakdown-row-badge">L3</span>
+                  <div class="breakdown-row-text"><strong><code>target_modules=["q_proj", "v_proj"]</code>:</strong> Inyecta adaptadores exclusivamente en las capas de atención Query y Value.</div>
+                </div>
+                <div class="breakdown-list-row">
+                  <span class="breakdown-row-badge">L4-5</span>
+                  <div class="breakdown-row-text"><strong><code>lora_dropout=0.0, task_type="CAUSAL_LM"</code>:</strong> Modo determinista para dataset compacto y tarea de lenguaje autoregresivo.</div>
+                </div>
+                <div class="breakdown-list-row">
+                  <span class="breakdown-row-badge">L7</span>
+                  <div class="breakdown-row-text"><strong><code>get_peft_model(modelo, config_lora_reto)</code>:</strong> Congela el modelo fundacional e integra los tensores adaptadores.</div>
+                </div>
+                <div class="breakdown-list-row">
+                  <span class="breakdown-row-badge">L8</span>
+                  <div class="breakdown-row-text"><strong><code>print_trainable_parameters()</code>:</strong> Verifica formalmente el <strong>0.102% de parámetros entrenables</strong> (1,126,400 de 1,101M).</div>
+                </div>
+              </div>
+            </div>
+          </details>
         </div>
       </article>
 
