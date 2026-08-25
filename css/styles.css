@@ -3107,11 +3107,12 @@ a.unit-item-row:hover {
 }
 
 /* FAQ Accordion */
-.faq-container {
+.faq-container,
+.faq-accordion {
   display: flex;
   flex-direction: column;
   gap: 0.9rem;
-  margin-top: 1.5rem;
+  margin-top: 1.2rem;
 }
 
 .faq-item {
