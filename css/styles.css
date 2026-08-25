@@ -3158,13 +3158,25 @@ a.unit-item-row:hover {
   transform: rotate(180deg);
 }
 
-.faq-answer {
+.faq-answer,
+.faq-content {
   padding: 0 1.5rem 1.4rem;
   font-size: 0.94rem;
   color: var(--text-secondary);
   line-height: 1.75;
   border-top: 1px solid var(--border-subtle);
   padding-top: 1rem;
+}
+
+.faq-question {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.notranslate {
+  /* Preserva literales de código y nombres propios */
 }
 
 /* Back to Top Floating Button */
@@ -8221,3 +8233,551 @@ p:last-child,
   margin: 0;
 }
 
+
+
+/* ==========================================================================
+   HOMOLOGACIÓN & COMPONENTES MODERNOS (BREAKDOWNS, GLOSARIOS, QUIZ, TABLAS)
+   ========================================================================== */
+
+/* Encabezado de Glosario y Secciones */
+.glossary-header {
+  text-align: center;
+  margin-bottom: 2.4rem;
+}
+
+.section-title-wrap {
+  text-align: center;
+  margin-bottom: 2.2rem;
+}
+
+.badge-role {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.76rem;
+  font-weight: 700;
+  color: var(--meta-blue);
+  background: var(--meta-blue-subtle);
+  border: 1px solid var(--meta-blue-border);
+  padding: 0.15rem 0.6rem;
+  border-radius: 20px;
+}
+
+.workbench-pedagogy-text {
+  font-size: 0.95rem;
+  color: var(--text-secondary);
+  line-height: 1.7;
+  margin-bottom: 1.2rem;
+}
+
+/* Colab Output Box & Tag */
+.code-output-container {
+  margin: 1.2rem 0;
+  border-radius: 12px;
+  overflow: hidden;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+}
+
+.colab-output-box {
+  background: #0d1117;
+  border: 1px solid #30363d;
+  border-radius: 12px;
+  padding: 1.2rem 1.4rem;
+  font-family: var(--font-mono);
+  font-size: 0.84rem;
+  color: #c9d1d9;
+  line-height: 1.65;
+  overflow-x: auto;
+  margin: 1.2rem 0;
+}
+
+.colab-output-tag {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 0.72rem;
+  font-weight: 750;
+  color: #58a6ff;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 0.7rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px dashed rgba(255, 255, 255, 0.15);
+}
+
+.colab-output-box pre {
+  margin: 0;
+  white-space: pre-wrap;
+  word-break: break-word;
+  color: #e6edf3;
+  font-family: inherit;
+  font-size: inherit;
+  line-height: inherit;
+}
+
+/* Desglose de Código & Breakdown Details */
+.breakdown-details-box,
+.formula-breakdown-details {
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  background: var(--bg-surface);
+  margin: 1.2rem 0;
+  overflow: hidden;
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.breakdown-details-box:hover,
+.formula-breakdown-details:hover {
+  border-color: var(--meta-blue);
+}
+
+.breakdown-summary-btn,
+.formula-breakdown-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.95rem 1.3rem;
+  cursor: pointer;
+  user-select: none;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  background: var(--bg-surface);
+  transition: background 0.2s ease, color 0.2s ease;
+  list-style: none;
+}
+
+.breakdown-summary-btn::-webkit-details-marker,
+.formula-breakdown-summary::-webkit-details-marker {
+  display: none;
+}
+
+.breakdown-summary-btn:hover,
+.formula-breakdown-summary:hover {
+  background: var(--meta-blue-subtle);
+  color: var(--meta-blue);
+}
+
+.breakdown-summary-btn::after {
+  content: "▼";
+  font-size: 0.7rem;
+  color: var(--meta-blue);
+  transition: transform 0.25s ease;
+}
+
+.breakdown-details-box[open] > .breakdown-summary-btn::after {
+  transform: rotate(180deg);
+}
+
+.breakdown-details-box[open] > .breakdown-summary-btn,
+.formula-breakdown-details[open] > .formula-breakdown-summary {
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--meta-blue);
+  background: var(--bg-surface-2);
+}
+
+.breakdown-content-wrap,
+.formula-breakdown-panel {
+  padding: 1.1rem 1.3rem;
+  background: var(--bg-surface-2);
+}
+
+.breakdown-list-grid,
+.breakdown-list-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 0.85rem;
+}
+
+.breakdown-list-row {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  font-size: 0.86rem;
+  line-height: 1.6;
+  color: var(--text-primary);
+}
+
+.breakdown-row-badge {
+  flex-shrink: 0;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  font-weight: 750;
+  color: var(--meta-blue);
+  background: var(--meta-blue-subtle);
+  border: 1px solid var(--meta-blue-border);
+  padding: 0.15rem 0.5rem;
+  border-radius: 6px;
+  min-width: 44px;
+  text-align: center;
+}
+
+.breakdown-row-text {
+  flex: 1;
+}
+
+/* Quiz Interactivo & Feedback */
+.quiz-item {
+  background: var(--bg-surface-2);
+  border: 1px solid var(--border-subtle);
+  border-radius: 12px;
+  padding: 1.4rem;
+  margin-bottom: 1.2rem;
+  transition: border-color 0.25s ease;
+}
+
+.quiz-item:hover {
+  border-color: var(--meta-blue-border);
+}
+
+.quiz-question {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--text-primary);
+  margin-bottom: 1rem;
+  line-height: 1.5;
+}
+
+.quiz-opt-btn {
+  display: block;
+  width: 100%;
+  text-align: left;
+  padding: 0.75rem 1.1rem;
+  border-radius: 8px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  cursor: pointer;
+  font-size: 0.86rem;
+  line-height: 1.5;
+  transition: all 0.2s ease;
+  font-family: inherit;
+}
+
+.quiz-opt-btn:hover {
+  border-color: var(--meta-blue);
+  background: var(--meta-blue-subtle);
+  transform: translateX(4px);
+}
+
+.quiz-opt-btn.correct {
+  background: rgba(35, 134, 54, 0.15) !important;
+  border-color: #238636 !important;
+  color: #2ea043 !important;
+  font-weight: 700;
+}
+
+.quiz-opt-btn.incorrect {
+  background: rgba(218, 54, 51, 0.15) !important;
+  border-color: #da3633 !important;
+  color: #f85149 !important;
+}
+
+.quiz-feedback-box {
+  margin-top: 1rem;
+  padding: 0.85rem 1.1rem;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  line-height: 1.55;
+  display: none;
+}
+
+.quiz-feedback-box.show-correct {
+  display: block !important;
+  background: rgba(35, 134, 54, 0.1);
+  border: 1px solid rgba(35, 134, 54, 0.3);
+  color: #2ea043;
+}
+
+.quiz-feedback-box.show-incorrect {
+  display: block !important;
+  background: rgba(218, 54, 51, 0.1);
+  border: 1px solid rgba(218, 54, 51, 0.3);
+  color: #f85149;
+}
+
+/* Tablas APA & Contenedores */
+.table-container {
+  width: 100%;
+  overflow-x: auto;
+  margin: 1.5rem 0;
+  border-radius: 10px;
+  border: 1px solid var(--border-subtle);
+}
+
+.apa-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.88rem;
+  text-align: left;
+}
+
+.apa-table th {
+  background: var(--bg-surface-2);
+  color: var(--text-primary);
+  font-weight: 750;
+  padding: 0.8rem 1rem;
+  border-bottom: 2px solid var(--border-subtle);
+}
+
+.apa-table td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
+}
+
+.apa-table tr:last-child td {
+  border-bottom: none;
+}
+
+
+/* ==========================================================================
+   PIPELINES INTERACTIVOS, TERMINALES, TERMINAL DOTS & COMPONENTES MODULO 2
+   ========================================================================== */
+
+/* Terminal Dots & Header */
+.terminal-dots {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.dot {
+  width: 11px;
+  height: 11px;
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.dot-red {
+  background: #ff5f56;
+}
+
+.dot-yellow {
+  background: #ffbd2e;
+}
+
+.dot-green {
+  background: #27c93f;
+}
+
+.terminal-title {
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: #8b949e;
+  font-weight: 600;
+}
+
+/* Interactive Pipeline & Stepper */
+.pipeline-interactive-box {
+  background: var(--bg-surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: 14px;
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+  box-shadow: var(--shadow-card);
+}
+
+.pipeline-stepper {
+  display: flex;
+  gap: 0.8rem;
+  overflow-x: auto;
+  padding-bottom: 0.8rem;
+  margin-bottom: 1.2rem;
+}
+
+.pipeline-step-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.65rem 1.1rem;
+  border-radius: 10px;
+  background: var(--bg-surface-2);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  font-size: 0.84rem;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.2s ease;
+}
+
+.pipeline-step-btn:hover,
+.pipeline-step-btn.active {
+  background: var(--meta-blue);
+  color: #ffffff;
+  border-color: var(--meta-blue);
+}
+
+.pipeline-terminal-container {
+  background: #0d1117;
+  border: 1px solid #30363d;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.pipeline-terminal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.6rem 1rem;
+  background: #161b22;
+  border-bottom: 1px solid #30363d;
+}
+
+/* Step Badge & Step Title */
+.step-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 800;
+  color: var(--meta-blue);
+  background: var(--meta-blue-subtle);
+  border: 1px solid var(--meta-blue-border);
+  padding: 0.12rem 0.5rem;
+  border-radius: 6px;
+  font-family: var(--font-mono);
+}
+
+.step-title {
+  font-family: var(--font-head);
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--text-primary);
+}
+
+/* WhatsApp Phone Preview Card */
+.wa-phone-card {
+  max-width: 380px;
+  margin: 1.5rem auto;
+  border: 2px solid #30363d;
+  border-radius: 28px;
+  overflow: hidden;
+  background: #0b141a;
+  box-shadow: 0 12px 36px rgba(0,0,0,0.3);
+}
+
+/* Easy Explainer Content & Icon */
+.easy-explainer-icon {
+  font-size: 1.8rem;
+  line-height: 1;
+}
+
+.easy-explainer-content {
+  font-size: 0.95rem;
+  line-height: 1.7;
+  color: var(--text-primary);
+}
+
+/* Ejercicios & Tiempos */
+.exercise-desc {
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  margin-bottom: 0.8rem;
+}
+
+.exercise-tag {
+  font-size: 0.74rem;
+  font-weight: 750;
+  color: var(--meta-blue);
+  background: var(--meta-blue-subtle);
+  border: 1px solid var(--meta-blue-border);
+  padding: 0.15rem 0.55rem;
+  border-radius: 20px;
+}
+
+.exercise-time {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-size: 0.74rem;
+  color: var(--text-muted);
+  font-family: var(--font-mono);
+}
+
+/* Preset Pills & Scenarios */
+.hybrid-preset-pill,
+.fc-preset-pill,
+.guard-preset-pill,
+.api-preset-pill,
+.pipeline-stage-pill,
+.resil-scenario-pill,
+.failure-scenario-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+  padding: 0.45rem 0.9rem;
+  border-radius: 20px;
+  background: var(--bg-surface-2);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  font-size: 0.8rem;
+  font-weight: 650;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.hybrid-preset-pill:hover,
+.fc-preset-pill:hover,
+.guard-preset-pill:hover,
+.api-preset-pill:hover,
+.pipeline-stage-pill:hover,
+.resil-scenario-pill:hover,
+.failure-scenario-btn:hover {
+  border-color: var(--meta-blue);
+  background: var(--meta-blue-subtle);
+  color: var(--meta-blue);
+}
+
+/* Audit & State Cards */
+.audit-check-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.8rem;
+  padding: 0.8rem 1rem;
+  background: var(--bg-surface-2);
+  border-radius: 8px;
+  margin-bottom: 0.6rem;
+}
+
+.cb-state-indicator {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.35rem 0.8rem;
+  border-radius: 6px;
+  font-family: var(--font-mono);
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.docker-node-card {
+  background: var(--bg-surface-2);
+  border: 1px solid var(--border-subtle);
+  border-radius: 10px;
+  padding: 1.2rem;
+  margin: 1rem 0;
+}
+
+.styled-list,
+.point-item {
+  margin: 0.6rem 0;
+  line-height: 1.65;
+  color: var(--text-primary);
+}
+
+.sources-header {
+  text-align: center;
+  margin-bottom: 2.2rem;
+}
+
+.mem-quick-step,
+.stack-tool-cb {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.88rem;
+}
