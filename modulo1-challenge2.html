@@ -1820,7 +1820,188 @@ Respuesta:"""</span>
     <!-- ======================================================================
          FUENTES DE INFORMACIÓN REALES & REFERENCIAS ACADÉMICAS (CUADRÍCULA 3x4)
          ====================================================================== -->
-    <section class="sources-section" id="fuentes-oficiales" style="margin-bottom: 5.5rem;">
+        <!-- ======================================================================
+         GLOSARIO TÉCNICO OFICIAL DEL CHALLENGE 2: RAG & BUSQUEDA VECTORIAL
+         ====================================================================== -->
+    <section class="glossary-section" id="glosario" style="margin-bottom: 3.5rem;">
+      <div class="glossary-header">
+        <span class="hero-badge-tag">Terminología &amp; Recuperación Semántica</span>
+        <h2 style="font-size:2.2rem; font-family:var(--font-disp); font-weight:800; color:var(--text-primary);">Glosario Técnico de Arquitectura RAG</h2>
+        <p style="color:var(--text-secondary); max-width:65ch; margin-top:0.4rem; font-size:0.98rem;">Conceptos fundamentales de bases de datos vectoriales, segmentación de texto (chunking), similitud coseno y mitigación de alucinaciones.</p>
+      </div>
+
+      <div class="glossary-table">
+        <!-- 01 -->
+        <div class="glossary-row-item">
+          <div class="glossary-row-left">
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <span class="glossary-tag">Concepto #01</span>
+            </div>
+            <span class="glossary-term-name">RAG (Retrieval-Augmented Generation)</span>
+          </div>
+          <div class="glossary-row-right">
+            <p class="glossary-term-desc">Patrón arquitectónico que complementa el conocimiento paramétrico de un LLM mediante la recuperación dinámica de fragmentos relevantes desde una base de datos externa para inyectarlos en el prompt en tiempo de inferencia.</p>
+            <div class="glossary-term-note">Beneficio: Elimina alucinaciones fácticas y permite actualizar la información sin reentrenar el modelo.</div>
+          </div>
+        </div>
+
+        <!-- 02 -->
+        <div class="glossary-row-item">
+          <div class="glossary-row-left">
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <span class="glossary-tag">Matemáticas #02</span>
+            </div>
+            <span class="glossary-term-name">Dense Embeddings (Incrustaciones Densas)</span>
+          </div>
+          <div class="glossary-row-right">
+            <p class="glossary-term-desc">Representaciones vectoriales en un espacio continuo de $d$ dimensiones (ej. $d=384$ o $d=768$) donde textos con significado semántico afín quedan situados a corta distancia euclidiana o angular.</p>
+            <div class="glossary-term-note">Modelo: <code>sentence-transformers/all-MiniLM-L6-v2</code> genera vectores normalizados de 384 dimensiones.</div>
+          </div>
+        </div>
+
+        <!-- 03 -->
+        <div class="glossary-row-item">
+          <div class="glossary-row-left">
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <span class="glossary-tag">Métrica #03</span>
+            </div>
+            <span class="glossary-term-name">Similitud Coseno (Cosine Similarity)</span>
+          </div>
+          <div class="glossary-row-right">
+            <p class="glossary-term-desc">Medida métrica que evalúa el coseno del ángulo entre dos vectores no nulos ($\cos \theta = \frac{u \cdot v}{\|u\| \|v\|}$). Al estar normalizados a longitud unitaria ($\|u\|=1$), equivale directamente al producto punto escalar.</p>
+            <div class="glossary-term-note">Rango: Varía entre $-1$ (opuesto) y $+1$ (semánticamente idéntico).</div>
+          </div>
+        </div>
+
+        <!-- 04 -->
+        <div class="glossary-row-item">
+          <div class="glossary-row-left">
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <span class="glossary-tag">Ingeniería #04</span>
+            </div>
+            <span class="glossary-term-name">Chunking (Segmentación de Documentos)</span>
+          </div>
+          <div class="glossary-row-right">
+            <p class="glossary-term-desc">División algorítmica de documentos extensos en fragmentos de longitud controlada (ej. $200$ a $500$ tokens) con solapamiento (overlap) para preservar el contexto gramatical en los límites.</p>
+            <div class="glossary-term-note">Parámetros típicos: <code>chunk_size=300</code>, <code>chunk_overlap=50</code> tokens.</div>
+          </div>
+        </div>
+
+        <!-- 05 -->
+        <div class="glossary-row-item">
+          <div class="glossary-row-left">
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <span class="glossary-tag">Motor #05</span>
+            </div>
+            <span class="glossary-term-name">FAISS (Facebook AI Similarity Search)</span>
+          </div>
+          <div class="glossary-row-right">
+            <p class="glossary-term-desc">Librería de código abierto de Meta AI optimizada en C++ y CUDA para búsqueda y agrupamiento extremadamente rápido de vectores densos en colecciones de millones de elementos.</p>
+            <div class="glossary-term-note">Estructuras: <code>IndexFlatIP</code> (búsqueda exacta) e <code>IndexIVFFlat</code> (aproximada ANN).</div>
+          </div>
+        </div>
+
+        <!-- 06 -->
+        <div class="glossary-row-item">
+          <div class="glossary-row-left">
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <span class="glossary-tag">Algoritmo #06</span>
+            </div>
+            <span class="glossary-term-name">Top-K Retrieval</span>
+          </div>
+          <div class="glossary-row-right">
+            <p class="glossary-term-desc">Estrategia de selección que extrae los $k$ fragmentos con mayor puntuación de similitud semántica respecto a la consulta del usuario para conformar el contexto documental.</p>
+            <div class="glossary-term-note">Optimización: Un $k=2$ o $k=3$ maximiza la precisión sin saturar la ventana de contexto.</div>
+          </div>
+        </div>
+
+        <!-- 07 -->
+        <div class="glossary-row-item">
+          <div class="glossary-row-left">
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <span class="glossary-tag">Alineación #07</span>
+            </div>
+            <span class="glossary-term-name">System Prompt &amp; Grounding</span>
+          </div>
+          <div class="glossary-row-right">
+            <p class="glossary-term-desc">Instrucción del sistema que condiciona al LLM a responder exclusivamente fundamentado en los fragmentos provistos, declarando explícitamente desconocimiento si la información no está en el contexto.</p>
+            <div class="glossary-term-note">Efecto: Previene respuestas especulativas o inventadas en entornos de cumplimiento normativo.</div>
+          </div>
+        </div>
+
+        <!-- 08 -->
+        <div class="glossary-row-item">
+          <div class="glossary-row-left">
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <span class="glossary-tag">Seguridad #08</span>
+            </div>
+            <span class="glossary-term-name">Mitigación de Alucinaciones</span>
+          </div>
+          <div class="glossary-row-right">
+            <p class="glossary-term-desc">Garantía de que las afirmaciones del modelo pueden ser auditadas y rastreadas directamente a una cláusula o política corporativa real presente en el índice documental.</p>
+            <div class="glossary-term-note">Trazabilidad: Permite citar el fragmento y la fuente exacta en cada respuesta generada.</div>
+          </div>
+        </div>
+
+        <!-- 09 -->
+        <div class="glossary-row-item">
+          <div class="glossary-row-left">
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <span class="glossary-tag">Estrategia #09</span>
+            </div>
+            <span class="glossary-term-name">Hybrid Search (Búsqueda Híbrida)</span>
+          </div>
+          <div class="glossary-row-right">
+            <p class="glossary-term-desc">Combinación de búsqueda densa semántica (embeddings) con búsqueda dispersa léxica (BM25 / TF-IDF) para capturar tanto conceptos conceptuales como códigos y números de referencia exactos.</p>
+            <div class="glossary-term-note">Fusión: Aplica Reciprocal Rank Fusion (RRF) para combinar los rankings de ambos motores.</div>
+          </div>
+        </div>
+
+        <!-- 10 -->
+        <div class="glossary-row-item">
+          <div class="glossary-row-left">
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <span class="glossary-tag">Evaluación #10</span>
+            </div>
+            <span class="glossary-term-name">RAG Triad (Fidelidad, Relevancia y Precisión)</span>
+          </div>
+          <div class="glossary-row-right">
+            <p class="glossary-term-desc">Marco de evaluación que audita tres pilares: Relevancia del Contexto Recuperado, Fidelidad de la Respuesta al Contexto y Relevancia de la Respuesta respecto a la Pregunta.</p>
+            <div class="glossary-term-note">Frameworks: Implementado por herramientas estándar como Ragas y TruLens.</div>
+          </div>
+        </div>
+
+        <!-- 11 -->
+        <div class="glossary-row-item">
+          <div class="glossary-row-left">
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <span class="glossary-tag">Optimización #11</span>
+            </div>
+            <span class="glossary-term-name">Reranking (Reordenamiento con Cross-Encoder)</span>
+          </div>
+          <div class="glossary-row-right">
+            <p class="glossary-term-desc">Etapa secundaria que procesa los pares (consulta, fragmento) de forma conjunta mediante un Cross-Encoder para refinar el orden de relevancia antes de construir el prompt final.</p>
+            <div class="glossary-term-note">Mejora: Aumenta la precisión del Top-1 entre un 15% y un 25% respecto a bi-encoders simples.</div>
+          </div>
+        </div>
+
+        <!-- 12 -->
+        <div class="glossary-row-item">
+          <div class="glossary-row-left">
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <span class="glossary-tag">Despliegue #12</span>
+            </div>
+            <span class="glossary-term-name">Vector DB Serverless</span>
+          </div>
+          <div class="glossary-row-right">
+            <p class="glossary-term-desc">Servicio administrado de base de datos vectorial (Pinecone, Chroma, Milvus, Qdrant) con escalado horizontal y persistencia en disco para aplicaciones empresariales.</p>
+            <div class="glossary-term-note">Producción: Mantiene índices particionados con latencias de consulta sub-10 milisegundos.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+<section class="sources-section" id="fuentes-oficiales" style="margin-bottom: 5.5rem;">
       <div style="text-align: center; margin-bottom: 2.2rem;">
         <span class="hero-badge-tag">Evidencia Científica &amp; Recursos Oficiales</span>
         <h2 style="font-size: 2.2rem; font-family: var(--font-disp); font-weight: 800; color: var(--text-primary);">Fuentes de Información Reales &amp; Referencias Académicas</h2>

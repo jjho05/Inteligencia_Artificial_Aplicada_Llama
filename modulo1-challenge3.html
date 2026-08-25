@@ -1262,42 +1262,182 @@ Respuesta LoRA: Si, puedes solicitar el cambio dentro de la primera hora escribi
     <!-- ======================================================================
          GLOSARIO TÉCNICO DE TÉRMINOS
          ====================================================================== -->
-    <section class="tema-card" id="glosario" style="margin-top: 5rem;">
-      <div class="tema-header">
-        <div class="tema-eyebrow">Diccionario de Conceptos · Fundamentos de Ingeniería</div>
-        <h3 class="tema-title">Glosario Técnico de Términos Clave</h3>
+        <!-- ======================================================================
+         GLOSARIO TÉCNICO OFICIAL DEL CHALLENGE 3: LORA & PEFT
+         ====================================================================== -->
+    <section class="glossary-section" id="glosario" style="margin-bottom: 3.5rem;">
+      <div class="glossary-header">
+        <span class="hero-badge-tag">Terminología &amp; Adaptación Eficiente</span>
+        <h2 style="font-size:2.2rem; font-family:var(--font-disp); font-weight:800; color:var(--text-primary);">Glosario Técnico de Fine-Tuning con LoRA</h2>
+        <p style="color:var(--text-secondary); max-width:65ch; margin-top:0.4rem; font-size:0.98rem;">Conceptos fundamentales de adaptación de bajo rango (PEFT), inicialización de tensores, funciones de pérdida y optimización de memoria GPU.</p>
       </div>
 
-      <div class="tema-section-block">
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.2rem;">
-          <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1.1rem;">
-            <strong style="color: var(--meta-blue); font-size: 0.95rem; display:block; margin-bottom: 0.3rem;">LoRA (Low-Rank Adaptation)</strong>
-            <p style="font-size: 0.84rem; color: var(--text-secondary); margin:0;">Técnica PEFT que factoriza la actualización de pesos $\Delta W$ en dos matrices densas de bajo rango ($B \times A$).</p>
+      <div class="glossary-table">
+        <!-- 01 -->
+        <div class="glossary-row-item">
+          <div class="glossary-row-left">
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <span class="glossary-tag">Concepto #01</span>
+            </div>
+            <span class="glossary-term-name">LoRA (Low-Rank Adaptation)</span>
           </div>
-
-          <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1.1rem;">
-            <strong style="color: var(--meta-blue); font-size: 0.95rem; display:block; margin-bottom: 0.3rem;">Rango ($r$)</strong>
-            <p style="font-size: 0.84rem; color: var(--text-secondary); margin:0;">Dimensión intermedia del cuello de botella en las matrices adaptadoras (valores comunes: 4, 8, 16).</p>
+          <div class="glossary-row-right">
+            <p class="glossary-term-desc">Técnica PEFT que congela los pesos base pre-entrenados ($W_0$) e inyecta pares de matrices entrenables de bajo rango ($B \times A$) en capas de atención, reduciendo en más del 99% los parámetros a optimizar.</p>
+            <div class="glossary-term-note">Eficiencia: Permite especializar modelos de 8B parámetros en GPUs comerciales con 12 GB de VRAM.</div>
           </div>
+        </div>
 
-          <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1.1rem;">
-            <strong style="color: var(--meta-blue); font-size: 0.95rem; display:block; margin-bottom: 0.3rem;">Factor de Escala ($\alpha$)</strong>
-            <p style="font-size: 0.84rem; color: var(--text-secondary); margin:0;">Multiplicador constante que modula la contribución de la matriz adaptada $\Delta W$. Relación estándar: $\alpha/r = 2.0$.</p>
+        <!-- 02 -->
+        <div class="glossary-row-item">
+          <div class="glossary-row-left">
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <span class="glossary-tag">Hiperparámetro #02</span>
+            </div>
+            <span class="glossary-term-name">Rango de Factorización ($r$)</span>
           </div>
-
-          <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1.1rem;">
-            <strong style="color: var(--meta-blue); font-size: 0.95rem; display:block; margin-bottom: 0.3rem;">SFT (Supervised Fine-Tuning)</strong>
-            <p style="font-size: 0.84rem; color: var(--text-secondary); margin:0;">Entrenamiento supervisado sobre pares instrucción-respuesta para ajustar estilo, formato o políticas.</p>
+          <div class="glossary-row-right">
+            <p class="glossary-term-desc">Dimensión intermedia del cuello de botella en la descomposición matricial $W \approx B \cdot A$ donde $B \in \mathbb{R}^{d \times r}$ y $A \in \mathbb{R}^{r \times k}$. Controla la capacidad representacional del adaptador.</p>
+            <div class="glossary-term-note">Estándar: $r=8$ o $r=16$ es óptimo para alineación de estilo, formato y diálogo.</div>
           </div>
+        </div>
 
-          <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1.1rem;">
-            <strong style="color: var(--meta-blue); font-size: 0.95rem; display:block; margin-bottom: 0.3rem;">Loss Decay (Reducción de Pérdida)</strong>
-            <p style="font-size: 0.84rem; color: var(--text-secondary); margin:0;">Disminución progresiva del error cross-entropy, indicando convergencia del modelo hacia el dataset.</p>
+        <!-- 03 -->
+        <div class="glossary-row-item">
+          <div class="glossary-row-left">
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <span class="glossary-tag">Escala #03</span>
+            </div>
+            <span class="glossary-term-name">Factor de Escala ($\alpha$ / Alpha)</span>
           </div>
+          <div class="glossary-row-right">
+            <p class="glossary-term-desc">Multiplicador constante que modula la magnitud de la actualización $\Delta W = \frac{\alpha}{r} (B \times A)$. Permite experimentar con diferentes rangos $r$ sin tener que recalibrar la tasa de aprendizaje $\eta$.</p>
+            <div class="glossary-term-note">Regla empírica: Se fija comúnmente en $\alpha = 2r$ ($\alpha/r = 2.0$).</div>
+          </div>
+        </div>
 
-          <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1.1rem;">
-            <strong style="color: var(--meta-blue); font-size: 0.95rem; display:block; margin-bottom: 0.3rem;">Merge and Unload</strong>
-            <p style="font-size: 0.84rem; color: var(--text-secondary); margin:0;">Operación que suma $\Delta W$ permanentemente en $W_0$, eliminando cualquier sobrecosto de latencia en producción.</p>
+        <!-- 04 -->
+        <div class="glossary-row-item">
+          <div class="glossary-row-left">
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <span class="glossary-tag">Matemáticas #04</span>
+            </div>
+            <span class="glossary-term-name">Inicialización Asimétrica ($B=0, A \sim \mathcal{N}$)</span>
+          </div>
+          <div class="glossary-row-right">
+            <p class="glossary-term-desc">Protocolo donde la matriz $B$ se inicia en ceros absolutos y la matriz $A$ con valores aleatorios gaussianos, garantizando que $\Delta W = 0$ en el paso inicial para preservar el comportamiento original intacto.</p>
+            <div class="glossary-term-note">Propiedad: El modelo comienza exactamente en su estado base pre-entrenado sin artefactos.</div>
+          </div>
+        </div>
+
+        <!-- 05 -->
+        <div class="glossary-row-item">
+          <div class="glossary-row-left">
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <span class="glossary-tag">Paradigma #05</span>
+            </div>
+            <span class="glossary-term-name">SFT (Supervised Fine-Tuning)</span>
+          </div>
+          <div class="glossary-row-right">
+            <p class="glossary-term-desc">Entrenamiento supervisado sobre pares de entrada-respuesta donde se calcula la función de pérdida exclusivamente sobre los tokens de respuesta del agente, condicionando el estilo conversacional.</p>
+            <div class="glossary-term-note">Librería: Implementado de forma nativa mediante la clase <code>SFTTrainer</code> de Hugging Face TRL.</div>
+          </div>
+        </div>
+
+        <!-- 06 -->
+        <div class="glossary-row-item">
+          <div class="glossary-row-left">
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <span class="glossary-tag">Métrica #06</span>
+            </div>
+            <span class="glossary-term-name">Loss Decay (Reducción de Pérdida Cross-Entropy)</span>
+          </div>
+          <div class="glossary-row-right">
+            <p class="glossary-term-desc">Disminución progresiva del error de entropía cruzada entre la distribución predicha por el modelo y las respuestas objetivo del dataset, cuantificando matemáticamente la convergencia del aprendizaje.</p>
+            <div class="glossary-term-note">Evidencia: Reducciones superiores al 80% (de $2.68$ a $0.41$) demuestran asimilación de directivas.</div>
+          </div>
+        </div>
+
+        <!-- 07 -->
+        <div class="glossary-row-item">
+          <div class="glossary-row-left">
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <span class="glossary-tag">Arquitectura #07</span>
+            </div>
+            <span class="glossary-term-name">Target Modules (Módulos Objetivo de Atención)</span>
+          </div>
+          <div class="glossary-row-right">
+            <p class="glossary-term-desc">Capas específicas del transformador donde se inyectan las matrices LoRA. Comúnmente <code>q_proj</code> y <code>v_proj</code> en capas de atención, o todas las proyecciones lineales en especializaciones complejas.</p>
+            <div class="glossary-term-note">Compensación: Inyectar en $q, v$ reduce la memoria en un 50% frente a inyectar en todas las capas lineales.</div>
+          </div>
+        </div>
+
+        <!-- 08 -->
+        <div class="glossary-row-item">
+          <div class="glossary-row-left">
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <span class="glossary-tag">Despliegue #08</span>
+            </div>
+            <span class="glossary-term-name">Merge and Unload ($W = W_0 + \Delta W$)</span>
+          </div>
+          <div class="glossary-row-right">
+            <p class="glossary-term-desc">Fusión estática donde el producto $\frac{\alpha}{r}BA$ se suma permanentemente a la matriz base $W_0$, generando un checkpoint independiente que se ejecuta con latencia cero adicional.</p>
+            <div class="glossary-term-note">Producción: Permite servir el modelo en motores de alta velocidad como vLLM o TGI.</div>
+          </div>
+        </div>
+
+        <!-- 09 -->
+        <div class="glossary-row-item">
+          <div class="glossary-row-left">
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <span class="glossary-tag">Hardware #09</span>
+            </div>
+            <span class="glossary-term-name">Trainable Parameters Ratio</span>
+          </div>
+          <div class="glossary-row-right">
+            <p class="glossary-term-desc">Proporción porcentual entre los parámetros adaptadores que reciben gradientes y el total de pesos de la red ($\approx 1.12\text{M} / 1,101\text{M} \approx 0.102\%$).</p>
+            <div class="glossary-term-note">Ventaja: Reduce el consumo del optimizador AdamW en más de 8 veces durante el backward pass.</div>
+          </div>
+        </div>
+
+        <!-- 10 -->
+        <div class="glossary-row-item">
+          <div class="glossary-row-left">
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <span class="glossary-tag">Memoria #10</span>
+            </div>
+            <span class="glossary-term-name">Huella de VRAM &amp; Optimizador AdamW</span>
+          </div>
+          <div class="glossary-row-right">
+            <p class="glossary-term-desc">Distribución de memoria GPU requerida para almacenar pesos en FP16 (2 bytes/param), activaciones, gradientes y momentos de primer/segundo orden del optimizador AdamW (8 bytes/param entrenable).</p>
+            <div class="glossary-term-note">Resultado en T4: Ocupa apenas 2.45 GB de los 15 GB disponibles en Google Colab.</div>
+          </div>
+        </div>
+
+        <!-- 11 -->
+        <div class="glossary-row-item">
+          <div class="glossary-row-left">
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <span class="glossary-tag">Regularización #11</span>
+            </div>
+            <span class="glossary-term-name">Overfitting &amp; Catastrophic Forgetting</span>
+          </div>
+          <div class="glossary-row-right">
+            <p class="glossary-term-desc">Fenómenos de degradación donde el modelo memoriza patrones sin generalizar (sobreajuste) o pierde capacidades lingüísticas previas (olvido catastrófico). LoRA previene ambos al mantener congelado $W_0$.</p>
+            <div class="glossary-term-note">Control: Se regula con <code>lora_dropout=0.05</code> y número moderado de épocas ($20$ a $30$).</div>
+          </div>
+        </div>
+
+        <!-- 12 -->
+        <div class="glossary-row-item">
+          <div class="glossary-row-left">
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <span class="glossary-tag">Cuantización #12</span>
+            </div>
+            <span class="glossary-term-name">QLoRA &amp; NormalFloat4 (NF4)</span>
+          </div>
+          <div class="glossary-row-right">
+            <p class="glossary-term-desc">Evolución de LoRA que cuantiza el modelo base a 4 bits con tipo de dato NormalFloat4 y optimizador paginado, permitiendo entrenar modelos de 70B en una sola GPU de 48 GB.</p>
+            <div class="glossary-term-note">Innovación: Introduce Double Quantization y Paged Optimizers para picos de memoria.</div>
           </div>
         </div>
       </div>
@@ -1402,34 +1542,177 @@ Respuesta LoRA: Si, puedes solicitar el cambio dentro de la primera hora escribi
     <!-- ======================================================================
          FUENTES OFICIALES & BIBLIOGRAFÍA
          ====================================================================== -->
-    <section class="tema-card" id="fuentes-oficiales" style="margin-top: 5rem; margin-bottom: 2rem;">
-      <div class="tema-header">
-        <div class="tema-eyebrow">Documentación Oficial &amp; Repositorios</div>
-        <h3 class="tema-title">Referencias de Ingeniería y Enlaces Directos</h3>
+        <!-- ======================================================================
+         FUENTES DE INFORMACIÓN REALES & REFERENCIAS ACADÉMICAS (CUADRÍCULA 3x4)
+         ====================================================================== -->
+    <section class="sources-section" id="fuentes-oficiales" style="margin-bottom: 5.5rem;">
+      <div style="text-align: center; margin-bottom: 2.2rem;">
+        <span class="hero-badge-tag">Evidencia Científica &amp; Recursos Oficiales</span>
+        <h2 style="font-size: 2.2rem; font-family: var(--font-disp); font-weight: 800; color: var(--text-primary);">Fuentes de Información Reales &amp; Referencias Académicas</h2>
+        <p style="color: var(--text-secondary); max-width: 75ch; margin: 0.5rem auto 0; font-size: 1.05rem;">
+          Todo el pipeline de fine-tuning con LoRA, la formulación matemática de bajo rango, la clase SFTTrainer y los benchmarks de GPU están rigurosamente fundamentados en papers científicos y documentación oficial.
+        </p>
       </div>
 
-      <div class="tema-section-block">
-        <div class="bento-layout-grid">
-          <div class="bento-sub-card">
-            <div class="bento-sub-title">1. Hugging Face PEFT</div>
-            <p class="bento-sub-desc">Documentación y repositorio oficial de Parameter-Efficient Fine-Tuning en PyTorch.</p>
-            <a href="https://huggingface.co/docs/peft" target="_blank" rel="noopener noreferrer" style="color:var(--meta-blue); font-size:0.8rem; font-weight:700;">hf.co/docs/peft &rarr;</a>
+      <div class="sources-grid">
+        <!-- Card 1 -->
+        <div class="source-card">
+          <div class="source-card-header">
+            <span class="source-tag">Edward Hu et al. / Microsoft · 2021</span>
+            <span class="source-type-pill">Paper Fundacional LoRA</span>
           </div>
-          <div class="bento-sub-card">
-            <div class="bento-sub-title">2. Hugging Face TRL</div>
-            <p class="bento-sub-desc">Librería Transformer Reinforcement Learning y clase SFTTrainer para entrenamiento supervisado.</p>
-            <a href="https://huggingface.co/docs/trl" target="_blank" rel="noopener noreferrer" style="color:var(--meta-blue); font-size:0.8rem; font-weight:700;">hf.co/docs/trl &rarr;</a>
+          <h4 class="source-title">LoRA: Low-Rank Adaptation of Large Language Models</h4>
+          <p class="source-desc">
+            Artículo científico fundacional que formula matemáticamente la descomposición de actualizaciones matriciales $\Delta W = BA$ e introduce la hipótesis del bajo rango intrínseco.
+          </p>
+          <a class="source-link-btn" href="https://arxiv.org/abs/2106.09685" rel="noopener noreferrer" target="_blank">
+            <span>Consultar en arXiv: 2106.09685</span>
+            <svg fill="none" height="14" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"></path></svg>
+          </a>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="source-card">
+          <div class="source-card-header">
+            <span class="source-tag">Dettmers et al. / UW &amp; Meta · 2023</span>
+            <span class="source-type-pill">Paper QLoRA</span>
           </div>
-          <div class="bento-sub-card">
-            <div class="bento-sub-title">3. LoRA Original Paper (arXiv)</div>
-            <p class="bento-sub-desc">Artículo científico fundacional: Low-Rank Adaptation of Large Language Models (Edward Hu et al.).</p>
-            <a href="https://arxiv.org/abs/2106.09685" target="_blank" rel="noopener noreferrer" style="color:var(--meta-blue); font-size:0.8rem; font-weight:700;">arxiv.org/abs/2106.09685 &rarr;</a>
+          <h4 class="source-title">QLoRA: Efficient Finetuning of Quantized LLMs</h4>
+          <p class="source-desc">
+            Publicación que introduce la cuantización NormalFloat4 (NF4) y adaptadores LoRA sobre modelos en 4 bits, democratizando el fine-tuning masivo.
+          </p>
+          <a class="source-link-btn" href="https://arxiv.org/abs/2305.14314" rel="noopener noreferrer" target="_blank">
+            <span>Consultar en arXiv: 2305.14314</span>
+            <svg fill="none" height="14" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"></path></svg>
+          </a>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="source-card">
+          <div class="source-card-header">
+            <span class="source-tag">Meta AI Research · 2024</span>
+            <span class="source-type-pill">Ecosistema Meta Llama</span>
           </div>
-          <div class="bento-sub-card">
-            <div class="bento-sub-title">4. Meta Llama 3 Ecosystem</div>
-            <p class="bento-sub-desc">Pesos abiertos oficiales, recetas de fine-tuning y guías de arquitectura de Meta AI.</p>
-            <a href="https://llama.meta.com" target="_blank" rel="noopener noreferrer" style="color:var(--meta-blue); font-size:0.8rem; font-weight:700;">llama.meta.com &rarr;</a>
+          <h4 class="source-title">The Llama 3 Herd of Models &amp; Fine-Tuning Recipes</h4>
+          <p class="source-desc">
+            Documento técnico que detalla la arquitectura de Llama 3/3.2, los hiperparámetros de entrenamiento supervisado y recetas oficiales de adaptación.
+          </p>
+          <a class="source-link-btn" href="https://arxiv.org/abs/2407.21783" rel="noopener noreferrer" target="_blank">
+            <span>Consultar en arXiv: 2407.21783</span>
+            <svg fill="none" height="14" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"></path></svg>
+          </a>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="source-card">
+          <div class="source-card-header">
+            <span class="source-tag">Hugging Face · 2025</span>
+            <span class="source-type-pill">Framework Oficial PEFT</span>
           </div>
+          <h4 class="source-title">PEFT: Parameter-Efficient Fine-Tuning Documentation</h4>
+          <p class="source-desc">
+            Guía de ingeniería y referencia de API para <code>LoraConfig</code>, <code>get_peft_model</code>, guardado de adaptadores y fusión en PyTorch.
+          </p>
+          <a class="source-link-btn" href="https://huggingface.co/docs/peft" rel="noopener noreferrer" target="_blank">
+            <span>Consultar en huggingface.co/docs/peft</span>
+            <svg fill="none" height="14" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"></path></svg>
+          </a>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="source-card">
+          <div class="source-card-header">
+            <span class="source-tag">Hugging Face · 2025</span>
+            <span class="source-type-pill">Entrenador SFT</span>
+          </div>
+          <h4 class="source-title">TRL: Transformer Reinforcement Learning &amp; SFTTrainer</h4>
+          <p class="source-desc">
+            Documentación de la clase <code>SFTTrainer</code> para formateo automático de datasets, empaquetado de secuencias y cálculo de loss en tokens de respuesta.
+          </p>
+          <a class="source-link-btn" href="https://huggingface.co/docs/trl" rel="noopener noreferrer" target="_blank">
+            <span>Consultar en huggingface.co/docs/trl</span>
+            <svg fill="none" height="14" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"></path></svg>
+          </a>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="source-card">
+          <div class="source-card-header">
+            <span class="source-tag">Aghajanyan et al. / Meta AI · 2020</span>
+            <span class="source-type-pill">Dimensión Intrínseca</span>
+          </div>
+          <h4 class="source-title">Intrinsic Dimensionality of Language Model Fine-Tuning</h4>
+          <p class="source-desc">
+            Estudio empírico de Meta AI que demuestra que los modelos pre-entrenados tienen una dimensión intrínseca muy baja para resolver tareas específicas.
+          </p>
+          <a class="source-link-btn" href="https://arxiv.org/abs/2012.13255" rel="noopener noreferrer" target="_blank">
+            <span>Consultar en arXiv: 2012.13255</span>
+            <svg fill="none" height="14" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"></path></svg>
+          </a>
+        </div>
+
+        <!-- Card 7 -->
+        <div class="source-card">
+          <div class="source-card-header">
+            <span class="source-tag">Loshchilov &amp; Hutter · 2019</span>
+            <span class="source-type-pill">Optimizador AdamW</span>
+          </div>
+          <h4 class="source-title">Decoupled Weight Decay Regularization (AdamW)</h4>
+          <p class="source-desc">
+            Formulación del optimizador estándar utilizado por SFTTrainer y PyTorch para desacoplar el decaimiento de pesos del gradiente adaptativo.
+          </p>
+          <a class="source-link-btn" href="https://arxiv.org/abs/1711.05101" rel="noopener noreferrer" target="_blank">
+            <span>Consultar en arXiv: 1711.05101</span>
+            <svg fill="none" height="14" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"></path></svg>
+          </a>
+        </div>
+
+        <!-- Card 8 -->
+        <div class="source-card">
+          <div class="source-card-header">
+            <span class="source-tag">Dao et al. · 2023</span>
+            <span class="source-type-pill">Aceleración FlashAttention</span>
+          </div>
+          <h4 class="source-title">FlashAttention-2: Faster Attention with Better Parallelism</h4>
+          <p class="source-desc">
+            Algoritmo de atención exacta optimizado para hardware GPU que reduce los accesos a HBM acelerando el entrenamiento de modelos Llama.
+          </p>
+          <a class="source-link-btn" href="https://arxiv.org/abs/2307.08691" rel="noopener noreferrer" target="_blank">
+            <span>Consultar en arXiv: 2307.08691</span>
+            <svg fill="none" height="14" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"></path></svg>
+          </a>
+        </div>
+
+        <!-- Card 9 -->
+        <div class="source-card">
+          <div class="source-card-header">
+            <span class="source-tag">Touvron et al. / Meta AI · 2023</span>
+            <span class="source-type-pill">Alineación Llama 2</span>
+          </div>
+          <h4 class="source-title">Llama 2: Open Foundation and Fine-Tuned Chat Models</h4>
+          <p class="source-desc">
+            Metodología de alineación de Meta AI mediante SFT y RLHF para seguridad, veracidad y directivas de diálogo institucional.
+          </p>
+          <a class="source-link-btn" href="https://arxiv.org/abs/2307.09288" rel="noopener noreferrer" target="_blank">
+            <span>Consultar en arXiv: 2307.09288</span>
+            <svg fill="none" height="14" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"></path></svg>
+          </a>
+        </div>
+
+        <!-- Card 10 -->
+        <div class="source-card">
+          <div class="source-card-header">
+            <span class="source-tag">PyTorch Core Team · 2025</span>
+            <span class="source-type-pill">Infraestructura FSDP</span>
+          </div>
+          <h4 class="source-title">PyTorch Fully Sharded Data Parallel (FSDP) &amp; PEFT</h4>
+          <p class="source-desc">
+            Documentación técnica para escalado multi-GPU de adaptadores LoRA y particionado de memoria de parámetros y optimizadores.
+          </p>
+          <a class="source-link-btn" href="https://pytorch.org/docs/stable/fsdp.html" rel="noopener noreferrer" target="_blank">
+            <span>Consultar en pytorch.org/docs</span>
+            <svg fill="none" height="14" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"></path></svg>
+          </a>
         </div>
       </div>
     </section>
