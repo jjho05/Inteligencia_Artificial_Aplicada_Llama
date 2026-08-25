@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html lang="es-MX" data-theme="dark">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Challenge 3: Fine-Tuning con LoRA | IA Aplicada con Modelos Abiertos</title>
+  <meta name="description" content="Laboratorio interactivo, guía exhaustiva y código resuelto del Challenge 3: Fine-Tuning con LoRA y SFTTrainer sobre Llama en Google Colab."/>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:ital,wght@0,400;0,500;0,700;1,400&family=Playfair+Display:ital,wght@0,600;0,700;1,400&display=swap" rel="stylesheet"/>
+  
+  <link rel="stylesheet" href="css/styles.css"/>
+</head>
+<body class="challenge-page">
+  <!-- ENCABEZADO Y NAVEGACIÓN -->
+  <header class="site-header">
+    <nav class="nav-container">
+      <a class="nav-logo" href="index.html">
+        <div class="logo-mark">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
+            <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+          </svg>
+        </div>
+        <div class="logo-text">
+          <span class="logo-title">IA Aplicada</span>
+          <span class="logo-sub">Meta Llama Masterclass</span>
+        </div>
+      </a>
+      
+      <div class="nav-links">
+        <a class="nav-link-item" href="modulo1-challenge2.html" style="color: var(--meta-blue); font-weight: 700;">← Challenge 2</a>
+        <a class="nav-link-item" href="#intro-modulo">Fundamento LoRA</a>
+        <a class="nav-link-item" href="#laboratorio-lora">Laboratorio Interactivo</a>
+        <a class="nav-link-item" href="#codigo-resuelto">Código Resuelto</a>
+        <a class="nav-link-item" href="#autoevaluacion">Autoevaluación</a>
+        <a class="nav-link-item" href="modulo2-tema1.html" style="color: var(--accent-success); font-weight: 700;">Módulo 2 →</a>
+      </div>
+
+      <div class="nav-actions">
+        <button id="theme-toggle" class="icon-btn" aria-label="Cambiar tema">
+          <svg class="sun-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="5"></circle><line x1="12" y1="1" x2="12" y2="3"></line><line x1="12" y1="21" x2="12" y2="23"></line><line x1="4.22" y1="4.22" x2="5.64" y2="5.64"></line><line x1="18.36" y1="18.36" x2="19.78" y2="19.78"></line><line x1="1" y1="12" x2="3" y2="12"></line><line x1="21" y1="12" x2="23" y2="12"></line><line x1="4.22" y1="19.78" x2="5.64" y2="18.36"></line><line x1="18.36" y1="5.64" x2="19.78" y2="4.22"></line></svg>
+          <svg class="moon-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path></svg>
+        </button>
+        <button id="lang-toggle" class="lang-toggle-btn" aria-label="Switch Language">
+          <span class="lang-text">EN</span>
+        </button>
+      </div>
+    </nav>
+  </header>
+
+  <!-- CONTENEDOR PRINCIPAL -->
+  <main class="main-content">
+    
+    <!-- SECCIÓN HERO -->
+    <section class="hero-section" style="padding-bottom: 2rem;">
+      <div class="hero-badge-pill">
+        <span class="hero-badge-num">MÓDULO 1</span>
+        <span class="hero-badge-divider"></span>
+        <span class="hero-badge-label">CHALLENGE 3 · FINE-TUNING CON LORA &amp; EVALUACIÓN</span>
+      </div>
+      <h1 class="hero-title">Fine-Tuning de Modelos Llama con LoRA &amp; Medición de Pérdida</h1>
+      <p class="hero-subtitle">
+        <b>Adaptación eficiente de bajo rango (PEFT) con SFTTrainer y Hugging Face</b>. Congela los 1,100 millones de parámetros del modelo base, inyecta matrices de bajo rango entrenables ($B \times A$) en las capas de atención ($q\_proj, v\_proj$), ejecuta el entrenamiento supervisado en GPU T4 y cuantifica objetivamente el aprendizaje mediante la reducción de la función de pérdida cross-entropy.
+      </p>
+
+      <div style="display: flex; gap: 0.8rem; align-items: center; justify-content: center; flex-wrap: wrap; margin-top: 1.5rem;">
+        <a href="https://colab.research.google.com/drive/1u42_zPGrt2wop5PsTBmzJD42L_GZLbC9" target="_blank" rel="noopener noreferrer" class="btn-primary" style="display: inline-flex; align-items: center; gap: 0.6rem; text-decoration: none; padding: 0.75rem 1.4rem; border-radius: 10px; font-weight: 750; box-shadow: 0 4px 18px rgba(8, 102, 255, 0.25);">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-9l6 4.5-6 4.5z"/></svg>
+          <span>Abrir Cuaderno en Google Colab</span>
+        </a>
+        <a href="https://github.com/jjho05/meta-llama-engineering-labs/blob/main/docs/modulo-1-fundamentos-ia/challenge-3-fine-tuning-lora.md" target="_blank" rel="noopener noreferrer" class="btn-secondary" style="display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; padding: 0.75rem 1.2rem; border-radius: 10px; font-weight: 700;">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          <span>Ver Guía en GitHub</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- FUNDAMENTO TEÓRICO & RESUMEN EJECUTIVO -->
+    <article class="tema-card" id="intro-modulo" style="border-left: 5px solid var(--meta-blue); margin-bottom: 3.5rem;">
+      <div class="tema-header">
+        <div class="tema-eyebrow">Fundamento Técnico · Mecánica de Adaptación</div>
+        <h3 class="tema-title">¿Cómo funciona LoRA y por qué democratiza el Fine-Tuning?</h3>
+      </div>
+      
+      <p>
+        El entrenamiento tradicional completo (<b>Full Fine-Tuning</b>) actualiza todos los pesos de la red neuronal, lo que requiere más de <b>64 GB de VRAM</b> para almacenar los gradientes y los estados del optimizador AdamW en un modelo de 8B. 
+      </p>
+
+      <div style="background: rgba(8, 102, 255, 0.05); border: 1px solid rgba(8, 102, 255, 0.2); border-radius: 8px; padding: 1.1rem; margin: 1.2rem 0;">
+        <h4 style="font-size: 0.95rem; font-weight: 750; color: var(--meta-blue); margin-bottom: 0.4rem;">
+          La Hipótesis del Bajo Rango Intrínseco (Edward Hu et al., 2021)
+        </h4>
+        <p style="font-size: 0.88rem; line-height: 1.6; margin: 0; color: var(--text-secondary);">
+          Los cambios de pesos $\Delta W$ durante la especialización a un nuevo dominio habitan en un subespacio de dimensión muy pequeña. LoRA congela la matriz original $W_0 \in \mathbb{R}^{d \times k}$ y descompone la actualización en dos matrices de rango $r \ll \min(d, k)$:
+        </p>
+        <div style="text-align: center; margin: 0.8rem 0; font-family: var(--font-mono); font-size: 1.1rem; font-weight: 700; color: var(--text-primary);">
+          $$h = W_0 x + \Delta W x = W_0 x + \frac{\alpha}{r} (B \times A) x$$
+        </div>
+      </div>
+
+      <!-- TABLA COMPARATIVA -->
+      <div class="table-container" style="overflow-x: auto; margin: 1.5rem 0;">
+        <table class="data-table" style="width: 100%; border-collapse: collapse; font-size: 0.84rem;">
+          <thead>
+            <tr style="background: var(--bg-surface-2); border-bottom: 2px solid var(--border-subtle);">
+              <th style="padding: 0.65rem 0.9rem; text-align: left;">Dimensión Técnica</th>
+              <th style="padding: 0.65rem 0.9rem; text-align: left;">Full Fine-Tuning</th>
+              <th style="padding: 0.65rem 0.9rem; text-align: left;">Fine-Tuning LoRA (PEFT)</th>
+              <th style="padding: 0.65rem 0.9rem; text-align: left;">Impacto Productivo</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr style="border-bottom: 1px solid var(--border-subtle);">
+              <td style="padding: 0.65rem 0.9rem; font-weight: 700;">Parámetros Entrenables</td>
+              <td style="padding: 0.65rem 0.9rem; color: #ef4444;">100% de la red</td>
+              <td style="padding: 0.65rem 0.9rem; color: #22c55e; font-weight: 700;">&lt; 0.15% (Matrices B y A)</td>
+              <td style="padding: 0.65rem 0.9rem;">Reducción de memoria de ~99.8%</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border-subtle);">
+              <td style="padding: 0.65rem 0.9rem; font-weight: 700;">Hardware Requerido</td>
+              <td style="padding: 0.65rem 0.9rem;">Clúster A100 / H100 (80GB)</td>
+              <td style="padding: 0.65rem 0.9rem; color: #22c55e; font-weight: 700;">GPU T4 Gratuita (Colab / 15GB)</td>
+              <td style="padding: 0.65rem 0.9rem;">Coste de infraestructura $0</td>
+            </tr>
+            <tr style="border-bottom: 1px solid var(--border-subtle);">
+              <td style="padding: 0.65rem 0.9rem; font-weight: 700;">Peso del Artefacto</td>
+              <td style="padding: 0.65rem 0.9rem;">~16 GB por checkpoint</td>
+              <td style="padding: 0.65rem 0.9rem; color: #22c55e; font-weight: 700;">10 MB - 30 MB (Adaptadores)</td>
+              <td style="padding: 0.65rem 0.9rem;">Distribución instantánea en edge</td>
+            </tr>
+            <tr>
+              <td style="padding: 0.65rem 0.9rem; font-weight: 700;">Riesgo de Olvido</td>
+              <td style="padding: 0.65rem 0.9rem; color: #ef4444;">Catastrófico (destruye lógica base)</td>
+              <td style="padding: 0.65rem 0.9rem; color: #22c55e; font-weight: 700;">Nulo (pesos base congelados)</td>
+              <td style="padding: 0.65rem 0.9rem;">Preservación total de capacidades</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </article>
+
+    <!-- LABORATORIO INTERACTIVO DE LORA -->
+    <article class="tema-card" id="laboratorio-lora" style="margin-bottom: 3.5rem;">
+      <div class="tema-header">
+        <div class="tema-eyebrow">Simulador en Vivo · Ecosistema Hugging Face</div>
+        <h3 class="tema-title">Laboratorio de Hiperparámetros, Parámetros Entrenables &amp; Curva de Pérdida</h3>
+      </div>
+
+      <div style="background: rgba(8, 102, 255, 0.05); border: 1px solid rgba(8, 102, 255, 0.18); border-radius: 8px; padding: 0.85rem 1.1rem; margin: 1.2rem 0; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.8rem;">
+        <div style="display: flex; align-items: center; gap: 0.6rem;">
+          <svg fill="currentColor" height="18" viewBox="0 0 24 24" width="18" style="color: var(--meta-blue);"><path d="M12.65 10C11.83 7.67 9.61 6 7 6c-3.31 0-6 2.69-6 6s2.69 6 6 6c2.61 0 4.83-1.67 5.65-4H17v4h4v-4h2v-4H12.65zM7 14c-1.1 0-2-.9-2-2s.9-2 2-2 2 .9 2 2-.9 2-2 2z"/></svg>
+          <div>
+            <div style="font-size: 0.84rem; font-weight: 700; color: var(--text-primary);">Entorno de Ejecución: <span style="color: var(--meta-blue);">GPU T4 de Google Colab (Hugging Face PEFT / TRL)</span></div>
+            <div style="font-size: 0.74rem; color: var(--text-secondary);">Modelo Base: TinyLlama-1.1B / Llama-3.2-1B en precisión torch.float16.</div>
+          </div>
+        </div>
+        <div style="display: flex; align-items: center; gap: 0.5rem;">
+          <span style="display: inline-flex; align-items: center; gap: 0.4rem; background: rgba(34, 197, 94, 0.12); color: #16a34a; border: 1px solid rgba(34, 197, 94, 0.3); padding: 0.35rem 0.8rem; border-radius: 20px; font-size: 0.78rem; font-weight: 600;">
+            <span style="width: 7px; height: 7px; border-radius: 50%; background: #22c55e; display: inline-block;"></span>
+            Ecosistema PEFT Activo
+          </span>
+        </div>
+      </div>
+
+      <!-- PANEL DE CONTROL DE HIPERPARÁMETROS -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem; margin: 1.5rem 0;">
+        
+        <!-- COLUMNA 1: CONFIGURACIÓN LORA -->
+        <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1.2rem;">
+          <h4 style="font-size: 0.86rem; font-family: var(--font-mono); color: var(--meta-blue); text-transform: uppercase; margin-bottom: 1rem;">1. Hiperparámetros de LoRA</h4>
+          
+          <div style="margin-bottom: 1rem;">
+            <div style="display:flex; justify-content:space-between; font-size:0.82rem; margin-bottom:0.3rem;">
+              <span>Rango $r$ (Bottleneck Dimension):</span>
+              <strong id="lora-rank-val" style="color:var(--meta-blue); font-family:var(--font-mono);">8</strong>
+            </div>
+            <input type="range" id="lora-rank-slider" min="4" max="32" step="4" value="8" style="width:100%;"/>
+          </div>
+
+          <div style="margin-bottom: 1rem;">
+            <div style="display:flex; justify-content:space-between; font-size:0.82rem; margin-bottom:0.3rem;">
+              <span>Factor de Escala $\alpha$ (LoRA Alpha):</span>
+              <strong id="lora-alpha-val" style="color:var(--meta-blue); font-family:var(--font-mono);">16</strong>
+            </div>
+            <input type="range" id="lora-alpha-slider" min="8" max="64" step="8" value="16" style="width:100%;"/>
+          </div>
+
+          <div style="margin-bottom: 1rem;">
+            <div style="display:flex; justify-content:space-between; font-size:0.82rem; margin-bottom:0.3rem;">
+              <span>Épocas de Entrenamiento ($N$):</span>
+              <strong id="lora-epochs-val" style="color:var(--meta-blue); font-family:var(--font-mono);">30</strong>
+            </div>
+            <input type="range" id="lora-epochs-slider" min="10" max="50" step="5" value="30" style="width:100%;"/>
+          </div>
+
+          <div style="margin-bottom: 0.5rem;">
+            <span style="font-size:0.82rem; display:block; margin-bottom:0.4rem;">Módulos Objetivo de Atención:</span>
+            <div style="display:flex; gap:0.6rem; flex-wrap:wrap; font-size:0.78rem; font-family:var(--font-mono);">
+              <label style="display:flex; align-items:center; gap:0.25rem;"><input type="checkbox" id="mod-q-proj" checked/> q_proj</label>
+              <label style="display:flex; align-items:center; gap:0.25rem;"><input type="checkbox" id="mod-v-proj" checked/> v_proj</label>
+              <label style="display:flex; align-items:center; gap:0.25rem;"><input type="checkbox" id="mod-k-proj"/> k_proj</label>
+              <label style="display:flex; align-items:center; gap:0.25rem;"><input type="checkbox" id="mod-o-proj"/> o_proj</label>
+            </div>
+          </div>
+        </div>
+
+        <!-- COLUMNA 2: REPORTE EN TIEMPO REAL DE PARÁMETROS -->
+        <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1.2rem; display:flex; flex-direction:column; justify-content:space-between;">
+          <div>
+            <h4 style="font-size: 0.86rem; font-family: var(--font-mono); color: var(--accent-success); text-transform: uppercase; margin-bottom: 1rem;">2. Huella de Memoria &amp; Tensores</h4>
+            
+            <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 0.7rem; font-size: 0.82rem;">
+              <div style="background:var(--bg-surface); padding:0.6rem; border-radius:6px; border:1px solid var(--border-subtle);">
+                <div style="color:var(--text-secondary); font-size:0.72rem;">Parámetros Entrenables</div>
+                <div id="val-trainable-params" style="font-weight:700; font-family:var(--font-mono); color:#38bdf8;">1,126,400 params</div>
+              </div>
+              <div style="background:var(--bg-surface); padding:0.6rem; border-radius:6px; border:1px solid var(--border-subtle);">
+                <div style="color:var(--text-secondary); font-size:0.72rem;">% Parámetros Base</div>
+                <div id="val-param-pct" style="font-weight:700; font-family:var(--font-mono); color:#22c55e;">0.102%</div>
+              </div>
+              <div style="background:var(--bg-surface); padding:0.6rem; border-radius:6px; border:1px solid var(--border-subtle);">
+                <div style="color:var(--text-secondary); font-size:0.72rem;">Parámetros Totales</div>
+                <div id="val-total-params" style="font-weight:700; font-family:var(--font-mono);">1.1B params</div>
+              </div>
+              <div style="background:var(--bg-surface); padding:0.6rem; border-radius:6px; border:1px solid var(--border-subtle);">
+                <div style="color:var(--text-secondary); font-size:0.72rem;">VRAM Estimada T4</div>
+                <div id="val-vram-est" style="font-weight:700; font-family:var(--font-mono); color:#eab308;">2.24 GB</div>
+              </div>
+            </div>
+          </div>
+
+          <div style="margin-top: 1rem;">
+            <button id="btn-run-lora-train" class="btn-primary" style="width: 100%; padding: 0.7rem; border-radius: 6px; font-weight: 750; display: inline-flex; align-items: center; justify-content: center; gap: 0.5rem; background: linear-gradient(135deg, #1877f2, #0052cc);">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+              <span>Ejecutar SFTTrainer con LoRA</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- MONITOR DE ENTRENAMIENTO & CURVA DE PÉRDIDA -->
+      <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1.2rem; margin: 1.5rem 0;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.8rem; flex-wrap:wrap; gap:0.5rem;">
+          <span style="font-size:0.84rem; font-weight:700; text-transform:uppercase; color:var(--text-primary);">Curva de Convergencia de Pérdida (Loss Decay):</span>
+          <div id="lora-train-status" style="font-size:0.78rem; color:var(--text-secondary);">Listo para iniciar optimización de tensores...</div>
+        </div>
+
+        <div style="width: 100%; background: var(--bg-subtle); height: 8px; border-radius: 4px; overflow: hidden; margin-bottom: 1rem;">
+          <div id="lora-train-progress" style="width: 0%; height: 100%; background: linear-gradient(90deg, #1877f2, #22c55e); transition: width 0.1s ease;"></div>
+        </div>
+
+        <canvas id="lora-loss-canvas" width="700" height="160" style="width: 100%; height: 160px; background: rgba(15,23,42,0.4); border-radius: 6px;"></canvas>
+
+        <!-- PANEL DE MÉTRICAS CUANTITATIVAS -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem;">
+          <div style="background: var(--bg-surface-2); padding: 0.75rem; border-radius: 6px; text-align: center; border-left: 3px solid #ef4444;">
+            <div style="font-size: 0.72rem; color: var(--text-secondary); text-transform: uppercase;">Pérdida Inicial (Paso 1)</div>
+            <div id="val-loss-init" style="font-size: 1.25rem; font-weight: 800; font-family: var(--font-mono); color: #ef4444;">2.6840</div>
+          </div>
+          <div style="background: var(--bg-surface-2); padding: 0.75rem; border-radius: 6px; text-align: center; border-left: 3px solid #22c55e;">
+            <div style="font-size: 0.72rem; color: var(--text-secondary); text-transform: uppercase;">Pérdida Final (Época 30)</div>
+            <div id="val-loss-final" style="font-size: 1.25rem; font-weight: 800; font-family: var(--font-mono); color: #22c55e;">0.4120</div>
+          </div>
+          <div style="background: var(--bg-surface-2); padding: 0.75rem; border-radius: 6px; text-align: center; border-left: 3px solid #38bdf8;">
+            <div style="font-size: 0.72rem; color: var(--text-secondary); text-transform: uppercase;">Reducción de Pérdida</div>
+            <div id="val-loss-red-pct" style="font-size: 1.25rem; font-weight: 800; font-family: var(--font-mono); color: #38bdf8;">84.6%</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ARENA DE COMPARACIÓN: BASE VS LORA -->
+      <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1.2rem; margin-top: 1.5rem;">
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.8rem; flex-wrap:wrap; gap:0.5rem;">
+          <h4 style="font-size: 0.88rem; font-weight: 750; color: var(--text-primary); margin: 0;">3. Evaluación Cualitativa de Inferencia (Base vs. LoRA)</h4>
+          <div style="display:flex; gap:0.6rem; align-items:center;">
+            <select id="lora-preset-query" style="background: var(--bg-surface); border: 1px solid var(--border-subtle); color: var(--text-primary); padding: 0.4rem 0.7rem; border-radius: 6px; font-size: 0.8rem;">
+              <option value="0">1. ¿Puedo cambiar mi pedido?</option>
+              <option value="1">2. ¿Cuánto tarda el reembolso?</option>
+              <option value="2">3. ¿Tienen envío el mismo día?</option>
+              <option value="3">4. ¿Pago contra entrega?</option>
+              <option value="4">5. ¿Cómo rastreo mi paquete?</option>
+            </select>
+            <button id="btn-run-lora-compare" class="btn-primary" style="padding: 0.4rem 0.9rem; font-size: 0.8rem; border-radius: 6px; display:inline-flex; align-items:center; gap:0.3rem;">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-9l6 4.5-6 4.5z"/></svg>
+              <span>Comparar</span>
+            </button>
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.2rem;">
+          <!-- MODELO BASE -->
+          <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1rem; border-top: 3px solid #ef4444;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem;">
+              <strong style="font-size:0.82rem; color:#ef4444;">Modelo Base (Sin Entrenar)</strong>
+              <span id="badge-base-status" style="font-size:0.72rem; padding:0.15rem 0.5rem; border-radius:12px; background:rgba(239,68,68,0.15); color:#ef4444;">Línea Base</span>
+            </div>
+            <div id="resp-base-model" style="font-size:0.84rem; line-height:1.6; color:var(--text-secondary); min-height:80px; font-family:var(--font-mono);">
+              Haz clic en "Comparar" para observar cómo responde el modelo base antes de la especialización...
+            </div>
+          </div>
+
+          <!-- MODELO LORA -->
+          <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1rem; border-top: 3px solid #22c55e;">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem;">
+              <strong style="font-size:0.82rem; color:#22c55e;">Modelo Adaptado con LoRA (SFTTrainer)</strong>
+              <span id="badge-lora-status" style="font-size:0.72rem; padding:0.15rem 0.5rem; border-radius:12px; background:rgba(34,197,94,0.2); color:#22c55e;">Especializado</span>
+            </div>
+            <div id="resp-lora-model" style="font-size:0.84rem; line-height:1.6; color:var(--text-primary); min-height:80px; font-family:var(--font-mono);">
+              Haz clic en "Comparar" para ver la respuesta concisa y corporativa tras el ajuste con adaptadores LoRA...
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- GUÍA DE CÓDIGO RESUELTO CELDA POR CELDA -->
+    <article class="tema-card" id="codigo-resuelto" style="margin-bottom: 3.5rem;">
+      <div class="tema-header">
+        <div class="tema-eyebrow">Implementación Oficial · Google Colab</div>
+        <h3 class="tema-title">Código Resuelto &amp; Desglose Pedagógico Línea por Línea</h3>
+      </div>
+
+      <!-- CELDA 1 -->
+      <div class="code-cell-wrapper" style="margin-bottom: 2rem;">
+        <div class="code-cell-header">
+          <span class="code-cell-title">Celda 1: Instalación de Librerías &amp; Autenticación Hugging Face</span>
+          <span class="code-cell-tag">01_instalacion.py</span>
+        </div>
+        <pre><code class="language-python"># Instalar librerías e iniciar sesión en Hugging Face con el token desde Colab Secrets
+!pip install transformers peft accelerate trl --quiet
+
+import torch
+from google.colab import userdata
+from huggingface_hub import login
+
+# Autenticación segura sin exponer credenciales
+login(token=userdata.get('HF_TOKEN'))
+print("Sesión de Hugging Face iniciada correctamente.")</code></pre>
+        <div class="breakdown-box">
+          <div class="breakdown-title">Desglose de Operaciones:</div>
+          <div class="breakdown-item"><span class="line-tag">L2</span> <strong><code>!pip install transformers peft accelerate trl</code>:</strong> Descarga e instala los paquetes necesarios para compilar y entrenar adaptadores LoRA en PyTorch.</div>
+          <div class="breakdown-item"><span class="line-tag">L4-6</span> <strong><code>import torch, userdata, login</code>:</strong> Carga el motor de cálculo en GPU y el lector criptográfico de secretos de Google Colab.</div>
+          <div class="breakdown-item"><span class="line-tag">L9</span> <strong><code>login(token=userdata.get('HF_TOKEN'))</code>:</strong> Autentica al usuario en Hugging Face Hub para habilitar la descarga de modelos base protegidos.</div>
+        </div>
+      </div>
+
+      <!-- CELDA 2 -->
+      <div class="code-cell-wrapper" style="margin-bottom: 2rem;">
+        <div class="code-cell-header">
+          <span class="code-cell-title">Celda 2: Carga del Modelo Base y Tokenizador en GPU</span>
+          <span class="code-cell-tag">02_cargar_modelo.py</span>
+        </div>
+        <pre><code class="language-python"># Cargar el modelo base de Llama y su tokenizer
+from transformers import AutoModelForCausalLM, AutoTokenizer
+from transformers.utils import logging
+logging.set_verbosity_error()
+
+modelo_base = "TinyLlama/TinyLlama-1.1B-Chat-v1.0"
+# Variante oficial de Meta: "meta-llama/Llama-3.2-1B-Instruct"
+
+tokenizer = AutoTokenizer.from_pretrained(modelo_base)
+modelo = AutoModelForCausalLM.from_pretrained(modelo_base, dtype=torch.float16, device_map="auto")
+print("Modelo base cargado:", modelo_base)</code></pre>
+        <div class="breakdown-box">
+          <div class="breakdown-title">Desglose de Operaciones:</div>
+          <div class="breakdown-item"><span class="line-tag">L2</span> <strong><code>AutoModelForCausalLM, AutoTokenizer</code>:</strong> Instancian la arquitectura neuronal autorregresiva de 1.1B parámetros.</div>
+          <div class="breakdown-item"><span class="line-tag">L9-10</span> <strong><code>dtype=torch.float16, device_map="auto"</code>:</strong> Carga los pesos en media precisión de 16 bits consumiendo únicamente ~2.2 GB de VRAM en la GPU T4.</div>
+        </div>
+      </div>
+
+      <!-- CELDA 5: LORA CONFIG -->
+      <div class="code-cell-wrapper" style="margin-bottom: 2rem;">
+        <div class="code-cell-header">
+          <span class="code-cell-title">Celda 5: Configuración e Inyección de Adaptadores LoRA (PEFT)</span>
+          <span class="code-cell-tag">05_config_lora.py</span>
+        </div>
+        <pre><code class="language-python"># Configurar LoRA (rango, alpha, módulos objetivo) y aplicarlo al modelo base
+!pip uninstall -y torchao --quiet
+
+from peft import LoraConfig, get_peft_model
+from transformers import set_seed
+set_seed(42)
+
+config_lora = LoraConfig(
+    r=8,
+    lora_alpha=16,
+    target_modules=["q_proj", "v_proj"],
+    lora_dropout=0.0,
+    task_type="CAUSAL_LM"
+)
+
+modelo_lora = get_peft_model(modelo, config_lora)
+print("--- PARÁMETROS ENTRENABLES CON LORA ---")
+modelo_lora.print_trainable_parameters()</code></pre>
+        <div class="breakdown-box">
+          <div class="breakdown-title">Desglose de Operaciones:</div>
+          <div class="breakdown-item"><span class="line-tag">L6</span> <strong><code>set_seed(42)</code>:</strong> Fija la semilla aleatoria para garantizar la reproducibilidad matemática de la inicialización de las matrices $A$.</div>
+          <div class="breakdown-item"><span class="line-tag">L8-14</span> <strong><code>LoraConfig(...)</code>:</strong> Define el rango $r=8$, la constante de escala $\alpha=16$ y enfoca la optimización sobre las proyecciones Query y Value.</div>
+          <div class="breakdown-item"><span class="line-tag">L16-18</span> <strong><code>get_peft_model(...)</code>:</strong> Congela el 99.89% de la red neuronal original y crea los adaptadores entrenables en memoria.</div>
+        </div>
+      </div>
+
+      <!-- CELDA 6 & 7: SFTTRAINER & LOSS -->
+      <div class="code-cell-wrapper" style="margin-bottom: 2rem;">
+        <div class="code-cell-header">
+          <span class="code-cell-title">Celda 6 y 7: Entrenamiento Supervisado &amp; Medición Objetiva de Pérdida</span>
+          <span class="code-cell-tag">06_entrenar_evaluar.py</span>
+        </div>
+        <pre><code class="language-python"># Configurar el entrenador (SFTTrainer) y ejecutar el fine-tuning
+from trl import SFTTrainer, SFTConfig
+
+config_entrenamiento = SFTConfig(
+    output_dir="/content/resultados",
+    num_train_epochs=30,
+    per_device_train_batch_size=5,
+    learning_rate=2e-4,
+    logging_steps=1,
+    dataset_text_field="texto",
+    max_length=128,
+    report_to="none",
+)
+
+trainer = SFTTrainer(
+    model=modelo_lora,
+    train_dataset=dataset,
+    args=config_entrenamiento,
+)
+
+resultado_entrenamiento = trainer.train()
+
+# Medición Objetiva de Pérdida
+perdida_inicial = trainer.state.log_history[0]['loss']
+perdida_final = resultado_entrenamiento.training_loss
+reduccion_pct = (1 - (perdida_final / perdida_inicial)) * 100
+
+print(f"Pérdida inicial: {perdida_inicial:.4f} | Pérdida final: {perdida_final:.4f} | Reducción: {reduccion_pct:.1f}%")</code></pre>
+        <div class="breakdown-box">
+          <div class="breakdown-title">Desglose de Operaciones:</div>
+          <div class="breakdown-item"><span class="line-tag">L4-13</span> <strong><code>SFTConfig(...)</code>:</strong> Configura 30 épocas de optimización sobre el dataset corporativo con tasa de aprendizaje $\eta = 2 \times 10^{-4}$.</div>
+          <div class="breakdown-item"><span class="line-tag">L15-22</span> <strong><code>trainer.train()</code>:</strong> Ejecuta el ciclo de retropropagación sobre las matrices $B$ y $A$.</div>
+          <div class="breakdown-item"><span class="line-tag">L25-29</span> <strong><code>(1 - perdida_final / perdida_inicial) * 100</code>:</strong> Comprueba una reducción matemática superior al 75% en la función de pérdida cross-entropy.</div>
+        </div>
+      </div>
+    </article>
+
+    <!-- AUTOEVALUACIÓN QUIZ INTERACTIVO -->
+    <article class="tema-card" id="autoevaluacion" style="margin-bottom: 3.5rem;">
+      <div class="tema-header">
+        <div class="tema-eyebrow">Validación de Conocimiento · Examen Rápido</div>
+        <h3 class="tema-title">Autoevaluación Técnica: LoRA, PEFT &amp; Métricas de Fine-Tuning</h3>
+      </div>
+
+      <div class="quiz-item" style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1.2rem; margin-bottom: 1.2rem;">
+        <div class="quiz-question" style="font-weight: 700; font-size: 0.92rem; margin-bottom: 0.8rem;">
+          1. ¿Por qué LoRA inicializa la matriz $B$ en ceros y la matriz $A$ con una distribución gaussiana aleatoria?
+        </div>
+        <div style="display:flex; flex-direction:column; gap:0.5rem;">
+          <button class="quiz-opt-btn" data-correct="false" style="text-align:left; padding:0.6rem 0.9rem; border-radius:6px; background:var(--bg-surface); border:1px solid var(--border-subtle); color:var(--text-primary); cursor:pointer; font-size:0.84rem;">
+            A) Para evitar que el optimizador AdamW utilice memoria RAM durante la primera época.
+          </button>
+          <button class="quiz-opt-btn" data-correct="true" style="text-align:left; padding:0.6rem 0.9rem; border-radius:6px; background:var(--bg-surface); border:1px solid var(--border-subtle); color:var(--text-primary); cursor:pointer; font-size:0.84rem;">
+            B) Para garantizar que $\Delta W = B \times A = 0$ al inicio, preservando exactamente la salida original del modelo base.
+          </button>
+          <button class="quiz-opt-btn" data-correct="false" style="text-align:left; padding:0.6rem 0.9rem; border-radius:6px; background:var(--bg-surface); border:1px solid var(--border-subtle); color:var(--text-primary); cursor:pointer; font-size:0.84rem;">
+            C) Porque la GPU T4 no admite números flotantes distintos de cero en tensores auxiliares.
+          </button>
+        </div>
+        <div class="quiz-feedback-box" data-exp="Al inicializar B en 0, el producto B x A es 0, garantizando que el modelo comience con su rendimiento original idéntico sin saltos abruptos." style="display:none; margin-top:0.8rem; padding:0.7rem; border-radius:6px; font-size:0.82rem;"></div>
+      </div>
+
+      <div class="quiz-item" style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 1.2rem; margin-bottom: 1.2rem;">
+        <div class="quiz-question" style="font-weight: 700; font-size: 0.92rem; margin-bottom: 0.8rem;">
+          2. En un dataset pequeño de demostración (5 ejemplos), ¿cuál es la evidencia matemática objetiva de que el modelo aprendió?
+        </div>
+        <div style="display:flex; flex-direction:column; gap:0.5rem;">
+          <button class="quiz-opt-btn" data-correct="false" style="text-align:left; padding:0.6rem 0.9rem; border-radius:6px; background:var(--bg-surface); border:1px solid var(--border-subtle); color:var(--text-primary); cursor:pointer; font-size:0.84rem;">
+            A) Que el texto generado sea siempre 100% idéntico en todas las ejecuciones sin importar la temperatura.
+          </button>
+          <button class="quiz-opt-btn" data-correct="true" style="text-align:left; padding:0.6rem 0.9rem; border-radius:6px; background:var(--bg-surface); border:1px solid var(--border-subtle); color:var(--text-primary); cursor:pointer; font-size:0.84rem;">
+            B) La reducción consistente de la función de pérdida (Loss Decay) entre el paso inicial y el paso final.
+          </button>
+          <button class="quiz-opt-btn" data-correct="false" style="text-align:left; padding:0.6rem 0.9rem; border-radius:6px; background:var(--bg-surface); border:1px solid var(--border-subtle); color:var(--text-primary); cursor:pointer; font-size:0.84rem;">
+            C) Que el tamaño del archivo checkpoint aumente a más de 16 GB en el disco duro.
+          </button>
+        </div>
+        <div class="quiz-feedback-box" data-exp="La pérdida cross-entropy evalúa la probabilidad determinista asignada a los tokens correctos, siendo la métrica rigurosa de aprendizaje." style="display:none; margin-top:0.8rem; padding:0.7rem; border-radius:6px; font-size:0.82rem;"></div>
+      </div>
+    </article>
+
+  </main>
+
+  <!-- PIE DE PÁGINA -->
+  <footer class="site-footer">
+    <div class="footer-container">
+      <div class="footer-col">
+        <h4>Especialización en IA Aplicada</h4>
+        <p>Desarrollo y optimización de modelos de lenguaje abiertos con Meta Llama, Groq LPU y Hugging Face PEFT.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Entregables del Módulo 1</h4>
+        <ul>
+          <li><a href="modulo1-challenge1.html">Challenge 1: Benchmarking Multi-Modelo</a></li>
+          <li><a href="modulo1-challenge2.html">Challenge 2: Asistente RAG con Políticas</a></li>
+          <li><a href="modulo1-challenge3.html">Challenge 3: Fine-Tuning con LoRA</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Recursos Oficiales</h4>
+        <ul>
+          <li><a href="https://github.com/jjho05/meta-llama-engineering-labs" target="_blank" rel="noopener noreferrer">Repositorio de Laboratorios</a></li>
+          <li><a href="https://huggingface.co" target="_blank" rel="noopener noreferrer">Hugging Face Hub</a></li>
+          <li><a href="agradecimiento.html">Agradecimientos</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <p>© 2026 Especialización en Inteligencia Artificial Aplicada · Meta AI &amp; Llama 3 Ecosystem.</p>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+  <script src="js/challenge3.js"></script>
+</body>
+</html>
