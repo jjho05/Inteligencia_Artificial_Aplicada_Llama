@@ -128,36 +128,6 @@
       </div>
 
       <div class="tema-section-block">
-        <!-- FICHA TÉCNICA OFICIAL DEL ALUMNO -->
-        <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-left: 4px solid var(--meta-blue); border-radius: 8px; padding: 1.2rem 1.5rem; margin-bottom: 1.5rem;">
-          <div style="font-size: 0.78rem; text-transform: uppercase; font-weight: 700; color: var(--meta-blue); margin-bottom: 0.3rem;">Ficha Técnica Oficial del Entregable</div>
-          <div style="font-size: 1.15rem; font-weight: 800; color: var(--text-primary); font-family: var(--font-head); margin-bottom: 0.5rem;">HANDS - ON: FINE-TUNING Y EVALUACIÓN DE MODELOS</div>
-          <div style="display: flex; gap: 1.5rem; flex-wrap: wrap; font-size: 0.86rem; color: var(--text-secondary);">
-            <div><strong>Alumno:</strong> <span class="notranslate" translate="no">Ing. Jesús Javier Hernández Olvera</span></div>
-            <div><strong>Módulo:</strong> IA Aplicada con Modelos Abiertos</div>
-            <div><strong>Challenge:</strong> Fine-Tuning de Modelos Llama con LoRA y Medición de Pérdida</div>
-          </div>
-        </div>
-
-        <!-- AVISO DE VISUALIZACIÓN Y EJECUCIÓN (READ-ONLY & EDIT GUIDE) -->
-        <div style="background: rgba(8, 102, 255, 0.06); border: 1px solid rgba(8, 102, 255, 0.25); border-radius: 8px; padding: 1.2rem 1.5rem; margin-bottom: 2rem;">
-          <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.6rem; color: var(--meta-blue);">
-            <svg fill="currentColor" height="18" viewBox="0 0 24 24" width="18"><path d="M12 1L3 5v6c0 5.55 3.84 10.74 9 12 5.16-1.26 9-6.45 9-12V5l-9-4zm-1 6h2v2h-2V7zm0 4h2v6h-2v-6z"></path></svg>
-            <strong style="font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0.5px;">🔒 AVISO DE VISUALIZACIÓN Y EJECUCIÓN (READ-ONLY &amp; EDIT GUIDE)</strong>
-          </div>
-          <p style="font-size: 0.88rem; line-height: 1.5; color: var(--text-primary); margin-bottom: 0.8rem;">
-            <strong>Este cuaderno oficial se encuentra en modo de solo lectura (<em>View Only</em>) para preservar la solución maestra.</strong>
-          </p>
-          <p style="font-size: 0.86rem; color: var(--text-secondary); margin-bottom: 0.5rem;">
-            <strong>Para ejecutar las celdas, experimentar o ingresar tu propia clave de API:</strong>
-          </p>
-          <ol style="font-size: 0.85rem; line-height: 1.6; color: var(--text-secondary); margin: 0; padding-left: 1.4rem;">
-            <li>💾 <strong>Guardar una Copia Personal:</strong> En el menú superior de Google Colab, haz clic en <strong>Archivo &rarr; Guardar una copia en Drive</strong> (<em>File &rarr; Save a copy in Drive</em>).</li>
-            <li>🔑 <strong>Configurar Clave Secreta:</strong> En tu copia, ve al panel lateral izquierdo &rarr; icono de llave (<strong>Secrets / Secretos</strong>) &rarr; agrega el nombre <code>HF_TOKEN</code> con tu valor secreto y activa el permiso de acceso para este cuaderno.</li>
-            <li>💻 <strong>Descarga Local:</strong> Si prefieres ejecutarlo en tu computadora con VS Code o JupyterLab, ve a <strong>Archivo &rarr; Descargar &rarr; Descargar .ipynb</strong>.</li>
-          </ol>
-        </div>
-
         <h4 class="tema-subheading"><span class="tema-subheading-tag">1. El Problema del Reentrenamiento Completo</span> Barreras de Hardware y Memoria</h4>
         <p class="prose-p">
           El reentrenamiento completo (<b>Full Fine-Tuning</b>) actualiza todos los pesos de la red neuronal, lo que requiere más de <b>64 GB de VRAM</b> para almacenar los gradientes y los estados del optimizador AdamW en un modelo de 8B. 
