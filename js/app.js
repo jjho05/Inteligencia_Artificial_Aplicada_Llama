@@ -12,6 +12,52 @@
     history.scrollRestoration = 'auto';
   }
 
+  /* 0. MOTOR GLOBAL DE DESPLAZAMIENTO UNIVERSAL */
+  window.scrollToTop = function() {
+    try {
+      window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+    } catch (e) {
+      window.scrollTo(0, 0);
+    }
+    try {
+      if (document.scrollingElement && typeof document.scrollingElement.scrollTo === "function") {
+        document.scrollingElement.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    } catch (e) {}
+    try {
+      var topElem = document.querySelector(".top-header") || document.querySelector("header") || document.querySelector("nav") || document.body.firstElementChild;
+      if (topElem && typeof topElem.scrollIntoView === "function") {
+        topElem.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    } catch (e) {}
+  };
+
+  window.scrollToBottom = function() {
+    var maxScroll = Math.max(
+      document.body.scrollHeight || 0,
+      document.documentElement.scrollHeight || 0,
+      document.body.offsetHeight || 0,
+      document.documentElement.offsetHeight || 0,
+      1000000
+    );
+    try {
+      window.scrollTo({ top: maxScroll, left: 0, behavior: "smooth" });
+    } catch (e) {
+      window.scrollTo(0, maxScroll);
+    }
+    try {
+      if (document.scrollingElement && typeof document.scrollingElement.scrollTo === "function") {
+        document.scrollingElement.scrollTo({ top: maxScroll, behavior: "smooth" });
+      }
+    } catch (e) {}
+    try {
+      var botElem = document.querySelector(".app-footer") || document.querySelector(".site-footer") || document.querySelector("footer") || document.body.lastElementChild;
+      if (botElem && typeof botElem.scrollIntoView === "function") {
+        botElem.scrollIntoView({ behavior: "smooth", block: "end" });
+      }
+    } catch (e) {}
+  };
+
   /* 0. RENDERIZADOR KATEX AUTOMÁTICO */
  function renderLatex(){
  if(typeof renderMathInElement !== "undefined"){
