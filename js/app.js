@@ -397,13 +397,44 @@
 
 
   /* 6. BOTONES FLOTANTES DE NAVEGACIÓN RÁPIDA (ARRIBA / ABAJO) */
+  function scrollToTopSmooth() {
+    try {
+      window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
+    } catch (e) {
+      window.scroll(0, 0);
+    }
+    document.documentElement.scrollTop = 0;
+    document.body.scrollTop = 0;
+  }
+
+  function scrollToBottomSmooth() {
+    var maxScroll = Math.max(
+      document.body.scrollHeight,
+      document.documentElement.scrollHeight,
+      document.body.offsetHeight,
+      document.documentElement.offsetHeight,
+      document.body.clientHeight,
+      document.documentElement.clientHeight
+    );
+    try {
+      window.scrollTo({ top: maxScroll, left: 0, behavior: "smooth" });
+    } catch (e) {
+      window.scroll(0, maxScroll);
+    }
+    document.documentElement.scrollTop = maxScroll;
+    document.body.scrollTop = maxScroll;
+  }
+
+  window.scrollToTop = scrollToTopSmooth;
+  window.scrollToBottom = scrollToBottomSmooth;
+
   function initFloatingScrollNav(){
     var nav = document.querySelector(".floating-scroll-nav");
     if(!nav){
       nav = document.createElement("aside");
       nav.className = "floating-scroll-nav";
       nav.setAttribute("aria-label", "Navegación rápida");
-      nav.innerHTML = '<button class="btn-floating-scroll" id="scroll-top-btn" title="Ir al inicio" aria-label="Ir al inicio"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg></button><button class="btn-floating-scroll" id="scroll-bottom-btn" title="Ir al final" aria-label="Ir al final"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>';
+      nav.innerHTML = '<button class="btn-floating-scroll" id="scroll-top-btn" title="Ir al inicio" aria-label="Ir al inicio" onclick="window.scrollToTop()"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg></button><button class="btn-floating-scroll" id="scroll-bottom-btn" title="Ir al final" aria-label="Ir al final" onclick="window.scrollToBottom()"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>';
       document.body.appendChild(nav);
     }
     
@@ -411,16 +442,41 @@
     var btnBottom = document.getElementById("scroll-bottom-btn");
     
     if(btnTop){
-      btnTop.onclick = function(){
-        window.scrollTo({ top: 0, behavior: "smooth" });
+      btnTop.onclick = function(e){
+        if(e) e.preventDefault();
+        scrollToTopSmooth();
       };
+      btnTop.addEventListener("click", function(e){
+        if(e) e.preventDefault();
+        scrollToTopSmooth();
+      });
     }
     if(btnBottom){
-      btnBottom.onclick = function(){
-        window.scrollTo({ top: document.documentElement.scrollHeight, behavior: "smooth" });
+      btnBottom.onclick = function(e){
+        if(e) e.preventDefault();
+        scrollToBottomSmooth();
       };
+      btnBottom.addEventListener("click", function(e){
+        if(e) e.preventDefault();
+        scrollToBottomSmooth();
+      });
     }
   }
+
+  // Delegación de eventos global para clicks en cualquier botón de scroll flotante
+  document.addEventListener("click", function (e) {
+    var target = e.target;
+    var btnTop = target.closest("#scroll-top-btn");
+    var btnBottom = target.closest("#scroll-bottom-btn");
+
+    if (btnTop) {
+      e.preventDefault();
+      scrollToTopSmooth();
+    } else if (btnBottom) {
+      e.preventDefault();
+      scrollToBottomSmooth();
+    }
+  }, true);
 
   if(document.readyState === "loading"){
     document.addEventListener("DOMContentLoaded", initFloatingScrollNav);
