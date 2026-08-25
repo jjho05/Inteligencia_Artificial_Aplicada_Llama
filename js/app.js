@@ -403,6 +403,17 @@
     } catch (e) {
       window.scrollTo(0, 0);
     }
+    try {
+      if (document.scrollingElement && typeof document.scrollingElement.scrollTo === "function") {
+        document.scrollingElement.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    } catch (e) {}
+    try {
+      var topElem = document.querySelector(".top-header") || document.querySelector("header") || document.querySelector("nav") || document.body.firstElementChild;
+      if (topElem && typeof topElem.scrollIntoView === "function") {
+        topElem.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    } catch (e) {}
   }
 
   function scrollToBottomSmooth() {
@@ -411,13 +422,24 @@
       document.documentElement.scrollHeight || 0,
       document.body.offsetHeight || 0,
       document.documentElement.offsetHeight || 0,
-      100000
+      1000000
     );
     try {
       window.scrollTo({ top: maxScroll, left: 0, behavior: "smooth" });
     } catch (e) {
       window.scrollTo(0, maxScroll);
     }
+    try {
+      if (document.scrollingElement && typeof document.scrollingElement.scrollTo === "function") {
+        document.scrollingElement.scrollTo({ top: maxScroll, behavior: "smooth" });
+      }
+    } catch (e) {}
+    try {
+      var botElem = document.querySelector(".app-footer") || document.querySelector(".site-footer") || document.querySelector("footer") || document.body.lastElementChild;
+      if (botElem && typeof botElem.scrollIntoView === "function") {
+        botElem.scrollIntoView({ behavior: "smooth", block: "end" });
+      }
+    } catch (e) {}
   }
 
   window.scrollToTop = scrollToTopSmooth;
@@ -431,6 +453,22 @@
       nav.setAttribute("aria-label", "Navegación rápida");
       nav.innerHTML = '<button class="btn-floating-scroll" id="scroll-top-btn" title="Ir al inicio" aria-label="Ir al inicio" onclick="window.scrollToTop()"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M18 15l-6-6-6 6"/></svg></button><button class="btn-floating-scroll" id="scroll-bottom-btn" title="Ir al final" aria-label="Ir al final" onclick="window.scrollToBottom()"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg></button>';
       document.body.appendChild(nav);
+    }
+
+    var btnTop = document.getElementById("scroll-top-btn");
+    var btnBottom = document.getElementById("scroll-bottom-btn");
+
+    if (btnTop) {
+      btnTop.onclick = function(e) {
+        if (e) { e.preventDefault(); e.stopPropagation(); }
+        scrollToTopSmooth();
+      };
+    }
+    if (btnBottom) {
+      btnBottom.onclick = function(e) {
+        if (e) { e.preventDefault(); e.stopPropagation(); }
+        scrollToBottomSmooth();
+      };
     }
   }
 
