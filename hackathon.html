@@ -764,13 +764,13 @@ Eres el asistente de la tienda TechStore. Responde las preguntas de los clientes
 
 <span class="code-cm"># 3. Respuesta Generada por el LLM (Alucinación Crítica):</span>
 "El trámite exprés cuesta $250 MXN y puedes transferir a la cuenta CLABE 012180001234567890 a nombre de TechStore Oficial. ¡Te llegará en 2 horas!"</code></pre>
-            <div style="padding: 0.9rem 1.1rem; background: rgba(239,68,68,0.08); border-top: 1px solid rgba(239,68,68,0.2); font-size: 0.8rem; color: #ef4444; line-height: 1.55;">
-              <b>Fallas Críticas Detectadas:</b>
-              <ul style="margin: 0.3rem 0 0 0; padding-left: 1.1rem;">
-                <li>Sin delimitadores semánticos Meta Llama 3 (<code>&lt;|start_header_id|&gt;</code>).</li>
-                <li>Inventa números de cuenta bancaria y tarifas no existentes (Alucinación).</li>
-                <li>Vulnerable a inyecciones de prompt y jailbreaks de usuarios maliciosos.</li>
-                <li>Sin mecanismo determinista de admisión explícita de ignorancia.</li>
+            <div style="padding: 0.9rem 1.1rem; background: rgba(239,68,68,0.12); border-top: 1px solid rgba(239,68,68,0.3); font-size: 0.82rem; line-height: 1.6;">
+              <b style="color: #f87171; font-size: 0.85rem; display: block; margin-bottom: 0.35rem;">Fallas Críticas Detectadas:</b>
+              <ul style="margin: 0; padding-left: 1.1rem; color: #fca5a5;">
+                <li style="color: #fca5a5; margin-bottom: 0.25rem;">Sin delimitadores semánticos Meta Llama 3 (<code style="background: rgba(239,68,68,0.25); color: #fee2e2; padding: 0.1rem 0.35rem; border-radius: 4px;">&lt;|start_header_id|&gt;</code>).</li>
+                <li style="color: #fca5a5; margin-bottom: 0.25rem;">Inventa números de cuenta bancaria y tarifas no existentes (Alucinación).</li>
+                <li style="color: #fca5a5; margin-bottom: 0.25rem;">Vulnerable a inyecciones de prompt y jailbreaks de usuarios maliciosos.</li>
+                <li style="color: #fca5a5;">Sin mecanismo determinista de admisión explícita de ignorancia.</li>
               </ul>
             </div>
           </div>
@@ -800,13 +800,13 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas basándote
 <span class="code-kw">&lt;|start_header_id|&gt;user&lt;|end_header_id|&gt;</span>
 <span class="code-var">{pregunta_usuario}</span><span class="code-kw">&lt;|eot_id|&gt;</span>
 <span class="code-kw">&lt;|start_header_id|&gt;assistant&lt;|end_header_id|&gt;</span></code></pre>
-            <div style="padding: 0.9rem 1.1rem; background: rgba(16,185,129,0.08); border-top: 1px solid rgba(16,185,129,0.2); font-size: 0.8rem; color: #10b981; line-height: 1.55;">
-              <b>Garantías de Ingeniería y Robustez:</b>
-              <ul style="margin: 0.3rem 0 0 0; padding-left: 1.1rem;">
-                <li>Delimitación semántica con tokens de control oficiales Meta Llama.</li>
-                <li>Anclaje fáctico estricto en el bloque de contexto inyectado.</li>
-                <li>Cláusula negativa obligatoria que bloquea invenciones financieras.</li>
-                <li>Cero alucinaciones con fallback seguro a canales humanos oficiales.</li>
+            <div style="padding: 0.9rem 1.1rem; background: rgba(16,185,129,0.12); border-top: 1px solid rgba(16,185,129,0.3); font-size: 0.82rem; line-height: 1.6;">
+              <b style="color: #34d399; font-size: 0.85rem; display: block; margin-bottom: 0.35rem;">Garantías de Ingeniería y Robustez:</b>
+              <ul style="margin: 0; padding-left: 1.1rem; color: #a7f3d0;">
+                <li style="color: #a7f3d0; margin-bottom: 0.25rem;">Delimitación semántica con tokens de control oficiales Meta Llama.</li>
+                <li style="color: #a7f3d0; margin-bottom: 0.25rem;">Anclaje fáctico estricto en el bloque de contexto inyectado.</li>
+                <li style="color: #a7f3d0; margin-bottom: 0.25rem;">Cláusula negativa obligatoria que bloquea invenciones financieras.</li>
+                <li style="color: #a7f3d0;">Cero alucinaciones con fallback seguro a canales humanos oficiales.</li>
               </ul>
             </div>
           </div>
