@@ -686,11 +686,12 @@ font {
 }
 
 .hero-subtitle {
-  font-size: 1rem;
+  font-size: 1.05rem;
   color: var(--text-secondary);
-  line-height: 1.7;
+  line-height: 1.75;
   margin-bottom: 0;
-  max-width: 85ch;
+  width: 100%;
+  max-width: 100%;
 }
 
 @media (max-width: 640px) {
