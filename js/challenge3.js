@@ -10,6 +10,27 @@
   // 1. UTILIDAD DE AUDIO SEGURO (WEB AUDIO API)
   var audioCtx = null;
   function safePlaySound(type, freq) {
+    if (window.SOUND && typeof window.SOUND.isEnabled === "function" && !window.SOUND.isEnabled()) {
+      return;
+    }
+    if (window.SOUND) {
+      if (type === "pop" && typeof window.SOUND.playPop === "function") {
+        window.SOUND.playPop(freq || 520);
+        return;
+      } else if (type === "chime" && typeof window.SOUND.playChime === "function") {
+        window.SOUND.playChime();
+        return;
+      } else if (type === "success" && typeof window.SOUND.playSuccess === "function") {
+        window.SOUND.playSuccess();
+        return;
+      } else if (type === "error" && typeof window.SOUND.playError === "function") {
+        window.SOUND.playError();
+        return;
+      } else if (type === "beep" && typeof window.SOUND.playBeep === "function") {
+        window.SOUND.playBeep(freq || 600, 0.08);
+        return;
+      }
+    }
     try {
       if (!audioCtx) {
         audioCtx = new (window.AudioContext || window.webkitAudioContext)();
@@ -29,24 +50,15 @@
         gain.gain.exponentialRampToValueAtTime(0.001, now + 0.08);
         osc.start(now);
         osc.stop(now + 0.08);
-      } else if (type === "chime") {
-        osc.frequency.setValueAtTime(440, now);
+      } else if (type === "chime" || type === "success") {
+        osc.frequency.setValueAtTime(587.33, now);
         osc.frequency.exponentialRampToValueAtTime(880, now + 0.25);
         gain.gain.setValueAtTime(0.15, now);
         gain.gain.exponentialRampToValueAtTime(0.001, now + 0.35);
         osc.start(now);
         osc.stop(now + 0.35);
-      } else if (type === "success") {
-        osc.frequency.setValueAtTime(587.33, now); // D5
-        osc.frequency.setValueAtTime(880, now + 0.1); // A5
-        gain.gain.setValueAtTime(0.15, now);
-        gain.gain.exponentialRampToValueAtTime(0.001, now + 0.3);
-        osc.start(now);
-        osc.stop(now + 0.3);
       }
-    } catch (e) {
-      // Ignorar restricciones de audio del navegador
-    }
+    } catch (e) {}
   }
 
   // 2. EFECTO STREAMING DE TEXTO TIPO MÁQUINA DE ESCRIBIR

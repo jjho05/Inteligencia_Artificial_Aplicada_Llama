@@ -200,15 +200,15 @@
       return ctx;
     }
 
-    // Desbloqueo de AudioContext ante el primer toque o clic
+    // Desbloqueo proactivo ante cualquier interacción táctil, clic o teclado
     function unlockContext(){
       var c = getContext();
       if(c && c.state === "suspended"){
         c.resume().catch(function(){});
       }
     }
-    ["click", "touchstart", "keydown"].forEach(function(evt){
-      document.addEventListener(evt, unlockContext, { passive: true, once: true });
+    ["click", "mousedown", "touchstart", "touchend", "keydown"].forEach(function(evt){
+      document.addEventListener(evt, unlockContext, { passive: true });
     });
 
     function updateSoundUI(){
@@ -236,31 +236,119 @@
         localStorage.setItem("meta_sound_enabled", enabled ? "true" : "false");
         updateSoundUI();
         if(enabled){
-          this.playPop(540);
+          this.playToggle(true);
         }
         return enabled;
       },
       initUI: function(){
         updateSoundUI();
       },
-      playPop: function(f){
+      playPop: function(f, dur){
         if(!enabled) return;
         var c = getContext();
         if(!c) return;
         try {
           var freq = f || 440;
+          var duration = dur || 0.06;
           var now = c.currentTime;
           var osc = c.createOscillator();
           var g = c.createGain();
           osc.type = "sine";
           osc.frequency.setValueAtTime(freq, now);
-          osc.frequency.exponentialRampToValueAtTime(Math.max(20, freq * 0.85), now + 0.06);
+          osc.frequency.exponentialRampToValueAtTime(Math.max(20, freq * 0.82), now + duration);
           g.gain.setValueAtTime(0.12, now);
-          g.gain.exponentialRampToValueAtTime(0.0001, now + 0.06);
+          g.gain.exponentialRampToValueAtTime(0.0001, now + duration);
           osc.connect(g);
           g.connect(c.destination);
           osc.start(now);
-          osc.stop(now + 0.06);
+          osc.stop(now + duration);
+        } catch(e){}
+      },
+      playClick: function(){
+        if(!enabled) return;
+        var c = getContext();
+        if(!c) return;
+        try {
+          var now = c.currentTime;
+          var osc = c.createOscillator();
+          var g = c.createGain();
+          osc.type = "sine";
+          osc.frequency.setValueAtTime(800, now);
+          osc.frequency.exponentialRampToValueAtTime(120, now + 0.03);
+          g.gain.setValueAtTime(0.08, now);
+          g.gain.exponentialRampToValueAtTime(0.0001, now + 0.03);
+          osc.connect(g);
+          g.connect(c.destination);
+          osc.start(now);
+          osc.stop(now + 0.03);
+        } catch(e){}
+      },
+      playToggle: function(isOn){
+        if(!enabled && isOn !== true) return;
+        var c = getContext();
+        if(!c) return;
+        try {
+          var now = c.currentTime;
+          var osc = c.createOscillator();
+          var g = c.createGain();
+          osc.type = "triangle";
+          if(isOn !== false){
+            osc.frequency.setValueAtTime(480, now);
+            osc.frequency.exponentialRampToValueAtTime(720, now + 0.08);
+          } else {
+            osc.frequency.setValueAtTime(640, now);
+            osc.frequency.exponentialRampToValueAtTime(360, now + 0.08);
+          }
+          g.gain.setValueAtTime(0.10, now);
+          g.gain.exponentialRampToValueAtTime(0.0001, now + 0.09);
+          osc.connect(g);
+          g.connect(c.destination);
+          osc.start(now);
+          osc.stop(now + 0.09);
+        } catch(e){}
+      },
+      playSuccess: function(){
+        if(!enabled) return;
+        var c = getContext();
+        if(!c) return;
+        try {
+          var now = c.currentTime;
+          // Arpegio ascendente brillante (C5, E5, G5)
+          [523.25, 659.25, 783.99].forEach(function(freq, idx){
+            var osc = c.createOscillator();
+            var g = c.createGain();
+            var t = now + (idx * 0.06);
+            osc.type = "sine";
+            osc.frequency.setValueAtTime(freq, t);
+            g.gain.setValueAtTime(0.11, t);
+            g.gain.exponentialRampToValueAtTime(0.0001, t + 0.24);
+            osc.connect(g);
+            g.connect(c.destination);
+            osc.start(t);
+            osc.stop(t + 0.24);
+          });
+        } catch(e){}
+      },
+      playError: function(){
+        if(!enabled) return;
+        var c = getContext();
+        if(!c) return;
+        try {
+          var now = c.currentTime;
+          // Tono descendente de advertencia
+          [329.63, 220.00].forEach(function(freq, idx){
+            var osc = c.createOscillator();
+            var g = c.createGain();
+            var t = now + (idx * 0.09);
+            osc.type = "sawtooth";
+            osc.frequency.setValueAtTime(freq, t);
+            g.gain.setValueAtTime(0.07, t);
+            g.gain.exponentialRampToValueAtTime(0.0001, t + 0.18);
+            osc.connect(g);
+            g.connect(c.destination);
+            osc.start(t);
+            osc.stop(t + 0.18);
+          });
         } catch(e){}
       },
       playChime: function(){
@@ -269,18 +357,59 @@
         if(!c) return;
         try {
           var now = c.currentTime;
-          [587.33, 880].forEach(function(freq, idx){
+          [587.33, 880.00].forEach(function(freq, idx){
             var osc = c.createOscillator();
             var g = c.createGain();
+            var t = now + (idx * 0.08);
             osc.type = "triangle";
-            osc.frequency.setValueAtTime(freq, now + (idx * 0.08));
-            g.gain.setValueAtTime(0.09, now + (idx * 0.08));
-            g.gain.exponentialRampToValueAtTime(0.0001, now + (idx * 0.08) + 0.22);
+            osc.frequency.setValueAtTime(freq, t);
+            g.gain.setValueAtTime(0.12, t);
+            g.gain.exponentialRampToValueAtTime(0.0001, t + 0.32);
             osc.connect(g);
             g.connect(c.destination);
-            osc.start(now + (idx * 0.08));
-            osc.stop(now + (idx * 0.08) + 0.22);
+            osc.start(t);
+            osc.stop(t + 0.32);
           });
+        } catch(e){}
+      },
+      playBeep: function(f, dur){
+        if(!enabled) return;
+        var c = getContext();
+        if(!c) return;
+        try {
+          var freq = f || 600;
+          var duration = dur || 0.08;
+          var now = c.currentTime;
+          var osc = c.createOscillator();
+          var g = c.createGain();
+          osc.type = "square";
+          osc.frequency.setValueAtTime(freq, now);
+          g.gain.setValueAtTime(0.04, now);
+          g.gain.exponentialRampToValueAtTime(0.0001, now + duration);
+          osc.connect(g);
+          g.connect(c.destination);
+          osc.start(now);
+          osc.stop(now + duration);
+        } catch(e){}
+      },
+      playWhoosh: function(){
+        if(!enabled) return;
+        var c = getContext();
+        if(!c) return;
+        try {
+          var now = c.currentTime;
+          var osc = c.createOscillator();
+          var g = c.createGain();
+          osc.type = "sine";
+          osc.frequency.setValueAtTime(200, now);
+          osc.frequency.exponentialRampToValueAtTime(600, now + 0.08);
+          osc.frequency.exponentialRampToValueAtTime(150, now + 0.18);
+          g.gain.setValueAtTime(0.08, now);
+          g.gain.exponentialRampToValueAtTime(0.0001, now + 0.18);
+          osc.connect(g);
+          g.connect(c.destination);
+          osc.start(now);
+          osc.stop(now + 0.18);
         } catch(e){}
       }
     };
@@ -299,6 +428,63 @@
   } else {
     window.SOUND.initUI();
   }
+
+  /* DELEGACIÓN GLOBAL DE SONIDOS PARA TODAS LAS PÁGINAS */
+  document.addEventListener("click", function(e){
+    if(!window.SOUND || !window.SOUND.isEnabled()) return;
+    var t = e.target;
+    if(!t) return;
+
+    // 1. Quizzes y Cuestionarios
+    var quizOpt = t.closest(".quiz-option");
+    if(quizOpt){
+      var isCorrect = quizOpt.getAttribute("data-correct") === "true" || quizOpt.classList.contains("correct");
+      if(isCorrect){
+        window.SOUND.playSuccess();
+      } else {
+        window.SOUND.playError();
+      }
+      return;
+    }
+
+    // 2. Botones de código
+    if(t.closest(".btn-copy-code")) {
+      window.SOUND.playSuccess();
+      return;
+    }
+    if(t.closest(".btn-download-code")) {
+      window.SOUND.playChime();
+      return;
+    }
+
+    // 3. Audio & Theme & Lang toggles (ya tienen sus handlers dedicados)
+    if(t.closest("#sound-btn") || t.closest("#theme-btn") || t.closest(".btn-lang-toggle") || t.closest("#lang-toggle")) {
+      return;
+    }
+
+    // 4. Acordeones y Detalles
+    if(t.tagName === "SUMMARY" || t.closest("summary")) {
+      window.SOUND.playPop(380);
+      return;
+    }
+
+    // 5. Botones generales, tabs, sim-sample-btn, etc.
+    var btn = t.closest("button") || t.closest(".btn-primary") || t.closest(".btn-secondary") || t.closest(".tab-btn") || t.closest(".nav-pill") || t.closest(".pill-btn") || t.closest(".sim-sample-btn") || t.closest(".sim-btn") || t.closest(".stepper-step") || t.closest(".filter-tag");
+    if(btn && !btn.closest(".code-actions") && btn.id !== "sound-btn" && btn.id !== "theme-btn") {
+      window.SOUND.playPop(480);
+      return;
+    }
+
+    // 6. Controles de formulario (radios, checks, selects)
+    if(t.tagName === "INPUT" && (t.type === "radio" || t.type === "checkbox")) {
+      window.SOUND.playClick();
+      return;
+    }
+    if(t.tagName === "SELECT") {
+      window.SOUND.playClick();
+      return;
+    }
+  }, { passive: true });
 
  /* 4. BARRA DE PROGRESO DE SCROLL */
  var progressBar = document.getElementById("progress-bar");
@@ -739,7 +925,10 @@ function copyCode(btn){
   if(!codeEl) return;
   var text = codeEl.innerText || codeEl.textContent;
   navigator.clipboard.writeText(text).then(function(){
-    if(window.SOUND) window.SOUND.playPop(580);
+    if(window.SOUND) {
+      if(typeof window.SOUND.playSuccess === "function") window.SOUND.playSuccess();
+      else if(typeof window.SOUND.playPop === "function") window.SOUND.playPop(580);
+    }
     var oldHtml = btn.innerHTML;
     btn.innerHTML = '<svg viewBox="0 0 24 24" width="12" height="12" fill="none" stroke="currentColor" stroke-width="3"><polyline points="20 6 9 17 4 12"/></svg> <span>¡Copiado!</span>';
     btn.style.background = "#0866ff";

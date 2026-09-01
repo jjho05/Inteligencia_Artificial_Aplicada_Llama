@@ -10,10 +10,21 @@
 
   // 1. SISTEMA DE AUDIO SEGURO
   function safePlaySound(type, freq) {
-    if (window.SOUND && typeof window.SOUND.playPop === "function" && type === "pop") {
+    if (!window.SOUND) return;
+    if (type === "pop" && typeof window.SOUND.playPop === "function") {
       window.SOUND.playPop(freq || 440);
-    } else if (window.SOUND && typeof window.SOUND.playChime === "function" && type === "chime") {
+    } else if (type === "chime" && typeof window.SOUND.playChime === "function") {
       window.SOUND.playChime();
+    } else if (type === "success" && typeof window.SOUND.playSuccess === "function") {
+      window.SOUND.playSuccess();
+    } else if (type === "error" && typeof window.SOUND.playError === "function") {
+      window.SOUND.playError();
+    } else if (type === "click" && typeof window.SOUND.playClick === "function") {
+      window.SOUND.playClick();
+    } else if (type === "beep" && typeof window.SOUND.playBeep === "function") {
+      window.SOUND.playBeep(freq || 600, 0.08);
+    } else if (typeof window.SOUND.playPop === "function") {
+      window.SOUND.playPop(freq || 440);
     }
   }
 

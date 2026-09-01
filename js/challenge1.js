@@ -39,6 +39,16 @@
           window.SOUND.playPop(freq || 440);
         } else if(soundName === "chime" && typeof window.SOUND.playChime === "function") {
           window.SOUND.playChime();
+        } else if(soundName === "success" && typeof window.SOUND.playSuccess === "function") {
+          window.SOUND.playSuccess();
+        } else if(soundName === "error" && typeof window.SOUND.playError === "function") {
+          window.SOUND.playError();
+        } else if(soundName === "click" && typeof window.SOUND.playClick === "function") {
+          window.SOUND.playClick();
+        } else if(soundName === "beep" && typeof window.SOUND.playBeep === "function") {
+          window.SOUND.playBeep(freq || 600, 0.08);
+        } else if(typeof window.SOUND.playPop === "function") {
+          window.SOUND.playPop(freq || 440);
         }
       }
     } catch(e) {
