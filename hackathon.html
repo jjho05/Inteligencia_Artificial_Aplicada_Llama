@@ -4,7 +4,7 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Hackathon: Proyecto Integrador | IA Aplicada con Modelos Abiertos</title>
-  <meta name="description" content="Guía técnica, exhaustiva y pedagógica para construir tu Proyecto Integrador de IA con Meta Llama: arquitectura desacoplada, 4 plantillas de proyectos, simulador en vivo, código modular y diagnóstico técnico."/>
+  <meta name="description" content="Guía maestra de ingeniería, diseño, buenas prácticas y mentoría paso a paso para construir tu Proyecto Integrador de IA con Meta Llama: viabilidad de problemas, chunking, RAG, FastAPI y evaluación."/>
   
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -24,7 +24,7 @@
   <script defer src="js/hackathon.js"></script>
 
   <style>
-    /* Estilos profesionales para el Centro del Hackathon (Strict No-Emoji Edition) */
+    /* Estilos profesionales para el Centro de Construcción del Hackathon */
     .sim-step-card {
       display: flex;
       gap: 1.2rem;
@@ -97,38 +97,29 @@
       border-color: var(--meta-blue);
       transform: translateY(-2px);
     }
-    .glossary-card {
-      background: var(--bg-surface-2);
+    .guide-step-card {
+      display: flex;
+      gap: 1.2rem;
+      background: var(--bg-surface);
       border: 1px solid var(--border-subtle);
       border-radius: 12px;
       padding: 1.4rem;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
+      transition: border-color 0.2s ease;
     }
-    .glossary-term {
-      font-family: var(--font-head);
-      font-size: 1.05rem;
-      font-weight: 800;
-      color: var(--meta-blue);
-      margin-bottom: 0.5rem;
+    .guide-step-card:hover {
+      border-color: var(--meta-blue);
+    }
+    .guide-step-badge {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
       display: flex;
       align-items: center;
-      gap: 0.5rem;
-    }
-    .glossary-desc {
-      font-size: 0.88rem;
-      color: var(--text-secondary);
-      line-height: 1.6;
-      margin-bottom: 0.8rem;
-    }
-    .glossary-rule {
-      background: var(--bg-subtle);
-      border-radius: 6px;
-      padding: 0.5rem 0.7rem;
-      font-size: 0.78rem;
-      color: var(--text-muted);
-      border-left: 2px solid var(--meta-blue);
+      justify-content: center;
+      font-weight: 800;
+      color: #fff;
+      flex-shrink: 0;
+      font-family: var(--font-head);
     }
   </style>
 </head>
@@ -144,15 +135,16 @@
       </a>
       <nav class="nav-links">
         <a class="nav-link-item" href="modulo1-challenge3.html" style="color: var(--meta-blue); font-weight: 700;">← Challenge 3</a>
-        <a class="nav-link-item" href="#arquitectura-modular">Arquitectura</a>
-        <a class="nav-link-item" href="#glosario-tecnico">Glosario</a>
-        <a class="nav-link-item" href="#catalogo-plantillas">4 Plantillas</a>
-        <a class="nav-link-item" href="#simulador-vivo">Simulador</a>
-        <a class="nav-link-item" href="#arbol-decisiones">Decisión</a>
-        <a class="nav-link-item" href="#hardware-colab">Hardware</a>
-        <a class="nav-link-item" href="#hoja-de-ruta">Paso a Paso</a>
-        <a class="nav-link-item" href="#bloques-codigo">Código</a>
-        <a class="nav-link-item" href="#manual-diagnostico">Diagnóstico</a>
+        <a class="nav-link-item" href="#como-concebir">1. Alcance</a>
+        <a class="nav-link-item" href="#consideraciones-criticas">2. Consideraciones</a>
+        <a class="nav-link-item" href="#si-vs-no">3. SÍ vs NO</a>
+        <a class="nav-link-item" href="#evaluador-viabilidad">4. Evaluador</a>
+        <a class="nav-link-item" href="#plan-cinco-dias">5. Plan 5 Días</a>
+        <a class="nav-link-item" href="#catalogo-plantillas">6. 4 Plantillas</a>
+        <a class="nav-link-item" href="#simulador-vivo">7. Simulador</a>
+        <a class="nav-link-item" href="#bloques-codigo">8. Código</a>
+        <a class="nav-link-item" href="#manual-diagnostico">9. Diagnóstico</a>
+        <a class="nav-link-item" href="#checklist-final">10. Checklist</a>
         <a class="nav-link-item" href="modulo2-tema1.html" style="color: #3fb950; font-weight: 700;">Módulo 2 →</a>
       </nav>
       <div class="header-controls">
@@ -209,22 +201,22 @@
       <div class="hero-badge-pill">
         <span class="hero-badge-num">MÓDULO 1</span>
         <span class="hero-badge-divider"></span>
-        <span class="hero-badge-label">HACKATHON DE INGENIERÍA IA · CENTRO DE MENTORÍA &amp; CONSTRUCCIÓN</span>
+        <span class="hero-badge-label">HACKATHON DE INGENIERÍA IA · GUÍA MAESTRA DE CONSTRUCCIÓN &amp; MENTORÍA</span>
       </div>
 
-      <h1 class="hero-title">Guía de Construcción: Diseña y Despliega tu Sistema de IA con Meta Llama</h1>
+      <h1 class="hero-title">Guía Integral de Construcción: Diseña y Despliega tu Sistema de IA con Meta Llama</h1>
       <p class="hero-subtitle">
         <b>Mesa de trabajo y asesoría técnica paso a paso</b>. Esta plataforma está diseñada para acompañar a los participantes en el diseño, estructuración de datos, dimensionamiento de recursos (VRAM), integración de código modular y resolución de bloqueos para construir su propio sistema de inteligencia artificial antes de avanzar al Módulo 2.
       </p>
 
-      <div style="display: flex; gap: 0.8rem; align-items: center; justify-content: center; flex-wrap: wrap; margin-top: 1.6rem;">
-        <a class="btn-primary" href="#catalogo-plantillas" style="display: inline-flex; align-items: center; gap: 0.6rem; text-decoration: none; padding: 0.75rem 1.4rem; border-radius: 10px; font-weight: 750; box-shadow: 0 4px 18px rgba(8, 102, 255, 0.25);">
-          <svg fill="currentColor" height="18" viewBox="0 0 24 24" width="18"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
-          <span>1. Seleccionar Plantilla de Proyecto</span>
+      <div style="display: flex; gap: 0.8rem; align-items: center; justify-content: flex-start; flex-wrap: wrap; margin-top: 1.6rem;">
+        <a class="btn-primary" href="#evaluador-viabilidad" style="display: inline-flex; align-items: center; gap: 0.6rem; text-decoration: none; padding: 0.75rem 1.4rem; border-radius: 10px; font-weight: 750; box-shadow: 0 4px 18px rgba(8, 102, 255, 0.25);">
+          <svg fill="currentColor" height="18" viewBox="0 0 24 24" width="18"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+          <span>1. Evaluar Viabilidad de mi Idea</span>
         </a>
-        <a class="btn-secondary" href="#simulador-vivo" style="display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; padding: 0.75rem 1.2rem; border-radius: 10px; font-weight: 700;">
-          <svg fill="currentColor" height="18" viewBox="0 0 24 24" width="18"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-9l6 4.5-6 4.5z"/></svg>
-          <span>2. Probar Simulador de Flujo</span>
+        <a class="btn-secondary" href="#plan-cinco-dias" style="display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; padding: 0.75rem 1.2rem; border-radius: 10px; font-weight: 700;">
+          <svg fill="currentColor" height="18" viewBox="0 0 24 24" width="18"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+          <span>2. Ver Plan de Acción (5 Días)</span>
         </a>
         <a class="btn-secondary" href="https://colab.research.google.com/github/jjho05/meta-llama-engineering-labs/blob/main/notebooks/04_Hackathon_Starter_Kit_Llama.ipynb" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; padding: 0.75rem 1.2rem; border-radius: 10px; font-weight: 700; color: #a855f7;">
           <svg fill="currentColor" height="18" viewBox="0 0 24 24" width="18"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
@@ -234,187 +226,288 @@
     </section>
 
     <!-- ======================================================================
-         SECCIÓN 1: FUNDAMENTO ARQUITECTÓNICO & MODELO MENTAL
+         SECCIÓN 1: ¿CÓMO CONCEBIR TU PROYECTO DE IA?
          ====================================================================== -->
-    <article class="tema-card" id="arquitectura-modular" style="border-left: 5px solid var(--meta-blue); margin-bottom: 3.5rem;">
+    <article class="tema-card" id="como-concebir" style="border-left: 5px solid var(--meta-blue); margin-bottom: 3.5rem;">
       <div class="tema-header">
-        <div class="tema-eyebrow">Fundamento de Ingeniería · Principio de Desacoplamiento</div>
-        <h3 class="tema-title">Arquitectura Modular de Cuatro Capas: De la Consulta a la Respuesta</h3>
+        <div class="tema-eyebrow">Estrategia de Proyecto · Filtro de Problemas</div>
+        <h3 class="tema-title">1. ¿Cómo Concebir tu Proyecto? Qué SÍ Resuelve un LLM y Qué NO</h3>
       </div>
 
       <div class="tema-section-block">
         <p class="prose-p">
-          En el desarrollo de sistemas de IA de grado industrial, la regla de oro consiste en <b>desacoplar el motor de razonamiento (LLM) del repositorio de datos fácticos (Base de Conocimiento)</b>. Intentar resolver todo mediante prompts extensos genera tres fallas críticas: <i>alucinaciones por sobrecarga de contexto</i>, <i>latencia inaceptable (&gt; 5 segundos)</i> y <i>costos exponenciales por consumo de tokens</i>.
+          El error más costoso en ingeniería de Inteligencia Artificial es elegir un problema que no se adapta a la naturaleza probabilística de los modelos de lenguaje. Antes de escribir código, filtre su idea a través de este marco de decisión técnica:
         </p>
 
-        <!-- Tabla Comparativa APA 7 -->
-        <div class="table-container" style="overflow-x:auto; margin:1.5rem 0;">
-          <table class="apa-table" style="width:100%; border-collapse:collapse; font-size:0.88rem;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.4rem; margin: 1.5rem 0;">
+          
+          <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-left: 4px solid var(--accent-success); border-radius: 12px; padding: 1.4rem;">
+            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.8rem;">
+              <span class="badge-role" style="background: rgba(5,150,105,0.12); color: var(--accent-success); font-size: 0.78rem; font-weight: 800; padding: 0.25rem 0.6rem; border-radius: 4px;">Casos Óptimos</span>
+              <strong style="font-size: 1rem; color: var(--text-primary);">Problemas que un LLM + RAG Resuelve con Excelencia:</strong>
+            </div>
+            <ul style="margin: 0; padding-left: 1.2rem; font-size: 0.88rem; color: var(--text-secondary); line-height: 1.65;">
+              <li><strong>Asistente Normativo / Políticas:</strong> Consultas sobre estatutos, reglamentos o manuales de procedimientos donde el usuario requiere citas fácticas y cero alucinación.</li>
+              <li><strong>Clasificación &amp; Extracción Estructurada:</strong> Convertir correos, quejas o mensajes libres en objetos JSON con tipado estricto (Pydantic).</li>
+              <li><strong>Tutoría Socrática Adaptativa:</strong> Explicar conceptos técnicos paso a paso, formulando preguntas de comprobación al alumno en lugar de dar toda la solución.</li>
+              <li><strong>Enrutamiento de Intenciones (Router):</strong> Filtrar en milisegundos si un mensaje es un saludo o si requiere consultar la base vectorial.</li>
+            </ul>
+          </div>
+
+          <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-left: 4px solid #ef4444; border-radius: 12px; padding: 1.4rem;">
+            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.8rem;">
+              <span class="badge-role" style="background: rgba(239,68,68,0.12); color: #ef4444; font-size: 0.78rem; font-weight: 800; padding: 0.25rem 0.6rem; border-radius: 4px;">Antipatrones</span>
+              <strong style="font-size: 1rem; color: var(--text-primary);">Problemas que NO Debes Intentar Resolver con un LLM Puro:</strong>
+            </div>
+            <ul style="margin: 0; padding-left: 1.2rem; font-size: 0.88rem; color: var(--text-secondary); line-height: 1.65;">
+              <li><strong>Cálculos Matemáticos / Contabilidad Exacta:</strong> Los LLMs son redes probabilísticas de predicción de tokens, no motores aritméticos. Para cálculos use Python tradicional.</li>
+              <li><strong>Base de Datos Transaccional (CRUD):</strong> Un LLM no almacena registros de forma determinista con propiedades ACID. Use PostgreSQL / SQLite.</li>
+              <li><strong>Predicciones Numéricas de Series de Tiempo:</strong> Para predecir precios de acciones o demanda cuantitativa use modelos de regresión (XGBoost, ARIMA).</li>
+            </ul>
+          </div>
+
+        </div>
+
+        <div style="background: var(--bg-subtle-alt); border-radius: 10px; padding: 1.2rem 1.4rem; border: 1px solid var(--border-subtle); margin-top: 1rem;">
+          <strong style="color: var(--text-primary); font-size: 0.92rem; display: block; margin-bottom: 0.3rem;">Definición del Alcance Mínimo Viable (MVP) para el Hackathon:</strong>
+          <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; margin: 0;">
+            Un proyecto de excelencia para este módulo <b>no requiere miles de páginas ni meses de entrenamiento</b>. Consiste en tres entregables claros y funcionales:
+            (1) Un archivo con 10 a 15 fragmentos de texto limpios de su temática, (2) Un motor RAG en Python con búsqueda cosenoidal calibrada, y (3) Un endpoint HTTP en FastAPI que reciba preguntas y devuelva respuestas fundamentadas.
+          </p>
+        </div>
+      </div>
+    </article>
+
+    <!-- ======================================================================
+         SECCIÓN 2: CONSIDERACIONES CRÍTICAS DE INGENIERÍA
+         ====================================================================== -->
+    <article class="tema-card" id="consideraciones-criticas" style="margin-bottom: 3.5rem;">
+      <div class="tema-header">
+        <div class="tema-eyebrow">Buenas Prácticas · Decisiones Técnicas</div>
+        <h3 class="tema-title">2. Consideraciones Críticas de Ingeniería Antes de Programar</h3>
+      </div>
+
+      <div class="tema-section-block">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.4rem; margin-top: 1.2rem;">
+          
+          <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.4rem;">
+            <strong style="color: var(--meta-blue); font-size: 1.05rem; display: block; margin-bottom: 0.5rem;">2.1 Calidad sobre Cantidad de Datos</strong>
+            <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 0.8rem;">
+              En RAG, la regla de oro es: <i>"Basura adentro, basura afuera" (GIGO)</i>. 15 párrafos fácticos bien redactados, sin contradicciones y con vocabulario preciso superan ampliamente a un PDF escaneado de 500 páginas lleno de tablas rotas o encabezados basura.
+            </p>
+            <div style="font-size: 0.78rem; color: var(--text-muted); background: var(--bg-subtle); padding: 0.45rem 0.65rem; border-radius: 6px;">
+              Recomendación: Escriba o limpie sus textos directamente en un archivo <code>documentos.txt</code>.
+            </div>
+          </div>
+
+          <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.4rem;">
+            <strong style="color: #0284c7; font-size: 1.05rem; display: block; margin-bottom: 0.5rem;">2.2 Estrategia de Chunking (Segmentación)</strong>
+            <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 0.8rem;">
+              Dividir documentos largos en fragmentos óptimos evita saturar el contexto del modelo.
+              El tamaño ideal para consultas institucionales es de <b>250 a 450 caracteres ($\sim 60 - 90$ palabras)</b>, con un solapamiento (overlap) del <b>10% al 15%</b> para no cortar oraciones a la mitad.
+            </p>
+            <div style="font-size: 0.78rem; color: var(--text-muted); background: var(--bg-subtle); padding: 0.45rem 0.65rem; border-radius: 6px;">
+              Fórmula: $\text{Chunk Size} = 350\text{ chars}$, $\text{Overlap} = 50\text{ chars}$.
+            </div>
+          </div>
+
+          <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.4rem;">
+            <strong style="color: #a855f7; font-size: 1.05rem; display: block; margin-bottom: 0.5rem;">2.3 Calibración del Umbral Cosenoidal</strong>
+            <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 0.8rem;">
+              Para evitar que el modelo responda basándose en texto irrelevante, fije un umbral de corte mínimo en <b>$\ge 0.40$</b> en el cálculo de similitud coseno. Si ningún fragmento alcanza ese puntaje, el sistema debe admitir ignorancia de inmediato.
+            </p>
+            <div style="font-size: 0.78rem; color: var(--text-muted); background: var(--bg-subtle); padding: 0.45rem 0.65rem; border-radius: 6px;">
+              Impacto: Reduce el 98% de alucinaciones en preguntas fuera de dominio.
+            </div>
+          </div>
+
+          <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.4rem;">
+            <strong style="color: var(--accent-success); font-size: 1.05rem; display: block; margin-bottom: 0.5rem;">2.4 Métricas de Éxito del Proyecto</strong>
+            <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 0.8rem;">
+              ¿Cómo sabrá que su solución está lista para producción?
+              Su sistema debe cumplir con: <b>Precisión fáctica $\ge 90\%$</b> en pruebas manuales, <b>Latencia $\le 1.5\text{ s}$</b> en inferencia, y <b>Cero fugas de credenciales</b> en el código.
+            </p>
+            <div style="font-size: 0.78rem; color: var(--text-muted); background: var(--bg-subtle); padding: 0.45rem 0.65rem; border-radius: 6px;">
+              Validación: Verifique estos 3 puntos en la rúbrica de evaluación.
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </article>
+
+    <!-- ======================================================================
+         SECCIÓN 3: LO QUE SÍ SIRVE VS LO QUE NO SIRVE
+         ====================================================================== -->
+    <article class="tema-card" id="si-vs-no" style="margin-bottom: 3.5rem;">
+      <div class="tema-header">
+        <div class="tema-eyebrow">Estándares de Calidad · Buenas Prácticas vs. Antipatrones</div>
+        <h3 class="tema-title">3. Lo que SÍ Sirve vs. Lo que NO Sirve en un Proyecto de IA</h3>
+      </div>
+
+      <div class="tema-section-block">
+        <p class="prose-p">
+          Consulte esta tabla comparativa de decisiones de ingeniería para evitar los errores más comunes de principiantes:
+        </p>
+
+        <div class="table-container" style="overflow-x: auto; margin: 1.5rem 0;">
+          <table class="apa-table" style="width: 100%; border-collapse: collapse; font-size: 0.88rem;">
             <thead>
-              <tr style="background:var(--bg-surface-2); border-bottom:2px solid var(--border-subtle);">
-                <th style="padding:0.75rem; text-align:left; width:22%;">Criterio de Evaluación</th>
-                <th style="padding:0.75rem; text-align:left; width:39%;">Enfoque Monolítico (Prompt Relleno)</th>
-                <th style="padding:0.75rem; text-align:left; width:39%;">Arquitectura Modular (Router + RAG + LoRA)</th>
+              <tr style="background: var(--bg-surface-2); border-bottom: 2px solid var(--border-subtle);">
+                <th style="padding: 0.8rem; text-align: left; width: 22%;">Dimensión Técnica</th>
+                <th style="padding: 0.8rem; text-align: left; width: 39%; color: var(--accent-success); font-weight: 800;">Lo que SÍ Sirve (Buena Práctica)</th>
+                <th style="padding: 0.8rem; text-align: left; width: 39%; color: #ef4444; font-weight: 800;">Lo que NO Sirve (Antipatrón)</th>
               </tr>
             </thead>
             <tbody>
-              <tr style="border-bottom:1px solid var(--border-subtle);">
-                <td style="padding:0.7rem;"><strong>Control de Alucinaciones</strong></td>
-                <td style="padding:0.7rem; color:#ef4444;">Bajo: El modelo inventa respuestas cuando la información no está explícita.</td>
-                <td style="padding:0.7rem; color:var(--accent-success); font-weight:700;">Máximo: Filtro de similitud coseno $\ge 0.40$ con admisión estricta de ignorancia.</td>
+              <tr style="border-bottom: 1px solid var(--border-subtle);">
+                <td style="padding: 0.75rem;"><strong>Estructura del Prompt</strong></td>
+                <td style="padding: 0.75rem; color: var(--text-primary);">Usar delimitadores explícitos (ej. <code>[CONTEXTO]...[/CONTEXTO]</code>) y roles directos.</td>
+                <td style="padding: 0.75rem; color: var(--text-secondary);">Escribir un párrafo largo desordenado esperando que el modelo adivine qué parte es instrucción y qué parte es dato.</td>
               </tr>
-              <tr style="border-bottom:1px solid var(--border-subtle);">
-                <td style="padding:0.7rem;"><strong>Latencia por Consulta</strong></td>
-                <td style="padding:0.7rem;">Alta ($3.0 - 8.0\text{ s}$ por procesar miles de tokens en cada turno).</td>
-                <td style="padding:0.7rem; color:var(--accent-success); font-weight:700;">Optimizada ($&lt; 0.8\text{ s}$ en consultas directas mediante Router).</td>
+              <tr style="border-bottom: 1px solid var(--border-subtle);">
+                <td style="padding: 0.75rem;"><strong>Control de Veracidad</strong></td>
+                <td style="padding: 0.75rem; color: var(--text-primary);">Instruir textualmente: <em>"Si la respuesta no está en el contexto, di 'No cuento con información oficial'."</em></td>
+                <td style="padding: 0.75rem; color: var(--text-secondary);">Dejar el modelo sin restricción, permitiendo que invente leyes, precios o políticas inexistentes.</td>
               </tr>
-              <tr style="border-bottom:1px solid var(--border-subtle);">
-                <td style="padding:0.7rem;"><strong>Actualización de Datos</strong></td>
-                <td style="padding:0.7rem;">Manual y costosa (Reescribir prompts en cada modificación de políticas).</td>
-                <td style="padding:0.7rem; color:var(--accent-success); font-weight:700;">Instantánea (Actualizar archivos de texto en el índice vectorial).</td>
+              <tr style="border-bottom: 1px solid var(--border-subtle);">
+                <td style="padding: 0.75rem;"><strong>Temperatura de Muestreo</strong></td>
+                <td style="padding: 0.75rem; color: var(--text-primary);">Fijar <code>temperature = 0.1 - 0.2</code> para consultas factuales, legales o de soporte técnico.</td>
+                <td style="padding: 0.75rem; color: var(--text-secondary);">Usar <code>temperature = 0.8 - 1.0</code> provocando respuestas cambiantes y alucinaciones en datos críticos.</td>
+              </tr>
+              <tr style="border-bottom: 1px solid var(--border-subtle);">
+                <td style="padding: 0.75rem;"><strong>Salidas Tipadas (JSON)</strong></td>
+                <td style="padding: 0.75rem; color: var(--text-primary);">Validar la respuesta con modelos <code>Pydantic</code> en FastAPI antes de retornarla.</td>
+                <td style="padding: 0.75rem; color: var(--text-secondary);">Asumir que el LLM siempre devolverá JSON perfecto sin agregar texto conversacional no estructurado.</td>
               </tr>
               <tr>
-                <td style="padding:0.7rem;"><strong>Estructura de Salida</strong></td>
-                <td style="padding:0.7rem;">Inconsistente (Agrega texto conversacional no deseado antes de JSON).</td>
-                <td style="padding:0.7rem; color:var(--accent-success); font-weight:700;">Garantizada mediante adaptadores LoRA y validación con Pydantic.</td>
+                <td style="padding: 0.75rem;"><strong>Seguridad de Claves</strong></td>
+                <td style="padding: 0.75rem; color: var(--text-primary);">Cargar tokens y claves desde variables de entorno con <code>os.getenv("HF_TOKEN")</code>.</td>
+                <td style="padding: 0.75rem; color: var(--text-secondary);">Escribir tokens de Hugging Face o Groq en texto plano dentro del código o repositorios públicos.</td>
               </tr>
             </tbody>
           </table>
         </div>
-
-        <!-- Las 4 Capas del Sistema -->
-        <h4 class="tema-subheading"><span class="tema-subheading-tag">Estructura</span> Los Cuatro Componentes del Sistema</h4>
-
-        <div class="bento-layout-grid" style="margin: 1.5rem 0;">
-          <div class="bento-sub-card">
-            <div>
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem;">
-                <span class="badge-role" style="background:rgba(8,102,255,0.12); color:var(--meta-blue); font-size:0.75rem; padding:0.2rem 0.5rem; border-radius:4px; font-weight:800;">Capa 1</span>
-                <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--meta-blue); font-weight:700;">router.py</span>
-              </div>
-              <h5 class="bento-sub-title">1. Enrutador de Complejidad (Router)</h5>
-              <p class="bento-sub-desc">
-                Clasifica la intención del usuario. Despacha saludos y consultas triviales a inferencia rápida ($&lt; 0.5\text{ s}$), y deriva preguntas documentales al pipeline RAG.
-              </p>
-            </div>
-          </div>
-
-          <div class="bento-sub-card">
-            <div>
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem;">
-                <span class="badge-role" style="background:rgba(2,132,199,0.12); color:#0284c7; font-size:0.75rem; padding:0.2rem 0.5rem; border-radius:4px; font-weight:800;">Capa 2</span>
-                <span style="font-family:var(--font-mono); font-size:0.75rem; color:#0284c7; font-weight:700;">rag_engine.py</span>
-              </div>
-              <h5 class="bento-sub-title">2. Base de Conocimiento Vectorial (RAG)</h5>
-              <p class="bento-sub-desc">
-                Segmenta los documentos de la organización, calcula incrustaciones en $\mathbb{R}^{384}$ y recupera los fragmentos con mayor similitud coseno antes de llamar al LLM.
-              </p>
-            </div>
-          </div>
-
-          <div class="bento-sub-card">
-            <div>
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem;">
-                <span class="badge-role" style="background:rgba(168,85,247,0.12); color:#a855f7; font-size:0.75rem; padding:0.2rem 0.5rem; border-radius:4px; font-weight:800;">Capa 3</span>
-                <span style="font-family:var(--font-mono); font-size:0.75rem; color:#a855f7; font-weight:700;">lora_adapter.py</span>
-              </div>
-              <h5 class="bento-sub-title">3. Adaptador LoRA / Formateador JSON</h5>
-              <p class="bento-sub-desc">
-                Aplica pesos adaptativos entrenados (PEFT) o directivas estructuradas Few-Shot para forzar al modelo a responder con esquemas JSON válidos y tipados.
-              </p>
-            </div>
-          </div>
-
-          <div class="bento-sub-card">
-            <div>
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem;">
-                <span class="badge-role" style="background:rgba(5,150,105,0.12); color:var(--accent-success); font-size:0.75rem; padding:0.2rem 0.5rem; border-radius:4px; font-weight:800;">Capa 4</span>
-                <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--accent-success); font-weight:700;">api_server.py</span>
-              </div>
-              <h5 class="bento-sub-title">4. Microservicio API (FastAPI)</h5>
-              <p class="bento-sub-desc">
-                Expone endpoints REST asíncronos (`/v1/chat`) validados con modelos de Pydantic y documentación interactiva Swagger UI (`/docs`), listo para WhatsApp.
-              </p>
-            </div>
-          </div>
-        </div>
       </div>
     </article>
 
     <!-- ======================================================================
-         SECCIÓN 2: GLOSARIO TÉCNICO EXHAUSTIVO
+         SECCIÓN 4: EVALUADOR INTERACTIVO DE VIABILIDAD DE IDEAS
          ====================================================================== -->
-    <article class="tema-card" id="glosario-tecnico" style="margin-bottom: 3.5rem;">
+    <article class="tema-card" id="evaluador-viabilidad" style="margin-bottom: 3.5rem; border-left: 5px solid var(--meta-blue);">
       <div class="tema-header">
-        <div class="tema-eyebrow">Marco Teórico · Glosario de Ingeniería</div>
-        <h3 class="tema-title">Glosario Técnico de Inteligencia Artificial Aplicada</h3>
+        <div class="tema-eyebrow">Diagnóstico en Tiempo Real · Asesor de Scoping</div>
+        <h3 class="tema-title">4. Evaluador Interactivo de Viabilidad de Ideas (Project Scoper)</h3>
       </div>
 
       <div class="tema-section-block">
         <p class="prose-p">
-          Definiciones conceptuales y directivas prácticas para comprender cada componente de tu sistema:
+          Seleccione los parámetros de la idea que tiene en mente. El evaluador analizará su viabilidad técnica, riesgos potenciales y tiempo de desarrollo estimado:
         </p>
 
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem; margin-top: 1.2rem;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.2rem; background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.4rem; margin: 1.2rem 0;">
+          <div>
+            <label style="font-size: 0.82rem; font-weight: 800; color: var(--text-primary); display: block; margin-bottom: 0.4rem;">Tipo de Tarea Principal:</label>
+            <select id="scoper-problem-type" style="width: 100%; padding: 0.65rem; border-radius: 8px; border: 1px solid var(--border-subtle); background: var(--bg-surface); color: var(--text-primary); font-size: 0.86rem;">
+              <option value="doc_rag" selected>Asistente Documental / Políticas (RAG)</option>
+              <option value="json_extract">Clasificador &amp; Extracción Estructurada JSON</option>
+              <option value="socratic_tutor">Tutor Educativo con Método Socrático</option>
+              <option value="math_accounting">Cálculos Contables / Nómina Numérica Exacta</option>
+              <option value="crud_database">Base de Datos Transaccional (CRUD)</option>
+            </select>
+          </div>
+
+          <div>
+            <label style="font-size: 0.82rem; font-weight: 800; color: var(--text-primary); display: block; margin-bottom: 0.4rem;">Estado de tus Datos:</label>
+            <select id="scoper-data-source" style="width: 100%; padding: 0.65rem; border-radius: 8px; border: 1px solid var(--border-subtle); background: var(--bg-surface); color: var(--text-primary); font-size: 0.86rem;">
+              <option value="clean_text" selected>Textos Propios Redactados y Limpios (.txt / .json)</option>
+              <option value="dirty_pdf">PDFs Escaneados o con Tablas Complejas</option>
+              <option value="no_data">Aún no tengo datos recopilados</option>
+            </select>
+          </div>
+
+          <div>
+            <label style="font-size: 0.82rem; font-weight: 800; color: var(--text-primary); display: block; margin-bottom: 0.4rem;">Nivel de Complejidad Objetivo:</label>
+            <select id="scoper-complexity" style="width: 100%; padding: 0.65rem; border-radius: 8px; border: 1px solid var(--border-subtle); background: var(--bg-surface); color: var(--text-primary); font-size: 0.86rem;">
+              <option value="mvp" selected>Alcance Mínimo Viable (1 - 2 días)</option>
+              <option value="advanced">Sistema Completo Multi-Endpoint (3 - 4 días)</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="scoper-result-box"></div>
+      </div>
+    </article>
+
+    <!-- ======================================================================
+         SECCIÓN 5: PLAN DE ACCIÓN OPERATIVO EN 5 DÍAS
+         ====================================================================== -->
+    <article class="tema-card" id="plan-cinco-dias" style="margin-bottom: 3.5rem;">
+      <div class="tema-header">
+        <div class="tema-eyebrow">Plan de Acción Operativo · Cronograma de Desarrollo</div>
+        <h3 class="tema-title">5. Plan de Construcción Paso a Paso: Tu Proyecto en Cinco Días</h3>
+      </div>
+
+      <div class="tema-section-block">
+        <p class="prose-p">
+          Siga esta guía de ejecución secuencial para completar su entregable con solidez técnica y sin contratiempos:
+        </p>
+
+        <div style="display: flex; flex-direction: column; gap: 1.2rem; margin-top: 1.4rem;">
           
-          <div class="glossary-card">
+          <div class="guide-step-card">
+            <div class="guide-step-badge" style="background: var(--meta-blue);">1</div>
             <div>
-              <div class="glossary-term">1. Prompt &amp; System Directives</div>
-              <p class="glossary-desc">
-                Conjunto de instrucciones estructuradas enviadas al modelo que definen su rol institucional, tono, restricciones operativas y contexto documental.
+              <strong style="color: var(--text-primary); font-size: 1rem; display: block; margin-bottom: 0.3rem;">Día 1: Curaduría Documental y Preparación del Dataset</strong>
+              <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; margin: 0 0 0.4rem 0;">
+                Defina la temática de su proyecto (tienda, escuela, soporte técnico o tutoría). Redacte entre 10 y 15 párrafos fácticos concisos en un archivo <code>documentos.txt</code>, asegurándose de que cada fragmento contenga una respuesta completa y verificable.
               </p>
+              <span style="font-size: 0.78rem; color: var(--meta-blue); font-weight: 700;">Entregable del Día 1: Archivo `documentos.txt` limpio y segmentado.</span>
             </div>
-            <div class="glossary-rule">Regla: Delimitar el contexto con etiquetas claras (ej. <code>[CONTEXTO]...[/CONTEXTO]</code>).</div>
           </div>
 
-          <div class="glossary-card">
+          <div class="guide-step-card">
+            <div class="guide-step-badge" style="background: #0284c7;">2</div>
             <div>
-              <div class="glossary-term">2. Tokens &amp; Tokenización BPE</div>
-              <p class="glossary-desc">
-                Unidades atómicas de procesamiento textual generadas mediante algoritmos Byte-Pair Encoding. Un token representa aproximadamente 4 caracteres en idioma español.
+              <strong style="color: var(--text-primary); font-size: 1rem; display: block; margin-bottom: 0.3rem;">Día 2: Motor RAG e Indexación Vectorial</strong>
+              <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; margin: 0 0 0.4rem 0;">
+                Abra <code>rag_engine.py</code> y cargue sus documentos con <code>SentenceTransformer("all-MiniLM-L6-v2")</code>. Pruebe búsquedas manuales con preguntas de prueba y valide que el cálculo de similitud coseno devuelva el párrafo correcto con confianza $\ge 0.40$.
               </p>
+              <span style="font-size: 0.78rem; color: #0284c7; font-weight: 700;">Entregable del Día 2: Función `rag.search()` respondiendo en &lt; 50 ms.</span>
             </div>
-            <div class="glossary-rule">Regla: Controlar la longitud del contexto para no exceder la ventana del modelo.</div>
           </div>
 
-          <div class="glossary-card">
+          <div class="guide-step-card">
+            <div class="guide-step-badge" style="background: #a855f7;">3</div>
             <div>
-              <div class="glossary-term">3. Incrustaciones Densas (Embeddings)</div>
-              <p class="glossary-desc">
-                Vectores numéricos continuos en $\mathbb{R}^{384}$ que capturan la semántica profunda de una oración, permitiendo búsquedas por similitud conceptual.
+              <strong style="color: var(--text-primary); font-size: 1rem; display: block; margin-bottom: 0.3rem;">Día 3: System Prompt Maestro y Filtro Anti-Alucinaciones</strong>
+              <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; margin: 0 0 0.4rem 0;">
+                Diseñe el prompt del sistema delimitando el rol, el tono y las restricciones de veracidad. Realice pruebas con preguntas fuera de tema (Out-of-Domain) para confirmar que el modelo admite ignorancia y nunca inventa datos no sustentados.
               </p>
+              <span style="font-size: 0.78rem; color: #a855f7; font-weight: 700;">Entregable del Día 3: Prompt probado con 0% de alucinación.</span>
             </div>
-            <div class="glossary-rule">Regla: Normalizar vectores con norma $L_2$ para calcular similitud mediante producto punto.</div>
           </div>
 
-          <div class="glossary-card">
+          <div class="guide-step-card">
+            <div class="guide-step-badge" style="background: var(--accent-success);">4</div>
             <div>
-              <div class="glossary-term">4. RAG &amp; Similitud Coseno</div>
-              <p class="glossary-desc">
-                Técnica que extrae los $k$ fragmentos más relevantes de una base documental antes de la inferencia, garantizando respuestas 100% verificables.
+              <strong style="color: var(--text-primary); font-size: 1rem; display: block; margin-bottom: 0.3rem;">Día 4: Enrutador Heurístico de Complejidad (router.py)</strong>
+              <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; margin: 0 0 0.4rem 0;">
+                Implemente la clase <code>ModelRouter</code> para clasificar intenciones. Si el usuario envía un saludo simple, responda de forma directa; si consulta información de negocio, derive al pipeline RAG.
               </p>
+              <span style="font-size: 0.78rem; color: var(--accent-success); font-weight: 700;">Entregable del Día 4: Despacho inteligente con latencia reducida.</span>
             </div>
-            <div class="glossary-rule">Regla: Fijar un umbral de corte mínimo ($\ge 0.40$) para descartar texto irrelevante.</div>
           </div>
 
-          <div class="glossary-card">
+          <div class="guide-step-card">
+            <div class="guide-step-badge" style="background: #f59e0b;">5</div>
             <div>
-              <div class="glossary-term">5. LoRA (Low-Rank Adaptation)</div>
-              <p class="glossary-desc">
-                Técnica de adaptación supervisada eficiente (PEFT) que congela el modelo base e inyecta matrices de bajo rango $r \ll d$ en capas de atención.
+              <strong style="color: var(--text-primary); font-size: 1rem; display: block; margin-bottom: 0.3rem;">Día 5: Servidor REST con FastAPI y Documentación OpenAPI</strong>
+              <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; margin: 0 0 0.4rem 0;">
+                Integre todo en <code>api_server.py</code>. Levante el servidor con Uvicorn, abra <code>http://localhost:8000/docs</code> para probar payloads interactivos y prepare su archivo README con la estructura oficial de entrega.
               </p>
+              <span style="font-size: 0.78rem; color: #f59e0b; font-weight: 700;">Entregable del Día 5: API documentada lista para conectar con WhatsApp.</span>
             </div>
-            <div class="glossary-rule">Regla: Usar $r=8$ y $\alpha=16$ para adaptar estilos y formatos con bajo consumo de VRAM.</div>
-          </div>
-
-          <div class="glossary-card">
-            <div>
-              <div class="glossary-term">6. Memoria VRAM &amp; GPU T4</div>
-              <p class="glossary-desc">
-                Memoria de alto ancho de banda de la tarjeta aceleradora. En Google Colab se dispone de 15 GB dedicados para alojar pesos, activaciones y KV-Cache.
-              </p>
-            </div>
-            <div class="glossary-rule">Regla: Usar cuantización en 4-bits (NF4/QLoRA) para modelos mayores a 3 mil millones de parámetros.</div>
           </div>
 
         </div>
@@ -422,12 +515,12 @@
     </article>
 
     <!-- ======================================================================
-         SECCIÓN 3: CATÁLOGO DE 4 PLANTILLAS DE PROYECTOS
+         SECCIÓN 6: CATÁLOGO DE 4 PLANTILLAS DE PROYECTOS
          ====================================================================== -->
     <article class="tema-card" id="catalogo-plantillas" style="margin-bottom: 3.5rem;">
       <div class="tema-header">
         <div class="tema-eyebrow">Catálogo de Proyectos · Entregables Listos</div>
-        <h3 class="tema-title">Cuatro Plantillas de Proyectos Listas para Adaptar</h3>
+        <h3 class="tema-title">6. Cuatro Plantillas de Proyectos Listas para Adaptar</h3>
       </div>
 
       <div class="tema-section-block">
@@ -435,7 +528,7 @@
           Seleccione la plantilla que mejor se ajuste a su caso de estudio. Cada opción incluye su objetivo de negocio, dataset de ejemplo en español y módulos de código a configurar:
         </p>
 
-        <!-- PLANTILLA A -->
+        <!-- PLANTILLA 1 -->
         <div class="template-card-highlight" id="plantilla-a" style="border-left: 5px solid var(--meta-blue);">
           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.6rem;">
             <span style="font-size:0.78rem; font-weight:800; text-transform:uppercase; color:var(--meta-blue); background:var(--meta-blue-subtle); padding:0.25rem 0.6rem; border-radius:6px;">PLANTILLA 1 · COMERCIO ELECTRÓNICO &amp; LOGÍSTICA</span>
@@ -460,7 +553,7 @@
           </div>
         </div>
 
-        <!-- PLANTILLA B -->
+        <!-- PLANTILLA 2 -->
         <div class="template-card-highlight" id="plantilla-b" style="border-left: 5px solid #0284c7;">
           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.6rem;">
             <span style="font-size:0.78rem; font-weight:800; text-transform:uppercase; color:#0284c7; background:rgba(2,132,199,0.12); padding:0.25rem 0.6rem; border-radius:6px;">PLANTILLA 2 · NORMATIVA INSTITUCIONAL &amp; LEGAL</span>
@@ -484,7 +577,7 @@
           </div>
         </div>
 
-        <!-- PLANTILLA C -->
+        <!-- PLANTILLA 3 -->
         <div class="template-card-highlight" id="plantilla-c" style="border-left: 5px solid #a855f7;">
           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.6rem;">
             <span style="font-size:0.78rem; font-weight:800; text-transform:uppercase; color:#a855f7; background:rgba(168,85,247,0.12); padding:0.25rem 0.6rem; border-radius:6px;">PLANTILLA 3 · AUTOMATIZACIÓN &amp; EXTRACCIÓN JSON</span>
@@ -511,7 +604,7 @@
           </div>
         </div>
 
-        <!-- PLANTILLA D -->
+        <!-- PLANTILLA 4 -->
         <div class="template-card-highlight" id="plantilla-d" style="border-left: 5px solid var(--accent-success);">
           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.6rem;">
             <span style="font-size:0.78rem; font-weight:800; text-transform:uppercase; color:var(--accent-success); background:rgba(5,150,105,0.12); padding:0.25rem 0.6rem; border-radius:6px;">PLANTILLA 4 · EDUCACIÓN &amp; EVALUACIÓN ADAPTATIVA</span>
@@ -532,12 +625,12 @@
     </article>
 
     <!-- ======================================================================
-         SECCIÓN 4: SIMULADOR VISUAL E INTERACTIVO EN VIVO
+         SECCIÓN 7: SIMULADOR VISUAL E INTERACTIVO EN VIVO
          ====================================================================== -->
     <article class="tema-card" id="simulador-vivo" style="margin-bottom: 3.5rem; border-left: 5px solid var(--meta-blue);">
       <div class="tema-header">
         <div class="tema-eyebrow">Simulación de Inferencia · Pipeline Interactivo</div>
-        <h3 class="tema-title">Simulador en Vivo: Ejecución del Flujo de Procesamiento</h3>
+        <h3 class="tema-title">7. Simulador en Vivo: Ejecución del Flujo de Procesamiento</h3>
       </div>
 
       <div class="tema-section-block">
@@ -570,187 +663,12 @@
     </article>
 
     <!-- ======================================================================
-         SECCIÓN 5: ÁRBOL DE DECISIONES ARQUITECTÓNICAS
-         ====================================================================== -->
-    <article class="tema-card" id="arbol-decisiones" style="margin-bottom: 3.5rem;">
-      <div class="tema-header">
-        <div class="tema-eyebrow">Diseño Técnico · Matriz de Decisión</div>
-        <h3 class="tema-title">Árbol de Decisiones: Configuración Óptima según tu Caso de Uso</h3>
-      </div>
-
-      <div class="tema-section-block">
-        <p class="prose-p">
-          Seleccione los parámetros operativos de su proyecto para calcular el stack técnico y la estrategia de código correspondiente:
-        </p>
-
-        <form id="friendly-wizard-form" style="background:var(--bg-surface-2); border:1px solid var(--border-subtle); border-radius:12px; padding:1.5rem; margin:1.2rem 0;">
-          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1.5rem; margin-bottom:1.2rem;">
-            <!-- Criterio 1 -->
-            <div>
-              <label style="font-weight:800; font-size:0.9rem; color:var(--text-primary); display:block; margin-bottom:0.6rem;">1. Dominio de Aplicación:</label>
-              <div style="display:flex; flex-direction:column; gap:0.5rem; font-size:0.86rem; color:var(--text-secondary);">
-                <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
-                  <input type="radio" name="wiz-project" value="ecommerce" checked> Comercio electrónico, logística o atención a clientes.
-                </label>
-                <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
-                  <input type="radio" name="wiz-project" value="legal"> Reglamentación institucional, estatutos o manuales de trámites.
-                </label>
-                <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
-                  <input type="radio" name="wiz-project" value="json_reports"> Extracción estructurada, clasificación y esquemas JSON.
-                </label>
-                <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
-                  <input type="radio" name="wiz-project" value="tutor"> Educación adaptativa y evaluación pedagógica formativa.
-                </label>
-              </div>
-            </div>
-
-            <!-- Criterio 2 -->
-            <div>
-              <label style="font-weight:800; font-size:0.9rem; color:var(--text-primary); display:block; margin-bottom:0.6rem;">2. Formato de Salida Requerido:</label>
-              <div style="display:flex; flex-direction:column; gap:0.5rem; font-size:0.86rem; color:var(--text-secondary);">
-                <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
-                  <input type="radio" name="wiz-output" value="friendly_text" checked> Lenguaje natural en prosa empática y estructurada.
-                </label>
-                <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
-                  <input type="radio" name="wiz-output" value="json_format"> Objeto JSON tipado estricto para interoperabilidad.
-                </label>
-              </div>
-            </div>
-
-            <!-- Criterio 3 -->
-            <div>
-              <label style="font-weight:800; font-size:0.9rem; color:var(--text-primary); display:block; margin-bottom:0.6rem;">3. Entorno de Ejecución:</label>
-              <div style="display:flex; flex-direction:column; gap:0.5rem; font-size:0.86rem; color:var(--text-secondary);">
-                <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
-                  <input type="radio" name="wiz-compute" value="colab_free" checked> Google Colab Gratuito (1x GPU Tesla T4 15 GB VRAM).
-                </label>
-                <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
-                  <input type="radio" name="wiz-compute" value="local_pc"> Entorno Local (CPU / Apple Silicon M-Series).
-                </label>
-              </div>
-            </div>
-          </div>
-        </form>
-
-        <div id="friendly-wizard-result"></div>
-      </div>
-    </article>
-
-    <!-- ======================================================================
-         SECCIÓN 6: HARDWARE, VRAM & GOOGLE COLAB
-         ====================================================================== -->
-    <article class="tema-card" id="hardware-colab" style="margin-bottom: 3.5rem;">
-      <div class="tema-header">
-        <div class="tema-eyebrow">Dimensionamiento de Recursos · Planificación VRAM</div>
-        <h3 class="tema-title">Presupuesto de Memoria VRAM y Factibilidad en Google Colab</h3>
-      </div>
-
-      <div class="tema-section-block">
-        <p class="prose-p">
-          El consumo de memoria de GPU durante la inferencia y el entrenamiento PEFT se rige por la ecuación formal:
-        </p>
-
-        <div class="formula-callout" style="background:var(--bg-surface-2); border:1px solid var(--border-subtle); border-radius:10px; padding:1.2rem; margin:1rem 0; text-align:center;">
-          $$\text{VRAM}_{\text{Total}} = \text{Memoria}_{\text{Pesos}} + \text{Memoria}_{\text{Optimizador (AdamW)}} + \text{Memoria}_{\text{KV-Cache}} + \text{Memoria}_{\text{Activaciones}} + \text{Sobrecarga CUDA}$$
-        </div>
-
-        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:1rem; background:var(--bg-surface-2); border:1px solid var(--border-subtle); border-radius:12px; padding:1.2rem; margin:1.2rem 0;">
-          <div>
-            <label style="font-size:0.82rem; font-weight:700; color:var(--text-primary); display:block; margin-bottom:0.3rem;">Modelo Fundacional Base:</label>
-            <select id="colab-model-choice" style="width:100%; padding:0.6rem; border-radius:8px; border:1px solid var(--border-subtle); background:var(--bg-surface); color:var(--text-primary); font-size:0.85rem;">
-              <option value="tinyllama" selected>TinyLlama 1.1B (1.1B Parámetros &bull; ~4.2 GB)</option>
-              <option value="llama_1b">Meta Llama 3.2 1B (1.2B Parámetros &bull; ~5.1 GB)</option>
-              <option value="llama_3b">Meta Llama 3.2 3B (3.2B Parámetros &bull; ~8.4 GB)</option>
-              <option value="llama_8b">Meta Llama 3.1 8B (8.0B Parámetros &bull; ~11.8 GB)</option>
-            </select>
-          </div>
-
-          <div>
-            <label style="font-size:0.82rem; font-weight:700; color:var(--text-primary); display:block; margin-bottom:0.3rem;">Régimen de Operación:</label>
-            <select id="colab-mode-choice" style="width:100%; padding:0.6rem; border-radius:8px; border:1px solid var(--border-subtle); background:var(--bg-surface); color:var(--text-primary); font-size:0.85rem;">
-              <option value="rag" selected>Inferencia con Motor Vectorial (RAG)</option>
-              <option value="lora">Entrenamiento Supervisado con LoRA (PEFT)</option>
-            </select>
-          </div>
-        </div>
-
-        <div id="colab-semaphore-box"></div>
-      </div>
-    </article>
-
-    <!-- ======================================================================
-         SECCIÓN 7: HOJA DE RUTA EN 5 FASES
-         ====================================================================== -->
-    <article class="tema-card" id="hoja-de-ruta" style="margin-bottom: 3.5rem;">
-      <div class="tema-header">
-        <div class="tema-eyebrow">Metodología de Desarrollo · Cronograma Técnico</div>
-        <h3 class="tema-title">Hoja de Ruta de Implementación en Cinco Fases</h3>
-      </div>
-
-      <div class="tema-section-block">
-        <div style="display:flex; flex-direction:column; gap:1.2rem; margin-top:1.2rem;">
-          
-          <div style="display:flex; gap:1.2rem; background:var(--bg-surface); border:1px solid var(--border-subtle); border-radius:12px; padding:1.3rem;">
-            <div style="width:34px; height:34px; border-radius:50%; background:var(--meta-blue); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800; flex-shrink:0;">1</div>
-            <div>
-              <strong style="color:var(--text-primary); font-size:1rem; display:block; margin-bottom:0.3rem;">Fase 1: Curaduría Documental y Limpieza de Datos</strong>
-              <p style="font-size:0.88rem; color:var(--text-secondary); line-height:1.6; margin:0;">
-                Defina el alcance del caso de uso. Extraiga de 5 a 15 párrafos fácticos correspondientes a su temática en archivos de texto plano, eliminando caracteres especiales o formatos corruptos.
-              </p>
-            </div>
-          </div>
-
-          <div style="display:flex; gap:1.2rem; background:var(--bg-surface); border:1px solid var(--border-subtle); border-radius:12px; padding:1.3rem;">
-            <div style="width:34px; height:34px; border-radius:50%; background:#0284c7; color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800; flex-shrink:0;">2</div>
-            <div>
-              <strong style="color:var(--text-primary); font-size:1rem; display:block; margin-bottom:0.3rem;">Fase 2: Indexación Vectorial en `rag_engine.py`</strong>
-              <p style="font-size:0.88rem; color:var(--text-secondary); line-height:1.6; margin:0;">
-                Incorpore sus textos en la matriz documental. El modelo <code>SentenceTransformer</code> calculará las incrustaciones normalizadas en $\mathbb{R}^{384}$ para búsquedas densas por similitud coseno.
-              </p>
-            </div>
-          </div>
-
-          <div style="display:flex; gap:1.2rem; background:var(--bg-surface); border:1px solid var(--border-subtle); border-radius:12px; padding:1.3rem;">
-            <div style="width:34px; height:34px; border-radius:50%; background:#a855f7; color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800; flex-shrink:0;">3</div>
-            <div>
-              <strong style="color:var(--text-primary); font-size:1rem; display:block; margin-bottom:0.3rem;">Fase 3: Estructuración del System Prompt y Restricciones</strong>
-              <p style="font-size:0.88rem; color:var(--text-secondary); line-height:1.6; margin:0;">
-                Configure las directivas del modelo indicando: <em>"Responda única y exclusivamente con la evidencia del contexto proporcionado. Si la evidencia no contiene la respuesta, admita ignorancia."</em>
-              </p>
-            </div>
-          </div>
-
-          <div style="display:flex; gap:1.2rem; background:var(--bg-surface); border:1px solid var(--border-subtle); border-radius:12px; padding:1.3rem;">
-            <div style="width:34px; height:34px; border-radius:50%; background:var(--accent-success); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800; flex-shrink:0;">4</div>
-            <div>
-              <strong style="color:var(--text-primary); font-size:1rem; display:block; margin-bottom:0.3rem;">Fase 4: Ejecución y Validación en Google Colab</strong>
-              <p style="font-size:0.88rem; color:var(--text-secondary); line-height:1.6; margin:0;">
-                Abra el cuaderno oficial en Google Colab, ejecute secuencialmente los bloques y evalúe la calidad de las respuestas frente a preguntas fuera de dominio (Out-of-Domain).
-              </p>
-            </div>
-          </div>
-
-          <div style="display:flex; gap:1.2rem; background:var(--bg-surface); border:1px solid var(--border-subtle); border-radius:12px; padding:1.3rem;">
-            <div style="width:34px; height:34px; border-radius:50%; background:#f59e0b; color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800; flex-shrink:0;">5</div>
-            <div>
-              <strong style="color:var(--text-primary); font-size:1rem; display:block; margin-bottom:0.3rem;">Fase 5: Despliegue del Servidor Web con FastAPI</strong>
-              <p style="font-size:0.88rem; color:var(--text-secondary); line-height:1.6; margin:0;">
-                Inicie <code>api_server.py</code> para exponer la interfaz Swagger UI (`/docs`), validando la recepción y respuesta de payloads JSON con tipado fuerte.
-              </p>
-            </div>
-          </div>
-
-        </div>
-      </div>
-    </article>
-
-    <!-- ======================================================================
          SECCIÓN 8: BLOQUES DE CÓDIGO LEGO COMENTADOS
          ====================================================================== -->
     <article class="tema-card" id="bloques-codigo" style="margin-bottom: 3.5rem;">
       <div class="tema-header">
         <div class="tema-eyebrow">Implementación Técnica · Bloques Reutilizables</div>
-        <h3 class="tema-title">Código Modular Comentado para el Starter Kit</h3>
+        <h3 class="tema-title">8. Código Modular Comentado para el Starter Kit</h3>
       </div>
 
       <div class="tema-section-block">
@@ -898,12 +816,12 @@
     <article class="tema-card" id="manual-diagnostico" style="margin-bottom: 3.5rem;">
       <div class="tema-header">
         <div class="tema-eyebrow">Diagnóstico y Mitigación · Primeros Auxilios</div>
-        <h3 class="tema-title">Resolución Técnica de Bloqueos y Errores Frecuentes</h3>
+        <h3 class="tema-title">9. Resolución Técnica de Bloqueos y Errores Frecuentes</h3>
       </div>
 
       <div class="tema-section-block">
         <p class="prose-p">
-          Soluciones directas y verificadas para los 8 problemas más comunes en desarrollo de IA aplicada:
+          Soluciones directas y verificadas para los 6 problemas más comunes en desarrollo de IA aplicada:
         </p>
 
         <div style="display:flex; flex-direction:column; gap:0.9rem; margin-top:1.2rem;">
@@ -990,7 +908,7 @@
     <article class="tema-card" id="checklist-final" style="margin-bottom: 3.5rem; border-left: 5px solid var(--accent-success);">
       <div class="tema-header">
         <div class="tema-eyebrow">Aseguramiento de Calidad · Rúbrica Oficial (100 Puntos)</div>
-        <h3 class="tema-title">Auditoría Pre-Entrega y Criterios de Evaluación</h3>
+        <h3 class="tema-title">10. Auditoría Pre-Entrega y Checklist de Calidad</h3>
       </div>
 
       <div class="tema-section-block">
