@@ -168,6 +168,7 @@
       </a>
       <nav class="nav-links">
         <a class="nav-link-item" href="modulo1-challenge3.html" style="color: var(--meta-blue); font-weight: 700;">← Challenge 3</a>
+        <a class="nav-link-item" href="#mapa-integracion" style="color: #a855f7; font-weight: 800;">0. Integración</a>
         <a class="nav-link-item" href="#como-concebir">1. Alcance</a>
         <a class="nav-link-item" href="#taxonomia-ia">2. Taxonomía</a>
         <a class="nav-link-item" href="#ingenieria-prompts">3. Prompts</a>
@@ -271,6 +272,61 @@
         </a>
       </div>
     </section>
+
+    <!-- ======================================================================
+         SECCIÓN 0: MAPA DE INTEGRACIÓN (4 TEMAS Y 3 CHALLENGES)
+         ====================================================================== -->
+    <article class="tema-card" id="mapa-integracion" style="border-left: 5px solid #a855f7; margin-bottom: 3.5rem;">
+      <div class="tema-header">
+        <div class="tema-eyebrow">Síntesis Formativa · Confluencia de Conocimiento</div>
+        <h3 class="tema-title">0. Mapa de Integración: Cómo se Ensamblan los 4 Temas y 3 Challenges en tu Proyecto</h3>
+      </div>
+
+      <div class="tema-section-block">
+        <p class="prose-p">
+          El Proyecto Integrador del Hackathon no es una tarea aislada: es la <b>confluencia arquitectónica exacta de todo lo aprendido en el Módulo 1</b>. Cada lección y cada reto práctico te aportaron una pieza de ingeniería fundamental que ahora ensamblarás en un único sistema coherente:
+        </p>
+
+        <div class="table-container" style="overflow-x:auto; margin:1.5rem 0;">
+          <table class="apa-table" style="width:100%; border-collapse:collapse; font-size:0.88rem;">
+            <thead>
+              <tr style="background:var(--bg-surface-2); border-bottom:2px solid var(--border-subtle);">
+                <th style="padding:0.75rem; text-align:left; width:22%;">Módulo 1: Tema / Challenge</th>
+                <th style="padding:0.75rem; text-align:left; width:36%;">Conocimiento / Habilidad Adquirida</th>
+                <th style="padding:0.75rem; text-align:left; width:42%; color:var(--meta-blue); font-weight:800;">Pieza que Aporta a tu Proyecto Integrador</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom:1px solid var(--border-subtle);">
+                <td style="padding:0.7rem;"><strong>Tema 1 &amp; Challenge 1</strong><br><span style="font-size:0.75rem; color:var(--text-muted);">Ecosistema Llama &amp; Benchmark</span></td>
+                <td style="padding:0.7rem;">Inferencia con Llama, cuantización (FP16/NF4) y medición de latencia ($t_{\text{ms}}$) y tokens/segundo.</td>
+                <td style="padding:0.7rem; color:var(--text-primary);"><b>Selección del Motor Base:</b> Dimensionar el modelo (1B/3B) para no saturar la GPU Tesla T4 (15 GB) y optimizar el tiempo de respuesta.</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--border-subtle);">
+                <td style="padding:0.7rem;"><strong>Tema 2</strong><br><span style="font-size:0.75rem; color:var(--text-muted);">Prompt Engineering Avanzado</span></td>
+                <td style="padding:0.7rem;">Delimitadores especiales (`&lt;|start_header_id|&gt;`), roles, temperatura baja ($0.1$) y cláusulas negativas.</td>
+                <td style="padding:0.7rem; color:var(--text-primary);"><b>System Prompt Maestro:</b> Control estricto de verdad y admisión explícita de ignorancia cuando no hay contexto.</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--border-subtle);">
+                <td style="padding:0.7rem;"><strong>Tema 3 &amp; Challenge 2</strong><br><span style="font-size:0.75rem; color:var(--text-muted);">Sistemas RAG &amp; Embeddings</span></td>
+                <td style="padding:0.7rem;">Incrustaciones vectoriales en $\mathbb{R}^{384}$, similitud coseno y calibración de umbral ($\ge 0.40$).</td>
+                <td style="padding:0.7rem; color:var(--text-primary);"><b>Capa 2 (`rag_engine.py`):</b> Base de conocimiento factual que alimenta al modelo en milisegundos con documentos de tu organización.</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--border-subtle);">
+                <td style="padding:0.7rem;"><strong>Tema 4 &amp; Challenge 3</strong><br><span style="font-size:0.75rem; color:var(--text-muted);">Fine-Tuning PEFT con LoRA</span></td>
+                <td style="padding:0.7rem;">Matrices de bajo rango $r=8$, congelamiento de pesos base y extracción tipada en esquemas JSON.</td>
+                <td style="padding:0.7rem; color:var(--text-primary);"><b>Capa 3 (`lora_adapter.py`):</b> Adaptador especializado para extraer campos estructurados (categoría, severidad, ticket) sin texto libre.</td>
+              </tr>
+              <tr>
+                <td style="padding:0.7rem;"><strong>Proyecto Integrador</strong><br><span style="font-size:0.75rem; color:var(--accent-success); font-weight:800;">La Gran Síntesis Modular</span></td>
+                <td style="padding:0.7rem;">Enrutamiento de intenciones, validación con Pydantic, servidor FastAPI y auditoría de Red Teaming.</td>
+                <td style="padding:0.7rem; color:var(--accent-success); font-weight:800;"><b>Microservicio REST Completo:</b> Un backend HTTP robusto (`/v1/chat`) listo para conectarse a WhatsApp en el Módulo 2.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </article>
 
     <!-- ======================================================================
          SECCIÓN 1: ¿CÓMO CONCEBIR TU PROYECTO DE IA?
