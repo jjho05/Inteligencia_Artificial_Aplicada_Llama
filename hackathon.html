@@ -891,6 +891,53 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas basándote
           Segmentar textos arbitrariamente por número de caracteres puede cortar oraciones clave a la mitad. Para el Hackathon se recomienda implementar <strong>Chunking Recursivo por Separadores Semánticos con Solapamiento (Overlap)</strong>:
         </p>
 
+        <!-- Fórmula y Desglose de Chunking -->
+        <div class="formula-card">
+          <div class="formula-math-area">
+            $$\text{Chunks}_{\text{Total}} = \left\lceil \frac{L_{\text{doc}} - \text{Overlap}}{\text{ChunkSize} - \text{Overlap}} \right\rceil, \quad \text{con } \text{Overlap} = \text{ChunkSize} \times \text{Ratio}_{\text{overlap}}$$
+          </div>
+          <details class="formula-breakdown-details" open>
+            <summary class="formula-breakdown-summary">
+              <div class="summary-left">
+                <svg fill="currentColor" height="16" viewBox="0 0 24 24" width="16"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path></svg>
+                <span>Desglose de Parámetros de Segmentación &amp; Chunking</span>
+                <span class="breakdown-count-tag">4 variables</span>
+              </div>
+              <span class="summary-toggle-icon">
+                <svg fill="none" height="14" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" width="14"><path d="M6 9l6 6 6-6"></path></svg>
+              </span>
+            </summary>
+            <div class="formula-breakdown-panel">
+              <div class="breakdown-list-stack">
+                <div class="breakdown-list-row">
+                  <span class="breakdown-row-badge">$L_{\text{doc}}$</span>
+                  <div class="breakdown-row-text">
+                    <strong>Longitud Total del Documento:</strong> Conteo total de caracteres o tokens del texto original tras pasar por la sanitización en <code>data_cleaner.py</code>.
+                  </div>
+                </div>
+                <div class="breakdown-list-row">
+                  <span class="breakdown-row-badge">$\text{ChunkSize}$</span>
+                  <div class="breakdown-row-text">
+                    <strong>Tamaño Máximo del Fragmento:</strong> Ventana de texto recomendada (300 a 500 caracteres, o 128 a 256 tokens) que cabe holgadamente en la ventana atencional sin perder granularidad semántica.
+                  </div>
+                </div>
+                <div class="breakdown-list-row">
+                  <span class="breakdown-row-badge">$\text{Overlap}$</span>
+                  <div class="breakdown-row-text">
+                    <strong>Solapamiento de Frontera:</strong> Cantidad de texto repetido (10% a 15% del chunk) entre bloques contiguos para evitar cortar oraciones clave y preservar la coherencia contextual.
+                  </div>
+                </div>
+                <div class="breakdown-list-row">
+                  <span class="breakdown-row-badge">$\text{Chunks}_{\text{Total}}$</span>
+                  <div class="breakdown-row-text">
+                    <strong>Número de Vectores Resultantes:</strong> Cantidad de incrustaciones que se generarán y almacenarán en la matriz vectorial de memoria para la búsqueda semántica.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </details>
+        </div>
+
         <!-- Visual Chunking Card -->
         <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.4rem; margin: 1.2rem 0;">
           <h4 style="font-size: 1rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.6rem;">
@@ -934,8 +981,57 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas basándote
           Cada texto se proyecta como un vector denso $\mathbf{v} \in \mathbb{R}^{d}$ (donde $d=384$ para MiniLM). La similitud semántica entre la pregunta del usuario $\mathbf{q}$ y el documento $\mathbf{d}$ se calcula mediante el coseno del ángulo entre ambos vectores:
         </p>
 
-        <div class="formula-callout" style="background:var(--bg-surface-2); border:1px solid var(--border-subtle); border-radius:10px; padding:1.2rem; margin:1rem 0; text-align:center;">
-          $$\text{Similitud Coseno}(\mathbf{q}, \mathbf{d}) = \cos(\theta) = \frac{\mathbf{q} \cdot \mathbf{d}}{\|\mathbf{q}\|_2 \|\mathbf{d}\|_2} = \frac{\sum_{i=1}^{d} q_i d_i}{\sqrt{\sum_{i=1}^{d} q_i^2} \sqrt{\sum_{i=1}^{d} d_i^2}}$$
+        <!-- Fórmula y Desglose de Similitud Coseno -->
+        <div class="formula-card">
+          <div class="formula-math-area">
+            $$\text{Similitud Coseno}(\mathbf{q}, \mathbf{d}) = \cos(\theta) = \frac{\mathbf{q} \cdot \mathbf{d}}{\|\mathbf{q}\|_2 \|\mathbf{d}\|_2} = \frac{\sum_{i=1}^{d} q_i d_i}{\sqrt{\sum_{i=1}^{d} q_i^2} \sqrt{\sum_{i=1}^{d} d_i^2}}$$
+          </div>
+          <details class="formula-breakdown-details" open>
+            <summary class="formula-breakdown-summary">
+              <div class="summary-left">
+                <svg fill="currentColor" height="16" viewBox="0 0 24 24" width="16"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path></svg>
+                <span>Desglose de Términos Matemáticos &amp; Variables Vectoriales</span>
+                <span class="breakdown-count-tag">5 variables</span>
+              </div>
+              <span class="summary-toggle-icon">
+                <svg fill="none" height="14" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" width="14"><path d="M6 9l6 6 6-6"></path></svg>
+              </span>
+            </summary>
+            <div class="formula-breakdown-panel">
+              <div class="breakdown-list-stack">
+                <div class="breakdown-list-row">
+                  <span class="breakdown-row-badge">$\mathbf{q} \in \mathbb{R}^{384}$</span>
+                  <div class="breakdown-row-text">
+                    <strong>Vector de la Consulta (Query Embedding):</strong> Representación vectorial continua generada por el modelo de embeddings (p. ej. <code>all-MiniLM-L6-v2</code>) a partir de la pregunta del usuario.
+                  </div>
+                </div>
+                <div class="breakdown-list-row">
+                  <span class="breakdown-row-badge">$\mathbf{d} \in \mathbb{R}^{384}$</span>
+                  <div class="breakdown-row-text">
+                    <strong>Vector del Documento (Chunk Embedding):</strong> Incrustación semántica densa de cada fragmento documental previamente indexado en la base de datos vectorial.
+                  </div>
+                </div>
+                <div class="breakdown-list-row">
+                  <span class="breakdown-row-badge">$\mathbf{q} \cdot \mathbf{d} = \sum_{i=1}^d q_i d_i$</span>
+                  <div class="breakdown-row-text">
+                    <strong>Producto Punto (Dot Product):</strong> Suma acumulativa de las multiplicaciones elemento por elemento entre ambas representaciones multidimensionales.
+                  </div>
+                </div>
+                <div class="breakdown-list-row">
+                  <span class="breakdown-row-badge">$\|\mathbf{q}\|_2, \|\mathbf{d}\|_2$</span>
+                  <div class="breakdown-row-text">
+                    <strong>Norma Euclidiana $L_2$ (Magnitud):</strong> Longitud espacial de cada vector ($\sqrt{\sum x_i^2}$). Al aplicar vectores normalizados a norma unitaria ($\|\mathbf{x}\|_2 = 1$), el denominador es igual a $1.0$, simplificando la similitud a un producto matricial directo en NumPy o GPU.
+                  </div>
+                </div>
+                <div class="breakdown-list-row">
+                  <span class="breakdown-row-badge">$\cos(\theta) \in [-1, 1]$</span>
+                  <div class="breakdown-row-text">
+                    <strong>Similitud Angular Cosenoidal:</strong> Coeficiente de afinidad semántica. $1.0$ representa coincidencia idéntica de significado, $0.0$ ortogonalidad (sin relación temática) y valores negativos significado opuesto. En nuestro motor exigimos $\ge 0.40$ para inyectar el fragmento en el prompt.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </details>
         </div>
 
         <!-- Semáforo Visual de Umbral Coseno -->
@@ -1804,8 +1900,58 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas basándote
           El consumo de memoria de GPU durante la inferencia y el entrenamiento PEFT se rige por la ecuación formal:
         </p>
 
-        <div class="formula-callout" style="background:var(--bg-surface-2); border:1px solid var(--border-subtle); border-radius:10px; padding:1.2rem; margin:1rem 0; text-align:center;">
-          $$\text{VRAM}_{\text{Total}} = \text{Memoria}_{\text{Pesos}} + \text{Memoria}_{\text{Optimizador (AdamW)}} + \text{Memoria}_{\text{KV-Cache}} + \text{Memoria}_{\text{Activaciones}} + \text{Sobrecarga CUDA}$$
+        <!-- Fórmula y Desglose de VRAM Budget -->
+        <div class="formula-card">
+          <div class="formula-math-area">
+            $$\text{VRAM}_{\text{Total}} = \text{Memoria}_{\text{Pesos}} + \text{Memoria}_{\text{Optimizador}} + \text{Memoria}_{\text{KV-Cache}} + \text{Memoria}_{\text{Activaciones}} + \text{Sobrecarga CUDA}$$
+            $$\text{Memoria}_{\text{Pesos}} = \frac{P \times b}{8 \times 10^9} \text{ GB}$$
+          </div>
+          <details class="formula-breakdown-details" open>
+            <summary class="formula-breakdown-summary">
+              <div class="summary-left">
+                <svg fill="currentColor" height="16" viewBox="0 0 24 24" width="16"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path></svg>
+                <span>Desglose de Componentes de Memoria VRAM en GPU</span>
+                <span class="breakdown-count-tag">5 variables</span>
+              </div>
+              <span class="summary-toggle-icon">
+                <svg fill="none" height="14" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" width="14"><path d="M6 9l6 6 6-6"></path></svg>
+              </span>
+            </summary>
+            <div class="formula-breakdown-panel">
+              <div class="breakdown-list-stack">
+                <div class="breakdown-list-row">
+                  <span class="breakdown-row-badge">$P, b$ (Pesos del Modelo)</span>
+                  <div class="breakdown-row-text">
+                    <strong>Parámetros y Precisión en Bits:</strong> $P$ es el conteo de pesos ($1.2\times 10^9$ para 1B, $3.2\times 10^9$ para 3B, $8.03\times 10^9$ para 8B) y $b$ los bits por peso (16 bits en FP16 $\to 2$ bytes/peso; 4 bits en NF4 $\to 0.5$ bytes/peso).
+                  </div>
+                </div>
+                <div class="breakdown-list-row">
+                  <span class="breakdown-row-badge">$\text{Memoria}_{\text{Optimizador}}$</span>
+                  <div class="breakdown-row-text">
+                    <strong>Optimizador AdamW:</strong> En entrenamiento tradicional ocupa $8P$ bytes (estados de momentum y varianza en FP32). En QLoRA solo se optimiza el adaptador ($r=8$), reduciendo el optimizador a menos de $1.2$ GB.
+                  </div>
+                </div>
+                <div class="breakdown-list-row">
+                  <span class="breakdown-row-badge">$\text{Memoria}_{\text{KV-Cache}}$</span>
+                  <div class="breakdown-row-text">
+                    <strong>Caché de Atención Clave-Valor:</strong> Almacena representaciones intermedias de tokens generados ($2 \times n_{\text{layers}} \times d_{\text{model}} \times L_{\text{ctx}}$), requiriendo de $1.0$ a $2.5$ GB según la longitud del contexto.
+                  </div>
+                </div>
+                <div class="breakdown-list-row">
+                  <span class="breakdown-row-badge">$\text{Memoria}_{\text{Activaciones}}$</span>
+                  <div class="breakdown-row-text">
+                    <strong>Tensiones Intermedias en Forward Pass:</strong> Memoria requerida para almacenar las salidas intermedias de cada capa Transformer antes del cálculo de pérdida ($\sim 0.8 - 1.5$ GB con Gradient Checkpointing).
+                  </div>
+                </div>
+                <div class="breakdown-list-row">
+                  <span class="breakdown-row-badge">$\text{Sobrecarga CUDA}$</span>
+                  <div class="breakdown-row-text">
+                    <strong>Buffer del Runtime NVIDIA:</strong> Espacio de direccionamiento estático reservado por el kernel de CUDA y PyTorch ($\approx 600 - 900$ MB).
+                  </div>
+                </div>
+              </div>
+            </div>
+          </details>
         </div>
 
         <!-- Barra Visual de Distribución de Memoria VRAM -->
@@ -1856,7 +2002,61 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas basándote
 
       <div class="tema-section-block">
         <p class="prose-p">
-          La cuantización reduce la precisión numérica de los pesos del modelo de 16 bits (FP16) a 4 u 8 bits, permitiendo ejecutar modelos de 8B parámetros en hardware modesto:
+          La cuantización reduce la precisión numérica de los pesos del modelo de 16 bits (FP16) a 4 u 8 bits, permitiendo ejecutar modelos de 8B parámetros en hardware modesto. Al entrenar con <strong>LoRA (Low-Rank Adaptation)</strong>, los pesos base congelados se complementan con matrices adaptadoras de bajo rango:
+        </p>
+
+        <!-- Fórmula y Desglose de LoRA -->
+        <div class="formula-card">
+          <div class="formula-math-area">
+            $$W = W_0 + \Delta W = W_0 + \frac{\alpha}{r} (B \cdot A), \quad \text{con } W_0 \in \mathbb{R}^{d \times k}, \; B \in \mathbb{R}^{d \times r}, \; A \in \mathbb{R}^{r \times k}$$
+          </div>
+          <details class="formula-breakdown-details" open>
+            <summary class="formula-breakdown-summary">
+              <div class="summary-left">
+                <svg fill="currentColor" height="16" viewBox="0 0 24 24" width="16"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"></path></svg>
+                <span>Desglose de la Descomposición de Bajo Rango (LoRA / PEFT)</span>
+                <span class="breakdown-count-tag">5 variables</span>
+              </div>
+              <span class="summary-toggle-icon">
+                <svg fill="none" height="14" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" width="14"><path d="M6 9l6 6 6-6"></path></svg>
+              </span>
+            </summary>
+            <div class="formula-breakdown-panel">
+              <div class="breakdown-list-stack">
+                <div class="breakdown-list-row">
+                  <span class="breakdown-row-badge">$W_0 \in \mathbb{R}^{d \times k}$</span>
+                  <div class="breakdown-row-text">
+                    <strong>Matriz de Pesos Base Congelada:</strong> Capas lineales originales de atención (<code>q_proj</code>, <code>v_proj</code>) de Meta Llama, cuantizadas en 4-bit (NF4) y congeladas para impedir olvido catastrófico.
+                  </div>
+                </div>
+                <div class="breakdown-list-row">
+                  <span class="breakdown-row-badge">$r \ll \min(d, k)$</span>
+                  <div class="breakdown-row-text">
+                    <strong>Rango Intrínseco de Adaptación ($r=8$):</strong> Dimensión del cuello de botella. Reduce los millones de parámetros entrenables a menos del 0.2% del modelo total.
+                  </div>
+                </div>
+                <div class="breakdown-list-row">
+                  <span class="breakdown-row-badge">$A \in \mathbb{R}^{r \times k}$</span>
+                  <div class="breakdown-row-text">
+                    <strong>Matriz de Proyección Descendente:</strong> Inicializada con distribución normal gaussiana $\mathcal{N}(0, \sigma^2)$ para comprimir la dimensión de entrada $k$ a $r$.
+                  </div>
+                </div>
+                <div class="breakdown-list-row">
+                  <span class="breakdown-row-badge">$B \in \mathbb{R}^{d \times r}$</span>
+                  <div class="breakdown-row-text">
+                    <strong>Matriz de Proyección Ascendente:</strong> Inicializada en ceros ($B=0$) para garantizar que al inicio del entrenamiento $\Delta W = 0$ y el comportamiento inicial sea idéntico al modelo base.
+                  </div>
+                </div>
+                <div class="breakdown-list-row">
+                  <span class="breakdown-row-badge">$\frac{\alpha}{r}$ (Factor de Escala)</span>
+                  <div class="breakdown-row-text">
+                    <strong>Escalamiento de Hiperparámetro:</strong> Con $\alpha=16$ y $r=8$, la multiplicación por $\text{escala} = 2.0$ estabiliza la magnitud de actualización de los gradientes durante el ajuste fino.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </details>
+        </div>
         </p>
 
         <div class="table-container" style="overflow-x:auto; margin:1.2rem 0;">
