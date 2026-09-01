@@ -148,59 +148,7 @@
       padding: 1.3rem;
     }
 
-    /* Terminal Mac Window */
-    .mac-window {
-      background: #0b1120;
-      border-radius: 10px;
-      overflow: hidden;
-      border: 1px solid #1e293b;
-      margin: 1.2rem 0;
-      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
-    }
-    .mac-header {
-      background: #131d31;
-      padding: 0.5rem 0.9rem;
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      border-bottom: 1px solid #1e293b;
-    }
-    .mac-dot {
-      width: 10px;
-      height: 10px;
-      border-radius: 50%;
-    }
-    .mac-dot.red { background: #ef4444; }
-    .mac-dot.yellow { background: #f59e0b; }
-    .mac-dot.green { background: #10b981; }
-    .mac-title {
-      color: #94a3b8;
-      font-family: var(--font-mono);
-      font-size: 0.75rem;
-      margin-left: 0.5rem;
-      font-weight: 600;
-    }
-    .mac-body {
-      padding: 1.2rem;
-      color: #e2e8f0;
-      font-family: var(--font-mono);
-      font-size: 0.84rem;
-      white-space: pre-wrap;
-      word-break: break-word;
-      overflow-x: auto;
-      line-height: 1.65;
-    }
-    .mac-body pre {
-      margin: 0;
-      padding: 0;
-      background: transparent;
-      border: none;
-      color: inherit;
-      font-family: inherit;
-      font-size: inherit;
-      white-space: pre-wrap;
-      word-break: break-word;
-    }
+
 
     /* Visual VRAM Memory Bar */
     .vram-bar-container {
@@ -762,32 +710,30 @@
 
         <div class="comparison-grid-dual">
           
-          <!-- Prompt Débil Terminal -->
-          <div class="mac-window" style="border-color: rgba(239, 68, 68, 0.4);">
-            <div class="mac-header">
-              <div class="mac-dot red"></div>
-              <div class="mac-dot yellow"></div>
-              <div class="mac-dot green"></div>
-              <span class="mac-title" style="color: #ef4444;">prompt_debil_inseguro.txt (Principiante)</span>
+          <!-- Prompt Débil Code-Box -->
+          <div class="code-box" style="margin: 0; border: 1px solid rgba(239, 68, 68, 0.4);">
+            <div class="code-header" style="background: #251616; border-bottom: 1px solid rgba(239, 68, 68, 0.3);">
+              <span style="color: #ef4444;">prompt_debil_inseguro.txt (Principiante)</span>
+              <div class="code-actions">
+                <button class="btn-copy-code" onclick="copyCode(this)">Copiar</button>
+              </div>
             </div>
-            <div class="mac-body" style="color: #fca5a5;">
-<pre style="margin:0; background:transparent; border:none; color:inherit; font-family:inherit; font-size:inherit; white-space:pre-wrap; word-break:break-word;"><code>Eres el asistente de la tienda TechStore. Responde las preguntas de los clientes usando la información de nuestras políticas. Sé muy amable y ayuda en todo lo que puedas.</code></pre>
-            </div>
+            <pre class="code-content" style="color: #fca5a5; line-height: 1.5; white-space: pre-wrap;"><code>Eres el asistente de la tienda TechStore. Responde las preguntas de los clientes usando la información de nuestras políticas. Sé muy amable y ayuda en todo lo que puedas.</code></pre>
             <div style="padding: 0.8rem 1.1rem; background: rgba(239,68,68,0.08); border-top: 1px solid rgba(239,68,68,0.2); font-size: 0.78rem; color: #ef4444;">
               <b>Fallas Críticas:</b> Sin delimitadores de contexto, sin cláusula de admisión de ignorancia y sin restricción de formato de salida.
             </div>
           </div>
 
-          <!-- Prompt Industrial Terminal -->
-          <div class="mac-window" style="border-color: rgba(16, 185, 129, 0.4);">
-            <div class="mac-header">
-              <div class="mac-dot red"></div>
-              <div class="mac-dot yellow"></div>
-              <div class="mac-dot green"></div>
-              <span class="mac-title" style="color: #10b981;">system_prompt_industrial_llama3.txt (Estándar Meta)</span>
+          <!-- Prompt Industrial Code-Box -->
+          <div class="code-box" style="margin: 0; border: 1px solid rgba(16, 185, 129, 0.4);">
+            <div class="code-header" style="background: #13251c; border-bottom: 1px solid rgba(16, 185, 129, 0.3);">
+              <span style="color: #10b981;">system_prompt_industrial_llama3.txt (Estándar Meta)</span>
+              <div class="code-actions">
+                <button class="btn-copy-code" onclick="copyCode(this)">Copiar</button>
+                <button class="btn-download-code" onclick="downloadCode(this)">Descargar</button>
+              </div>
             </div>
-            <div class="mac-body" style="color: #6ee7b7;">
-<pre style="margin:0; background:transparent; border:none; color:inherit; font-family:inherit; font-size:inherit; white-space:pre-wrap; word-break:break-word;"><code><span class="code-kw">&lt;|begin_of_text|&gt;&lt;|start_header_id|&gt;system&lt;|end_header_id|&gt;</span>
+            <pre class="code-content" style="color: #6ee7b7; line-height: 1.5; white-space: pre-wrap;"><code><span class="code-kw">&lt;|begin_of_text|&gt;&lt;|start_header_id|&gt;system&lt;|end_header_id|&gt;</span>
 Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas basándote EXCLUSIVAMENTE en el fragmento provisto en [CONTEXTO].
 
 ### REGLAS OPERATIVAS ESTRICTAS:
@@ -803,7 +749,6 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas basándote
 <span class="code-kw">&lt;|start_header_id|&gt;user&lt;|end_header_id|&gt;</span>
 <span class="code-var">{pregunta_usuario}</span><span class="code-kw">&lt;|eot_id|&gt;</span>
 <span class="code-kw">&lt;|start_header_id|&gt;assistant&lt;|end_header_id|&gt;</span></code></pre>
-            </div>
             <div style="padding: 0.8rem 1.1rem; background: rgba(16,185,129,0.08); border-top: 1px solid rgba(16,185,129,0.2); font-size: 0.78rem; color: #10b981;">
               <b>Garantía de Calidad:</b> Delimitación semántica limpia, anclaje estricto y cero alucinación garantizada.
             </div>
@@ -827,36 +772,28 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas basándote
           El 80% del éxito de un sistema RAG reside en la <strong>calidad y pulcritud de los datos de entrada</strong>. A continuación se presenta el pipeline formal de extracción y limpieza para ingerir PDFs, páginas web o archivos de texto:
         </p>
 
-        <!-- Mac Window Terminal para data_cleaner.py -->
-        <div class="mac-window">
-          <div class="mac-header">
-            <div class="mac-dot red"></div>
-            <div class="mac-dot yellow"></div>
-            <div class="mac-dot green"></div>
-            <span class="mac-title">data_cleaner.py · Módulo de Sanitización Regex</span>
+        <!-- Code-Box Estándar para data_cleaner.py -->
+        <div class="code-box">
+          <div class="code-header">
+            <span>data_cleaner.py · Módulo de Sanitización Regex</span>
+            <div class="code-actions">
+              <button class="btn-copy-code" onclick="copyCode(this)">Copiar</button>
+              <button class="btn-download-code" onclick="downloadCode(this)">Descargar</button>
+            </div>
           </div>
-          <div class="mac-body">
-<pre style="margin:0; background:transparent; border:none; color:inherit; font-family:inherit; font-size:inherit; white-space:pre-wrap; word-break:break-word;"><code><span class="code-kw">import</span> <span class="code-var">re</span>
+          <pre class="code-content"><code><span class="code-kw">import</span> re
 
-<span class="code-kw">def</span> <span class="code-fn">sanitizar_texto</span>(<span class="code-var">texto_crudo</span>: <span class="code-cls">str</span>) -> <span class="code-cls">str</span>:
+<span class="code-kw">def</span> <span class="code-fn">sanitizar_texto</span>(texto_crudo: <span class="code-cls">str</span>) -> <span class="code-cls">str</span>:
     <span class="code-str">"""Elimina encabezados repetitivos, saltos de linea huerfanos y caracteres no validos."""</span>
     <span class="code-cm"># 1. Normalizar saltos de linea y tabulaciones</span>
-    <span class="code-var">t</span> = <span class="code-var">texto_crudo</span>.<span class="code-fn">replace</span>(<span class="code-str">"\r\n"</span>, <span class="code-str">"\n"</span>).<span class="code-fn">replace</span>(<span class="code-str">"\t"</span>, <span class="code-str">" "</span>)
-    
+    t = texto_crudo.replace(<span class="code-str">"\r\n"</span>, <span class="code-str">"\n"</span>).replace(<span class="code-str">"\t"</span>, <span class="code-str">" "</span>)
     <span class="code-cm"># 2. Eliminar numeros de pagina y cabeceras OCR comunes</span>
-    <span class="code-var">t</span> = <span class="code-var">re</span>.<span class="code-fn">sub</span>(<span class="code-str">r"P[aá]gina\s+\d+\s+de\s+\d+"</span>, <span class="code-str">""</span>, <span class="code-var">t</span>, <span class="code-var">flags</span>=<span class="code-var">re</span>.<span class="code-var">IGNORECASE</span>)
-    
+    t = re.sub(<span class="code-str">r"P[aá]gina\s+\d+\s+de\s+\d+"</span>, <span class="code-str">""</span>, t, flags=re.IGNORECASE)
     <span class="code-cm"># 3. Eliminar multiples espacios en blanco consecutivos</span>
-    <span class="code-var">t</span> = <span class="code-var">re</span>.<span class="code-fn">sub</span>(<span class="code-str">r"[ ]{2,}"</span>, <span class="code-str">" "</span>, <span class="code-var">t</span>)
-    
+    t = re.sub(<span class="code-str">r"[ ]{2,}"</span>, <span class="code-str">" "</span>, t)
     <span class="code-cm"># 4. Eliminar lineas vacias redundantes</span>
-    <span class="code-var">t</span> = <span class="code-var">re</span>.<span class="code-fn">sub</span>(<span class="code-str">r"\n{3,}"</span>, <span class="code-str">"\n\n"</span>, <span class="code-var">t</span>)
-    
-    <span class="code-kw">return</span> <span class="code-var">t</span>.<span class="code-fn">strip</span>()</code></pre>
-          </div>
-          <div style="padding: 0.8rem 1.1rem; background: rgba(8,102,255,0.06); border-top: 1px solid rgba(8,102,255,0.18); font-size: 0.78rem; color: var(--meta-blue);">
-            <b>Buenas Prácticas:</b> Ejecutar siempre <code>sanitizar_texto()</code> antes de dividir el texto en fragmentos con solapamiento.
-          </div>
+    t = re.sub(<span class="code-str">r"\n{3,}"</span>, <span class="code-str">"\n\n"</span>, t)
+    <span class="code-kw">return</span> t.strip()</code></pre>
         </div>
 
         <!-- Grid de 3 Etapas de Ingesta -->
@@ -1362,21 +1299,19 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas basándote
           </div>
           
           <!-- Mac Window Terminal Simulation -->
-          <div class="mac-window" style="margin-bottom:0.9rem;">
-            <div class="mac-header">
-              <div class="mac-dot red"></div>
-              <div class="mac-dot yellow"></div>
-              <div class="mac-dot green"></div>
-              <span class="mac-title">Salida Generada · Inferencia con RAG Fáctico (Llama 3.2 1B)</span>
+          <div class="code-box" style="margin: 0.8rem 0;">
+            <div class="code-header">
+              <span>Salida Generada · Inferencia con RAG Fáctico (Llama 3.2 1B)</span>
+              <div class="code-actions">
+                <button class="btn-copy-code" onclick="copyCode(this)">Copiar</button>
+              </div>
             </div>
-            <div class="mac-body">
-<pre style="margin:0; background:transparent; border:none; color:inherit; font-family:inherit; font-size:inherit; white-space:pre-wrap; word-break:break-word;"><code><span class="code-kw">curl</span> -X POST http://localhost:8000/v1/chat \
+            <pre class="code-content"><code><span class="code-kw">curl</span> -X POST http://localhost:8000/v1/chat \
   -H <span class="code-str">"Content-Type: application/json"</span> \
   -d <span class="code-str">'{"query": "¿Puedo pedir reembolso de un producto después de 20 días?"}'</span>
 
 <span class="code-cm"># Respuesta del Asistente:</span>
 <span class="code-str">"De acuerdo con nuestra Política de Reembolsos (Art. 4), puedes solicitar la devolución total de tu compra dentro de los primeros 30 días naturales presentando tu empaque original y ticket de compra. Los envíos demoran de 2 a 4 días hábiles (Art. 2)."</span></code></pre>
-</div>
           </div>
 
           <div style="font-size:0.82rem; color:var(--text-muted); display:flex; gap:0.5rem; flex-wrap:wrap;">
@@ -1411,21 +1346,19 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas basándote
           </div>
           
           <!-- Mac Window Terminal Simulation -->
-          <div class="mac-window" style="margin-bottom:0.9rem;">
-            <div class="mac-header">
-              <div class="mac-dot red"></div>
-              <div class="mac-dot yellow"></div>
-              <div class="mac-dot green"></div>
-              <span class="mac-title">Salida Generada · Citación de Artículos Regulatorios</span>
+          <div class="code-box" style="margin: 0.8rem 0;">
+            <div class="code-header">
+              <span>Salida Generada · Citación de Artículos Regulatorios</span>
+              <div class="code-actions">
+                <button class="btn-copy-code" onclick="copyCode(this)">Copiar</button>
+              </div>
             </div>
-            <div class="mac-body">
-<pre style="margin:0; background:transparent; border:none; color:inherit; font-family:inherit; font-size:inherit; white-space:pre-wrap; word-break:break-word;"><code><span class="code-kw">curl</span> -X POST http://localhost:8000/v1/chat \
+            <pre class="code-content"><code><span class="code-kw">curl</span> -X POST http://localhost:8000/v1/chat \
   -H <span class="code-str">"Content-Type: application/json"</span> \
   -d <span class="code-str">'{"query": "¿Con cuántos días de anticipación debo pedir mis vacaciones?"}'</span>
 
 <span class="code-cm"># Respuesta del Asistente:</span>
 <span class="code-str">"Conforme al Estatuto Laboral (Art. 24), las solicitudes de vacaciones deberán registrarse en el portal interno con un mínimo de 10 días hábiles de anticipación a la fecha de inicio deseada. Recuerda que no contar con aprobación previa invalida la ausencia."</span></code></pre>
-</div>
           </div>
 
           <div style="font-size:0.82rem; color:var(--text-muted); display:flex; gap:0.5rem; flex-wrap:wrap;">
@@ -1460,22 +1393,20 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas basándote
           </div>
           
           <!-- Mac Window Terminal Simulation -->
-          <div class="mac-window" style="margin-bottom:0.9rem;">
-            <div class="mac-header">
-              <div class="mac-dot red"></div>
-              <div class="mac-dot yellow"></div>
-              <div class="mac-dot green"></div>
-              <span class="mac-title">Salida Tipada JSON Validada · Pydantic Response</span>
+          <div class="code-box" style="margin: 0.8rem 0;">
+            <div class="code-header">
+              <span>Salida Tipada JSON Validada · Pydantic Response</span>
+              <div class="code-actions">
+                <button class="btn-copy-code" onclick="copyCode(this)">Copiar</button>
+              </div>
             </div>
-            <div class="mac-body">
-<pre style="margin:0; background:transparent; border:none; color:inherit; font-family:inherit; font-size:inherit; white-space:pre-wrap; word-break:break-word;"><code><span class="code-kw">{</span>
+            <pre class="code-content"><code><span class="code-kw">{</span>
   <span class="code-str">"categoria"</span>: <span class="code-str">"infraestructura_critica"</span>,
   <span class="code-str">"severidad"</span>: <span class="code-str">"alta"</span>,
   <span class="code-str">"usuario_afectado"</span>: <span class="code-str">"usr_9481"</span>,
   <span class="code-str">"resumen"</span>: <span class="code-str">"Caida de pasarela de pagos con error HTTP 500 en cluster de produccion."</span>,
   <span class="code-str">"accion_sugerida"</span>: <span class="code-str">"notificar_equipo_oncall_inmediato"</span>
 <span class="code-kw">}</span></code></pre>
-</div>
           </div>
 
           <div style="font-size:0.82rem; color:var(--text-muted); display:flex; gap:0.5rem; flex-wrap:wrap;">
@@ -1509,21 +1440,19 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas basándote
           </div>
           
           <!-- Mac Window Terminal Simulation -->
-          <div class="mac-window" style="margin-bottom:0.9rem;">
-            <div class="mac-header">
-              <div class="mac-dot red"></div>
-              <div class="mac-dot yellow"></div>
-              <div class="mac-dot green"></div>
-              <span class="mac-title">Salida Pedagógica Socrática · Interacción Guiada</span>
+          <div class="code-box" style="margin: 0.8rem 0;">
+            <div class="code-header">
+              <span>Salida Pedagógica Socrática · Interacción Guiada</span>
+              <div class="code-actions">
+                <button class="btn-copy-code" onclick="copyCode(this)">Copiar</button>
+              </div>
             </div>
-            <div class="mac-body">
-<pre style="margin:0; background:transparent; border:none; color:inherit; font-family:inherit; font-size:inherit; white-space:pre-wrap; word-break:break-word;"><code><span class="code-kw">curl</span> -X POST http://localhost:8000/v1/chat \
+            <pre class="code-content"><code><span class="code-kw">curl</span> -X POST http://localhost:8000/v1/chat \
   -H <span class="code-str">"Content-Type: application/json"</span> \
   -d <span class="code-str">'{"query": "¿Por qué la atención en Transformers es computacionalmente costosa?"}'</span>
 
 <span class="code-cm"># Respuesta del Tutor Socrático:</span>
 <span class="code-str">"¡Excelente pregunta! Para entender por qué la complejidad es cuadrática O(N²), imagina una reunión con 10 personas donde cada una debe estrechar la mano con todas las demás. ¿Cuántos apretones ocurren en total? Intenta responder para deducir cómo interactúan las matrices Q y K."</span></code></pre>
-</div>
           </div>
 
           <div style="font-size:0.82rem; color:var(--text-muted); display:flex; gap:0.5rem; flex-wrap:wrap;">
@@ -1558,21 +1487,19 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas basándote
           </div>
           
           <!-- Mac Window Terminal Simulation -->
-          <div class="mac-window" style="margin-bottom:0.9rem;">
-            <div class="mac-header">
-              <div class="mac-dot red"></div>
-              <div class="mac-dot yellow"></div>
-              <div class="mac-dot green"></div>
-              <span class="mac-title">Salida con Descargo de Responsabilidad Médica</span>
+          <div class="code-box" style="margin: 0.8rem 0;">
+            <div class="code-header">
+              <span>Salida con Descargo de Responsabilidad Médica</span>
+              <div class="code-actions">
+                <button class="btn-copy-code" onclick="copyCode(this)">Copiar</button>
+              </div>
             </div>
-            <div class="mac-body">
-<pre style="margin:0; background:transparent; border:none; color:inherit; font-family:inherit; font-size:inherit; white-space:pre-wrap; word-break:break-word;"><code><span class="code-kw">curl</span> -X POST http://localhost:8000/v1/chat \
+            <pre class="code-content"><code><span class="code-kw">curl</span> -X POST http://localhost:8000/v1/chat \
   -H <span class="code-str">"Content-Type: application/json"</span> \
   -d <span class="code-str">'{"query": "¿Puedo desayunar antes de mi prueba de química sanguínea?"}'</span>
 
 <span class="code-cm"># Respuesta del Asistente Clínico:</span>
 <span class="code-str">"[AVISO MÉDICO: Este sistema es puramente informativo y no constituye un diagnóstico clínico.] Para la prueba de Química Sanguínea (Guía 3) se requiere ayuno estricto de 8 a 12 horas. Solo se permite el consumo moderado de agua simple."</span></code></pre>
-</div>
           </div>
 
           <div style="font-size:0.82rem; color:var(--text-muted); display:flex; gap:0.5rem; flex-wrap:wrap;">
@@ -1607,21 +1534,19 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas basándote
           </div>
           
           <!-- Mac Window Terminal Simulation -->
-          <div class="mac-window" style="margin-bottom:0.9rem;">
-            <div class="mac-header">
-              <div class="mac-dot red"></div>
-              <div class="mac-dot yellow"></div>
-              <div class="mac-dot green"></div>
-              <span class="mac-title">Salida de Inducción y Bienestar Laboral</span>
+          <div class="code-box" style="margin: 0.8rem 0;">
+            <div class="code-header">
+              <span>Salida de Inducción y Bienestar Laboral</span>
+              <div class="code-actions">
+                <button class="btn-copy-code" onclick="copyCode(this)">Copiar</button>
+              </div>
             </div>
-            <div class="mac-body">
-<pre style="margin:0; background:transparent; border:none; color:inherit; font-family:inherit; font-size:inherit; white-space:pre-wrap; word-break:break-word;"><code><span class="code-kw">curl</span> -X POST http://localhost:8000/v1/chat \
+            <pre class="code-content"><code><span class="code-kw">curl</span> -X POST http://localhost:8000/v1/chat \
   -H <span class="code-str">"Content-Type: application/json"</span> \
   -d <span class="code-str">'{"query": "¿Cuándo se depositan los vales de despensa y cuántos días económicos tengo?"}'</span>
 
 <span class="code-cm"># Respuesta del Asistente RRHH:</span>
 <span class="code-str">"¡Bienvenido al equipo! Los vales de despensa se depositan el día 15 de cada mes a tu tarjeta corporativa (Art. 8). Además, dispones de 3 días económicos con goce de sueldo al año (Art. 14)."</span></code></pre>
-</div>
           </div>
 
           <div style="font-size:0.82rem; color:var(--text-muted); display:flex; gap:0.5rem; flex-wrap:wrap;">
