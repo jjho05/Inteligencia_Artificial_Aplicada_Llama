@@ -4,7 +4,7 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Hackathon: Proyecto Integrador | IA Aplicada con Modelos Abiertos</title>
-  <meta name="description" content="Guía maestra exhaustiva, metodológica y técnica para construir tu Proyecto Integrador de IA con Meta Llama: viabilidad de problemas, chunking, RAG, LoRA, arquitectura modular de 4 capas, hardware VRAM, FastAPI, pruebas de red teaming y evaluación."/>
+  <meta name="description" content="Guía maestra exhaustiva, enciclopédica y técnica para construir tu Proyecto Integrador de IA con Meta Llama: viabilidad de problemas, chunking, RAG, LoRA, arquitectura modular de 4 capas, hardware VRAM, FastAPI, pruebas de red teaming, Docker y evaluación."/>
   
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -171,21 +171,27 @@
         <a class="nav-link-item" href="#como-concebir">1. Alcance</a>
         <a class="nav-link-item" href="#taxonomia-ia">2. Taxonomía</a>
         <a class="nav-link-item" href="#ingenieria-prompts">3. Prompts</a>
-        <a class="nav-link-item" href="#consideraciones-criticas">4. Datos &amp; RAG</a>
-        <a class="nav-link-item" href="#si-vs-no">5. SÍ vs NO</a>
-        <a class="nav-link-item" href="#evaluador-viabilidad">6. Evaluador</a>
-        <a class="nav-link-item" href="#plan-cinco-dias">7. Plan 5 Días</a>
-        <a class="nav-link-item" href="#arquitectura-modular">8. Arquitectura</a>
-        <a class="nav-link-item" href="#glosario-tecnico">9. Glosario</a>
-        <a class="nav-link-item" href="#catalogo-plantillas">10. 4 Plantillas</a>
-        <a class="nav-link-item" href="#simulador-vivo">11. Simulador</a>
-        <a class="nav-link-item" href="#arbol-decisiones">12. Decisión</a>
-        <a class="nav-link-item" href="#hardware-colab">13. Hardware</a>
-        <a class="nav-link-item" href="#bloques-codigo">14. Código</a>
-        <a class="nav-link-item" href="#plan-pruebas">15. Pruebas</a>
-        <a class="nav-link-item" href="#manual-diagnostico">16. Diagnóstico</a>
-        <a class="nav-link-item" href="#checklist-final">17. Checklist</a>
-        <a class="nav-link-item" href="#ruta-modulo2">18. Módulo 2</a>
+        <a class="nav-link-item" href="#ingenieria-datos">4. Ingesta Datos</a>
+        <a class="nav-link-item" href="#estrategias-chunking">5. Chunking</a>
+        <a class="nav-link-item" href="#matematicas-vectoriales">6. Embeddings</a>
+        <a class="nav-link-item" href="#vector-stores">7. Vector Stores</a>
+        <a class="nav-link-item" href="#reranking-pipeline">8. Reranking</a>
+        <a class="nav-link-item" href="#si-vs-no">9. SÍ vs NO</a>
+        <a class="nav-link-item" href="#evaluador-viabilidad">10. Evaluador</a>
+        <a class="nav-link-item" href="#plan-cinco-dias">11. Plan 5 Días</a>
+        <a class="nav-link-item" href="#arquitectura-modular">12. Arquitectura</a>
+        <a class="nav-link-item" href="#glosario-tecnico">13. Glosario</a>
+        <a class="nav-link-item" href="#catalogo-plantillas">14. 6 Plantillas</a>
+        <a class="nav-link-item" href="#simulador-vivo">15. Simulador</a>
+        <a class="nav-link-item" href="#arbol-decisiones">16. Decisión</a>
+        <a class="nav-link-item" href="#hardware-colab">17. Hardware</a>
+        <a class="nav-link-item" href="#cuantizacion-formatos">18. Cuantización</a>
+        <a class="nav-link-item" href="#bloques-codigo">19. Código</a>
+        <a class="nav-link-item" href="#despliegue-docker">20. Docker</a>
+        <a class="nav-link-item" href="#plan-pruebas">21. Red Teaming</a>
+        <a class="nav-link-item" href="#manual-diagnostico">22. Diagnóstico</a>
+        <a class="nav-link-item" href="#checklist-final">23. Checklist</a>
+        <a class="nav-link-item" href="#ruta-modulo2">24. Módulo 2</a>
         <a class="nav-link-item" href="modulo2-tema1.html" style="color: #3fb950; font-weight: 700;">Módulo 2 →</a>
       </nav>
       <div class="header-controls">
@@ -441,72 +447,183 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas de cliente
     </article>
 
     <!-- ======================================================================
-         SECCIÓN 4: CONSIDERACIONES CRÍTICAS DE INGENIERÍA
+         SECCIÓN 4: INGENIERÍA DE DATOS & LIMPIEZA DOCUMENTAL
          ====================================================================== -->
-    <article class="tema-card" id="consideraciones-criticas" style="margin-bottom: 3.5rem;">
+    <article class="tema-card" id="ingenieria-datos" style="margin-bottom: 3.5rem;">
       <div class="tema-header">
-        <div class="tema-eyebrow">Buenas Prácticas · Decisiones Técnicas</div>
-        <h3 class="tema-title">4. Consideraciones Críticas de Ingeniería Antes de Programar</h3>
+        <div class="tema-eyebrow">Data Engineering · Preparación de Textos</div>
+        <h3 class="tema-title">4. Ingeniería de Datos: Recolección, Extracción y Sanitización</h3>
       </div>
 
       <div class="tema-section-block">
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.4rem; margin-top: 1.2rem;">
-          
-          <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.4rem;">
-            <strong style="color: var(--meta-blue); font-size: 1.05rem; display: block; margin-bottom: 0.5rem;">4.1 Calidad sobre Cantidad de Datos</strong>
-            <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 0.8rem;">
-              En RAG, la regla de oro es: <i>"Basura adentro, basura afuera" (GIGO)</i>. 15 párrafos fácticos bien redactados, sin contradicciones y con vocabulario preciso superan ampliamente a un PDF escaneado de 500 páginas lleno de tablas rotas o encabezados basura.
-            </p>
-            <div style="font-size: 0.78rem; color: var(--text-muted); background: var(--bg-subtle); padding: 0.45rem 0.65rem; border-radius: 6px;">
-              Recomendación: Escriba o limpie sus textos directamente en un archivo <code>documentos.txt</code>.
+        <p class="prose-p">
+          El 80% del éxito de un sistema RAG reside en la **calidad de los datos de entrada**. A continuación se presenta el pipeline formal de extracción y limpieza para ingerir PDFs, páginas web o archivos de texto:
+        </p>
+
+        <div class="code-box" style="margin: 1.2rem 0;">
+          <div class="code-header">
+            <span>data_cleaner.py</span>
+            <div class="code-actions">
+              <button class="btn-copy-code" onclick="copyCode(this)">Copiar</button>
+              <button class="btn-download-code" onclick="downloadCode(this)">Descargar</button>
             </div>
           </div>
+          <pre class="code-content"><code><span class="code-kw">import</span> <span class="code-var">re</span>
 
-          <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.4rem;">
-            <strong style="color: #0284c7; font-size: 1.05rem; display: block; margin-bottom: 0.5rem;">4.2 Estrategia de Chunking (Segmentación)</strong>
-            <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 0.8rem;">
-              Dividir documentos largos en fragmentos óptimos evita saturar el contexto del modelo.
-              El tamaño ideal para consultas institucionales es de <b>250 a 450 caracteres ($\sim 60 - 90$ palabras)</b>, con un solapamiento (overlap) del <b>10% al 15%</b> para no cortar oraciones a la mitad.
-            </p>
-            <div style="font-size: 0.78rem; color: var(--text-muted); background: var(--bg-subtle); padding: 0.45rem 0.65rem; border-radius: 6px;">
-              Fórmula: $\text{Chunk Size} = 350\text{ chars}$, $\text{Overlap} = 50\text{ chars}$.
-            </div>
-          </div>
-
-          <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.4rem;">
-            <strong style="color: #a855f7; font-size: 1.05rem; display: block; margin-bottom: 0.5rem;">4.3 Calibración del Umbral Cosenoidal</strong>
-            <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 0.8rem;">
-              Para evitar que el modelo responda basándose en texto irrelevante, fije un umbral de corte mínimo en <b>$\ge 0.40$</b> en el cálculo de similitud coseno:
-              $$\cos(\theta) = \frac{\mathbf{u} \cdot \mathbf{v}}{\|\mathbf{u}\|_2 \|\mathbf{v}\|_2}$$
-              Si ningún fragmento alcanza ese puntaje, el sistema debe admitir ignorancia de inmediato.
-            </p>
-            <div style="font-size: 0.78rem; color: var(--text-muted); background: var(--bg-subtle); padding: 0.45rem 0.65rem; border-radius: 6px;">
-              Impacto: Reduce el 98% de alucinaciones en preguntas fuera de dominio.
-            </div>
-          </div>
-
-          <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.4rem;">
-            <strong style="color: var(--accent-success); font-size: 1.05rem; display: block; margin-bottom: 0.5rem;">4.4 Métricas de Éxito del Proyecto</strong>
-            <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; margin-bottom: 0.8rem;">
-              ¿Cómo sabrá que su solución está lista para producción?
-              Su sistema debe cumplir con: <b>Precisión fáctica $\ge 90\%$</b> en pruebas manuales, <b>Latencia $\le 1.5\text{ s}$</b> en inferencia, y <b>Cero fugas de credenciales</b> en el código.
-            </p>
-            <div style="font-size: 0.78rem; color: var(--text-muted); background: var(--bg-subtle); padding: 0.45rem 0.65rem; border-radius: 6px;">
-              Validación: Verifique estos 3 puntos en la rúbrica de evaluación.
-            </div>
-          </div>
-
+<span class="code-kw">def</span> <span class="code-fn">sanitizar_texto</span>(<span class="code-var">texto_crudo</span>: <span class="code-cls">str</span>) -> <span class="code-cls">str</span>:
+    <span class="code-str">"""Elimina encabezados repetitivos, saltos de linea huerfanos y caracteres no validos."""</span>
+    <span class="code-cm"># 1. Normalizar saltos de linea y tabulaciones</span>
+    <span class="code-var">t</span> = <span class="code-var">texto_crudo</span>.<span class="code-fn">replace</span>(<span class="code-str">"\r\n"</span>, <span class="code-str">"\n"</span>).<span class="code-fn">replace</span>(<span class="code-str">"\t"</span>, <span class="code-str">" "</span>)
+    
+    <span class="code-cm"># 2. Eliminar numeros de pagina y cabeceras OCR comunes (ej. "Pagina 12 de 50")</span>
+    <span class="code-var">t</span> = <span class="code-var">re</span>.<span class="code-fn">sub</span>(<span class="code-str">r"P[aá]gina\s+\d+\s+de\s+\d+"</span>, <span class="code-str">""</span>, <span class="code-var">t</span>, <span class="code-var">flags</span>=<span class="code-var">re</span>.<span class="code-var">IGNORECASE</span>)
+    
+    <span class="code-cm"># 3. Eliminar multiples espacios en blanco consecutivos</span>
+    <span class="code-var">t</span> = <span class="code-var">re</span>.<span class="code-fn">sub</span>(<span class="code-str">r"[ ]{2,}"</span>, <span class="code-str">" "</span>, <span class="code-var">t</span>)
+    
+    <span class="code-cm"># 4. Eliminar lineas vacias redundantes</span>
+    <span class="code-var">t</span> = <span class="code-var">re</span>.<span class="code-fn">sub</span>(<span class="code-str">r"\n{3,}"</span>, <span class="code-str">"\n\n"</span>, <span class="code-var">t</span>)
+    
+    <span class="code-kw">return</span> <span class="code-var">t</span>.<span class="code-fn">strip</span>()</code></pre>
         </div>
       </div>
     </article>
 
     <!-- ======================================================================
-         SECCIÓN 5: LO QUE SÍ SIRVE VS LO QUE NO SIRVE
+         SECCIÓN 5: ESTRATEGIAS AVANZADAS DE CHUNKING
+         ====================================================================== -->
+    <article class="tema-card" id="estrategias-chunking" style="margin-bottom: 3.5rem;">
+      <div class="tema-header">
+        <div class="tema-eyebrow">Segmentación Documental · Prevención de Pérdida de Contexto</div>
+        <h3 class="tema-title">5. Estrategias Avanzadas de Chunking y el Fenómeno "Lost in the Middle"</h3>
+      </div>
+
+      <div class="tema-section-block">
+        <p class="prose-p">
+          Segmentar textos arbitrariamente por número de caracteres puede cortar oraciones clave a la mitad. Para el Hackathon se recomienda implementar **Chunking Recursivo por Separadores Semánticos**:
+        </p>
+
+        <div style="background:var(--bg-surface-2); border:1px solid var(--border-subtle); border-radius:12px; padding:1.4rem; margin:1.2rem 0;">
+          <h4 style="font-size:1rem; font-weight:800; color:var(--text-primary); margin-bottom:0.6rem;">Jerarquía de Separadores Semánticos:</h4>
+          <ol style="margin:0; padding-left:1.2rem; font-size:0.88rem; color:var(--text-secondary); line-height:1.7;">
+            <li><code>\n\n</code> &rarr; División por párrafos completos (preserva unidades temáticas).</li>
+            <li><code>\n</code> &rarr; División por líneas o cláusulas.</li>
+            <li><code>. </code> &rarr; División por oraciones completas.</li>
+            <li><code> </code> &rarr; División por palabras (último recurso).</li>
+          </ol>
+        </div>
+
+        <div style="background:var(--bg-subtle-alt); border-left:4px solid #a855f7; padding:1rem 1.2rem; border-radius:8px; font-size:0.88rem; color:var(--text-primary); line-height:1.6;">
+          <strong>Efecto "Lost in the Middle" (Liu et al., 2023):</strong>
+          Los LLMs procesan con mayor precisión la información ubicada al <b>principio</b> y al <b>final</b> del prompt. Al inyectar $k$ fragmentos recuperados en el System Prompt, ordene los documentos más relevantes con mayor puntaje de confianza en las posiciones extremas.
+        </div>
+      </div>
+    </article>
+
+    <!-- ======================================================================
+         SECCIÓN 6: MATEMÁTICAS DE LA BÚSQUEDA VECTORIAL
+         ====================================================================== -->
+    <article class="tema-card" id="matematicas-vectoriales" style="margin-bottom: 3.5rem;">
+      <div class="tema-header">
+        <div class="tema-eyebrow">Álgebra Lineal Aplicada · Embeddings</div>
+        <h3 class="tema-title">6. Matemáticas de la Búsqueda Vectorial &amp; Similitud Coseno</h3>
+      </div>
+
+      <div class="tema-section-block">
+        <p class="prose-p">
+          Cada texto se proyecta como un vector denso $\mathbf{v} \in \mathbb{R}^{d}$ (donde $d=384$ para MiniLM). La similitud semántica entre la pregunta del usuario $\mathbf{q}$ y el documento $\mathbf{d}$ se calcula mediante el coseno del ángulo entre ambos vectores:
+        </p>
+
+        <div class="formula-callout" style="background:var(--bg-surface-2); border:1px solid var(--border-subtle); border-radius:10px; padding:1.2rem; margin:1rem 0; text-align:center;">
+          $$\text{Similitud Coseno}(\mathbf{q}, \mathbf{d}) = \cos(\theta) = \frac{\mathbf{q} \cdot \mathbf{d}}{\|\mathbf{q}\|_2 \|\mathbf{d}\|_2} = \frac{\sum_{i=1}^{d} q_i d_i}{\sqrt{\sum_{i=1}^{d} q_i^2} \sqrt{\sum_{i=1}^{d} d_i^2}}$$
+        </div>
+
+        <p class="prose-p">
+          Al activar <code>normalize_embeddings=True</code> en <code>SentenceTransformer</code>, los vectores quedan proyectados sobre la hiperesfera unitaria ($\|\mathbf{q}\|_2 = 1, \|\mathbf{d}\|_2 = 1$), lo que reduce la similitud a un simple <b>producto punto matricial ($\mathbf{q} \cdot \mathbf{d}$)</b> ejecutable en microsegundos mediante NumPy o FAISS.
+        </p>
+      </div>
+    </article>
+
+    <!-- ======================================================================
+         SECCIÓN 7: COMPARATIVA DE EMBEDDINGS Y VECTOR STORES
+         ====================================================================== -->
+    <article class="tema-card" id="vector-stores" style="margin-bottom: 3.5rem;">
+      <div class="tema-header">
+        <div class="tema-eyebrow">Infraestructura Vectorial · Motores de Búsqueda</div>
+        <h3 class="tema-title">7. Modelos de Embeddings y Bases de Datos Vectoriales</h3>
+      </div>
+
+      <div class="tema-section-block">
+        <p class="prose-p">
+          Opciones recomendadas para el almacenamiento e indexación de fragmentos vectoriales en Python:
+        </p>
+
+        <div class="table-container" style="overflow-x:auto; margin:1.2rem 0;">
+          <table class="apa-table" style="width:100%; border-collapse:collapse; font-size:0.88rem;">
+            <thead>
+              <tr style="background:var(--bg-surface-2); border-bottom:2px solid var(--border-subtle);">
+                <th style="padding:0.75rem; text-align:left;">Motor / Vector Store</th>
+                <th style="padding:0.75rem; text-align:left;">Tipo de Despliegue</th>
+                <th style="padding:0.75rem; text-align:left;">Capacidad Máxima</th>
+                <th style="padding:0.75rem; text-align:left;">Recomendación Hackathon</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom:1px solid var(--border-subtle);">
+                <td style="padding:0.7rem;"><strong>NumPy (In-Memory)</strong></td>
+                <td style="padding:0.7rem;">En memoria RAM</td>
+                <td style="padding:0.7rem;">&lt; 50,000 vectores</td>
+                <td style="padding:0.7rem; color:var(--accent-success); font-weight:700;">Recomendado MVP (0 dependencias extra).</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--border-subtle);">
+                <td style="padding:0.7rem;"><strong>Meta FAISS (faiss-cpu)</strong></td>
+                <td style="padding:0.7rem;">Index local en disco</td>
+                <td style="padding:0.7rem;">&gt; 10,000,000 vectores</td>
+                <td style="padding:0.7rem; color:var(--meta-blue); font-weight:700;">Excelente para proyectos avanzados.</td>
+              </tr>
+              <tr>
+                <td style="padding:0.7rem;"><strong>ChromaDB / Qdrant</strong></td>
+                <td style="padding:0.7rem;">Base de datos embebida / Servidor</td>
+                <td style="padding:0.7rem;">Millones con metadatos</td>
+                <td style="padding:0.7rem;">Opcional para producción Módulo 2.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </article>
+
+    <!-- ======================================================================
+         SECCIÓN 8: RERANKING Y FUSIÓN DE RANGOS
+         ====================================================================== -->
+    <article class="tema-card" id="reranking-pipeline" style="margin-bottom: 3.5rem;">
+      <div class="tema-header">
+        <div class="tema-eyebrow">Recuperación Avanzada · Filtrado en Dos Etapas</div>
+        <h3 class="tema-title">8. Estrategia de Reranking: Eliminando Falsos Positivos</h3>
+      </div>
+
+      <div class="tema-section-block">
+        <p class="prose-p">
+          En documentos con vocabulario técnico similar, la búsqueda por embeddings bi-encoder puede recuperar fragmentos que comparten palabras clave pero no la semántica exacta. Un **Reranker Cross-Encoder** evalúa la pregunta y el fragmento de forma conjunta para reordenar los resultados con precisión milimétrica:
+        </p>
+
+        <div style="background:var(--bg-surface-2); border:1px solid var(--border-subtle); border-radius:12px; padding:1.2rem; margin:1.2rem 0;">
+          <strong>Pipeline de 2 Etapas:</strong>
+          <p style="font-size:0.88rem; color:var(--text-secondary); line-height:1.6; margin:0.4rem 0 0 0;">
+            1. <i>Recuperación Densa (Etapa 1):</i> Extrae los $top\_k = 10$ fragmentos más cercanos mediante Bi-Encoder ($&lt; 10\text{ ms}$).<br/>
+            2. <i>Reordenamiento Cross-Encoder (Etapa 2):</i> Califica cada par $(Pregunta, Fragmento)$ y selecciona los 2 mejores con confianza máxima.
+          </p>
+        </div>
+      </div>
+    </article>
+
+    <!-- ======================================================================
+         SECCIÓN 9: LO QUE SÍ SIRVE VS LO QUE NO SIRVE
          ====================================================================== -->
     <article class="tema-card" id="si-vs-no" style="margin-bottom: 3.5rem;">
       <div class="tema-header">
         <div class="tema-eyebrow">Estándares de Calidad · Buenas Prácticas vs. Antipatrones</div>
-        <h3 class="tema-title">5. Lo que SÍ Sirve vs. Lo que NO Sirve en un Proyecto de IA</h3>
+        <h3 class="tema-title">9. Lo que SÍ Sirve vs. Lo que NO Sirve en un Proyecto de IA</h3>
       </div>
 
       <div class="tema-section-block">
@@ -556,12 +673,12 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas de cliente
     </article>
 
     <!-- ======================================================================
-         SECCIÓN 6: EVALUADOR INTERACTIVO DE VIABILIDAD DE IDEAS
+         SECCIÓN 10: EVALUADOR INTERACTIVO DE VIABILIDAD DE IDEAS
          ====================================================================== -->
     <article class="tema-card" id="evaluador-viabilidad" style="margin-bottom: 3.5rem; border-left: 5px solid var(--meta-blue);">
       <div class="tema-header">
         <div class="tema-eyebrow">Diagnóstico en Tiempo Real · Asesor de Scoping</div>
-        <h3 class="tema-title">6. Evaluador Interactivo de Viabilidad de Ideas (Project Scoper)</h3>
+        <h3 class="tema-title">10. Evaluador Interactivo de Viabilidad de Ideas (Project Scoper)</h3>
       </div>
 
       <div class="tema-section-block">
@@ -604,12 +721,12 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas de cliente
     </article>
 
     <!-- ======================================================================
-         SECCIÓN 7: PLAN DE ACCIÓN OPERATIVO EN 5 DÍAS
+         SECCIÓN 11: PLAN DE ACCIÓN OPERATIVO EN 5 DÍAS
          ====================================================================== -->
     <article class="tema-card" id="plan-cinco-dias" style="margin-bottom: 3.5rem;">
       <div class="tema-header">
         <div class="tema-eyebrow">Plan de Acción Operativo · Cronograma de Desarrollo</div>
-        <h3 class="tema-title">7. Plan de Construcción Paso a Paso: Tu Proyecto en Cinco Días</h3>
+        <h3 class="tema-title">11. Plan de Construcción Paso a Paso: Tu Proyecto en Cinco Días</h3>
       </div>
 
       <div class="tema-section-block">
@@ -679,12 +796,12 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas de cliente
     </article>
 
     <!-- ======================================================================
-         SECCIÓN 8: FUNDAMENTO ARQUITECTÓNICO & MODELO MENTAL
+         SECCIÓN 12: FUNDAMENTO ARQUITECTÓNICO & MODELO MENTAL
          ====================================================================== -->
     <article class="tema-card" id="arquitectura-modular" style="border-left: 5px solid var(--meta-blue); margin-bottom: 3.5rem;">
       <div class="tema-header">
         <div class="tema-eyebrow">Fundamento de Ingeniería · Principio de Desacoplamiento</div>
-        <h3 class="tema-title">8. Arquitectura Modular de Cuatro Capas: De la Consulta a la Respuesta</h3>
+        <h3 class="tema-title">12. Arquitectura Modular de Cuatro Capas: De la Consulta a la Respuesta</h3>
       </div>
 
       <div class="tema-section-block">
@@ -787,12 +904,12 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas de cliente
     </article>
 
     <!-- ======================================================================
-         SECCIÓN 9: GLOSARIO TÉCNICO EXHAUSTIVO
+         SECCIÓN 13: GLOSARIO TÉCNICO EXHAUSTIVO
          ====================================================================== -->
     <article class="tema-card" id="glosario-tecnico" style="margin-bottom: 3.5rem;">
       <div class="tema-header">
         <div class="tema-eyebrow">Marco Teórico · Glosario de Ingeniería</div>
-        <h3 class="tema-title">9. Glosario Técnico de Inteligencia Artificial Aplicada</h3>
+        <h3 class="tema-title">13. Glosario Técnico de Inteligencia Artificial Aplicada</h3>
       </div>
 
       <div class="tema-section-block">
@@ -862,17 +979,37 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas de cliente
             <div class="glossary-rule">Regla: Usar cuantización en 4-bits (NF4/QLoRA) para modelos mayores a 3 mil millones de parámetros.</div>
           </div>
 
+          <div class="glossary-card">
+            <div>
+              <div class="glossary-term">7. Reranking Cross-Encoder</div>
+              <p class="glossary-desc">
+                Modelo de clasificación binaria que procesa simultáneamente pregunta y documento, asignando un puntaje de relevancia contextual exacto.
+              </p>
+            </div>
+            <div class="glossary-rule">Regla: Aplicar sobre el $top\_10$ de la búsqueda vectorial para extraer los $2$ fragmentos óptimos.</div>
+          </div>
+
+          <div class="glossary-card">
+            <div>
+              <div class="glossary-term">8. Cuantización NF4 (NormalFloat4)</div>
+              <p class="glossary-desc">
+                Tipo de dato de 4 bits optimizado teóricamente para pesos con distribución gaussiana normal, reduciendo la memoria en un 75% sin pérdida de precisión.
+              </p>
+            </div>
+            <div class="glossary-rule">Regla: Habilitar con <code>load_in_4bit=True</code> y <code>bnb_4bit_quant_type="nf4"</code>.</div>
+          </div>
+
         </div>
       </div>
     </article>
 
     <!-- ======================================================================
-         SECCIÓN 10: CATÁLOGO DE 4 PLANTILLAS DE PROYECTOS
+         SECCIÓN 14: CATÁLOGO DE 6 PLANTILLAS DE PROYECTOS
          ====================================================================== -->
     <article class="tema-card" id="catalogo-plantillas" style="margin-bottom: 3.5rem;">
       <div class="tema-header">
         <div class="tema-eyebrow">Catálogo de Proyectos · Entregables Listos</div>
-        <h3 class="tema-title">10. Cuatro Plantillas de Proyectos Listas para Adaptar</h3>
+        <h3 class="tema-title">14. Seis Plantillas de Proyectos Listas para Adaptar</h3>
       </div>
 
       <div class="tema-section-block">
@@ -973,16 +1110,64 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas de cliente
           </div>
         </div>
 
+        <!-- PLANTILLA 5 (NUEVA) -->
+        <div class="template-card-highlight" id="plantilla-e" style="border-left: 5px solid #ef4444;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.6rem;">
+            <span style="font-size:0.78rem; font-weight:800; text-transform:uppercase; color:#ef4444; background:rgba(239,68,68,0.12); padding:0.25rem 0.6rem; border-radius:6px;">PLANTILLA 5 · SALUD &amp; PROTOCOLOS CLÍNICOS</span>
+            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">Complejidad: Alta &bull; Restricciones Médicas</span>
+          </div>
+          <h4 style="font-family:var(--font-head); font-size:1.2rem; font-weight:800; color:var(--text-primary); margin-bottom:0.5rem;">
+            Asistente de Protocolos Clínicos Institucionales y Triage Informativo
+          </h4>
+          <p style="font-size:0.9rem; line-height:1.6; color:var(--text-secondary); margin-bottom:0.9rem;">
+            <b>Objetivo del Proyecto:</b> Orientar al personal administrativo o pacientes sobre requisitos de estudios de laboratorio, preparación para cirugías y guías de triage, incorporando siempre la cláusula de advertencia de que la IA no emite diagnósticos médicos vinculantes.
+          </p>
+          <div style="background:var(--bg-subtle); border-radius:8px; padding:1rem 1.2rem; font-size:0.86rem; color:var(--text-primary); margin-bottom:0.9rem;">
+            <strong>Dataset de Documentos a Ingresar en `rag_engine.py`:</strong>
+            <ul style="margin:0.5rem 0 0 0; padding-left:1.2rem; color:var(--text-secondary); line-height:1.6;">
+              <li>"Protocolo de Química Sanguínea (Guía 3): Requiere ayuno estricto de 8 a 12 horas previas a la toma de muestra. Se permite ingesta moderada de agua simple."</li>
+              <li>"Triage Respiratorio (Nivel 2): Pacientes con saturación &lt; 90% o disnea súbita deben ingresar de inmediato al área de choque sin trámite previo."</li>
+            </ul>
+          </div>
+          <div style="font-size:0.82rem; color:var(--text-muted);">
+            <strong>Archivos de Código Utilizados:</strong> <code>rag_engine.py</code> + Directivas de Seguridad Médica + <code>api_server.py</code>.
+          </div>
+        </div>
+
+        <!-- PLANTILLA 6 (NUEVA) -->
+        <div class="template-card-highlight" id="plantilla-f" style="border-left: 5px solid #f59e0b;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.6rem;">
+            <span style="font-size:0.78rem; font-weight:800; text-transform:uppercase; color:#f59e0b; background:rgba(245,158,11,0.12); padding:0.25rem 0.6rem; border-radius:6px;">PLANTILLA 6 · RECURSOS HUMANOS &amp; ONBOARDING</span>
+            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">Complejidad: Baja &bull; Corporativo</span>
+          </div>
+          <h4 style="font-family:var(--font-head); font-size:1.2rem; font-weight:800; color:var(--text-primary); margin-bottom:0.5rem;">
+            Asistente de Inducción Corporativa, Prestaciones y Cultura de Empresa
+          </h4>
+          <p style="font-size:0.9rem; line-height:1.6; color:var(--text-secondary); margin-bottom:0.9rem;">
+            <b>Objetivo del Proyecto:</b> Acompañar a nuevos empleados en su proceso de bienvenida, respondiendo dudas sobre póliza de gastos médicos, solicitud de equipo de cómputo, días económicos y código de ética.
+          </p>
+          <div style="background:var(--bg-subtle); border-radius:8px; padding:1rem 1.2rem; font-size:0.86rem; color:var(--text-primary); margin-bottom:0.9rem;">
+            <strong>Dataset de Documentos a Ingresar en `rag_engine.py`:</strong>
+            <ul style="margin:0.5rem 0 0 0; padding-left:1.2rem; color:var(--text-secondary); line-height:1.6;">
+              <li>"Seguro de Gastos Médicos Mayores (Sección 5): La cobertura inicia desde el primer día laboral. La red de hospitales y credencial digital se consultan en el portal de nómina."</li>
+              <li>"Vales de Despensa (Art. 8): Se abonan el día 15 de cada mes a la tarjeta electrónica empresarial proporcionada durante la semana de inducción."</li>
+            </ul>
+          </div>
+          <div style="font-size:0.82rem; color:var(--text-muted);">
+            <strong>Archivos de Código Utilizados:</strong> <code>rag_engine.py</code> + <code>router.py</code> + <code>api_server.py</code>.
+          </div>
+        </div>
+
       </div>
     </article>
 
     <!-- ======================================================================
-         SECCIÓN 11: SIMULADOR VISUAL E INTERACTIVO EN VIVO
+         SECCIÓN 15: SIMULADOR VISUAL E INTERACTIVO EN VIVO
          ====================================================================== -->
     <article class="tema-card" id="simulador-vivo" style="margin-bottom: 3.5rem; border-left: 5px solid var(--meta-blue);">
       <div class="tema-header">
         <div class="tema-eyebrow">Simulación de Inferencia · Pipeline Interactivo</div>
-        <h3 class="tema-title">11. Simulador en Vivo: Ejecución del Flujo de Procesamiento</h3>
+        <h3 class="tema-title">15. Simulador en Vivo: Ejecución del Flujo de Procesamiento</h3>
       </div>
 
       <div class="tema-section-block">
@@ -1015,12 +1200,12 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas de cliente
     </article>
 
     <!-- ======================================================================
-         SECCIÓN 12: ÁRBOL DE DECISIONES ARQUITECTÓNICAS
+         SECCIÓN 16: ÁRBOL DE DECISIONES ARQUITECTÓNICAS
          ====================================================================== -->
     <article class="tema-card" id="arbol-decisiones" style="margin-bottom: 3.5rem;">
       <div class="tema-header">
         <div class="tema-eyebrow">Diseño Técnico · Matriz de Decisión</div>
-        <h3 class="tema-title">12. Árbol de Decisiones: Configuración Óptima según tu Caso de Uso</h3>
+        <h3 class="tema-title">16. Árbol de Decisiones: Configuración Óptima según tu Caso de Uso</h3>
       </div>
 
       <div class="tema-section-block">
@@ -1082,12 +1267,12 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas de cliente
     </article>
 
     <!-- ======================================================================
-         SECCIÓN 13: HARDWARE, VRAM & GOOGLE COLAB
+         SECCIÓN 17: HARDWARE, VRAM & GOOGLE COLAB
          ====================================================================== -->
     <article class="tema-card" id="hardware-colab" style="margin-bottom: 3.5rem;">
       <div class="tema-header">
         <div class="tema-eyebrow">Dimensionamiento de Recursos · Planificación VRAM</div>
-        <h3 class="tema-title">13. Presupuesto de Memoria VRAM y Factibilidad en Google Colab</h3>
+        <h3 class="tema-title">17. Presupuesto de Memoria VRAM y Factibilidad en Google Colab</h3>
       </div>
 
       <div class="tema-section-block">
@@ -1124,12 +1309,67 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas de cliente
     </article>
 
     <!-- ======================================================================
-         SECCIÓN 14: BLOQUES DE CÓDIGO LEGO COMENTADOS
+         SECCIÓN 18: CUANTIZACIÓN DE MODELOS Y FORMATOS
+         ====================================================================== -->
+    <article class="tema-card" id="cuantizacion-formatos" style="margin-bottom: 3.5rem;">
+      <div class="tema-header">
+        <div class="tema-eyebrow">Compresión de Redes Neuronales · Formatos Abiertos</div>
+        <h3 class="tema-title">18. Cuantización de Modelos: FP16, INT8, NF4, GGUF y AWQ</h3>
+      </div>
+
+      <div class="tema-section-block">
+        <p class="prose-p">
+          La cuantización reduce la precisión numérica de los pesos del modelo de 16 bits (FP16) a 4 u 8 bits, permitiendo ejecutar modelos de 8B parámetros en hardware modesto:
+        </p>
+
+        <div class="table-container" style="overflow-x:auto; margin:1.2rem 0;">
+          <table class="apa-table" style="width:100%; border-collapse:collapse; font-size:0.88rem;">
+            <thead>
+              <tr style="background:var(--bg-surface-2); border-bottom:2px solid var(--border-subtle);">
+                <th style="padding:0.75rem; text-align:left;">Formato</th>
+                <th style="padding:0.75rem; text-align:left;">Bits por Peso</th>
+                <th style="padding:0.75rem; text-align:left;">VRAM para Llama-3-8B</th>
+                <th style="padding:0.75rem; text-align:left;">Entorno Óptimo</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom:1px solid var(--border-subtle);">
+                <td style="padding:0.7rem;"><strong>FP16 / BF16</strong></td>
+                <td style="padding:0.7rem;">16 bits</td>
+                <td style="padding:0.7rem;">~16.0 GB</td>
+                <td style="padding:0.7rem;">GPU A100 / H100 (Producción Cloud)</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--border-subtle);">
+                <td style="padding:0.7rem;"><strong>INT8 (LLM.int8())</strong></td>
+                <td style="padding:0.7rem;">8 bits</td>
+                <td style="padding:0.7rem;">~8.5 GB</td>
+                <td style="padding:0.7rem;">GPU RTX 3080 / 4080 (Local)</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--border-subtle);">
+                <td style="padding:0.7rem;"><strong>NF4 (QLoRA 4-bit)</strong></td>
+                <td style="padding:0.7rem;">4 bits</td>
+                <td style="padding:0.7rem; color:var(--accent-success); font-weight:700;">~5.5 GB</td>
+                <td style="padding:0.7rem; color:var(--accent-success); font-weight:700;">GPU Tesla T4 (Google Colab Gratuito)</td>
+              </tr>
+              <tr>
+                <td style="padding:0.7rem;"><strong>GGUF (Q4_K_M)</strong></td>
+                <td style="padding:0.7rem;">4 bits</td>
+                <td style="padding:0.7rem;">~5.0 GB (RAM)</td>
+                <td style="padding:0.7rem;">Inferencia CPU / Apple Silicon (llama.cpp)</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </article>
+
+    <!-- ======================================================================
+         SECCIÓN 19: BLOQUES DE CÓDIGO LEGO COMENTADOS
          ====================================================================== -->
     <article class="tema-card" id="bloques-codigo" style="margin-bottom: 3.5rem;">
       <div class="tema-header">
         <div class="tema-eyebrow">Implementación Técnica · Bloques Reutilizables</div>
-        <h3 class="tema-title">14. Código Modular Comentado para el Starter Kit</h3>
+        <h3 class="tema-title">19. Código Modular Comentado para el Starter Kit</h3>
       </div>
 
       <div class="tema-section-block">
@@ -1282,12 +1522,53 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas de cliente
     </article>
 
     <!-- ======================================================================
-         SECCIÓN 15: PLAN DE PRUEBAS DE CALIDAD & RED TEAMING
+         SECCIÓN 20: DESPLIEGUE EN PRODUCCIÓN CON DOCKER
+         ====================================================================== -->
+    <article class="tema-card" id="despliegue-docker" style="margin-bottom: 3.5rem;">
+      <div class="tema-header">
+        <div class="tema-eyebrow">DevOps &amp; Contenedores · Grado Industrial</div>
+        <h3 class="tema-title">20. Despliegue en Producción: Contenedores Docker y Uvicorn</h3>
+      </div>
+
+      <div class="tema-section-block">
+        <p class="prose-p">
+          Para llevar tu solución a servidores en la nube (AWS EC2, Google Cloud Run o VPS local), utiliza este `Dockerfile` optimizado:
+        </p>
+
+        <div class="code-box">
+          <div class="code-header">
+            <span>Dockerfile</span>
+            <div class="code-actions">
+              <button class="btn-copy-code" onclick="copyCode(this)">Copiar</button>
+              <button class="btn-download-code" onclick="downloadCode(this)">Descargar</button>
+            </div>
+          </div>
+          <pre class="code-content"><code>FROM python:3.11-slim
+
+WORKDIR /app
+
+# Instalar dependencias del sistema
+RUN apt-get update && apt-get install -y --no-install-recommends build-essential && rm -rf /var/lib/apt/lists/*
+
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . .
+
+EXPOSE 8000
+
+CMD ["uvicorn", "api_server:app", "--host", "0.0.0.0", "--port", "8000", "--workers", "2"]</code></pre>
+        </div>
+      </div>
+    </article>
+
+    <!-- ======================================================================
+         SECCIÓN 21: PLAN DE PRUEBAS DE CALIDAD & RED TEAMING
          ====================================================================== -->
     <article class="tema-card" id="plan-pruebas" style="margin-bottom: 3.5rem;">
       <div class="tema-header">
         <div class="tema-eyebrow">Aseguramiento de Calidad · Red Teaming</div>
-        <h3 class="tema-title">15. Matriz de Pruebas de Calidad &amp; Robustez del Sistema</h3>
+        <h3 class="tema-title">21. Matriz de Pruebas de Calidad, Benchmarking &amp; Red Teaming</h3>
       </div>
 
       <div class="tema-section-block">
@@ -1343,12 +1624,12 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas de cliente
     </article>
 
     <!-- ======================================================================
-         SECCIÓN 16: MANUAL DE DIAGNÓSTICO & PRIMEROS AUXILIOS TÉCNICOS
+         SECCIÓN 22: MANUAL DE DIAGNÓSTICO & PRIMEROS AUXILIOS TÉCNICOS
          ====================================================================== -->
     <article class="tema-card" id="manual-diagnostico" style="margin-bottom: 3.5rem;">
       <div class="tema-header">
         <div class="tema-eyebrow">Diagnóstico y Mitigación · Primeros Auxilios</div>
-        <h3 class="tema-title">16. Resolución Técnica de Bloqueos y Errores Frecuentes</h3>
+        <h3 class="tema-title">22. Resolución Técnica de Bloqueos y Errores Frecuentes</h3>
       </div>
 
       <div class="tema-section-block">
@@ -1435,12 +1716,12 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas de cliente
     </article>
 
     <!-- ======================================================================
-         SECCIÓN 17: RÚBRICA OFICIAL & CHECKLIST INTERACTIVO
+         SECCIÓN 23: RÚBRICA OFICIAL & CHECKLIST INTERACTIVO
          ====================================================================== -->
     <article class="tema-card" id="checklist-final" style="margin-bottom: 3.5rem; border-left: 5px solid var(--accent-success);">
       <div class="tema-header">
         <div class="tema-eyebrow">Aseguramiento de Calidad · Rúbrica Oficial (100 Puntos)</div>
-        <h3 class="tema-title">17. Auditoría Pre-Entrega y Checklist de Calidad</h3>
+        <h3 class="tema-title">23. Auditoría Pre-Entrega y Checklist de Calidad</h3>
       </div>
 
       <div class="tema-section-block">
@@ -1499,12 +1780,12 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas de cliente
     </article>
 
     <!-- ======================================================================
-         SECCIÓN 18: RUTA HACIA EL MÓDULO 2
+         SECCIÓN 24: RUTA HACIA EL MÓDULO 2
          ====================================================================== -->
     <article class="tema-card" id="ruta-modulo2" style="margin-bottom: 3.5rem; border-left: 5px solid #3fb950;">
       <div class="tema-header">
         <div class="tema-eyebrow">Próximos Pasos · Conexión con Canales de Mensajería</div>
-        <h3 class="tema-title">18. Hoja de Ruta: De tu Servidor FastAPI al Módulo 2 (WhatsApp Cloud API)</h3>
+        <h3 class="tema-title">24. Hoja de Ruta: De tu Servidor FastAPI al Módulo 2 (WhatsApp Cloud API)</h3>
       </div>
 
       <div class="tema-section-block">
