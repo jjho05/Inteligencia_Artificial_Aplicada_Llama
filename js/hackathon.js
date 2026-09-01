@@ -1,5 +1,6 @@
 /**
  * Meta AI - Hackathon Interactive Mentorship & Builder Workbench Engine
+ * Strict Professional Edition: Clean typography, vector icons, no emojis.
  * Features:
  * 1. Live Interactive Pipeline Simulator (Simulador Visual de Flujo de IA)
  * 2. Friendly Architectural Decision Wizard (Árbol de Decisiones Intuitivo)
@@ -22,10 +23,10 @@
 
     // Base de conocimiento precargada de ejemplo para el simulador
     var demoKnowledge = [
-      { topic: "devolucion", text: "Política de Devoluciones (Art. 4): Tienes hasta 30 días naturales con empaque original y ticket de compra para solicitar reembolso total.", score: 0.89 },
-      { topic: "envio", text: "Tiempos de Entrega (Art. 2): Los envíos estándar tardan entre 2 y 4 días hábiles. El envío prioritario llega en 24 horas.", score: 0.92 },
-      { topic: "garantia", text: "Garantía de Fábrica (Art. 7): Todos los productos electrónicos cuentan con 12 meses de garantía directa ante defectos técnicos.", score: 0.86 },
-      { topic: "soporte", text: "Atención al Cliente (Art. 1): Nuestro canal oficial de WhatsApp y correo atiende de lunes a domingo de 08:00 a 20:00 hrs.", score: 0.81 }
+      { topic: "devolucion", text: "Política de Devoluciones (Art. 4): El cliente dispone de hasta 30 días naturales con empaque original y comprobante de compra para solicitar reembolso total.", score: 0.89 },
+      { topic: "envio", text: "Tiempos de Entrega (Art. 2): Los envíos estándar demoran entre 2 y 4 días hábiles. El servicio prioritario se entrega en 24 horas hábiles.", score: 0.92 },
+      { topic: "garantia", text: "Garantía de Fábrica (Art. 7): Todos los productos electrónicos cuentan con 12 meses de garantía directa ante defectos de manufactura.", score: 0.86 },
+      { topic: "soporte", text: "Atención al Cliente (Art. 1): Los canales oficiales de soporte atienden de lunes a domingo de 08:00 a 20:00 horas.", score: 0.81 }
     ];
 
     sampleBtns.forEach(function(btn){
@@ -45,7 +46,7 @@
     function runSimulation() {
       var query = queryInput ? queryInput.value.trim() : "";
       if (!query) {
-        query = "¿Puedo devolver un producto si ya abrí la caja?";
+        query = "¿Puedo devolver un producto si ya abrí la caja original?";
         if (queryInput) queryInput.value = query;
       }
 
@@ -54,29 +55,29 @@
       }
 
       runBtn.disabled = true;
-      runBtn.innerHTML = "<span>⏳ Simulando proceso paso a paso...</span>";
+      runBtn.innerHTML = "<span>Procesando flujo de inferencia...</span>";
       if (finalResultBox) finalResultBox.style.display = "none";
 
       var qLower = query.toLowerCase();
       var detectedRoute = "FAST_LLM";
-      var routeExplanation = "Consulta general o saludo común. Se procesa directamente con el modelo de lenguaje ligero en menos de 0.5 segundos.";
+      var routeExplanation = "Consulta conversacional estándar o saludo. Se procesa directamente mediante inferencia rápida con latencia inferior a 0.5 segundos.";
       var matchedDoc = null;
 
       if (qLower.includes("devol") || qLower.includes("reembols") || qLower.includes("ticket") || qLower.includes("cambi")) {
         detectedRoute = "RAG_PIPELINE";
-        routeExplanation = "La pregunta requiere consultar las políticas oficiales de devolución de la empresa.";
+        routeExplanation = "La consulta requiere verificar las políticas oficiales de devolución y reembolso de la organización.";
         matchedDoc = demoKnowledge[0];
       } else if (qLower.includes("envi") || qLower.includes("entreg") || qLower.includes("tarda") || qLower.includes("llega")) {
         detectedRoute = "RAG_PIPELINE";
-        routeExplanation = "La pregunta consulta sobre tiempos y costos de paquetería y logística.";
+        routeExplanation = "La consulta solicita información logística sobre tiempos de entrega y coberturas de envío.";
         matchedDoc = demoKnowledge[1];
       } else if (qLower.includes("garant") || qLower.includes("fall") || qLower.includes("defect") || qLower.includes("repar")) {
         detectedRoute = "RAG_PIPELINE";
-        routeExplanation = "La pregunta solicita información de garantías técnicas de productos.";
+        routeExplanation = "La consulta requiere cotejar las cláusulas de garantía técnica de hardware.";
         matchedDoc = demoKnowledge[2];
       } else if (qLower.includes("json") || qLower.includes("formato") || qLower.includes("esquema") || qLower.includes("ficha") || qLower.includes("codigo")) {
         detectedRoute = "LORA_ADAPTER";
-        routeExplanation = "La pregunta exige una salida estrictamente estructurada en formato JSON para conectarse a otra aplicación.";
+        routeExplanation = "La consulta exige una respuesta con validación estricta de estructura JSON tipada para interoperabilidad.";
       } else {
         matchedDoc = demoKnowledge[3];
       }
@@ -86,9 +87,9 @@
         <div class="sim-step-card sim-step-active" id="step-1">
           <div class="sim-step-num">1</div>
           <div class="sim-step-body">
-            <h5>Paso 1: El Mesero Inteligente (Router)</h5>
-            <p>Analizando la intención de la frase: <em>"${query}"</em></p>
-            <div class="sim-step-badge">Ruta detectada: <strong>${detectedRoute}</strong></div>
+            <h5>Paso 1: Enrutador Inteligente de Consultas (router.py)</h5>
+            <p>Evaluación semántica de la entrada: <em>"${query}"</em></p>
+            <div class="sim-step-badge">Ruta Asignada: <strong>${detectedRoute}</strong></div>
             <p class="sim-step-sub">${routeExplanation}</p>
           </div>
         </div>
@@ -101,13 +102,13 @@
         if (detectedRoute === "RAG_PIPELINE" && matchedDoc) {
           step2Content = `
             <div class="sim-step-card sim-step-active" id="step-2">
-              <div class="sim-step-num" style="background:#0284c7;">2</div>
+              <div class="sim-step-num" style="background: var(--accent-info, #0284c7);">2</div>
               <div class="sim-step-body">
-                <h5>Paso 2: Consulta al Recetario (RAG &amp; Vectores)</h5>
-                <p>Buscando en los documentos de la empresa mediante <strong>Similitud Coseno</strong>:</p>
+                <h5>Paso 2: Búsqueda en Base Vectorial (rag_engine.py)</h5>
+                <p>Cálculo de similitud coseno sobre incrustaciones densas normalizadas:</p>
                 <div class="sim-retrieved-quote">
                   "<strong>${matchedDoc.text}</strong>"<br>
-                  <span style="color:#0284c7; font-size:0.75rem; font-weight:700;">Similitud calculada: ${(matchedDoc.score * 100).toFixed(0)}% (Superior al umbral de 40%)</span>
+                  <span style="color: var(--accent-info, #0284c7); font-size: 0.75rem; font-weight: 700;">Similitud Coseno: ${(matchedDoc.score * 100).toFixed(1)}% (Superior al umbral mínimo de 40%)</span>
                 </div>
               </div>
             </div>
@@ -115,20 +116,20 @@
         } else if (detectedRoute === "LORA_ADAPTER") {
           step2Content = `
             <div class="sim-step-card sim-step-active" id="step-2">
-              <div class="sim-step-num" style="background:#a855f7;">2</div>
+              <div class="sim-step-num" style="background: #a855f7;">2</div>
               <div class="sim-step-body">
-                <h5>Paso 2: Activación del Adaptador de Estilo (LoRA)</h5>
-                <p>Cargando el esquema de formato para forzar que el modelo responda en <strong>JSON estricto</strong> sin inventar texto adicional.</p>
+                <h5>Paso 2: Activación del Adaptador LoRA (lora_adapter.py)</h5>
+                <p>Carga de matrices de bajo rango entrenadas para forzar la sintaxis JSON Schema sin texto conversacional no estructurado.</p>
               </div>
             </div>
           `;
         } else {
           step2Content = `
             <div class="sim-step-card sim-step-active" id="step-2">
-              <div class="sim-step-num" style="background:#10b981;">2</div>
+              <div class="sim-step-num" style="background: var(--accent-success, #10b981);">2</div>
               <div class="sim-step-body">
-                <h5>Paso 2: Ruta Rápida Directa (Zero Latency)</h5>
-                <p>No se requiere buscar en documentos externos. La consulta se resuelve con la inteligencia conversacional base del modelo.</p>
+                <h5>Paso 2: Inferencia Rápida Directa (Zero Retrieval Overhead)</h5>
+                <p>No se requiere consulta documental externa. La solicitud se despacha al modelo base optimizado para baja latencia.</p>
               </div>
             </div>
           `;
@@ -140,10 +141,10 @@
           
           stepContainer.innerHTML += `
             <div class="sim-step-card sim-step-active" id="step-3">
-              <div class="sim-step-num" style="background:#10b981;">3</div>
+              <div class="sim-step-num" style="background: var(--accent-success, #10b981);">3</div>
               <div class="sim-step-body">
-                <h5>Paso 3: Redacción Empática con Meta Llama 3</h5>
-                <p>El modelo recibe la pregunta junto con la evidencia exacta y redacta una respuesta clara, amable y 100% verídica.</p>
+                <h5>Paso 3: Síntesis Fáctica Condicionada (Meta Llama 3)</h5>
+                <p>El modelo de lenguaje recibe el prompt enriquecido con la evidencia recuperada y redacta la respuesta respetando las restricciones de veracidad.</p>
               </div>
             </div>
           `;
@@ -153,31 +154,31 @@
 
             var finalAnswer = "";
             if (detectedRoute === "RAG_PIPELINE" && matchedDoc) {
-              finalAnswer = `¡Hola! Con mucho gusto te oriento: según nuestras políticas oficiales, ${matchedDoc.text.toLowerCase()} Si tienes tu comprobante a la mano, con gusto te ayudamos con el proceso de inmediato.`;
+              finalAnswer = `De acuerdo con la documentación institucional oficial: ${matchedDoc.text.toLowerCase()} Para iniciar el proceso, presente su comprobante en el canal correspondiente.`;
             } else if (detectedRoute === "LORA_ADAPTER") {
               finalAnswer = `{\n  "estado": "exitoso",\n  "tipo_solicitud": "soporte_tecnico",\n  "prioridad": "media",\n  "mensaje_usuario": "${query}",\n  "accion_sugerida": "crear_ticket_atencion"\n}`;
             } else {
-              finalAnswer = `¡Hola! Con mucho gusto te ayudo. Soy tu asistente inteligente para este proyecto. ¿En qué te puedo orientar hoy?`;
+              finalAnswer = `Bienvenido al sistema de asistencia técnica de IA. ¿En qué temática o procedimiento puedo orientarle el día de hoy?`;
             }
 
             if (finalResultBox) {
               finalResultBox.style.display = "block";
               finalResultBox.innerHTML = `
-                <div style="background:var(--bg-surface); border:1px solid var(--meta-blue-border); border-left:5px solid var(--accent-success); border-radius:12px; padding:1.4rem; animation:mainFadeIn 0.3s ease;">
-                  <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.6rem;">
-                    <span style="font-size:0.75rem; font-weight:800; text-transform:uppercase; color:var(--accent-success); background:rgba(5,150,105,0.12); padding:0.25rem 0.6rem; border-radius:6px;">
-                      ✓ Respuesta Generada con Éxito
+                <div style="background: var(--bg-surface); border: 1px solid var(--meta-blue-border); border-left: 5px solid var(--accent-success); border-radius: 12px; padding: 1.4rem; animation: mainFadeIn 0.3s ease;">
+                  <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.6rem;">
+                    <span style="font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: var(--accent-success); background: rgba(5, 150, 105, 0.12); padding: 0.25rem 0.6rem; border-radius: 6px;">
+                      Respuesta Generada y Auditada
                     </span>
-                    <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">Latencia estimada: ~320 ms</span>
+                    <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);">Latencia total: ~310 ms</span>
                   </div>
-                  <h5 style="font-family:var(--font-head); font-size:1.05rem; font-weight:800; color:var(--text-primary); margin-bottom:0.6rem;">
-                    Resultado que verá tu usuario final:
+                  <h5 style="font-family: var(--font-head); font-size: 1.05rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.6rem;">
+                    Salida Entregada al Usuario Final:
                   </h5>
                   ${detectedRoute === "LORA_ADAPTER" ? 
-                    `<pre style="background:var(--bg-subtle-alt); padding:0.9rem; border-radius:8px; font-family:var(--font-mono); font-size:0.85rem; color:var(--text-primary); overflow-x:auto;"><code>${finalAnswer}</code></pre>` :
-                    `<p style="font-size:0.95rem; line-height:1.65; color:var(--text-primary); margin:0;">${finalAnswer}</p>`
+                    `<pre style="background: var(--bg-subtle-alt); padding: 0.9rem; border-radius: 8px; font-family: var(--font-mono); font-size: 0.85rem; color: var(--text-primary); overflow-x: auto;"><code>${finalAnswer}</code></pre>` :
+                    `<p style="font-size: 0.95rem; line-height: 1.65; color: var(--text-primary); margin: 0;">${finalAnswer}</p>`
                   }
-                  ${matchedDoc ? `<div style="margin-top:0.8rem; font-size:0.78rem; color:var(--text-muted); border-top:1px dashed var(--border-subtle); padding-top:0.6rem;">📄 <strong>Documento fuente utilizado:</strong> ${matchedDoc.topic.toUpperCase()} (Cero Alucinación)</div>` : ''}
+                  ${matchedDoc ? `<div style="margin-top: 0.8rem; font-size: 0.78rem; color: var(--text-muted); border-top: 1px dashed var(--border-subtle); padding-top: 0.6rem;">Fuente de Verificación Documental: <strong>${matchedDoc.topic.toUpperCase()}</strong> (Anclaje Fáctico Verificado)</div>` : ''}
                 </div>
               `;
             }
@@ -185,7 +186,7 @@
             runBtn.disabled = false;
             runBtn.innerHTML = `
               <svg fill="currentColor" height="18" viewBox="0 0 24 24" width="18"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-9l6 4.5-6 4.5z"></path></svg>
-              <span>Probar Otra Pregunta</span>
+              <span>Ejecutar Nueva Consulta</span>
             `;
           }, 450);
         }, 450);
@@ -193,7 +194,7 @@
     }
   }
 
-  // 2. ÁRBOL INTERACTIVO DE DECISIONES SÚPER AMIGABLE
+  // 2. ÁRBOL INTERACTIVO DE DECISIONES ARQUITECTÓNICAS
   function initFriendlyDecisionWizard() {
     var form = document.getElementById("friendly-wizard-form");
     var resultBox = document.getElementById("friendly-wizard-result");
@@ -211,66 +212,66 @@
       var templateId = "";
 
       if (projectType === "ecommerce") {
-        title = "Plantilla Proyecto A: Asistente de Tienda & Devoluciones con RAG";
-        badge = "Ideal para Negocios, Comercios y Emprendimientos";
-        explanation = "Tu proyecto guardará el catálogo de productos y las políticas de envío/devolución en archivos de texto. Cuando el cliente pregunte por un cambio, el sistema buscará la política exacta y responderá con amabilidad sin inventar nada.";
+        title = "Plantilla 1: Asistente de Operaciones Comerciales y Políticas de Devolución (RAG)";
+        badge = "Recomendada para Comercio Electrónico y Servicios";
+        explanation = "La solución indexa el catálogo de productos y el compendio de políticas en archivos de texto estructurado. Ante una consulta de cambio o reembolso, el sistema recupera la cláusula fáctica exacta y genera una respuesta fundamentada sin riesgo de alucinación.";
         steps = [
-          "1. Copia tus políticas de tienda en la lista de textos de <code>rag_engine.py</code>",
-          "2. Usa el enrutador para detectar preguntas de envíos o devoluciones.",
-          "3. Ejecuta el cuaderno en Google Colab para probarlo gratis."
+          "1. Incorpore las políticas comerciales en la matriz de documentos de <code>rag_engine.py</code>.",
+          "2. Configure el enrutador para clasificar consultas de logística y devoluciones.",
+          "3. Ejecute el entorno en Google Colab para validar latencia y precisión."
         ];
         templateId = "plantilla-a";
       } else if (projectType === "legal") {
-        title = "Plantilla Proyecto B: Asesor de Reglamentos y Trámites Escolares/Laborales";
-        badge = "Ideal para Escuelas, Universidades y Empresas";
-        explanation = "Tu proyecto indexará reglamentos, estatutos o manuales de titulación/vacaciones. Cuando un alumno o empleado pregunte requisitos, el sistema citará el artículo exacto y los pasos a seguir.";
+        title = "Plantilla 2: Asesor Normativo Institucional y Trámites Regulatorios";
+        badge = "Recomendada para Entornos Académicos, Legales y Corporativos";
+        explanation = "La arquitectura procesa estatutos, reglamentos internos y manuales de procedimientos. Ante una consulta de requisitos o plazos, cita el artículo correspondiente y detalla el flujo de ejecución prescrito.";
         steps = [
-          "1. Pega los artículos de tu reglamento en <code>rag_engine.py</code>",
-          "2. Configura el umbral de similitud en 0.40 para máxima precisión fáctica.",
-          "3. Conéctalo a la API de FastAPI para que tus compañeros lo consulten."
+          "1. Inserte los artículos reglamentarios en <code>rag_engine.py</code>.",
+          "2. Ajuste el umbral de similitud coseno en 0.40 para garantizar rigor fáctico.",
+          "3. Exponga el servicio mediante FastAPI para consumo departamental."
         ];
         templateId = "plantilla-b";
       } else if (projectType === "json_reports") {
-        title = "Plantilla Proyecto C: Clasificador de Tickets y Generador de JSON";
-        badge = "Ideal para Conectar a Otras Aplicaciones o Bases de Datos";
-        explanation = "Tu proyecto recibirá mensajes de clientes y los convertirá automáticamente en objetos estructurados (JSON) con campos como categoría, urgencia y resumen para alimentar un panel de administración.";
+        title = "Plantilla 3: Clasificador de Incidencias y Generador Estructurado JSON";
+        badge = "Recomendada para Interoperabilidad de APIs y Bases de Datos";
+        explanation = "El sistema recibe reportes en lenguaje natural y genera objetos JSON validados por esquemas Pydantic con tipado fuerte (categoría, severidad, resumen de acción) para integración con sistemas externos.";
         steps = [
-          "1. Define tu estructura de datos con modelos de Pydantic en <code>api_server.py</code>",
-          "2. Agrega 2 ejemplos Few-Shot en el prompt o usa el adaptador LoRA.",
-          "3. Prueba el envío de datos mediante Swagger UI (<code>/docs</code>)."
+          "1. Especifique el modelo de datos Pydantic en <code>api_server.py</code>.",
+          "2. Incorpore ejemplos Few-Shot en el System Prompt o integre el adaptador LoRA.",
+          "3. Audite la consistencia de salida mediante Swagger UI (<code>/docs</code>)."
         ];
         templateId = "plantilla-c";
       } else {
-        title = "Plantilla Proyecto D: Tutor de Estudio Personalizado y Evaluador";
-        badge = "Ideal para Educación y Capacitación de Personal";
-        explanation = "Tu proyecto explicará temas difíciles paso a paso usando la técnica del 'Profesor Socrático', haciendo preguntas de opción múltiple al estudiante para evaluar su aprendizaje.";
+        title = "Plantilla 4: Tutor Educativo Adaptativo y Evaluación Socrática";
+        badge = "Recomendada para Educación y Capacitación Técnica";
+        explanation = "La arquitectura desglosa conceptos técnicos complejos de forma progresiva, aplicando formulación de preguntas orientadas a evaluar y retroalimentar el dominio conceptual del usuario.";
         steps = [
-          "1. Configura el prompt del sistema con el rol de Tutor Paciente.",
-          "2. Inyecta el temario o materia en el motor RAG.",
-          "3. Evalúa las respuestas del alumno con retroalimentación instantánea."
+          "1. Configure las directivas pedagógicas en el System Prompt.",
+          "2. Inyecte los contenidos temáticos en la base vectorial RAG.",
+          "3. Valide las respuestas del estudiante con retroalimentación formativa."
         ];
         templateId = "plantilla-d";
       }
 
       resultBox.innerHTML = `
-        <div style="background:var(--bg-surface); border:1px solid var(--meta-blue-border); border-left:5px solid var(--meta-blue); border-radius:12px; padding:1.5rem; animation:mainFadeIn 0.3s ease;">
-          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.6rem;">
-            <span style="font-size:0.75rem; font-weight:800; text-transform:uppercase; color:var(--meta-blue); background:var(--meta-blue-subtle); padding:0.25rem 0.6rem; border-radius:6px;">${badge}</span>
-            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">Recomendación Personalizada</span>
+        <div style="background: var(--bg-surface); border: 1px solid var(--meta-blue-border); border-left: 5px solid var(--meta-blue); border-radius: 12px; padding: 1.5rem; animation: mainFadeIn 0.3s ease;">
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.6rem;">
+            <span style="font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: var(--meta-blue); background: var(--meta-blue-subtle); padding: 0.25rem 0.6rem; border-radius: 6px;">${badge}</span>
+            <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);">Recomendación de Arquitectura</span>
           </div>
-          <h4 style="font-family:var(--font-head); font-size:1.15rem; font-weight:800; color:var(--text-primary); margin-bottom:0.6rem;">${title}</h4>
-          <p style="font-size:0.92rem; line-height:1.65; color:var(--text-secondary); margin-bottom:1rem;">${explanation}</p>
+          <h4 style="font-family: var(--font-head); font-size: 1.15rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.6rem;">${title}</h4>
+          <p style="font-size: 0.92rem; line-height: 1.65; color: var(--text-secondary); margin-bottom: 1rem;">${explanation}</p>
           
-          <div style="background:var(--bg-subtle-alt); border-radius:8px; padding:1rem; border:1px solid var(--border-subtle); margin-bottom:1rem;">
-            <strong style="font-size:0.85rem; color:var(--text-primary); display:block; margin-bottom:0.5rem;">Tus 3 Pasos Inmediatos para Construirlo:</strong>
-            <ul style="margin:0; padding-left:1.2rem; font-size:0.86rem; color:var(--text-secondary); line-height:1.65;">
+          <div style="background: var(--bg-subtle-alt); border-radius: 8px; padding: 1rem; border: 1px solid var(--border-subtle); margin-bottom: 1rem;">
+            <strong style="font-size: 0.85rem; color: var(--text-primary); display: block; margin-bottom: 0.5rem;">Fases de Implementación Sugeridas:</strong>
+            <ul style="margin: 0; padding-left: 1.2rem; font-size: 0.86rem; color: var(--text-secondary); line-height: 1.65;">
               ${steps.map(s => `<li>${s}</li>`).join('')}
             </ul>
           </div>
 
-          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.6rem;">
-            <span style="font-size:0.82rem; color:var(--text-muted);">💡 ¿Quieres usar el código base de esta plantilla?</span>
-            <a href="#${templateId}" class="btn-primary" style="font-size:0.82rem; padding:0.45rem 0.9rem; text-decoration:none; border-radius:8px; font-weight:700;">Ver Plantilla en Pantalla &darr;</a>
+          <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.6rem;">
+            <span style="font-size: 0.82rem; color: var(--text-muted);">Consulte el código correspondiente a esta plantilla:</span>
+            <a href="#${templateId}" class="btn-primary" style="font-size: 0.82rem; padding: 0.45rem 0.9rem; text-decoration: none; border-radius: 8px; font-weight: 700;">Ver Plantilla en Detalle &darr;</a>
           </div>
         </div>
       `;
@@ -284,7 +285,7 @@
     evaluateWizard();
   }
 
-  // 3. SEMÁFORO DE HARDWARE & GOOGLE COLAB GRATUITO
+  // 3. SEMÁFORO DE HARDWARE & RECURSOS GOOGLE COLAB
   function initColabSemaphore() {
     var modelSelect = document.getElementById("colab-model-choice");
     var modeSelect = document.getElementById("colab-mode-choice");
@@ -297,10 +298,10 @@
       var mode = modeSelect.value;
 
       var vram = 3.2;
-      var statusTitle = "¡100% Viable y Gratuito en Google Colab!";
-      var statusColor = "var(--accent-success)";
-      var statusDesc = "Tu configuración consume muy poca memoria. Puedes ejecutarla con total tranquilidad en Google Colab sin pagar nada y sin miedo a que se desconecte.";
-      var icon = "🟢";
+      var statusTitle = "Totalmente Viable en Google Colab (GPU Tesla T4 15 GB)";
+      var statusColor = "var(--accent-success, #10b981)";
+      var statusDesc = "Consumo de memoria holgado. Permite ejecución estable sin riesgo de saturación ni desconexión en entornos estándar de GPU.";
+      var statusBadge = "Estado: Óptimo";
 
       if (model === "tinyllama") {
         vram = mode === "lora" ? 4.2 : 2.5;
@@ -311,26 +312,26 @@
       } else if (model === "llama_8b") {
         vram = mode === "lora" ? 11.8 : 8.5;
         if (mode === "lora") {
-          statusTitle = "Viable en Colab (Usa Cuantización NF4 4-bit)";
-          statusColor = "var(--accent-warning)";
-          statusDesc = "Cabe en la GPU gratuita de Colab (15 GB). Solo asegúrate de usar Batch Size = 1 y activar QLoRA para evitar picos de memoria.";
-          icon = "🟡";
+          statusTitle = "Viable en Colab con Cuantización NF4 4-bit (QLoRA)";
+          statusColor = "var(--accent-warning, #f59e0b)";
+          statusDesc = "Compatible con la GPU T4 de 15 GB. Se recomienda establecer Batch Size = 1 y habilitar acumulación de gradientes para evitar picos transitorios.";
+          statusBadge = "Estado: Requiere QLoRA";
         }
       }
 
       semaphoreBox.innerHTML = `
-        <div style="background:var(--bg-surface); border:1px solid var(--border-subtle); border-left:5px solid ${statusColor}; border-radius:12px; padding:1.2rem; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:1rem;">
-          <div style="max-width:550px;">
-            <div style="display:flex; align-items:center; gap:0.5rem; margin-bottom:0.3rem;">
-              <span style="font-size:1.3rem;">${icon}</span>
-              <strong style="font-size:1rem; color:var(--text-primary);">${statusTitle}</strong>
+        <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-left: 5px solid ${statusColor}; border-radius: 12px; padding: 1.2rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;">
+          <div style="max-width: 550px;">
+            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.3rem;">
+              <span class="badge-role" style="background: rgba(8,102,255,0.1); color: var(--text-primary); font-weight: 700; font-size: 0.75rem; padding: 0.2rem 0.5rem; border-radius: 4px;">${statusBadge}</span>
+              <strong style="font-size: 1rem; color: var(--text-primary);">${statusTitle}</strong>
             </div>
-            <p style="font-size:0.86rem; color:var(--text-secondary); line-height:1.55; margin:0;">${statusDesc}</p>
+            <p style="font-size: 0.86rem; color: var(--text-secondary); line-height: 1.55; margin: 0;">${statusDesc}</p>
           </div>
-          <div style="text-align:right; min-width:140px;">
-            <span style="font-size:0.75rem; text-transform:uppercase; font-weight:800; color:var(--text-muted); display:block;">Consumo de Memoria:</span>
-            <div style="font-family:var(--font-head); font-size:1.6rem; font-weight:800; color:${statusColor};">
-              ~${vram.toFixed(1)} GB <span style="font-size:0.8rem; color:var(--text-muted);">/ 15 GB</span>
+          <div style="text-align: right; min-width: 140px;">
+            <span style="font-size: 0.75rem; text-transform: uppercase; font-weight: 800; color: var(--text-muted); display: block;">Consumo VRAM Estimado:</span>
+            <div style="font-family: var(--font-head); font-size: 1.6rem; font-weight: 800; color: ${statusColor};">
+              ~${vram.toFixed(1)} GB <span style="font-size: 0.8rem; color: var(--text-muted);">/ 15.0 GB</span>
             </div>
           </div>
         </div>
@@ -346,7 +347,7 @@
     evaluateHardware();
   }
 
-  // 4. CHECKLIST INTERACTIVO CON PERSISTENCIA Y CELEBRACIÓN DE CONFETI
+  // 4. CHECKLIST INTERACTIVO DE CALIDAD CON AUDITORÍA LOCAL
   function initQualityChecklist() {
     var container = document.getElementById("friendly-checklist-container");
     var progressText = document.getElementById("friendly-progress-text");
@@ -355,7 +356,7 @@
     if (!container) return;
 
     var checkboxes = container.querySelectorAll('input[type="checkbox"]');
-    var storageKey = "hackathon_friendly_checklist_v2";
+    var storageKey = "hackathon_professional_checklist_v3";
 
     var savedState = {};
     try {

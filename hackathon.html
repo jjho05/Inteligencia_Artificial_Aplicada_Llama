@@ -4,7 +4,7 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Centro de Construcción &amp; Mentoría del Hackathon | Proyecto Integrador IA</title>
-  <meta name="description" content="Guía amigable, paso a paso y accesible para construir tu propio Proyecto de IA con Llama 3: analogías simples, 4 plantillas listas, simulador en vivo, código explicado y resolución de dudas."/>
+  <meta name="description" content="Guía técnica, exhaustiva y pedagógica para construir tu Proyecto Integrador de IA con Meta Llama: arquitectura desacoplada, 4 plantillas de proyectos, simulador en vivo, código modular y diagnóstico técnico."/>
   
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -24,15 +24,15 @@
   <script defer src="js/hackathon.js"></script>
 
   <style>
-    /* Estilos específicos para componentes didácticos del Hackathon */
+    /* Estilos profesionales para el Centro del Hackathon (Strict No-Emoji Edition) */
     .sim-step-card {
       display: flex;
-      gap: 1rem;
+      gap: 1.2rem;
       background: var(--bg-surface);
       border: 1px solid var(--border-subtle);
       border-radius: 12px;
-      padding: 1.2rem;
-      margin-bottom: 0.9rem;
+      padding: 1.3rem;
+      margin-bottom: 1rem;
       transition: all 0.3s ease;
       animation: mainFadeIn 0.3s ease;
     }
@@ -50,26 +50,27 @@
       flex-shrink: 0;
     }
     .sim-step-body h5 {
-      margin: 0 0 0.3rem 0;
-      font-size: 0.98rem;
+      margin: 0 0 0.35rem 0;
+      font-size: 1rem;
       font-weight: 800;
       color: var(--text-primary);
     }
     .sim-step-body p {
-      margin: 0 0 0.4rem 0;
+      margin: 0 0 0.45rem 0;
       font-size: 0.88rem;
       color: var(--text-secondary);
-      line-height: 1.55;
+      line-height: 1.6;
     }
     .sim-step-badge {
       display: inline-block;
       font-size: 0.75rem;
-      font-weight: 700;
+      font-weight: 800;
+      text-transform: uppercase;
       color: var(--meta-blue);
       background: var(--meta-blue-subtle);
-      padding: 0.2rem 0.55rem;
+      padding: 0.25rem 0.6rem;
       border-radius: 6px;
-      margin-bottom: 0.3rem;
+      margin-bottom: 0.4rem;
     }
     .sim-step-sub {
       font-size: 0.82rem !important;
@@ -77,10 +78,10 @@
     }
     .sim-retrieved-quote {
       background: var(--bg-subtle-alt);
-      border-left: 3px solid #0284c7;
-      padding: 0.6rem 0.8rem;
+      border-left: 3px solid var(--accent-info, #0284c7);
+      padding: 0.7rem 0.9rem;
       border-radius: 6px;
-      font-size: 0.84rem;
+      font-size: 0.85rem;
       color: var(--text-primary);
       margin-top: 0.4rem;
     }
@@ -88,13 +89,46 @@
       background: var(--bg-surface);
       border: 1px solid var(--border-subtle);
       border-radius: 14px;
-      padding: 1.5rem;
-      margin-bottom: 1.8rem;
+      padding: 1.6rem;
+      margin-bottom: 2rem;
       transition: transform 0.2s ease, border-color 0.2s ease;
     }
     .template-card-highlight:hover {
       border-color: var(--meta-blue);
       transform: translateY(-2px);
+    }
+    .glossary-card {
+      background: var(--bg-surface-2);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 1.4rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .glossary-term {
+      font-family: var(--font-head);
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--meta-blue);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .glossary-desc {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 0.8rem;
+    }
+    .glossary-rule {
+      background: var(--bg-subtle);
+      border-radius: 6px;
+      padding: 0.5rem 0.7rem;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      border-left: 2px solid var(--meta-blue);
     }
   </style>
 </head>
@@ -110,13 +144,15 @@
       </a>
       <nav class="nav-links">
         <a class="nav-link-item" href="modulo1-challenge3.html" style="color: var(--meta-blue); font-weight: 700;">← Challenge 3</a>
-        <a class="nav-link-item" href="#analogia-restaurante">¿Qué es?</a>
-        <a class="nav-link-item" href="#glosario-facil">Glosario Fácil</a>
-        <a class="nav-link-item" href="#plantillas-proyectos">4 Plantillas</a>
-        <a class="nav-link-item" href="#simulador-vivo">Simulador en Vivo</a>
-        <a class="nav-link-item" href="#paso-a-paso">Paso a Paso</a>
-        <a class="nav-link-item" href="#codigo-lego">Código Explicado</a>
-        <a class="nav-link-item" href="#primeros-auxilios">Primeros Auxilios</a>
+        <a class="nav-link-item" href="#arquitectura-modular">Arquitectura</a>
+        <a class="nav-link-item" href="#glosario-tecnico">Glosario</a>
+        <a class="nav-link-item" href="#catalogo-plantillas">4 Plantillas</a>
+        <a class="nav-link-item" href="#simulador-vivo">Simulador</a>
+        <a class="nav-link-item" href="#arbol-decisiones">Decisión</a>
+        <a class="nav-link-item" href="#hardware-colab">Hardware</a>
+        <a class="nav-link-item" href="#hoja-de-ruta">Paso a Paso</a>
+        <a class="nav-link-item" href="#bloques-codigo">Código</a>
+        <a class="nav-link-item" href="#manual-diagnostico">Diagnóstico</a>
         <a class="nav-link-item" href="modulo2-tema1.html" style="color: #3fb950; font-weight: 700;">Módulo 2 →</a>
       </nav>
       <div class="header-controls">
@@ -167,7 +203,7 @@
 
   <main class="main-container">
     <!-- ======================================================================
-         HERO PRINCIPAL DEL HACKATHON
+         HERO PRINCIPAL DEL CENTRO DE HACKATHON
          ====================================================================== -->
     <section class="course-hero" id="overview">
       <div class="hero-badge-pill">
@@ -176,52 +212,89 @@
         <span class="hero-badge-label">HACKATHON DE INGENIERÍA IA · CENTRO DE MENTORÍA &amp; CONSTRUCCIÓN</span>
       </div>
 
-      <h1 class="hero-title">Construye tu Propio Proyecto de IA con Modelos Abiertos</h1>
+      <h1 class="hero-title">Guía de Construcción: Diseña y Despliega tu Sistema de IA con Meta Llama</h1>
       <p class="hero-subtitle">
-        <b>No necesitas ser un científico de datos para crear tu propio sistema inteligente</b>. Esta página es tu taller interactivo: te explicamos cómo funciona la IA con analogías simples de la vida real, te damos <b>4 plantillas de proyectos listas para elegir</b>, te mostramos un simulador interactivo en vivo y te entregamos el código listo para probar en Google Colab totalmente gratis.
+        <b>Mesa de trabajo y asesoría técnica paso a paso</b>. Esta plataforma está diseñada para acompañar a los participantes en el diseño, estructuración de datos, dimensionamiento de recursos (VRAM), integración de código modular y resolución de bloqueos para construir su propio sistema de inteligencia artificial antes de avanzar al Módulo 2.
       </p>
 
-      <div style="display: flex; gap: 0.8rem; align-items: center; justify-content: center; flex-wrap: wrap; margin-top: 1.5rem;">
-        <a class="btn-primary" href="#plantillas-proyectos" style="display: inline-flex; align-items: center; gap: 0.6rem; text-decoration: none; padding: 0.75rem 1.4rem; border-radius: 10px; font-weight: 750; box-shadow: 0 4px 18px rgba(8, 102, 255, 0.25);">
-          <svg fill="currentColor" height="20" viewBox="0 0 24 24" width="20"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
-          <span>1. Ver 4 Plantillas Listas</span>
+      <div style="display: flex; gap: 0.8rem; align-items: center; justify-content: center; flex-wrap: wrap; margin-top: 1.6rem;">
+        <a class="btn-primary" href="#catalogo-plantillas" style="display: inline-flex; align-items: center; gap: 0.6rem; text-decoration: none; padding: 0.75rem 1.4rem; border-radius: 10px; font-weight: 750; box-shadow: 0 4px 18px rgba(8, 102, 255, 0.25);">
+          <svg fill="currentColor" height="18" viewBox="0 0 24 24" width="18"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+          <span>1. Seleccionar Plantilla de Proyecto</span>
         </a>
         <a class="btn-secondary" href="#simulador-vivo" style="display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; padding: 0.75rem 1.2rem; border-radius: 10px; font-weight: 700;">
           <svg fill="currentColor" height="18" viewBox="0 0 24 24" width="18"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-9l6 4.5-6 4.5z"/></svg>
-          <span>2. Probar Simulador en Vivo</span>
+          <span>2. Probar Simulador de Flujo</span>
         </a>
         <a class="btn-secondary" href="https://colab.research.google.com/github/jjho05/meta-llama-engineering-labs/blob/main/notebooks/04_Hackathon_Starter_Kit_Llama.ipynb" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; padding: 0.75rem 1.2rem; border-radius: 10px; font-weight: 700; color: #a855f7;">
           <svg fill="currentColor" height="18" viewBox="0 0 24 24" width="18"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
-          <span>3. Abrir Cuaderno en Colab</span>
+          <span>3. Abrir Cuaderno en Google Colab</span>
         </a>
       </div>
     </section>
 
     <!-- ======================================================================
-         MÓDULO 0: ¿QUÉ ES EL HACKATHON? LA ANALOGÍA DEL RESTAURANTE
+         SECCIÓN 1: FUNDAMENTO ARQUITECTÓNICO & MODELO MENTAL
          ====================================================================== -->
-    <article class="tema-card" id="analogia-restaurante" style="border-left: 5px solid var(--meta-blue); margin-bottom: 3.5rem;">
+    <article class="tema-card" id="arquitectura-modular" style="border-left: 5px solid var(--meta-blue); margin-bottom: 3.5rem;">
       <div class="tema-header">
-        <div class="tema-eyebrow">Concepto Intuitivo · Para Todo Público</div>
-        <h3 class="tema-title">¿Cómo Funciona tu Sistema de IA? La Analogía del Restaurante</h3>
+        <div class="tema-eyebrow">Fundamento de Ingeniería · Principio de Desacoplamiento</div>
+        <h3 class="tema-title">Arquitectura Modular de Cuatro Capas: De la Consulta a la Respuesta</h3>
       </div>
 
       <div class="tema-section-block">
         <p class="prose-p">
-          Para construir tu proyecto no necesitas memorizar fórmulas matemáticas. Imagina que tu sistema de Inteligencia Artificial es como un <b>Restaurante Gourmet Inteligente</b> que atiende clientes. Cada parte de tu código tiene un trabajo muy claro:
+          En el desarrollo de sistemas de IA de grado industrial, la regla de oro consiste en <b>desacoplar el motor de razonamiento (LLM) del repositorio de datos fácticos (Base de Conocimiento)</b>. Intentar resolver todo mediante prompts extensos genera tres fallas críticas: <i>alucinaciones por sobrecarga de contexto</i>, <i>latencia inaceptable (&gt; 5 segundos)</i> y <i>costos exponenciales por consumo de tokens</i>.
         </p>
 
-        <!-- Bento Grid: 4 Componentes del Restaurante -->
-        <div class="bento-layout-grid" style="margin: 1.8rem 0;">
+        <!-- Tabla Comparativa APA 7 -->
+        <div class="table-container" style="overflow-x:auto; margin:1.5rem 0;">
+          <table class="apa-table" style="width:100%; border-collapse:collapse; font-size:0.88rem;">
+            <thead>
+              <tr style="background:var(--bg-surface-2); border-bottom:2px solid var(--border-subtle);">
+                <th style="padding:0.75rem; text-align:left; width:22%;">Criterio de Evaluación</th>
+                <th style="padding:0.75rem; text-align:left; width:39%;">Enfoque Monolítico (Prompt Relleno)</th>
+                <th style="padding:0.75rem; text-align:left; width:39%;">Arquitectura Modular (Router + RAG + LoRA)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom:1px solid var(--border-subtle);">
+                <td style="padding:0.7rem;"><strong>Control de Alucinaciones</strong></td>
+                <td style="padding:0.7rem; color:#ef4444;">Bajo: El modelo inventa respuestas cuando la información no está explícita.</td>
+                <td style="padding:0.7rem; color:var(--accent-success); font-weight:700;">Máximo: Filtro de similitud coseno $\ge 0.40$ con admisión estricta de ignorancia.</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--border-subtle);">
+                <td style="padding:0.7rem;"><strong>Latencia por Consulta</strong></td>
+                <td style="padding:0.7rem;">Alta ($3.0 - 8.0\text{ s}$ por procesar miles de tokens en cada turno).</td>
+                <td style="padding:0.7rem; color:var(--accent-success); font-weight:700;">Optimizada ($&lt; 0.8\text{ s}$ en consultas directas mediante Router).</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--border-subtle);">
+                <td style="padding:0.7rem;"><strong>Actualización de Datos</strong></td>
+                <td style="padding:0.7rem;">Manual y costosa (Reescribir prompts en cada modificación de políticas).</td>
+                <td style="padding:0.7rem; color:var(--accent-success); font-weight:700;">Instantánea (Actualizar archivos de texto en el índice vectorial).</td>
+              </tr>
+              <tr>
+                <td style="padding:0.7rem;"><strong>Estructura de Salida</strong></td>
+                <td style="padding:0.7rem;">Inconsistente (Agrega texto conversacional no deseado antes de JSON).</td>
+                <td style="padding:0.7rem; color:var(--accent-success); font-weight:700;">Garantizada mediante adaptadores LoRA y validación con Pydantic.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Las 4 Capas del Sistema -->
+        <h4 class="tema-subheading"><span class="tema-subheading-tag">Estructura</span> Los Cuatro Componentes del Sistema</h4>
+
+        <div class="bento-layout-grid" style="margin: 1.5rem 0;">
           <div class="bento-sub-card">
             <div>
               <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem;">
-                <span class="tema-subheading-tag" style="margin:0; background:rgba(8,102,255,0.15); color:var(--meta-blue);">Pieza 1</span>
-                <span style="font-family:var(--font-mono); font-size:0.75rem; font-weight:800; color:var(--meta-blue);">router.py</span>
+                <span class="badge-role" style="background:rgba(8,102,255,0.12); color:var(--meta-blue); font-size:0.75rem; padding:0.2rem 0.5rem; border-radius:4px; font-weight:800;">Capa 1</span>
+                <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--meta-blue); font-weight:700;">router.py</span>
               </div>
-              <h5 class="bento-sub-title">1. El Mesero Amable (Router)</h5>
+              <h5 class="bento-sub-title">1. Enrutador de Complejidad (Router)</h5>
               <p class="bento-sub-desc">
-                Escucha lo que dice el cliente. Si solo pide un vaso de agua o saluda ("Hola, ¿cómo están?"), responde al instante. Si pide un platillo complejo o una duda de la carta, corre a la cocina.
+                Clasifica la intención del usuario. Despacha saludos y consultas triviales a inferencia rápida ($&lt; 0.5\text{ s}$), y deriva preguntas documentales al pipeline RAG.
               </p>
             </div>
           </div>
@@ -229,12 +302,12 @@
           <div class="bento-sub-card">
             <div>
               <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem;">
-                <span class="tema-subheading-tag" style="margin:0; background:rgba(2,132,199,0.15); color:#0284c7;">Pieza 2</span>
-                <span style="font-family:var(--font-mono); font-size:0.75rem; font-weight:800; color:#0284c7;">rag_engine.py</span>
+                <span class="badge-role" style="background:rgba(2,132,199,0.12); color:#0284c7; font-size:0.75rem; padding:0.2rem 0.5rem; border-radius:4px; font-weight:800;">Capa 2</span>
+                <span style="font-family:var(--font-mono); font-size:0.75rem; color:#0284c7; font-weight:700;">rag_engine.py</span>
               </div>
-              <h5 class="bento-sub-title">2. El Menú y Recetario (RAG)</h5>
+              <h5 class="bento-sub-title">2. Base de Conocimiento Vectorial (RAG)</h5>
               <p class="bento-sub-desc">
-                Es la libreta con las políticas, precios y manuales de tu empresa. El mesero consulta la receta exacta antes de hablar para <b>no inventar ingredientes (cero alucinaciones)</b>.
+                Segmenta los documentos de la organización, calcula incrustaciones en $\mathbb{R}^{384}$ y recupera los fragmentos con mayor similitud coseno antes de llamar al LLM.
               </p>
             </div>
           </div>
@@ -242,12 +315,12 @@
           <div class="bento-sub-card">
             <div>
               <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem;">
-                <span class="tema-subheading-tag" style="margin:0; background:rgba(168,85,247,0.15); color:#a855f7;">Pieza 3</span>
-                <span style="font-family:var(--font-mono); font-size:0.75rem; font-weight:800; color:#a855f7;">lora_adapter.py</span>
+                <span class="badge-role" style="background:rgba(168,85,247,0.12); color:#a855f7; font-size:0.75rem; padding:0.2rem 0.5rem; border-radius:4px; font-weight:800;">Capa 3</span>
+                <span style="font-family:var(--font-mono); font-size:0.75rem; color:#a855f7; font-weight:700;">lora_adapter.py</span>
               </div>
-              <h5 class="bento-sub-title">3. La Escuela de Cocina (LoRA)</h5>
+              <h5 class="bento-sub-title">3. Adaptador LoRA / Formateador JSON</h5>
               <p class="bento-sub-desc">
-                Es el entrenamiento especial para que el chef sirva la comida con el estilo y protocolo de la casa: por ejemplo, emplatar siempre en un formato cuadrado y ordenado (formato JSON).
+                Aplica pesos adaptativos entrenados (PEFT) o directivas estructuradas Few-Shot para forzar al modelo a responder con esquemas JSON válidos y tipados.
               </p>
             </div>
           </div>
@@ -255,12 +328,12 @@
           <div class="bento-sub-card">
             <div>
               <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem;">
-                <span class="tema-subheading-tag" style="margin:0; background:rgba(5,150,105,0.15); color:var(--accent-success);">Pieza 4</span>
-                <span style="font-family:var(--font-mono); font-size:0.75rem; font-weight:800; color:var(--accent-success);">api_server.py</span>
+                <span class="badge-role" style="background:rgba(5,150,105,0.12); color:var(--accent-success); font-size:0.75rem; padding:0.2rem 0.5rem; border-radius:4px; font-weight:800;">Capa 4</span>
+                <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--accent-success); font-weight:700;">api_server.py</span>
               </div>
-              <h5 class="bento-sub-title">4. La Ventana de Entrega (FastAPI)</h5>
+              <h5 class="bento-sub-title">4. Microservicio API (FastAPI)</h5>
               <p class="bento-sub-desc">
-                Es el mostrador oficial donde cualquier persona (desde una página web o desde un bot de WhatsApp) puede hacer pedidos por internet y recibir su respuesta calientita y rápida.
+                Expone endpoints REST asíncronos (`/v1/chat`) validados con modelos de Pydantic y documentación interactiva Swagger UI (`/docs`), listo para WhatsApp.
               </p>
             </div>
           </div>
@@ -269,255 +342,290 @@
     </article>
 
     <!-- ======================================================================
-         MÓDULO 1: GLOSARIO AMIGABLE "LA IA CON PERAS Y MANZANAS"
+         SECCIÓN 2: GLOSARIO TÉCNICO EXHAUSTIVO
          ====================================================================== -->
-    <article class="tema-card" id="glosario-facil" style="margin-bottom: 3.5rem;">
+    <article class="tema-card" id="glosario-tecnico" style="margin-bottom: 3.5rem;">
       <div class="tema-header">
-        <div class="tema-eyebrow">Diccionario Sin Complicaciones · Vocabulario Práctico</div>
-        <h3 class="tema-title">Glosario Fácil: La Inteligencia Artificial Explicada con Peras y Manzanas</h3>
-      </div>
-
-      <div class="tema-section-block">
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; margin-top: 1rem;">
-          <div style="background:var(--bg-surface-2); border:1px solid var(--border-subtle); border-radius:10px; padding:1.2rem;">
-            <strong style="color:var(--meta-blue); font-size:1rem; display:block; margin-bottom:0.4rem;">💬 1. Prompt</strong>
-            <p style="font-size:0.86rem; color:var(--text-secondary); line-height:1.55; margin:0;">
-              Es la instrucción o pregunta que tú le escribes a la IA. Entre más claro y específico seas con tu orden, mejor será el resultado.
-            </p>
-          </div>
-
-          <div style="background:var(--bg-surface-2); border:1px solid var(--border-subtle); border-radius:10px; padding:1.2rem;">
-            <strong style="color:#0284c7; font-size:1rem; display:block; margin-bottom:0.4rem;">🧩 2. Token</strong>
-            <p style="font-size:0.86rem; color:var(--text-secondary); line-height:1.55; margin:0;">
-              Son los pedacitos en los que la IA divide las palabras para leerlas (como sílabas). 100 palabras son aproximadamente 130 tokens.
-            </p>
-          </div>
-
-          <div style="background:var(--bg-surface-2); border:1px solid var(--border-subtle); border-radius:10px; padding:1.2rem;">
-            <strong style="color:#38bdf8; font-size:1rem; display:block; margin-bottom:0.4rem;">🗺️ 3. Embedding</strong>
-            <p style="font-size:0.86rem; color:var(--text-secondary); line-height:1.55; margin:0;">
-              Es como la "huella digital" del significado de una frase. Permite buscar ideas parecidas aunque usen palabras completamente diferentes.
-            </p>
-          </div>
-
-          <div style="background:var(--bg-surface-2); border:1px solid var(--border-subtle); border-radius:10px; padding:1.2rem;">
-            <strong style="color:#a855f7; font-size:1rem; display:block; margin-bottom:0.4rem;">📖 4. RAG (Recuperación)</strong>
-            <p style="font-size:0.86rem; color:var(--text-secondary); line-height:1.55; margin:0;">
-              Es como hacer un <b>examen a libro abierto</b>: en lugar de que la IA responda de memoria, le pasas tus documentos para que lea la respuesta correcta.
-            </p>
-          </div>
-
-          <div style="background:var(--bg-surface-2); border:1px solid var(--border-subtle); border-radius:10px; padding:1.2rem;">
-            <strong style="color:#ec4899; font-size:1rem; display:block; margin-bottom:0.4rem;">👓 5. LoRA (Adaptación)</strong>
-            <p style="font-size:0.86rem; color:var(--text-secondary); line-height:1.55; margin:0;">
-              Ponerle unos <b>lentes de aumento especializados</b> al modelo para que aprenda un formato especial o jerga técnica sin gastar millones de dólares.
-            </p>
-          </div>
-
-          <div style="background:var(--bg-surface-2); border:1px solid var(--border-subtle); border-radius:10px; padding:1.2rem;">
-            <strong style="color:var(--accent-success); font-size:1rem; display:block; margin-bottom:0.4rem;">⚡ 6. VRAM (Memoria GPU)</strong>
-            <p style="font-size:0.86rem; color:var(--text-secondary); line-height:1.55; margin:0;">
-              La memoria ultra rápida de la tarjeta gráfica donde vive el cerebro de la IA mientras piensa. En Google Colab te prestan 15 GB gratis.
-            </p>
-          </div>
-        </div>
-      </div>
-    </article>
-
-    <!-- ======================================================================
-         MÓDULO 2: 4 PLANTILLAS DE PROYECTOS LISTAS PARA USAR
-         ====================================================================== -->
-    <article class="tema-card" id="plantillas-proyectos" style="margin-bottom: 3.5rem;">
-      <div class="tema-header">
-        <div class="tema-eyebrow">Elige tu Idea en 5 Minutos · Proyectos Listos</div>
-        <h3 class="tema-title">4 Ideas de Proyectos Listas para Adaptar y Presentar</h3>
+        <div class="tema-eyebrow">Marco Teórico · Glosario de Ingeniería</div>
+        <h3 class="tema-title">Glosario Técnico de Inteligencia Artificial Aplicada</h3>
       </div>
 
       <div class="tema-section-block">
         <p class="prose-p">
-          ¿No sabes qué proyecto construir? <b>Elige una de estas 4 plantillas reales</b>. Ya están diseñadas con sus datos de ejemplo para que solo tengas que cambiar los textos y tener tu proyecto listo:
+          Definiciones conceptuales y directivas prácticas para comprender cada componente de tu sistema:
+        </p>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem; margin-top: 1.2rem;">
+          
+          <div class="glossary-card">
+            <div>
+              <div class="glossary-term">1. Prompt &amp; System Directives</div>
+              <p class="glossary-desc">
+                Conjunto de instrucciones estructuradas enviadas al modelo que definen su rol institucional, tono, restricciones operativas y contexto documental.
+              </p>
+            </div>
+            <div class="glossary-rule">Regla: Delimitar el contexto con etiquetas claras (ej. <code>[CONTEXTO]...[/CONTEXTO]</code>).</div>
+          </div>
+
+          <div class="glossary-card">
+            <div>
+              <div class="glossary-term">2. Tokens &amp; Tokenización BPE</div>
+              <p class="glossary-desc">
+                Unidades atómicas de procesamiento textual generadas mediante algoritmos Byte-Pair Encoding. Un token representa aproximadamente 4 caracteres en idioma español.
+              </p>
+            </div>
+            <div class="glossary-rule">Regla: Controlar la longitud del contexto para no exceder la ventana del modelo.</div>
+          </div>
+
+          <div class="glossary-card">
+            <div>
+              <div class="glossary-term">3. Incrustaciones Densas (Embeddings)</div>
+              <p class="glossary-desc">
+                Vectores numéricos continuos en $\mathbb{R}^{384}$ que capturan la semántica profunda de una oración, permitiendo búsquedas por similitud conceptual.
+              </p>
+            </div>
+            <div class="glossary-rule">Regla: Normalizar vectores con norma $L_2$ para calcular similitud mediante producto punto.</div>
+          </div>
+
+          <div class="glossary-card">
+            <div>
+              <div class="glossary-term">4. RAG &amp; Similitud Coseno</div>
+              <p class="glossary-desc">
+                Técnica que extrae los $k$ fragmentos más relevantes de una base documental antes de la inferencia, garantizando respuestas 100% verificables.
+              </p>
+            </div>
+            <div class="glossary-rule">Regla: Fijar un umbral de corte mínimo ($\ge 0.40$) para descartar texto irrelevante.</div>
+          </div>
+
+          <div class="glossary-card">
+            <div>
+              <div class="glossary-term">5. LoRA (Low-Rank Adaptation)</div>
+              <p class="glossary-desc">
+                Técnica de adaptación supervisada eficiente (PEFT) que congela el modelo base e inyecta matrices de bajo rango $r \ll d$ en capas de atención.
+              </p>
+            </div>
+            <div class="glossary-rule">Regla: Usar $r=8$ y $\alpha=16$ para adaptar estilos y formatos con bajo consumo de VRAM.</div>
+          </div>
+
+          <div class="glossary-card">
+            <div>
+              <div class="glossary-term">6. Memoria VRAM &amp; GPU T4</div>
+              <p class="glossary-desc">
+                Memoria de alto ancho de banda de la tarjeta aceleradora. En Google Colab se dispone de 15 GB dedicados para alojar pesos, activaciones y KV-Cache.
+              </p>
+            </div>
+            <div class="glossary-rule">Regla: Usar cuantización en 4-bits (NF4/QLoRA) para modelos mayores a 3 mil millones de parámetros.</div>
+          </div>
+
+        </div>
+      </div>
+    </article>
+
+    <!-- ======================================================================
+         SECCIÓN 3: CATÁLOGO DE 4 PLANTILLAS DE PROYECTOS
+         ====================================================================== -->
+    <article class="tema-card" id="catalogo-plantillas" style="margin-bottom: 3.5rem;">
+      <div class="tema-header">
+        <div class="tema-eyebrow">Catálogo de Proyectos · Entregables Listos</div>
+        <h3 class="tema-title">Cuatro Plantillas de Proyectos Listas para Adaptar</h3>
+      </div>
+
+      <div class="tema-section-block">
+        <p class="prose-p">
+          Seleccione la plantilla que mejor se ajuste a su caso de estudio. Cada opción incluye su objetivo de negocio, dataset de ejemplo en español y módulos de código a configurar:
         </p>
 
         <!-- PLANTILLA A -->
         <div class="template-card-highlight" id="plantilla-a" style="border-left: 5px solid var(--meta-blue);">
           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.6rem;">
-            <span style="font-size:0.78rem; font-weight:800; text-transform:uppercase; color:var(--meta-blue); background:var(--meta-blue-subtle); padding:0.25rem 0.6rem; border-radius:6px;">PLANTILLA A · E-COMMERCE &amp; NEGOCIOS</span>
-            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">Dificultad: Súper Fácil ★☆☆</span>
+            <span style="font-size:0.78rem; font-weight:800; text-transform:uppercase; color:var(--meta-blue); background:var(--meta-blue-subtle); padding:0.25rem 0.6rem; border-radius:6px;">PLANTILLA 1 · COMERCIO ELECTRÓNICO &amp; LOGÍSTICA</span>
+            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">Complejidad: Baja &bull; 100% Viable Colab</span>
           </div>
           <h4 style="font-family:var(--font-head); font-size:1.2rem; font-weight:800; color:var(--text-primary); margin-bottom:0.5rem;">
-            🛍️ Asistente de Atención al Cliente y Políticas de Devolución
+            Asistente de Atención al Cliente, Logística y Políticas de Devolución
           </h4>
           <p style="font-size:0.9rem; line-height:1.6; color:var(--text-secondary); margin-bottom:0.9rem;">
-            <b>¿Para qué sirve?</b> Responde dudas sobre garantías, tiempos de envío y cómo devolver productos de una tienda en línea sin inventar información.
+            <b>Objetivo del Proyecto:</b> Resolver consultas frecuentes de usuarios sobre cobertura de envíos, costos, garantías técnicas y procedimientos de reembolso, sustentando cada respuesta en el compendio normativo de la tienda sin incurrir en alucinaciones.
           </p>
-          <div style="background:var(--bg-subtle); border-radius:8px; padding:0.9rem 1.1rem; font-size:0.86rem; color:var(--text-primary); margin-bottom:0.8rem;">
-            <strong>Textos que vas a ingresar en tu RAG:</strong>
-            <ul style="margin:0.4rem 0 0 0; padding-left:1.2rem; color:var(--text-secondary);">
-              <li>"Los reembolsos se procesan en un máximo de 15 días con ticket original."</li>
-              <li>"Los envíos a todo el país demoran de 2 a 4 días hábiles."</li>
-              <li>"Todos los artículos electrónicos tienen 1 año de garantía ante defectos de fábrica."</li>
+          <div style="background:var(--bg-subtle); border-radius:8px; padding:1rem 1.2rem; font-size:0.86rem; color:var(--text-primary); margin-bottom:0.9rem;">
+            <strong>Dataset de Documentos a Ingresar en `rag_engine.py`:</strong>
+            <ul style="margin:0.5rem 0 0 0; padding-left:1.2rem; color:var(--text-secondary); line-height:1.6;">
+              <li>"Política de Reembolsos (Art. 4): Las solicitudes de devolución aplican dentro de los primeros 30 días naturales posteriores a la entrega, presentando comprobante fiscal y empaque íntegro."</li>
+              <li>"Tiempos de Entrega (Art. 2): Los envíos estándar dentro de la república demoran entre 2 y 4 días hábiles. El servicio exprés garantiza entrega en 24 horas hábiles."</li>
+              <li>"Garantía de Hardware (Art. 7): Los equipos electrónicos cuentan con 12 meses de garantía directa del fabricante ante defectos de manufactura comprobables."</li>
             </ul>
           </div>
-          <span style="font-size:0.8rem; color:var(--text-muted);">📁 <strong>Archivos que utilizarás:</strong> <code>rag_engine.py</code> + <code>api_server.py</code></span>
+          <div style="font-size:0.82rem; color:var(--text-muted);">
+            <strong>Archivos de Código Utilizados:</strong> <code>rag_engine.py</code> (Indexación y Búsqueda) + <code>api_server.py</code> (FastAPI Endpoint).
+          </div>
         </div>
 
         <!-- PLANTILLA B -->
         <div class="template-card-highlight" id="plantilla-b" style="border-left: 5px solid #0284c7;">
           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.6rem;">
-            <span style="font-size:0.78rem; font-weight:800; text-transform:uppercase; color:#0284c7; background:rgba(2,132,199,0.12); padding:0.25rem 0.6rem; border-radius:6px;">PLANTILLA B · LEGAL &amp; EDUCATIVO</span>
-            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">Dificultad: Intermedia ★★☆</span>
+            <span style="font-size:0.78rem; font-weight:800; text-transform:uppercase; color:#0284c7; background:rgba(2,132,199,0.12); padding:0.25rem 0.6rem; border-radius:6px;">PLANTILLA 2 · NORMATIVA INSTITUCIONAL &amp; LEGAL</span>
+            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">Complejidad: Media &bull; Enfoque Fáctico</span>
           </div>
           <h4 style="font-family:var(--font-head); font-size:1.2rem; font-weight:800; color:var(--text-primary); margin-bottom:0.5rem;">
-            ⚖️ Asesor de Reglamentos Escolares, Laborales o Contratos
+            Asesor Normativo Institucional y Trámites Regulatorios
           </h4>
           <p style="font-size:0.9rem; line-height:1.6; color:var(--text-secondary); margin-bottom:0.9rem;">
-            <b>¿Para qué sirve?</b> Responde dudas a estudiantes o empleados sobre cómo titularse, pedir vacaciones o cumplir las normas de la empresa, citando el número de artículo exacto.
+            <b>Objetivo del Proyecto:</b> Proveer asesoría regulatoria para estudiantes o colaboradores institucionales, resolviendo dudas sobre requisitos de titulación, solicitudes de permisos laborales o reglamentos de operación, citando explícitamente el artículo legal correspondiente.
           </p>
-          <div style="background:var(--bg-subtle); border-radius:8px; padding:0.9rem 1.1rem; font-size:0.86rem; color:var(--text-primary); margin-bottom:0.8rem;">
-            <strong>Textos que vas a ingresar en tu RAG:</strong>
-            <ul style="margin:0.4rem 0 0 0; padding-left:1.2rem; color:var(--text-secondary);">
-              <li>"Artículo 12: Para iniciar el trámite de titulación se requiere haber liberado el servicio social y contar con el 100% de créditos."</li>
-              <li>"Artículo 24: Las solicitudes de vacaciones deben enviarse con 10 días de anticipación al departamento de Recursos Humanos."</li>
+          <div style="background:var(--bg-subtle); border-radius:8px; padding:1rem 1.2rem; font-size:0.86rem; color:var(--text-primary); margin-bottom:0.9rem;">
+            <strong>Dataset de Documentos a Ingresar en `rag_engine.py`:</strong>
+            <ul style="margin:0.5rem 0 0 0; padding-left:1.2rem; color:var(--text-secondary); line-height:1.6;">
+              <li>"Reglamento de Titulación (Art. 12): Es requisito indispensable haber acreditado el 100% de los créditos curriculares, contar con la liberación del servicio social y constancia de dominio de idioma inglés nivel B2."</li>
+              <li>"Estatuto Laboral (Art. 24): Las solicitudes de vacaciones deberán registrarse en el portal interno con un mínimo de 10 días hábiles de anticipación a la fecha de inicio del periodo solicitado."</li>
             </ul>
           </div>
-          <span style="font-size:0.8rem; color:var(--text-muted);">📁 <strong>Archivos que utilizarás:</strong> <code>rag_engine.py</code> + <code>router.py</code></span>
+          <div style="font-size:0.82rem; color:var(--text-muted);">
+            <strong>Archivos de Código Utilizados:</strong> <code>rag_engine.py</code> (Búsqueda por Artículo) + <code>router.py</code> (Detección de Trámite).
+          </div>
         </div>
 
         <!-- PLANTILLA C -->
         <div class="template-card-highlight" id="plantilla-c" style="border-left: 5px solid #a855f7;">
           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.6rem;">
-            <span style="font-size:0.78rem; font-weight:800; text-transform:uppercase; color:#a855f7; background:rgba(168,85,247,0.12); padding:0.25rem 0.6rem; border-radius:6px;">PLANTILLA C · SISTEMAS &amp; AUTOMATIZACIÓN</span>
-            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">Dificultad: Intermedia ★★☆</span>
+            <span style="font-size:0.78rem; font-weight:800; text-transform:uppercase; color:#a855f7; background:rgba(168,85,247,0.12); padding:0.25rem 0.6rem; border-radius:6px;">PLANTILLA 3 · AUTOMATIZACIÓN &amp; EXTRACCIÓN JSON</span>
+            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">Complejidad: Media &bull; Tipado Estricto Pydantic</span>
           </div>
           <h4 style="font-family:var(--font-head); font-size:1.2rem; font-weight:800; color:var(--text-primary); margin-bottom:0.5rem;">
-            📊 Clasificador de Mensajes y Generador de Tickets en JSON
+            Clasificador de Incidencias Técnicas y Generador Estructurado JSON
           </h4>
           <p style="font-size:0.9rem; line-height:1.6; color:var(--text-secondary); margin-bottom:0.9rem;">
-            <b>¿Para qué sirve?</b> Lee quejas o reportes de clientes y los convierte automáticamente en una ficha ordenada en JSON (con categoría, urgencia y resumen) para enviarlos a una base de datos.
+            <b>Objetivo del Proyecto:</b> Ingerir reportes de fallas o mensajes libres de usuarios y transformarlos automáticamente en objetos JSON validados por esquemas de Pydantic (categoría de falla, nivel de severidad, resumen ejecutivo y acción sugerida).
           </p>
-          <div style="background:var(--bg-subtle); border-radius:8px; padding:0.9rem 1.1rem; font-size:0.86rem; color:var(--text-primary); margin-bottom:0.8rem;">
-            <strong>Salida estructurada que generará tu modelo:</strong>
-            <pre style="margin:0.4rem 0 0 0; background:var(--bg-subtle-alt); padding:0.6rem; border-radius:6px; font-family:var(--font-mono); font-size:0.78rem;"><code>{
-  "categoria": "fallo_tecnico",
-  "urgencia": "alta",
-  "resumen": "El cliente no puede iniciar sesion tras actualizar la contrasena."
+          <div style="background:var(--bg-subtle); border-radius:8px; padding:1rem 1.2rem; font-size:0.86rem; color:var(--text-primary); margin-bottom:0.9rem;">
+            <strong>Salida Estructurada Generada por el Modelo:</strong>
+            <pre style="margin:0.5rem 0 0 0; background:var(--bg-subtle-alt); padding:0.7rem; border-radius:6px; font-family:var(--font-mono); font-size:0.82rem; color:var(--text-primary);"><code>{
+  "categoria": "acceso_plataforma",
+  "severidad": "alta",
+  "usuario_afectado": "usr_9481",
+  "resumen_incidencia": "Imposibilidad de autenticación con doble factor tras reinicio de sesión.",
+  "accion_automatica": "generar_ticket_seguridad"
 }</code></pre>
           </div>
-          <span style="font-size:0.8rem; color:var(--text-muted);">📁 <strong>Archivos que utilizarás:</strong> <code>lora_adapter.py</code> o Prompt Few-Shot + <code>api_server.py</code></span>
+          <div style="font-size:0.82rem; color:var(--text-muted);">
+            <strong>Archivos de Código Utilizados:</strong> <code>lora_adapter.py</code> (o Prompt Few-Shot) + <code>api_server.py</code> (Pydantic Validation).
+          </div>
         </div>
 
         <!-- PLANTILLA D -->
         <div class="template-card-highlight" id="plantilla-d" style="border-left: 5px solid var(--accent-success);">
           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.6rem;">
-            <span style="font-size:0.78rem; font-weight:800; text-transform:uppercase; color:var(--accent-success); background:rgba(5,150,105,0.12); padding:0.25rem 0.6rem; border-radius:6px;">PLANTILLA D · EDUCACIÓN &amp; TUTORÍAS</span>
-            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">Dificultad: Súper Fácil ★☆☆</span>
+            <span style="font-size:0.78rem; font-weight:800; text-transform:uppercase; color:var(--accent-success); background:rgba(5,150,105,0.12); padding:0.25rem 0.6rem; border-radius:6px;">PLANTILLA 4 · EDUCACIÓN &amp; EVALUACIÓN ADAPTATIVA</span>
+            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">Complejidad: Baja &bull; Método Socrático</span>
           </div>
           <h4 style="font-family:var(--font-head); font-size:1.2rem; font-weight:800; color:var(--text-primary); margin-bottom:0.5rem;">
-            🎓 Tutor de Estudio Personalizado y Evaluador Socrático
+            Tutor Educativo Adaptativo y Evaluador Socrático
           </h4>
           <p style="font-size:0.9rem; line-height:1.6; color:var(--text-secondary); margin-bottom:0.9rem;">
-            <b>¿Para qué sirve?</b> Explica temas difíciles con palabras sencillas y luego le hace preguntas de repaso al estudiante para poner a prueba lo que aprendió.
+            <b>Objetivo del Proyecto:</b> Desglosar conceptos de ingeniería o ciencias de forma progresiva, aplicando formulación de preguntas interactivas para evaluar y retroalimentar el dominio conceptual del alumno en tiempo real.
           </p>
-          <span style="font-size:0.8rem; color:var(--text-muted);">📁 <strong>Archivos que utilizarás:</strong> <code>rag_engine.py</code> + Prompt de Profesor Paciente + <code>api_server.py</code></span>
+          <div style="font-size:0.82rem; color:var(--text-muted);">
+            <strong>Archivos de Código Utilizados:</strong> <code>rag_engine.py</code> (Temario) + Directivas Pedagógicas en Prompt + <code>api_server.py</code>.
+          </div>
         </div>
+
       </div>
     </article>
 
     <!-- ======================================================================
-         MÓDULO 3: SIMULADOR VISUAL E INTERACTIVO EN VIVO
+         SECCIÓN 4: SIMULADOR VISUAL E INTERACTIVO EN VIVO
          ====================================================================== -->
     <article class="tema-card" id="simulador-vivo" style="margin-bottom: 3.5rem; border-left: 5px solid var(--meta-blue);">
       <div class="tema-header">
-        <div class="tema-eyebrow">Taller Interactivo · Laboratorio en Tiempo Real</div>
-        <h3 class="tema-title">Simulador en Vivo: Mira Cómo Viaja una Pregunta por tu Sistema de IA</h3>
+        <div class="tema-eyebrow">Simulación de Inferencia · Pipeline Interactivo</div>
+        <h3 class="tema-title">Simulador en Vivo: Ejecución del Flujo de Procesamiento</h3>
       </div>
 
       <div class="tema-section-block">
         <p class="prose-p">
-          Prueba este simulador para ver exactamente qué pasa por dentro cuando una persona le escribe a tu asistente inteligente. Escribe tu propia pregunta o haz clic en los ejemplos:
+          Pruebe interactivamente la secuencia operativa de las cuatro capas de la arquitectura ante diversas tipologías de consulta:
         </p>
 
-        <!-- Preguntas de prueba rápida -->
+        <!-- Consultas de Prueba Rápida -->
         <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:1rem;">
-          <span style="font-size:0.82rem; font-weight:700; color:var(--text-muted); align-self:center;">Preguntas de prueba:</span>
-          <button type="button" class="btn-secondary sim-sample-btn" data-query="¿Puedo devolver un producto si ya abrí la caja?" style="font-size:0.78rem; padding:0.35rem 0.75rem; border-radius:20px;">"¿Cómo devolver un producto?"</button>
-          <button type="button" class="btn-secondary sim-sample-btn" data-query="¿Cuánto tiempo tarda en llegar un envío estándar?" style="font-size:0.78rem; padding:0.35rem 0.75rem; border-radius:20px;">"¿Tiempos de envío?"</button>
-          <button type="button" class="btn-secondary sim-sample-btn" data-query="¿Qué cubre la garantía de los artículos electrónicos?" style="font-size:0.78rem; padding:0.35rem 0.75rem; border-radius:20px;">"¿Garantía de productos?"</button>
-          <button type="button" class="btn-secondary sim-sample-btn" data-query="Genera una ficha en formato JSON del reporte" style="font-size:0.78rem; padding:0.35rem 0.75rem; border-radius:20px;">"Generar JSON"</button>
+          <span style="font-size:0.82rem; font-weight:700; color:var(--text-muted); align-self:center;">Casos de Prueba:</span>
+          <button type="button" class="btn-secondary sim-sample-btn" data-query="¿Puedo devolver un producto si ya abrí la caja original?" style="font-size:0.78rem; padding:0.35rem 0.75rem; border-radius:20px;">Caso 1: Reembolso</button>
+          <button type="button" class="btn-secondary sim-sample-btn" data-query="¿Cuánto tiempo demora en llegar un envío estándar?" style="font-size:0.78rem; padding:0.35rem 0.75rem; border-radius:20px;">Caso 2: Envíos</button>
+          <button type="button" class="btn-secondary sim-sample-btn" data-query="¿Qué cobertura tiene la garantía de equipos electrónicos?" style="font-size:0.78rem; padding:0.35rem 0.75rem; border-radius:20px;">Caso 3: Garantía</button>
+          <button type="button" class="btn-secondary sim-sample-btn" data-query="Genera una ficha técnica estructurada en formato JSON" style="font-size:0.78rem; padding:0.35rem 0.75rem; border-radius:20px;">Caso 4: Estructura JSON</button>
         </div>
 
-        <!-- Caja de entrada y botón de acción -->
+        <!-- Entrada de Texto y Ejecución -->
         <div style="display:flex; gap:0.8rem; flex-wrap:wrap; margin-bottom:1.5rem;">
-          <input type="text" id="sim-query-input" value="¿Puedo devolver un producto si ya abrí la caja?" placeholder="Escribe aquí cualquier pregunta de prueba..." style="flex:1; min-width:280px; padding:0.8rem 1.1rem; border-radius:10px; border:1px solid var(--border-subtle); background:var(--bg-surface); color:var(--text-primary); font-size:0.95rem; font-family:var(--font-sans);">
+          <input type="text" id="sim-query-input" value="¿Puedo devolver un producto si ya abrí la caja original?" placeholder="Ingrese una consulta de prueba para el sistema..." style="flex:1; min-width:280px; padding:0.8rem 1.1rem; border-radius:10px; border:1px solid var(--border-subtle); background:var(--bg-surface); color:var(--text-primary); font-size:0.95rem; font-family:var(--font-sans);">
           <button type="button" id="sim-run-btn" class="btn-primary" style="display:inline-flex; align-items:center; gap:0.5rem; padding:0.8rem 1.4rem; border-radius:10px; font-weight:750; cursor:pointer;">
             <svg fill="currentColor" height="18" viewBox="0 0 24 24" width="18"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-9l6 4.5-6 4.5z"/></svg>
-            <span>Simular Proceso de IA</span>
+            <span>Ejecutar Simulación</span>
           </button>
         </div>
 
-        <!-- Contenedores de animación paso a paso -->
+        <!-- Contenedores de Animación y Resultados -->
         <div id="sim-steps-container"></div>
         <div id="sim-final-result" style="display:none; margin-top:1.2rem;"></div>
       </div>
     </article>
 
     <!-- ======================================================================
-         MÓDULO 4: ÁRBOL DE DECISIONES INTERACTIVO SÚPER AMIGABLE
+         SECCIÓN 5: ÁRBOL DE DECISIONES ARQUITECTÓNICAS
          ====================================================================== -->
     <article class="tema-card" id="arbol-decisiones" style="margin-bottom: 3.5rem;">
       <div class="tema-header">
-        <div class="tema-eyebrow">Asistente de Diseño · Enfoque Intuitivo</div>
-        <h3 class="tema-title">Árbol de Decisiones: ¿Qué Receta Tecnológica Necesita tu Idea?</h3>
+        <div class="tema-eyebrow">Diseño Técnico · Matriz de Decisión</div>
+        <h3 class="tema-title">Árbol de Decisiones: Configuración Óptima según tu Caso de Uso</h3>
       </div>
 
       <div class="tema-section-block">
         <p class="prose-p">
-          Responde estas 3 sencillas preguntas para que el asistente te diga exactamente qué herramientas usar y qué pasos seguir:
+          Seleccione los parámetros operativos de su proyecto para calcular el stack técnico y la estrategia de código correspondiente:
         </p>
 
         <form id="friendly-wizard-form" style="background:var(--bg-surface-2); border:1px solid var(--border-subtle); border-radius:12px; padding:1.5rem; margin:1.2rem 0;">
           <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1.5rem; margin-bottom:1.2rem;">
-            <!-- Pregunta 1 -->
+            <!-- Criterio 1 -->
             <div>
-              <label style="font-weight:800; font-size:0.9rem; color:var(--text-primary); display:block; margin-bottom:0.6rem;">1. ¿De qué trata tu proyecto?</label>
+              <label style="font-weight:800; font-size:0.9rem; color:var(--text-primary); display:block; margin-bottom:0.6rem;">1. Dominio de Aplicación:</label>
               <div style="display:flex; flex-direction:column; gap:0.5rem; font-size:0.86rem; color:var(--text-secondary);">
                 <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
-                  <input type="radio" name="wiz-project" value="ecommerce" checked> Tienda, productos, envíos o atención al cliente.
+                  <input type="radio" name="wiz-project" value="ecommerce" checked> Comercio electrónico, logística o atención a clientes.
                 </label>
                 <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
-                  <input type="radio" name="wiz-project" value="legal"> Reglamentos, leyes, trámites de escuela o trabajo.
+                  <input type="radio" name="wiz-project" value="legal"> Reglamentación institucional, estatutos o manuales de trámites.
                 </label>
                 <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
-                  <input type="radio" name="wiz-project" value="json_reports"> Generar reportes o fichas técnicas en JSON.
+                  <input type="radio" name="wiz-project" value="json_reports"> Extracción estructurada, clasificación y esquemas JSON.
                 </label>
                 <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
-                  <input type="radio" name="wiz-project" value="tutor"> Explicar temas escolares o dar clases a alumnos.
+                  <input type="radio" name="wiz-project" value="tutor"> Educación adaptativa y evaluación pedagógica formativa.
                 </label>
               </div>
             </div>
 
-            <!-- Pregunta 2 -->
+            <!-- Criterio 2 -->
             <div>
-              <label style="font-weight:800; font-size:0.9rem; color:var(--text-primary); display:block; margin-bottom:0.6rem;">2. ¿Cómo quieres que responda?</label>
+              <label style="font-weight:800; font-size:0.9rem; color:var(--text-primary); display:block; margin-bottom:0.6rem;">2. Formato de Salida Requerido:</label>
               <div style="display:flex; flex-direction:column; gap:0.5rem; font-size:0.86rem; color:var(--text-secondary);">
                 <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
-                  <input type="radio" name="wiz-output" value="friendly_text" checked> En español natural, amable y conversacional.
+                  <input type="radio" name="wiz-output" value="friendly_text" checked> Lenguaje natural en prosa empática y estructurada.
                 </label>
                 <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
-                  <input type="radio" name="wiz-output" value="json_format"> En código JSON estricto para conectarse a otra app.
+                  <input type="radio" name="wiz-output" value="json_format"> Objeto JSON tipado estricto para interoperabilidad.
                 </label>
               </div>
             </div>
 
-            <!-- Pregunta 3 -->
+            <!-- Criterio 3 -->
             <div>
-              <label style="font-weight:800; font-size:0.9rem; color:var(--text-primary); display:block; margin-bottom:0.6rem;">3. ¿Dónde lo vas a probar?</label>
+              <label style="font-weight:800; font-size:0.9rem; color:var(--text-primary); display:block; margin-bottom:0.6rem;">3. Entorno de Ejecución:</label>
               <div style="display:flex; flex-direction:column; gap:0.5rem; font-size:0.86rem; color:var(--text-secondary);">
                 <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
-                  <input type="radio" name="wiz-compute" value="colab_free" checked> En Google Colab Gratuito (100% en la nube sin pagar).
+                  <input type="radio" name="wiz-compute" value="colab_free" checked> Google Colab Gratuito (1x GPU Tesla T4 15 GB VRAM).
                 </label>
                 <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
-                  <input type="radio" name="wiz-compute" value="local_pc"> En mi propia computadora (Mac / Windows / Linux).
+                  <input type="radio" name="wiz-compute" value="local_pc"> Entorno Local (CPU / Apple Silicon M-Series).
                 </label>
               </div>
             </div>
@@ -529,35 +637,39 @@
     </article>
 
     <!-- ======================================================================
-         MÓDULO 5: SEMÁFORO DE HARDWARE & GOOGLE COLAB GRATUITO
+         SECCIÓN 6: HARDWARE, VRAM & GOOGLE COLAB
          ====================================================================== -->
-    <article class="tema-card" id="semaforo-hardware" style="margin-bottom: 3.5rem;">
+    <article class="tema-card" id="hardware-colab" style="margin-bottom: 3.5rem;">
       <div class="tema-header">
-        <div class="tema-eyebrow">Tranquilidad Técnica · Sin Gastar Dinero</div>
-        <h3 class="tema-title">Semáforo de Hardware: ¿Cabe tu Proyecto en Google Colab Gratis?</h3>
+        <div class="tema-eyebrow">Dimensionamiento de Recursos · Planificación VRAM</div>
+        <h3 class="tema-title">Presupuesto de Memoria VRAM y Factibilidad en Google Colab</h3>
       </div>
 
       <div class="tema-section-block">
         <p class="prose-p">
-          Una duda muy común es: <em>"¿Necesito una supercomputadora para hacer mi proyecto de IA?"</em>. <b>La respuesta es NO.</b> Google te presta una tarjeta gráfica de 15 GB totalmente gratis. Usa este semáforo para verificar que tu modelo cabe sin problemas:
+          El consumo de memoria de GPU durante la inferencia y el entrenamiento PEFT se rige por la ecuación formal:
         </p>
+
+        <div class="formula-callout" style="background:var(--bg-surface-2); border:1px solid var(--border-subtle); border-radius:10px; padding:1.2rem; margin:1rem 0; text-align:center;">
+          $$\text{VRAM}_{\text{Total}} = \text{Memoria}_{\text{Pesos}} + \text{Memoria}_{\text{Optimizador (AdamW)}} + \text{Memoria}_{\text{KV-Cache}} + \text{Memoria}_{\text{Activaciones}} + \text{Sobrecarga CUDA}$$
+        </div>
 
         <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:1rem; background:var(--bg-surface-2); border:1px solid var(--border-subtle); border-radius:12px; padding:1.2rem; margin:1.2rem 0;">
           <div>
-            <label style="font-size:0.82rem; font-weight:700; color:var(--text-primary); display:block; margin-bottom:0.3rem;">Tamaño del Modelo de IA:</label>
+            <label style="font-size:0.82rem; font-weight:700; color:var(--text-primary); display:block; margin-bottom:0.3rem;">Modelo Fundacional Base:</label>
             <select id="colab-model-choice" style="width:100%; padding:0.6rem; border-radius:8px; border:1px solid var(--border-subtle); background:var(--bg-surface); color:var(--text-primary); font-size:0.85rem;">
-              <option value="tinyllama" selected>TinyLlama 1.1B (Muy ligero &bull; ~4.2 GB)</option>
-              <option value="llama_1b">Meta Llama 3.2 1B (Recomendado &bull; ~5.1 GB)</option>
-              <option value="llama_3b">Meta Llama 3.2 3B (Potente &bull; ~8.4 GB)</option>
-              <option value="llama_8b">Meta Llama 3.1 8B (Avanzado &bull; ~11.8 GB)</option>
+              <option value="tinyllama" selected>TinyLlama 1.1B (1.1B Parámetros &bull; ~4.2 GB)</option>
+              <option value="llama_1b">Meta Llama 3.2 1B (1.2B Parámetros &bull; ~5.1 GB)</option>
+              <option value="llama_3b">Meta Llama 3.2 3B (3.2B Parámetros &bull; ~8.4 GB)</option>
+              <option value="llama_8b">Meta Llama 3.1 8B (8.0B Parámetros &bull; ~11.8 GB)</option>
             </select>
           </div>
 
           <div>
-            <label style="font-size:0.82rem; font-weight:700; color:var(--text-primary); display:block; margin-bottom:0.3rem;">Tipo de Trabajo:</label>
+            <label style="font-size:0.82rem; font-weight:700; color:var(--text-primary); display:block; margin-bottom:0.3rem;">Régimen de Operación:</label>
             <select id="colab-mode-choice" style="width:100%; padding:0.6rem; border-radius:8px; border:1px solid var(--border-subtle); background:var(--bg-surface); color:var(--text-primary); font-size:0.85rem;">
-              <option value="rag" selected>RAG (Buscar en Documentos y Responder)</option>
-              <option value="lora">Entrenamiento LoRA (Aprender Estilo Fijo)</option>
+              <option value="rag" selected>Inferencia con Motor Vectorial (RAG)</option>
+              <option value="lora">Entrenamiento Supervisado con LoRA (PEFT)</option>
             </select>
           </div>
         </div>
@@ -567,63 +679,63 @@
     </article>
 
     <!-- ======================================================================
-         MÓDULO 6: LA RUTA EN 5 FASES PASO A PASO
+         SECCIÓN 7: HOJA DE RUTA EN 5 FASES
          ====================================================================== -->
-    <article class="tema-card" id="paso-a-paso" style="margin-bottom: 3.5rem;">
+    <article class="tema-card" id="hoja-de-ruta" style="margin-bottom: 3.5rem;">
       <div class="tema-header">
-        <div class="tema-eyebrow">Hoja de Ruta · Guía Paso a Paso</div>
-        <h3 class="tema-title">Cómo Construir tu Proyecto en 5 Sencillos Pasos</h3>
+        <div class="tema-eyebrow">Metodología de Desarrollo · Cronograma Técnico</div>
+        <h3 class="tema-title">Hoja de Ruta de Implementación en Cinco Fases</h3>
       </div>
 
       <div class="tema-section-block">
         <div style="display:flex; flex-direction:column; gap:1.2rem; margin-top:1.2rem;">
           
-          <div style="display:flex; gap:1rem; background:var(--bg-surface); border:1px solid var(--border-subtle); border-radius:12px; padding:1.2rem;">
+          <div style="display:flex; gap:1.2rem; background:var(--bg-surface); border:1px solid var(--border-subtle); border-radius:12px; padding:1.3rem;">
             <div style="width:34px; height:34px; border-radius:50%; background:var(--meta-blue); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800; flex-shrink:0;">1</div>
             <div>
-              <strong style="color:var(--text-primary); font-size:1rem; display:block; margin-bottom:0.3rem;">Fase 1: Define tu Problema y Prepara tus Textos</strong>
+              <strong style="color:var(--text-primary); font-size:1rem; display:block; margin-bottom:0.3rem;">Fase 1: Curaduría Documental y Limpieza de Datos</strong>
               <p style="font-size:0.88rem; color:var(--text-secondary); line-height:1.6; margin:0;">
-                Elige de qué va a saber tu IA (ej. tu negocio, tu escuela o tu tema favorito). Escribe de 5 a 10 párrafos con las respuestas oficiales en un archivo de texto o blog de notas.
+                Defina el alcance del caso de uso. Extraiga de 5 a 15 párrafos fácticos correspondientes a su temática en archivos de texto plano, eliminando caracteres especiales o formatos corruptos.
               </p>
             </div>
           </div>
 
-          <div style="display:flex; gap:1rem; background:var(--bg-surface); border:1px solid var(--border-subtle); border-radius:12px; padding:1.2rem;">
+          <div style="display:flex; gap:1.2rem; background:var(--bg-surface); border:1px solid var(--border-subtle); border-radius:12px; padding:1.3rem;">
             <div style="width:34px; height:34px; border-radius:50%; background:#0284c7; color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800; flex-shrink:0;">2</div>
             <div>
-              <strong style="color:var(--text-primary); font-size:1rem; display:block; margin-bottom:0.3rem;">Fase 2: Conecta tus Textos a `rag_engine.py`</strong>
+              <strong style="color:var(--text-primary); font-size:1rem; display:block; margin-bottom:0.3rem;">Fase 2: Indexación Vectorial en `rag_engine.py`</strong>
               <p style="font-size:0.88rem; color:var(--text-secondary); line-height:1.6; margin:0;">
-                Pega tus párrafos en la lista de textos de <code>rag_engine.py</code>. El sistema calculará automáticamente sus huellas digitales (embeddings) para encontrar las respuestas en milisegundos.
+                Incorpore sus textos en la matriz documental. El modelo <code>SentenceTransformer</code> calculará las incrustaciones normalizadas en $\mathbb{R}^{384}$ para búsquedas densas por similitud coseno.
               </p>
             </div>
           </div>
 
-          <div style="display:flex; gap:1rem; background:var(--bg-surface); border:1px solid var(--border-subtle); border-radius:12px; padding:1.2rem;">
+          <div style="display:flex; gap:1.2rem; background:var(--bg-surface); border:1px solid var(--border-subtle); border-radius:12px; padding:1.3rem;">
             <div style="width:34px; height:34px; border-radius:50%; background:#a855f7; color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800; flex-shrink:0;">3</div>
             <div>
-              <strong style="color:var(--text-primary); font-size:1rem; display:block; margin-bottom:0.3rem;">Fase 3: Define la Personalidad de tu Asistente</strong>
+              <strong style="color:var(--text-primary); font-size:1rem; display:block; margin-bottom:0.3rem;">Fase 3: Estructuración del System Prompt y Restricciones</strong>
               <p style="font-size:0.88rem; color:var(--text-secondary); line-height:1.6; margin:0;">
-                En el System Prompt indícale: <em>"Eres el asistente oficial de [Mi Empresa]. Responde siempre con amabilidad usando únicamente la información proporcionada. Si no sabes la respuesta, dilo con honestidad."</em>
+                Configure las directivas del modelo indicando: <em>"Responda única y exclusivamente con la evidencia del contexto proporcionado. Si la evidencia no contiene la respuesta, admita ignorancia."</em>
               </p>
             </div>
           </div>
 
-          <div style="display:flex; gap:1rem; background:var(--bg-surface); border:1px solid var(--border-subtle); border-radius:12px; padding:1.2rem;">
+          <div style="display:flex; gap:1.2rem; background:var(--bg-surface); border:1px solid var(--border-subtle); border-radius:12px; padding:1.3rem;">
             <div style="width:34px; height:34px; border-radius:50%; background:var(--accent-success); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800; flex-shrink:0;">4</div>
             <div>
-              <strong style="color:var(--text-primary); font-size:1rem; display:block; margin-bottom:0.3rem;">Fase 4: Ejecuta tu Cuaderno en Google Colab</strong>
+              <strong style="color:var(--text-primary); font-size:1rem; display:block; margin-bottom:0.3rem;">Fase 4: Ejecución y Validación en Google Colab</strong>
               <p style="font-size:0.88rem; color:var(--text-secondary); line-height:1.6; margin:0;">
-                Abre el cuaderno oficial en Google Colab con el botón de arriba, dale "Play" a las celdas en orden y hazle tus primeras preguntas de prueba.
+                Abra el cuaderno oficial en Google Colab, ejecute secuencialmente los bloques y evalúe la calidad de las respuestas frente a preguntas fuera de dominio (Out-of-Domain).
               </p>
             </div>
           </div>
 
-          <div style="display:flex; gap:1rem; background:var(--bg-surface); border:1px solid var(--border-subtle); border-radius:12px; padding:1.2rem;">
+          <div style="display:flex; gap:1.2rem; background:var(--bg-surface); border:1px solid var(--border-subtle); border-radius:12px; padding:1.3rem;">
             <div style="width:34px; height:34px; border-radius:50%; background:#f59e0b; color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800; flex-shrink:0;">5</div>
             <div>
-              <strong style="color:var(--text-primary); font-size:1rem; display:block; margin-bottom:0.3rem;">Fase 5: Prueba tu Servidor Web (FastAPI)</strong>
+              <strong style="color:var(--text-primary); font-size:1rem; display:block; margin-bottom:0.3rem;">Fase 5: Despliegue del Servidor Web con FastAPI</strong>
               <p style="font-size:0.88rem; color:var(--text-secondary); line-height:1.6; margin:0;">
-                Ejecuta <code>api_server.py</code> para ver tu panel interactivo de pruebas Swagger UI (<code>/docs</code>), listo para conectarse a cualquier aplicación o bot en el Módulo 2.
+                Inicie <code>api_server.py</code> para exponer la interfaz Swagger UI (`/docs`), validando la recepción y respuesta de payloads JSON con tipado fuerte.
               </p>
             </div>
           </div>
@@ -633,24 +745,24 @@
     </article>
 
     <!-- ======================================================================
-         MÓDULO 7: BLOQUES DE CÓDIGO LEGO EXPLICADOS
+         SECCIÓN 8: BLOQUES DE CÓDIGO LEGO COMENTADOS
          ====================================================================== -->
-    <article class="tema-card" id="codigo-lego" style="margin-bottom: 3.5rem;">
+    <article class="tema-card" id="bloques-codigo" style="margin-bottom: 3.5rem;">
       <div class="tema-header">
-        <div class="tema-eyebrow">Código Listo para Usar · Piezas Lego</div>
-        <h3 class="tema-title">Bloques de Código Comentados en Español Sencillo</h3>
+        <div class="tema-eyebrow">Implementación Técnica · Bloques Reutilizables</div>
+        <h3 class="tema-title">Código Modular Comentado para el Starter Kit</h3>
       </div>
 
       <div class="tema-section-block">
         <p class="prose-p">
-          Aquí tienes los 3 bloques principales de código que necesitas para tu proyecto. Cada línea tiene un comentario en español explicando qué hace y <b>dónde poner tus propios datos</b>:
+          Archivos base listos para copiar, adaptar con su propio dataset e integrar en su solución:
         </p>
 
         <!-- BLOQUE 1: RAG -->
         <div style="margin-bottom: 2rem;">
-          <h4 class="tema-subheading"><span class="tema-subheading-tag">Pieza 1</span> rag_engine.py · El Buscador de Documentos de tu Proyecto</h4>
+          <h4 class="tema-subheading"><span class="tema-subheading-tag">Módulo 1</span> rag_engine.py · Motor Vectorial y Búsqueda por Similitud Coseno</h4>
           <p class="prose-p" style="font-size: 0.88rem;">
-            Este código guarda los textos de tu negocio y encuentra automáticamente el párrafo que responde la pregunta del usuario:
+            Indexa textos documentales, calcula incrustaciones en $\mathbb{R}^{384}$ y recupera contexto relevante con umbral de filtrado:
           </p>
 
           <div class="code-box">
@@ -665,19 +777,19 @@
 <span class="code-kw">from</span> <span class="code-var">sentence_transformers</span> <span class="code-kw">import</span> <span class="code-cls">SentenceTransformer</span>
 
 <span class="code-kw">class</span> <span class="code-cls">VectorRAGEngine</span>:
+    <span class="code-str">"""Motor de busqueda vectorial para recuperacion de contexto factico."""</span>
     <span class="code-kw">def</span> <span class="code-fn">__init__</span>(<span class="code-var">self</span>, <span class="code-var">model_name</span>=<span class="code-str">"all-MiniLM-L6-v2"</span>):
-        <span class="code-cm"># Cargamos el modelo traductor de texto a vectores de significado</span>
         <span class="code-var">self</span>.<span class="code-var">embedder</span> = <span class="code-cls">SentenceTransformer</span>(<span class="code-var">model_name</span>)
         <span class="code-var">self</span>.<span class="code-var">documentos</span> = []
         <span class="code-var">self</span>.<span class="code-var">embeddings</span> = <span class="code-kw">None</span>
 
     <span class="code-kw">def</span> <span class="code-fn">index_documents</span>(<span class="code-var">self</span>, <span class="code-var">docs</span>: <span class="code-cls">list</span>[<span class="code-cls">str</span>]):
-        <span class="code-cm"># Guarda tus textos y calcula sus huellas digitales en segundos</span>
+        <span class="code-str">"""Calcula embeddings con normalizacion L2 para producto punto equivalente a coseno."""</span>
         <span class="code-var">self</span>.<span class="code-var">documentos</span> = <span class="code-var">docs</span>
         <span class="code-var">self</span>.<span class="code-var">embeddings</span> = <span class="code-var">self</span>.<span class="code-var">embedder</span>.<span class="code-fn">encode</span>(<span class="code-var">docs</span>, <span class="code-var">normalize_embeddings</span>=<span class="code-kw">True</span>)
 
     <span class="code-kw">def</span> <span class="code-fn">search</span>(<span class="code-var">self</span>, <span class="code-var">pregunta</span>: <span class="code-cls">str</span>, <span class="code-var">top_k</span>=2, <span class="code-var">umbral_minimo</span>=0.40):
-        <span class="code-cm"># Compara la pregunta contra todos los textos y devuelve los 2 mas parecidos</span>
+        <span class="code-str">"""Recupera los fragmentos que superan el umbral de confianza cosenoidal."""</span>
         <span class="code-var">q_emb</span> = <span class="code-var">self</span>.<span class="code-var">embedder</span>.<span class="code-fn">encode</span>([<span class="code-var">pregunta</span>], <span class="code-var">normalize_embeddings</span>=<span class="code-kw">True</span>)[0]
         <span class="code-var">similitudes</span> = <span class="code-var">np</span>.<span class="code-fn">dot</span>(<span class="code-var">self</span>.<span class="code-var">embeddings</span>, <span class="code-var">q_emb</span>)
         <span class="code-var">mejores_indices</span> = <span class="code-var">np</span>.<span class="code-fn">argsort</span>(<span class="code-var">similitudes</span>)[::-1][:top_k]
@@ -688,26 +800,23 @@
                 <span class="code-var">resultados</span>.<span class="code-fn">append</span>({<span class="code-str">"texto"</span>: <span class="code-var">self</span>.<span class="code-var">documentos</span>[<span class="code-var">idx</span>], <span class="code-str">"confianza"</span>: <span class="code-fn">float</span>(<span class="code-var">similitudes</span>[<span class="code-var">idx</span>])})
         <span class="code-kw">return</span> <span class="code-var">resultados</span>
 
-<span class="code-cm"># ==========================================</span>
-<span class="code-cm"># AQUI PEGAS LOS TEXTOS DE TU PROPIO PROYECTO:</span>
-<span class="code-cm"># ==========================================</span>
-<span class="code-var">mis_documentos_de_prueba</span> = [
-    <span class="code-str">"Los reembolsos se solicitan en un plazo maximo de 30 dias con comprobante."</span>,
-    <span class="code-str">"Los envios normales demoran de 2 a 4 dias habiles en llegar a tu domicilio."</span>,
-    <span class="code-str">"Todos los productos cuentan con 12 meses de garantia oficial de fabrica."</span>
+<span class="code-cm"># Inserte los textos de su caso de estudio institucional:</span>
+<span class="code-var">mis_documentos</span> = [
+    <span class="code-str">"Las solicitudes de reembolso aplican en un plazo maximo de 30 dias naturales con ticket."</span>,
+    <span class="code-str">"Los envios estandar demoran de 2 a 4 dias habiles en cobertura nacional."</span>,
+    <span class="code-str">"Los equipos cuentan con 12 meses de garantia de fabrica ante defectos tecnicos."</span>
 ]
 
 <span class="code-var">rag</span> = <span class="code-cls">VectorRAGEngine</span>()
-<span class="code-var">rag</span>.<span class="code-fn">index_documents</span>(<span class="code-var">mis_documentos_de_prueba</span>)
-<span class="code-fn">print</span>(<span class="code-str">"Prueba de busqueda:"</span>, <span class="code-var">rag</span>.<span class="code-fn">search</span>(<span class="code-str">"¿Puedo devolver un producto?"</span>))</code></pre>
+<span class="code-var">rag</span>.<span class="code-fn">index_documents</span>(<span class="code-var">mis_documentos</span>)</code></pre>
           </div>
         </div>
 
         <!-- BLOQUE 2: ROUTER -->
         <div style="margin-bottom: 2rem;">
-          <h4 class="tema-subheading"><span class="tema-subheading-tag">Pieza 2</span> router.py · El Mesero Inteligente</h4>
+          <h4 class="tema-subheading"><span class="tema-subheading-tag">Módulo 2</span> router.py · Enrutador Heurístico de Complejidad</h4>
           <p class="prose-p" style="font-size: 0.88rem;">
-            Filtra si la persona está saludando amablemente o si está preguntando algo de la empresa:
+            Clasifica la intención para reducir latencia y costo computacional:
           </p>
 
           <div class="code-box">
@@ -719,32 +828,26 @@
               </div>
             </div>
             <pre class="code-content"><code><span class="code-kw">class</span> <span class="code-cls">ModelRouter</span>:
+    <span class="code-str">"""Clasifica la intencion de la consulta para derivar al pipeline correspondiente."""</span>
     <span class="code-kw">def</span> <span class="code-fn">__init__</span>(<span class="code-var">self</span>):
-        <span class="code-cm"># Palabras clave que indican que debemos buscar en tus documentos</span>
-        <span class="code-var">self</span>.<span class="code-var">palabras_documento</span> = [<span class="code-str">"politica"</span>, <span class="code-str">"reembolso"</span>, <span class="code-str">"devolucion"</span>, <span class="code-str">"garantia"</span>, <span class="code-str">"envio"</span>, <span class="code-str">"precio"</span>, <span class="code-str">"costo"</span>]
-        <span class="code-var">self</span>.<span class="code-var">palabras_formato_json</span> = [<span class="code-str">"json"</span>, <span class="code-str">"esquema"</span>, <span class="code-str">"ticket"</span>, <span class="code-str">"ficha"</span>]
+        <span class="code-var">self</span>.<span class="code-var">palabras_clave_rag</span> = [<span class="code-str">"politica"</span>, <span class="code-str">"reembolso"</span>, <span class="code-str">"devolucion"</span>, <span class="code-str">"garantia"</span>, <span class="code-str">"envio"</span>, <span class="code-str">"costo"</span>]
+        <span class="code-var">self</span>.<span class="code-var">palabras_clave_lora</span> = [<span class="code-str">"json"</span>, <span class="code-str">"esquema"</span>, <span class="code-str">"ticket"</span>, <span class="code-str">"ficha"</span>]
 
     <span class="code-kw">def</span> <span class="code-fn">route</span>(<span class="code-var">self</span>, <span class="code-var">mensaje_usuario</span>: <span class="code-cls">str</span>) -> <span class="code-cls">str</span>:
         <span class="code-var">texto</span> = <span class="code-var">mensaje_usuario</span>.<span class="code-fn">lower</span>()
-        
-        <span class="code-cm"># Si pregunta por politicas -> Usamos RAG</span>
-        <span class="code-kw">if</span> <span class="code-fn">any</span>(<span class="code-var">p</span> <span class="code-kw">in</span> <span class="code-var">texto</span> <span class="code-kw">for</span> <span class="code-var">p</span> <span class="code-kw">in</span> <span class="code-var">self</span>.<span class="code-var">palabras_documento</span>):
+        <span class="code-kw">if</span> <span class="code-fn">any</span>(<span class="code-var">p</span> <span class="code-kw">in</span> <span class="code-var">texto</span> <span class="code-kw">for</span> <span class="code-var">p</span> <span class="code-kw">in</span> <span class="code-var">self</span>.<span class="code-var">palabras_clave_rag</span>):
             <span class="code-kw">return</span> <span class="code-str">"RAG_PIPELINE"</span>
-            
-        <span class="code-cm"># Si pide un formato tecnico -> Usamos el formateador JSON</span>
-        <span class="code-kw">if</span> <span class="code-fn">any</span>(<span class="code-var">p</span> <span class="code-kw">in</span> <span class="code-var">texto</span> <span class="code-kw">for</span> <span class="code-var">p</span> <span class="code-kw">in</span> <span class="code-var">self</span>.<span class="code-var">palabras_formato_json</span>):
+        <span class="code-kw">if</span> <span class="code-fn">any</span>(<span class="code-var">p</span> <span class="code-kw">in</span> <span class="code-var">texto</span> <span class="code-kw">for</span> <span class="code-var">p</span> <span class="code-kw">in</span> <span class="code-var">self</span>.<span class="code-var">palabras_clave_lora</span>):
             <span class="code-kw">return</span> <span class="code-str">"LORA_ADAPTER"</span>
-            
-        <span class="code-cm"># Si es un saludo normal -> Respuesta directa</span>
         <span class="code-kw">return</span> <span class="code-str">"FAST_LLM"</span></code></pre>
           </div>
         </div>
 
         <!-- BLOQUE 3: API FASTAPI -->
         <div style="margin-bottom: 2rem;">
-          <h4 class="tema-subheading"><span class="tema-subheading-tag">Pieza 3</span> api_server.py · El Servidor Web para Conectar a Internet</h4>
+          <h4 class="tema-subheading"><span class="tema-subheading-tag">Módulo 3</span> api_server.py · Microservicio REST Asíncrono</h4>
           <p class="prose-p" style="font-size: 0.88rem;">
-            Permite que cualquier persona o aplicación web consulte a tu asistente a través de un endpoint HTTP seguro:
+            Servidor web tipado con Pydantic y documentación Swagger UI (`/docs`):
           </p>
 
           <div class="code-box">
@@ -759,31 +862,30 @@
 <span class="code-kw">from</span> <span class="code-var">pydantic</span> <span class="code-kw">import</span> <span class="code-cls">BaseModel</span>
 <span class="code-kw">import</span> <span class="code-var">time</span>
 
-<span class="code-var">app</span> = <span class="code-cls">FastAPI</span>(<span class="code-var">title</span>=<span class="code-str">"Mi Asistente de IA - Proyecto Hackathon"</span>, <span class="code-var">version</span>=<span class="code-str">"1.0.0"</span>)
+<span class="code-var">app</span> = <span class="code-cls">FastAPI</span>(<span class="code-var">title</span>=<span class="code-str">"Motor de Asistencia IA - Hackathon Integrador"</span>, <span class="code-var">version</span>=<span class="code-str">"1.0.0"</span>)
 
-<span class="code-cm"># Definimos la forma del mensaje que nos envian</span>
 <span class="code-kw">class</span> <span class="code-cls">MensajeEntrada</span>(<span class="code-cls">BaseModel</span>):
     <span class="code-var">mensaje</span>: <span class="code-cls">str</span>
     <span class="code-var">usuario</span>: <span class="code-cls">str</span> = <span class="code-str">"invitado"</span>
 
-<span class="code-cm"># Definimos la forma de la respuesta que entregamos</span>
 <span class="code-kw">class</span> <span class="code-cls">RespuestaSalida</span>(<span class="code-cls">BaseModel</span>):
     <span class="code-var">respuesta</span>: <span class="code-cls">str</span>
-    <span class="code-var">tiempo_milisegundos</span>: <span class="code-cls">float</span>
-    <span class="code-var">fuente</span>: <span class="code-cls">str</span>
+    <span class="code-var">tiempo_ms</span>: <span class="code-cls">float</span>
+    <span class="code-var">ruta_usada</span>: <span class="code-cls">str</span>
+    <span class="code-var">fuentes</span>: <span class="code-cls">list</span>[<span class="code-cls">str</span>] = []
 
 <span class="code-nd">@app.post</span>(<span class="code-str">"/v1/chat"</span>, <span class="code-var">response_model</span>=<span class="code-cls">RespuestaSalida</span>)
 <span class="code-kw">async def</span> <span class="code-fn">chatear</span>(<span class="code-var">entrada</span>: <span class="code-cls">MensajeEntrada</span>):
     <span class="code-var">inicio</span> = <span class="code-var">time</span>.<span class="code-fn">perf_counter</span>()
     <span class="code-kw">if not</span> <span class="code-var">entrada</span>.<span class="code-var">mensaje</span>.<span class="code-fn">strip</span>():
-        <span class="code-kw">raise</span> <span class="code-cls">HTTPException</span>(<span class="code-var">status_code</span>=400, <span class="code-var">detail</span>=<span class="code-str">"Por favor escribe un mensaje valido."</span>)
+        <span class="code-kw">raise</span> <span class="code-cls">HTTPException</span>(<span class="code-var">status_code</span>=400, <span class="code-var">detail</span>=<span class="code-str">"El mensaje no puede estar vacio."</span>)
     
-    <span class="code-cm"># Aqui se procesa el mensaje con RAG o el LLM</span>
     <span class="code-var">tiempo</span> = (<span class="code-var">time</span>.<span class="code-fn">perf_counter</span>() - <span class="code-var">inicio</span>) * 1000
     <span class="code-kw">return</span> <span class="code-cls">RespuestaSalida</span>(
-        <span class="code-var">respuesta</span>=<span class="code-str">"¡Hola! Segun nuestras politicas oficiales: los reembolsos se gestionan en 30 dias con ticket."</span>,
-        <span class="code-var">tiempo_milisegundos</span>=<span class="code-fn">round</span>(<span class="code-var">tiempo</span>, 2),
-        <span class="code-var">fuente</span>=<span class="code-str">"Politica_Devoluciones_Art4"</span>
+        <span class="code-var">respuesta</span>=<span class="code-str">"Respuesta procesada correctamente mediante el pipeline de IA."</span>,
+        <span class="code-var">tiempo_ms</span>=<span class="code-fn">round</span>(<span class="code-var">tiempo</span>, 2),
+        <span class="code-var">ruta_usada</span>=<span class="code-str">"RAG_PIPELINE"</span>,
+        <span class="code-var">fuentes</span>=[<span class="code-str">"Politica_Devoluciones_Art4"</span>]
     )</code></pre>
           </div>
         </div>
@@ -791,161 +893,163 @@
     </article>
 
     <!-- ======================================================================
-         MÓDULO 8: PRIMEROS AUXILIOS TÉCNICOS & PREGUNTAS FRECUENTES
+         SECCIÓN 9: MANUAL DE DIAGNÓSTICO & PRIMEROS AUXILIOS TÉCNICOS
          ====================================================================== -->
-    <article class="tema-card" id="primeros-auxilios" style="margin-bottom: 3.5rem;">
+    <article class="tema-card" id="manual-diagnostico" style="margin-bottom: 3.5rem;">
       <div class="tema-header">
-        <div class="tema-eyebrow">Primeros Auxilios · Solución de Problemas</div>
-        <h3 class="tema-title">Resolución Rápida de Dudas y Tropiezos Frecuentes</h3>
+        <div class="tema-eyebrow">Diagnóstico y Mitigación · Primeros Auxilios</div>
+        <h3 class="tema-title">Resolución Técnica de Bloqueos y Errores Frecuentes</h3>
       </div>
 
       <div class="tema-section-block">
         <p class="prose-p">
-          ¿Tuviste algún tropiezo o duda técnica? Consulta las soluciones con explicaciones sencillas:
+          Soluciones directas y verificadas para los 8 problemas más comunes en desarrollo de IA aplicada:
         </p>
 
         <div style="display:flex; flex-direction:column; gap:0.9rem; margin-top:1.2rem;">
+          
           <details class="breakdown-details-box">
             <summary class="breakdown-summary-btn">
-              <span>1. ¿Cómo hago para que la IA nunca invente cosas que no están en mis textos?</span>
-              <span class="breakdown-count-tag" style="background:rgba(5,150,105,0.15); color:var(--accent-success);">Cero Alucinaciones</span>
+              <span>1. ¿Cómo erradicar alucinaciones fácticas en el pipeline RAG?</span>
+              <span class="breakdown-count-tag" style="background:rgba(5,150,105,0.15); color:var(--accent-success);">Control Fáctico</span>
             </summary>
             <div class="breakdown-content-wrap">
               <p style="font-size:0.88rem; line-height:1.65; color:var(--text-secondary); margin:0;">
-                En tu prompt del sistema agrega esta regla de oro: <em>"Responde únicamente usando el texto del Contexto. Si el Contexto no contiene la respuesta, di textualmente: 'No cuento con información oficial sobre este tema en mis manuales'."</em> Además, fija el <code>umbral_minimo = 0.40</code> en tu RAG para ignorar textos que no tengan que ver.
+                <b>Solución:</b> Integre en el System Prompt la directiva: <em>"Responda únicamente a partir de la evidencia del Contexto. Si no está en el Contexto, responda textualmente: 'No cuento con información oficial sobre este tema'."</em> Fije <code>umbral_minimo = 0.40</code> en <code>rag_engine.py</code> para descartar fragmentos irrelevantes.
               </p>
             </div>
           </details>
 
           <details class="breakdown-details-box">
             <summary class="breakdown-summary-btn">
-              <span>2. ¿Qué hago si me sale un error rojo de `CUDA Out of memory` en Colab?</span>
-              <span class="breakdown-count-tag" style="background:rgba(239,68,68,0.15); color:#ef4444;">Memoria VRAM</span>
+              <span>2. Error `CUDA Out of memory (OOM)` durante la carga o entrenamiento</span>
+              <span class="breakdown-count-tag" style="background:rgba(239,68,68,0.15); color:#ef4444;">VRAM Overflow</span>
             </summary>
             <div class="breakdown-content-wrap">
               <p style="font-size:0.88rem; line-height:1.65; color:var(--text-secondary); margin:0;">
-                Significa que le pediste a la tarjeta gráfica más de lo que puede cargar a la vez. <b>Solución súper fácil:</b> Cambia el modelo a uno de 1B (como <code>TinyLlama/TinyLlama-1.1B-Chat-v1.0</code> o <code>meta-llama/Llama-3.2-1B-Instruct</code>) o fija <code>per_device_train_batch_size = 1</code>.
+                <b>Solución:</b> Fije <code>per_device_train_batch_size = 1</code> y active <code>gradient_accumulation_steps = 4</code>. Utilice modelos de escala 1B/3B (ej. <code>Llama-3.2-1B-Instruct</code>) o cuantización NF4 4-bit (QLoRA) para modelos de 8B.
               </p>
             </div>
           </details>
 
           <details class="breakdown-details-box">
             <summary class="breakdown-summary-btn">
-              <span>3. ¿Cómo puedo subir mis propios archivos PDF o Word a Google Colab?</span>
-              <span class="breakdown-count-tag">Archivos Propios</span>
+              <span>3. Ingesta de archivos locales PDF, Word o CSV en Google Colab</span>
+              <span class="breakdown-count-tag">Ingesta de Datos</span>
             </summary>
             <div class="breakdown-content-wrap">
               <p style="font-size:0.88rem; line-height:1.65; color:var(--text-secondary); margin:0;">
-                En Google Colab, haz clic en el icono de carpetita a la izquierda y arrastra tu archivo <code>.txt</code> o <code>.pdf</code>. En Python puedes leerlo fácilmente con <code>with open("mi_archivo.txt") as f: textos = f.readlines()</code> y pasarlo directo a <code>rag.index_documents(textos)</code>.
+                <b>Solución:</b> Suba su archivo en el panel izquierdo de Colab y lea los fragmentos con <code>with open("documento.txt") as f: textos = f.readlines()</code>. Páselos directamente a <code>rag.index_documents(textos)</code>.
               </p>
             </div>
           </details>
 
           <details class="breakdown-details-box">
             <summary class="breakdown-summary-btn">
-              <span>4. ¿Cómo pruebo mi servidor FastAPI desde el navegador?</span>
-              <span class="breakdown-count-tag" style="background:rgba(8,102,255,0.15); color:var(--meta-blue);">Swagger UI</span>
+              <span>4. Inspección y prueba interactiva con Swagger UI (`/docs`)</span>
+              <span class="breakdown-count-tag" style="background:rgba(8,102,255,0.15); color:var(--meta-blue);">OpenAPI Spec</span>
             </summary>
             <div class="breakdown-content-wrap">
               <p style="font-size:0.88rem; line-height:1.65; color:var(--text-secondary); margin:0;">
-                Cuando ejecutes tu servidor localmente, abre en tu navegador <code>http://localhost:8000/docs</code>. Verás una pantalla interactiva con botones para mandar mensajes de prueba y ver las respuestas al instante.
+                <b>Solución:</b> Inicie el servidor localmente con <code>uvicorn api_server:app --reload --port 8000</code> y abra <code>http://localhost:8000/docs</code> para enviar payloads JSON de prueba interactivos.
               </p>
             </div>
           </details>
 
           <details class="breakdown-details-box">
             <summary class="breakdown-summary-btn">
-              <span>5. ¿Cómo forzar al modelo a que conteste estrictamente en formato JSON?</span>
-              <span class="breakdown-count-tag" style="background:rgba(168,85,247,0.15); color:#a855f7;">Formato JSON</span>
+              <span>5. Validación estricta de salida en formato JSON Schema</span>
+              <span class="breakdown-count-tag" style="background:rgba(168,85,247,0.15); color:#a855f7;">Formato Tipado</span>
             </summary>
             <div class="breakdown-content-wrap">
               <p style="font-size:0.88rem; line-height:1.65; color:var(--text-secondary); margin:0;">
-                Pon 2 ejemplos claros en el prompt mostrando cómo empieza con <code>{</code> y termina con <code>}</code>. Indícale: <em>"Responde únicamente con el bloque JSON, sin introducciones ni despedidas."</em>
+                <b>Solución:</b> Incorpore 2 ejemplos Few-Shot iniciando con <code>{</code> y finalizando con <code>}</code>. Indique en la directiva: <em>"Responda exclusivamente con el bloque JSON parseable, sin introducciones ni marcas Markdown fuera del objeto."</em>
               </p>
             </div>
           </details>
 
           <details class="breakdown-details-box">
             <summary class="breakdown-summary-btn">
-              <span>6. ¿Qué pasa si Google Colab se desconecta por inactividad?</span>
-              <span class="breakdown-count-tag">Sesiones Colab</span>
+              <span>6. Reconexión y persistencia de entorno en Google Colab</span>
+              <span class="breakdown-count-tag">Sesiones Cloud</span>
             </summary>
             <div class="breakdown-content-wrap">
               <p style="font-size:0.88rem; line-height:1.65; color:var(--text-secondary); margin:0;">
-                No te preocupes. Solo vuelve a darle clic a "Conectar" en la esquina superior derecha y dale "Ejecutar todas las celdas" (Runtime &rarr; Run all). Todo tu código se vuelve a cargar en menos de 1 minuto.
+                <b>Solución:</b> En caso de desconexión por inactividad, seleccione <em>Entorno de ejecución &rarr; Ejecutar todo</em>. El entorno descarga e indexa las dependencias nuevamente en menos de 60 segundos.
               </p>
             </div>
           </details>
+
         </div>
       </div>
     </article>
 
     <!-- ======================================================================
-         MÓDULO 9: CHECKLIST INTERACTIVO DE CALIDAD & RÚBRICA
+         SECCIÓN 10: RÚBRICA OFICIAL & CHECKLIST INTERACTIVO
          ====================================================================== -->
     <article class="tema-card" id="checklist-final" style="margin-bottom: 3.5rem; border-left: 5px solid var(--accent-success);">
       <div class="tema-header">
-        <div class="tema-eyebrow">Autoevaluación · Checklist de Calidad</div>
-        <h3 class="tema-title">Lista de Verificación de tu Proyecto Antes de Entregar</h3>
+        <div class="tema-eyebrow">Aseguramiento de Calidad · Rúbrica Oficial (100 Puntos)</div>
+        <h3 class="tema-title">Auditoría Pre-Entrega y Criterios de Evaluación</h3>
       </div>
 
       <div class="tema-section-block">
         <p class="prose-p">
-          Marca cada casilla conforme completes tu proyecto. Al llegar al 100%, ¡recibirás una felicitación con confeti!
+          Valide que su solución cumple con los criterios de la rúbrica oficial antes de entregar el proyecto o proceder al Módulo 2:
         </p>
 
         <!-- Barra de Progreso -->
         <div style="background:var(--bg-surface-2); border:1px solid var(--border-subtle); border-radius:10px; padding:1rem 1.4rem; margin:1.2rem 0;">
           <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
-            <span style="font-size:0.82rem; font-weight:700; color:var(--text-primary);">Tu Progreso de Proyecto:</span>
-            <span id="friendly-progress-text" style="font-family:var(--font-mono); font-size:0.85rem; font-weight:800; color:var(--accent-success);">0 de 6 pasos (0%)</span>
+            <span style="font-size:0.82rem; font-weight:700; color:var(--text-primary);">Progreso de Verificación Técnica:</span>
+            <span id="friendly-progress-text" style="font-family:var(--font-mono); font-size:0.85rem; font-weight:800; color:var(--accent-success);">0 de 6 verificados (0%)</span>
           </div>
           <div style="width:100%; height:8px; background:var(--bg-subtle-alt); border-radius:4px; overflow:hidden;">
             <div id="friendly-progress-bar" style="width:0%; height:100%; background:var(--accent-success); transition:width 0.3s ease;"></div>
           </div>
         </div>
 
-        <div id="checklist-celebration-msg" style="display:none; background:rgba(5,150,105,0.12); border:1px solid var(--accent-success); border-radius:10px; padding:1rem 1.2rem; margin-bottom:1rem; text-align:center; animation:mainFadeIn 0.4s ease;">
-          <strong style="color:var(--accent-success); font-size:1.1rem; display:block; margin-bottom:0.3rem;">🎉 ¡Felicidades! Tu proyecto cumple al 100% con los estándares de ingeniería.</strong>
-          <span style="font-size:0.88rem; color:var(--text-primary);">Estás completamente listo para avanzar al Módulo 2 y conectar tu IA a WhatsApp.</span>
+        <div id="checklist-celebration-msg" style="display:none; background:rgba(5,150,105,0.12); border:1px solid var(--accent-success); border-radius:10px; padding:1.2rem; margin-bottom:1rem; text-align:center; animation:mainFadeIn 0.4s ease;">
+          <strong style="color:var(--accent-success); font-size:1.1rem; display:block; margin-bottom:0.3rem;">Auditoría de Calidad Completa: 100% Verificado.</strong>
+          <span style="font-size:0.88rem; color:var(--text-primary);">El proyecto cumple con los estándares de ingeniería requeridos para la integración con WhatsApp en el Módulo 2.</span>
         </div>
 
         <div id="friendly-checklist-container" style="display:flex; flex-direction:column; gap:0.75rem; font-size:0.88rem; color:var(--text-primary);">
           <label style="display:flex; align-items:flex-start; gap:0.7rem; cursor:pointer; background:var(--bg-surface); padding:0.8rem 1rem; border-radius:8px; border:1px solid var(--border-subtle);">
             <input type="checkbox" style="margin-top:0.2rem; cursor:pointer;">
-            <div><strong>1. Tema Definido:</strong> Elegí una de las 4 plantillas o un tema propio y preparé mis textos.</div>
+            <div><strong>1. Desacoplamiento de Datos:</strong> El conocimiento del sistema proviene de un repositorio externo indexado y no del texto del prompt.</div>
           </label>
 
           <label style="display:flex; align-items:flex-start; gap:0.7rem; cursor:pointer; background:var(--bg-surface); padding:0.8rem 1rem; border-radius:8px; border:1px solid var(--border-subtle);">
             <input type="checkbox" style="margin-top:0.2rem; cursor:pointer;">
-            <div><strong>2. Motor RAG Conectado:</strong> Mis textos están indexados en <code>rag_engine.py</code> y la búsqueda devuelve resultados.</div>
+            <div><strong>2. Motor RAG Operativo:</strong> La base documental está indexada en <code>rag_engine.py</code> y la búsqueda devuelve fragmentos verificables.</div>
           </label>
 
           <label style="display:flex; align-items:flex-start; gap:0.7rem; cursor:pointer; background:var(--bg-surface); padding:0.8rem 1rem; border-radius:8px; border:1px solid var(--border-subtle);">
             <input type="checkbox" style="margin-top:0.2rem; cursor:pointer;">
-            <div><strong>3. Sin Alucinaciones:</strong> El modelo responde únicamente con la evidencia y admite cuando no sabe.</div>
+            <div><strong>3. Control de Alucinación:</strong> El modelo aplica umbral de similitud ($\ge 0.40$) y admite ignorancia ante consultas fuera de dominio.</div>
           </label>
 
           <label style="display:flex; align-items:flex-start; gap:0.7rem; cursor:pointer; background:var(--bg-surface); padding:0.8rem 1rem; border-radius:8px; border:1px solid var(--border-subtle);">
             <input type="checkbox" style="margin-top:0.2rem; cursor:pointer;">
-            <div><strong>4. Probado en Google Colab:</strong> Ejecuté el cuaderno de Colab sin errores de memoria (VRAM).</div>
+            <div><strong>4. Validación de VRAM:</strong> El cuaderno ejecuta de forma fluida en Google Colab sin incurrir en desbordamientos de memoria CUDA.</div>
           </label>
 
           <label style="display:flex; align-items:flex-start; gap:0.7rem; cursor:pointer; background:var(--bg-surface); padding:0.8rem 1rem; border-radius:8px; border:1px solid var(--border-subtle);">
             <input type="checkbox" style="margin-top:0.2rem; cursor:pointer;">
-            <div><strong>5. Servidor FastAPI Listo:</strong> El archivo <code>api_server.py</code> responde consultas en formato JSON.</div>
+            <div><strong>5. Endpoints REST Tipados:</strong> El microservicio <code>api_server.py</code> valida esquemas Pydantic y expone documentación en Swagger UI.</div>
           </label>
 
           <label style="display:flex; align-items:flex-start; gap:0.7rem; cursor:pointer; background:var(--bg-surface); padding:0.8rem 1rem; border-radius:8px; border:1px solid var(--border-subtle);">
             <input type="checkbox" style="margin-top:0.2rem; cursor:pointer;">
-            <div><strong>6. Seguridad de Claves:</strong> No escribí contraseñas ni tokens en el código; usé variables de entorno.</div>
+            <div><strong>6. Seguridad de Credenciales:</strong> No existen tokens confidenciales en texto plano; se leen desde variables de entorno.</div>
           </label>
         </div>
       </div>
     </article>
 
     <!-- ======================================================================
-         BARRA DE NAVEGACIÓN INFERIOR
+         BARRA DE NAVEGACIÓN INFERIOR (PAGINACIÓN ENTRE RETOS)
          ====================================================================== -->
     <div class="bottom-pagination-nav" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin: 3rem 0 5rem 0; padding: 1.5rem 0; border-top: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle);">
       <a href="modulo1-challenge3.html" class="btn-secondary" style="display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; padding: 0.7rem 1.2rem; border-radius: 10px; font-weight: 700;">
