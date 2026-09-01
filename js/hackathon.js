@@ -47,22 +47,32 @@
         risks.push("Un LLM no debe utilizarse como almacenamiento transaccional (CRUD) ni garantiza persistencia ACID.");
         recommendations.push("Implemente una base de datos PostgreSQL/SQLite y use el LLM unicamente como traductor de lenguaje natural a SQL (Text-to-SQL).");
         estimatedHours = "Requiere backend relacional (+10 horas)";
-      } else if (problem === "doc_rag") {
-        recommendations.push("Excelente caso de uso. Segmentar los textos en fragmentos de 250 a 450 caracteres con 10% de solapamiento.");
-        recommendations.push("Fijar umbral de similitud coseno >= 0.40 en rag_engine.py para erradicar alucinaciones.");
-      } else if (problem === "json_extract") {
-        recommendations.push("Caso ideal para integracion de sistemas. Defina esquemas Pydantic con tipado estricto en api_server.py.");
-        recommendations.push("Incorpore 2 ejemplos Few-Shot en el System Prompt delimitando la salida con llaves JSON.");
-      } else if (problem === "socratic_tutor") {
-        recommendations.push("Excelente para educacion. Configure directivas pedagogicas para que el modelo haga preguntas de validacion en lugar de dar toda la respuesta.");
+      } else if (problem === "ecommerce_support") {
+        recommendations.push("Plantilla 1 (E-Commerce): Segmentar catalogos y politicas en fragmentos de 300 a 450 caracteres.");
+        recommendations.push("Fijar umbral de similitud coseno >= 0.40 en rag_engine.py para erradicar alucinaciones en garantias.");
+      } else if (problem === "legal_normative") {
+        recommendations.push("Plantilla 2 (Normativa): Citar el articulo legal exacto en el prompt de sistema para dar rigor juridico.");
+        recommendations.push("Incorporar directiva de admision estricta de ignorancia cuando el articulo no este en el contexto.");
+      } else if (problem === "it_helpdesk_json") {
+        recommendations.push("Plantilla 3 (Soporte TI / LoRA): Definir esquemas Pydantic con tipado estricto en api_server.py.");
+        recommendations.push("Utilizar el adaptador LoRA (r=8, alpha=16) para forzar sintaxis JSON pura sin texto adicional.");
+      } else if (problem === "socratic_education") {
+        recommendations.push("Plantilla 4 (Tutor Socratico): Configurar directivas para hacer preguntas de comprension en lugar de resolver el ejercicio.");
+        recommendations.push("Inyectar el temario academico en la base vectorial RAG para validar conceptos en tiempo real.");
+      } else if (problem === "health_protocols") {
+        recommendations.push("Plantilla 5 (Salud / Triage): Incluir clausula obligatoria de que la IA no emite diagnosticos medicos vinculantes.");
+        recommendations.push("Indexar unicamente guias de preparacion de estudios de laboratorio y criterios de triage.");
+      } else if (problem === "hr_onboarding") {
+        recommendations.push("Plantilla 6 (Recursos Humanos): Indexar manual de induccion, polizas de seguro y dias economicos.");
+        recommendations.push("Configurar router.py para canalizar consultas sobre prestaciones y bienvenida corporativa.");
       }
 
       if (data === "dirty_pdf") {
         risks.push("Los archivos PDF escaneados o con tablas complejas introducen ruido OCR que degrada la precision del RAG.");
-        recommendations.push("Extraiga el texto manualmente a un archivo .txt plano y limpie saltos de linea huerfanos antes de indexar.");
+        recommendations.push("Extraiga el texto a un archivo .txt plano y limpie saltos de linea huerfanos con data_cleaner.py.");
       } else if (data === "no_data") {
         risks.push("Sin datos propios el asistente solo respondera con conocimiento general de internet.");
-        recommendations.push("Redacte una lista minima de 10 a 15 preguntas y respuestas institucionales en documentos.txt.");
+        recommendations.push("Redacte una lista minima de 10 a 15 parrafos institucionales fácticos en documentos.txt.");
       }
 
       if (complexity === "advanced") {
@@ -123,10 +133,12 @@
     if (!runBtn || !stepContainer) return;
 
     var demoKnowledge = [
-      { topic: "devolucion", text: "Politica de Devoluciones (Art. 4): El cliente dispone de hasta 30 dias naturales con empaque original y comprobante de compra para solicitar reembolso total.", score: 0.89 },
-      { topic: "envio", text: "Tiempos de Entrega (Art. 2): Los envios estandar demoran entre 2 y 4 dias habiles. El servicio prioritario se entrega en 24 horas habiles.", score: 0.92 },
-      { topic: "garantia", text: "Garantia de Fabrica (Art. 7): Todos los productos electronicos cuentan con 12 meses de garantia directa ante defectos de manufactura.", score: 0.86 },
-      { topic: "soporte", text: "Atencion al Cliente (Art. 1): Los canales oficiales de soporte atienden de lunes a domingo de 08:00 a 20:00 horas.", score: 0.81 }
+      { topic: "ecommerce", text: "Politica de Reembolsos (Art. 4): El cliente dispone de hasta 30 dias naturales con empaque original y comprobante fiscal para solicitar reembolso total.", score: 0.89 },
+      { topic: "legal", text: "Reglamento de Titulacion (Art. 12): Es indispensable acreditar el 100% de creditos curriculares, liberacion de servicio social e ingles B2.", score: 0.94 },
+      { topic: "it_helpdesk", text: "Mesa de Ayuda (Catalogo 2): Caidas de bases de datos o pasarelas de pago se tipifican como infraestructura_critica con severidad alta.", score: 0.91 },
+      { topic: "educacion", text: "Mecanismo de Auto-Atencion (Tema 3): La auto-atencion calcula la relevancia de palabras mediante matrices Q (Query), K (Key) y V (Value).", score: 0.88 },
+      { topic: "salud", text: "Protocolo de Quimica Sanguinea (Guia 3): Requiere ayuno estricto de 8 a 12 horas previas a la toma de muestra. Agua simple permitida.", score: 0.93 },
+      { topic: "rrhh", text: "Seguro de Gastos Medicos Mayores (Seccion 5): La cobertura inicia desde el primer dia laboral. Los vales se depositan el dia 15.", score: 0.87 }
     ];
 
     sampleBtns.forEach(function(btn){
@@ -159,27 +171,38 @@
       if (finalResultBox) finalResultBox.style.display = "none";
 
       var qLower = query.toLowerCase();
-      var detectedRoute = "FAST_LLM";
-      var routeExplanation = "Consulta conversacional estandar o saludo. Se procesa directamente mediante inferencia rapida con latencia inferior a 0.5 segundos.";
-      var matchedDoc = null;
+      var detectedRoute = "RAG_PIPELINE";
+      var routeExplanation = "Consulta que requiere verificar base documental.";
+      var matchedDoc = demoKnowledge[0];
 
-      if (qLower.includes("devol") || qLower.includes("reembols") || qLower.includes("ticket") || qLower.includes("cambi")) {
-        detectedRoute = "RAG_PIPELINE";
-        routeExplanation = "La consulta requiere verificar las politicas oficiales de devolucion y reembolso de la organizacion.";
-        matchedDoc = demoKnowledge[0];
-      } else if (qLower.includes("envi") || qLower.includes("entreg") || qLower.includes("tarda") || qLower.includes("llega")) {
-        detectedRoute = "RAG_PIPELINE";
-        routeExplanation = "La consulta solicita informacion logistica sobre tiempos de entrega y coberturas de envio.";
-        matchedDoc = demoKnowledge[1];
-      } else if (qLower.includes("garant") || qLower.includes("fall") || qLower.includes("defect") || qLower.includes("repar")) {
-        detectedRoute = "RAG_PIPELINE";
-        routeExplanation = "La consulta requiere cotejar las clausulas de garantia tecnica de hardware.";
-        matchedDoc = demoKnowledge[2];
-      } else if (qLower.includes("json") || qLower.includes("formato") || qLower.includes("esquema") || qLower.includes("ficha") || qLower.includes("codigo")) {
+      if (qLower.includes("json") || qLower.includes("ficha") || qLower.includes("esquema") || qLower.includes("falla de base")) {
         detectedRoute = "LORA_ADAPTER";
-        routeExplanation = "La consulta exige una respuesta con validacion estricta de estructura JSON tipada para interoperabilidad.";
-      } else {
+        routeExplanation = "La consulta exige un objeto JSON tipado mediante el adaptador LoRA PEFT (r=8) para interoperabilidad con APIs.";
+        matchedDoc = demoKnowledge[2];
+      } else if (qLower.includes("titulac") || qLower.includes("servicio social") || qLower.includes("requisito") || qLower.includes("estatuto")) {
+        detectedRoute = "RAG_PIPELINE";
+        routeExplanation = "Consulta normativa legal. Se cotejan estatutos institucionales en la base vectorial.";
+        matchedDoc = demoKnowledge[1];
+      } else if (qLower.includes("auto-atencion") || qLower.includes("transformer") || qLower.includes("socratico") || qLower.includes("explica")) {
+        detectedRoute = "RAG_PIPELINE";
+        routeExplanation = "Consulta academica. El sistema recupera el concepto y formula una pregunta socratica orientativa.";
         matchedDoc = demoKnowledge[3];
+      } else if (qLower.includes("ayuno") || qLower.includes("quimica") || qLower.includes("salud") || qLower.includes("triage")) {
+        detectedRoute = "RAG_PIPELINE";
+        routeExplanation = "Consulta de protocolo clinico. Se recupera la guia de preparacion y se anexa el aviso medico no vinculante.";
+        matchedDoc = demoKnowledge[4];
+      } else if (qLower.includes("vales") || qLower.includes("despensa") || qLower.includes("seguro") || qLower.includes("onboarding") || qLower.includes("recursos humanos")) {
+        detectedRoute = "RAG_PIPELINE";
+        routeExplanation = "Consulta corporativa de RRHH. Se recupera el manual de prestaciones y bienvenida.";
+        matchedDoc = demoKnowledge[5];
+      } else if (qLower.includes("hola") || qLower.includes("buenos") || qLower.includes("saludos")) {
+        detectedRoute = "FAST_LLM";
+        routeExplanation = "Saludo conversacional estandar. Despacho inmediato en < 1 ms con cero sobrecarga RAG.";
+        matchedDoc = null;
+      } else {
+        detectedRoute = "RAG_PIPELINE";
+        routeExplanation = "Consulta de atencion comercial y politicas de devolucion.";
+        matchedDoc = demoKnowledge[0];
       }
 
       stepContainer.innerHTML = `
@@ -204,7 +227,7 @@
               <div class="sim-step-num" style="background: var(--accent-info, #0284c7);">2</div>
               <div class="sim-step-body">
                 <h5>Paso 2: Busqueda en Base Vectorial (rag_engine.py)</h5>
-                <p>Calculo de similitud coseno sobre incrustaciones densas normalizadas:</p>
+                <p>Calculo de similitud coseno sobre incrustaciones densas normalizadas (all-MiniLM-L6-v2):</p>
                 <div class="sim-retrieved-quote">
                   "<strong>${matchedDoc.text}</strong>"<br>
                   <span style="color: var(--accent-info, #0284c7); font-size: 0.75rem; font-weight: 700;">Similitud Coseno: ${(matchedDoc.score * 100).toFixed(1)}% (Superior al umbral minimo de 40%)</span>
@@ -218,7 +241,7 @@
               <div class="sim-step-num" style="background: #a855f7;">2</div>
               <div class="sim-step-body">
                 <h5>Paso 2: Activacion del Adaptador LoRA (lora_adapter.py)</h5>
-                <p>Carga de matrices de bajo rango entrenadas para forzar la sintaxis JSON Schema sin texto conversacional no estructurado.</p>
+                <p>Inyeccion de matrices de bajo rango entrenadas (Rank r=8, alpha=16) para forzar sintaxis JSON pura con esquemas Pydantic.</p>
               </div>
             </div>
           `;
@@ -242,8 +265,8 @@
             <div class="sim-step-card sim-step-active" id="step-3">
               <div class="sim-step-num" style="background: var(--accent-success, #10b981);">3</div>
               <div class="sim-step-body">
-                <h5>Paso 3: Sintesis Factica Condicionada (Meta Llama 3)</h5>
-                <p>El modelo de lenguaje recibe el prompt enriquecido con la evidencia recuperada y redacta la respuesta respetando las restricciones de veracidad.</p>
+                <h5>Paso 3: Generacion Factica Condicionada (Meta Llama 3)</h5>
+                <p>El modelo de lenguaje recibe el prompt delimitado por <code>[CONTEXTO]</code> y redacta la respuesta respetando las restricciones de veracidad.</p>
               </div>
             </div>
           `;
@@ -253,11 +276,17 @@
 
             var finalAnswer = "";
             if (detectedRoute === "RAG_PIPELINE" && matchedDoc) {
-              finalAnswer = `De acuerdo con la documentacion institucional oficial: ${matchedDoc.text.toLowerCase()} Para iniciar el proceso, presente su comprobante en el canal correspondiente.`;
+              if (matchedDoc.topic === "salud") {
+                finalAnswer = `AVISO MEDICO: Esta informacion es informativa y no sustituye criterio medico. De acuerdo con el protocolo institucional: ${matchedDoc.text}`;
+              } else if (matchedDoc.topic === "educacion") {
+                finalAnswer = `Para comprender este concepto: ${matchedDoc.text} Ahora reflexiona: ¿Como afecta esta formula a la memoria requerida cuando la longitud del texto se duplica?`;
+              } else {
+                finalAnswer = `De acuerdo con la documentacion oficial: ${matchedDoc.text}`;
+              }
             } else if (detectedRoute === "LORA_ADAPTER") {
-              finalAnswer = `{\n  "estado": "exitoso",\n  "tipo_solicitud": "soporte_tecnico",\n  "prioridad": "media",\n  "mensaje_usuario": "${query}",\n  "accion_sugerida": "crear_ticket_atencion"\n}`;
+              finalAnswer = `{\n  "categoria": "infraestructura_critica",\n  "severidad": "alta",\n  "usuario_afectado": "usr_9481",\n  "resumen": "Caida de pasarela de pagos con error HTTP 500.",\n  "accion_sugerida": "notificar_equipo_oncall_inmediato"\n}`;
             } else {
-              finalAnswer = `Bienvenido al sistema de asistencia tecnica de IA. En que tematica o procedimiento puedo orientarle el dia de hoy?`;
+              finalAnswer = `Hola, bienvenido al sistema de asistencia inteligente. ¿En que procedimiento puedo orientarle el dia de hoy?`;
             }
 
             if (finalResultBox) {
@@ -268,7 +297,7 @@
                     <span style="font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: var(--accent-success); background: rgba(5, 150, 105, 0.12); padding: 0.25rem 0.6rem; border-radius: 6px;">
                       Respuesta Generada y Auditada
                     </span>
-                    <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);">Latencia total: ~310 ms</span>
+                    <span style="font-family: var(--font-mono); font-size: 0.75rem; color: var(--text-muted);">Latencia total: ~280 ms</span>
                   </div>
                   <h5 style="font-family: var(--font-head); font-size: 1.05rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.6rem;">
                     Salida Entregada al Usuario Final:
@@ -327,26 +356,46 @@
           "3. Exponga el servicio mediante FastAPI para consumo departamental."
         ];
         templateId = "plantilla-b";
-      } else if (projectType === "json_reports") {
-        title = "Plantilla 3: Clasificador de Incidencias y Generador Estructurado JSON";
+      } else if (projectType === "it_helpdesk") {
+        title = "Plantilla 3: Soporte TI, Mesa de Ayuda y Extraccion JSON (LoRA)";
         badge = "Recomendada para Interoperabilidad de APIs y Bases de Datos";
-        explanation = "El sistema recibe reportes en lenguaje natural y genera objetos JSON validados por esquemas Pydantic con tipado fuerte (categoria, severidad, resumen de accion) para integracion con sistemas externos.";
+        explanation = "El sistema recibe reportes en lenguaje natural y genera objetos JSON validados por esquemas Pydantic con tipado fuerte (categoria, severidad, resumen de accion) mediante el adaptador LoRA PEFT ($r=8$).";
         steps = [
           "1. Especifique el modelo de datos Pydantic en <code>api_server.py</code>.",
-          "2. Incorpore ejemplos Few-Shot en el System Prompt o integre el adaptador LoRA.",
+          "2. Active el adaptador LoRA (<code>lora_adapter.py</code>) para forzar salidas JSON.",
           "3. Audite la consistencia de salida mediante Swagger UI (<code>/docs</code>)."
         ];
         templateId = "plantilla-c";
-      } else {
+      } else if (projectType === "education") {
         title = "Plantilla 4: Tutor Educativo Adaptativo y Evaluacion Socratica";
         badge = "Recomendada para Educacion y Capacitacion Tecnica";
-        explanation = "La arquitectura desglosa conceptos tecnicos complejos de forma progresiva, aplicando formulacion de preguntas orientadas a evaluar y retroalimentar el dominio conceptual del usuario.";
+        explanation = "La arquitectura desglosa conceptos tecnicos complejos de forma progresiva, aplicando formulacion de preguntas orientadas a evaluar y retroalimentar el dominio conceptual del usuario sin resolver de golpe el ejercicio.";
         steps = [
-          "1. Configure las directivas pedagogicas en el System Prompt.",
+          "1. Configure las directivas pedagogicas socromaticas en el System Prompt.",
           "2. Inyecte los contenidos tematicos en la base vectorial RAG.",
           "3. Valide las respuestas del estudiante con retroalimentacion formativa."
         ];
         templateId = "plantilla-d";
+      } else if (projectType === "health") {
+        title = "Plantilla 5: Salud Institucional, Triage y Protocolos Clinicos";
+        badge = "Recomendada para Orientacion Medica Informativa";
+        explanation = "La solucion orienta a pacientes sobre preparacion de estudios clinicos y guias de triage, incorporando clausulas estrictas de advertencia de que la IA no emite diagnosticos medicos vinculantes.";
+        steps = [
+          "1. Indexe unicamente guias de preparacion y triage en <code>rag_engine.py</code>.",
+          "2. Fije el disclaimer medico mandatorio en el System Prompt.",
+          "3. Pruebe preguntas de emergencia para validar derivacion inmediata a urgencias."
+        ];
+        templateId = "plantilla-e";
+      } else {
+        title = "Plantilla 6: Recursos Humanos, Onboarding y Cultura Corporativa";
+        badge = "Recomendada para Gestion de Talento y Empresas";
+        explanation = "Acompana a nuevos empleados en su proceso de integracion, resolviendo dudas sobre polizas de seguro medico, prestaciones, vales de despensa y dias economicos.";
+        steps = [
+          "1. Indexe el manual de bienvenida y politicas de beneficios en <code>rag_engine.py</code>.",
+          "2. Ajuste el tono del asistente a un lenguaje calido, institucional y profesional.",
+          "3. Exponga el microservicio para integracion directa con WhatsApp."
+        ];
+        templateId = "plantilla-f";
       }
 
       resultBox.innerHTML = `

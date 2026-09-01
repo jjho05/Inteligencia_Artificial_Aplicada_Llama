@@ -742,7 +742,7 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas de cliente
               </tr>
               <tr style="border-bottom: 1px solid var(--border-subtle);">
                 <td style="padding: 0.75rem;"><strong>Salidas Tipadas (JSON)</strong></td>
-                <td style="padding: 0.75rem; color: var(--text-primary);">Validar la respuesta con modelos <code>Pydantic</code> en FastAPI antes de retornarla.</td>
+<td style="padding: 0.75rem; color: var(--text-primary);">Validar la respuesta con modelos <code>Pydantic</code> en FastAPI antes de retornarla.</td>
                 <td style="padding: 0.75rem; color: var(--text-secondary);">Asumir que el LLM siempre devolverá JSON perfecto sin agregar texto conversacional no estructurado.</td>
               </tr>
               <tr>
@@ -772,13 +772,16 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas de cliente
 
         <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1.2rem; background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.4rem; margin: 1.2rem 0;">
           <div>
-            <label style="font-size: 0.82rem; font-weight: 800; color: var(--text-primary); display: block; margin-bottom: 0.4rem;">Tipo de Tarea Principal:</label>
+            <label style="font-size: 0.82rem; font-weight: 800; color: var(--text-primary); display: block; margin-bottom: 0.4rem;">Vertical / Tipo de Proyecto:</label>
             <select id="scoper-problem-type" style="width: 100%; padding: 0.65rem; border-radius: 8px; border: 1px solid var(--border-subtle); background: var(--bg-surface); color: var(--text-primary); font-size: 0.86rem;">
-              <option value="doc_rag" selected>Asistente Documental / Políticas (RAG)</option>
-              <option value="json_extract">Clasificador &amp; Extracción Estructurada JSON</option>
-              <option value="socratic_tutor">Tutor Educativo con Método Socrático</option>
-              <option value="math_accounting">Cálculos Contables / Nómina Numérica Exacta</option>
-              <option value="crud_database">Base de Datos Transaccional (CRUD)</option>
+              <option value="ecommerce_support" selected>Plantilla 1: E-Commerce, Envíos y Reembolsos</option>
+              <option value="legal_normative">Plantilla 2: Normativa Institucional y Trámites</option>
+              <option value="it_helpdesk_json">Plantilla 3: Soporte TI y Extracción JSON (LoRA)</option>
+              <option value="socratic_education">Plantilla 4: Tutor Educativo Socrático</option>
+              <option value="health_protocols">Plantilla 5: Salud y Protocolos Clínicos (No vinculante)</option>
+              <option value="hr_onboarding">Plantilla 6: Recursos Humanos y Onboarding</option>
+              <option value="math_accounting">Antipatrón: Cálculos Contables / Nómina Exacta</option>
+              <option value="crud_database">Antipatrón: Base de Datos Transaccional (CRUD)</option>
             </select>
           </div>
 
@@ -858,20 +861,20 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas de cliente
             <div>
               <strong style="color: var(--text-primary); font-size: 1rem; display: block; margin-bottom: 0.3rem;">Día 4: Enrutador Heurístico de Complejidad (router.py)</strong>
               <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; margin: 0 0 0.4rem 0;">
-                Implemente la clase <code>ModelRouter</code> para clasificar intenciones. Si el usuario envía un saludo simple, responda de forma directa; si consulta información de negocio, derive al pipeline RAG.
+                Implemente el enrutador semántico para clasificar saludos en &lt; 1 ms y derivar consultas técnicas a la base vectorial o al adaptador LoRA según corresponda.
               </p>
-              <span style="font-size: 0.78rem; color: var(--accent-success); font-weight: 700;">Entregable del Día 4: Despacho inteligente con latencia reducida.</span>
+              <span style="font-size: 0.78rem; color: var(--accent-success); font-weight: 700;">Entregable del Día 4: `ModelRouter` activo con despacho dinámico.</span>
             </div>
           </div>
 
           <div class="guide-step-card">
             <div class="guide-step-badge" style="background: #f59e0b;">5</div>
             <div>
-              <strong style="color: var(--text-primary); font-size: 1rem; display: block; margin-bottom: 0.3rem;">Día 5: Servidor REST con FastAPI y Documentación OpenAPI</strong>
+              <strong style="color: var(--text-primary); font-size: 1rem; display: block; margin-bottom: 0.3rem;">Día 5: Servidor FastAPI, Red Teaming y Empaquetado</strong>
               <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; margin: 0 0 0.4rem 0;">
-                Integre todo en <code>api_server.py</code>. Levante el servidor con Uvicorn, abra <code>http://localhost:8000/docs</code> para probar payloads interactivos y prepare su archivo README con la estructura oficial de entrega.
+                Integre todo en <code>api_server.py</code>, ejecute la suite de Red Teaming contra inyecciones y descargue el entregable comprimido en ZIP listo para la entrega final.
               </p>
-              <span style="font-size: 0.78rem; color: #f59e0b; font-weight: 700;">Entregable del Día 5: API documentada lista para conectar con WhatsApp.</span>
+              <span style="font-size: 0.78rem; color: #f59e0b; font-weight: 700;">Entregable del Día 5: API REST validada con Swagger UI y exportada en ZIP.</span>
             </div>
           </div>
 
@@ -880,207 +883,101 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas de cliente
     </article>
 
     <!-- ======================================================================
-         SECCIÓN 12: FUNDAMENTO ARQUITECTÓNICO & MODELO MENTAL
+         SECCIÓN 12: ARQUITECTURA MODULAR DEL STARTER KIT
          ====================================================================== -->
-    <article class="tema-card" id="arquitectura-modular" style="border-left: 5px solid var(--meta-blue); margin-bottom: 3.5rem;">
+    <article class="tema-card" id="arquitectura-modular" style="margin-bottom: 3.5rem;">
       <div class="tema-header">
-        <div class="tema-eyebrow">Fundamento de Ingeniería · Principio de Desacoplamiento</div>
-        <h3 class="tema-title">12. Arquitectura Modular de Cuatro Capas: De la Consulta a la Respuesta</h3>
+        <div class="tema-eyebrow">Arquitectura de Software · Patrón en Cuatro Capas</div>
+        <h3 class="tema-title">12. Arquitectura de Software del Starter Kit</h3>
       </div>
 
       <div class="tema-section-block">
         <p class="prose-p">
-          En el desarrollo de sistemas de IA de grado industrial, la regla de oro consiste en <b>desacoplar el motor de razonamiento (LLM) del repositorio de datos fácticos (Base de Conocimiento)</b>. Intentar resolver todo mediante prompts extensos genera tres fallas críticas: <i>alucinaciones por sobrecarga de contexto</i>, <i>latencia inaceptable (&gt; 5 segundos)</i> y <i>costos exponenciales por consumo de tokens</i>.
+          Para garantizar escalabilidad, bajo acoplamiento y facilidad de mantenimiento, el sistema se organiza en cuatro capas de procesamiento independientes:
         </p>
 
-        <!-- Tabla Comparativa APA 7 -->
-        <div class="table-container" style="overflow-x:auto; margin:1.5rem 0;">
-          <table class="apa-table" style="width:100%; border-collapse:collapse; font-size:0.88rem;">
-            <thead>
-              <tr style="background:var(--bg-surface-2); border-bottom:2px solid var(--border-subtle);">
-                <th style="padding:0.75rem; text-align:left; width:22%;">Criterio de Evaluación</th>
-                <th style="padding:0.75rem; text-align:left; width:39%;">Enfoque Monolítico (Prompt Relleno)</th>
-                <th style="padding:0.75rem; text-align:left; width:39%;">Arquitectura Modular (Router + RAG + LoRA)</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr style="border-bottom:1px solid var(--border-subtle);">
-                <td style="padding:0.7rem;"><strong>Control de Alucinaciones</strong></td>
-                <td style="padding:0.7rem; color:#ef4444;">Bajo: El modelo inventa respuestas cuando la información no está explícita.</td>
-                <td style="padding:0.7rem; color:var(--accent-success); font-weight:700;">Máximo: Filtro de similitud coseno $\ge 0.40$ con admisión estricta de ignorancia.</td>
-              </tr>
-              <tr style="border-bottom:1px solid var(--border-subtle);">
-                <td style="padding:0.7rem;"><strong>Latencia por Consulta</strong></td>
-                <td style="padding:0.7rem;">Alta ($3.0 - 8.0\text{ s}$ por procesar miles de tokens en cada turno).</td>
-                <td style="padding:0.7rem; color:var(--accent-success); font-weight:700;">Optimizada ($&lt; 0.8\text{ s}$ en consultas directas mediante Router).</td>
-              </tr>
-              <tr style="border-bottom:1px solid var(--border-subtle);">
-                <td style="padding:0.7rem;"><strong>Actualización de Datos</strong></td>
-                <td style="padding:0.7rem;">Manual y costosa (Reescribir prompts en cada modificación de políticas).</td>
-                <td style="padding:0.7rem; color:var(--accent-success); font-weight:700;">Instantánea (Actualizar archivos de texto en el índice vectorial).</td>
-              </tr>
-              <tr>
-                <td style="padding:0.7rem;"><strong>Estructura de Salida</strong></td>
-                <td style="padding:0.7rem;">Inconsistente (Agrega texto conversacional no deseado antes de JSON).</td>
-                <td style="padding:0.7rem; color:var(--accent-success); font-weight:700;">Garantizada mediante adaptadores LoRA y validación con Pydantic.</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-
-        <!-- Las 4 Capas del Sistema -->
-        <h4 class="tema-subheading"><span class="tema-subheading-tag">Estructura</span> Los Cuatro Componentes del Sistema</h4>
-
-        <div class="bento-layout-grid" style="margin: 1.5rem 0;">
-          <div class="bento-sub-card">
-            <div>
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem;">
-                <span class="badge-role" style="background:rgba(8,102,255,0.12); color:var(--meta-blue); font-size:0.75rem; padding:0.2rem 0.5rem; border-radius:4px; font-weight:800;">Capa 1</span>
-                <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--meta-blue); font-weight:700;">router.py</span>
-              </div>
-              <h5 class="bento-sub-title">1. Enrutador de Complejidad (Router)</h5>
-              <p class="bento-sub-desc">
-                Clasifica la intención del usuario. Despacha saludos y consultas triviales a inferencia rápida ($&lt; 0.5\text{ s}$), y deriva preguntas documentales al pipeline RAG.
-              </p>
-            </div>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.4rem; margin: 1.5rem 0;">
+          
+          <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-top: 4px solid var(--meta-blue); border-radius: 12px; padding: 1.4rem;">
+            <div style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--meta-blue); font-weight: 800; margin-bottom: 0.3rem;">CAPA 1 · ROUTING</div>
+            <h4 style="font-family: var(--font-head); font-size: 1.05rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.5rem;">Enrutador Semántico (router.py)</h4>
+            <p style="font-size: 0.86rem; color: var(--text-secondary); line-height: 1.6; margin: 0;">
+              Analiza la intención del usuario. Si es un saludo o consulta trivial, responde de inmediato. Si contiene palabras clave temáticas, deriva a RAG o al adaptador LoRA.
+            </p>
           </div>
 
-          <div class="bento-sub-card">
-            <div>
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem;">
-                <span class="badge-role" style="background:rgba(2,132,199,0.12); color:#0284c7; font-size:0.75rem; padding:0.2rem 0.5rem; border-radius:4px; font-weight:800;">Capa 2</span>
-                <span style="font-family:var(--font-mono); font-size:0.75rem; color:#0284c7; font-weight:700;">rag_engine.py</span>
-              </div>
-              <h5 class="bento-sub-title">2. Base de Conocimiento Vectorial (RAG)</h5>
-              <p class="bento-sub-desc">
-                Segmenta los documentos de la organización, calcula incrustaciones en $\mathbb{R}^{384}$ y recupera los fragmentos con mayor similitud coseno antes de llamar al LLM.
-              </p>
-            </div>
+          <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-top: 4px solid #0284c7; border-radius: 12px; padding: 1.4rem;">
+            <div style="font-family: var(--font-mono); font-size: 0.78rem; color: #0284c7; font-weight: 800; margin-bottom: 0.3rem;">CAPA 2 · CONOCIMIENTO</div>
+            <h4 style="font-family: var(--font-head); font-size: 1.05rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.5rem;">Motor Vectorial (rag_engine.py)</h4>
+            <p style="font-size: 0.86rem; color: var(--text-secondary); line-height: 1.6; margin: 0;">
+              Transforma documentos en vectores de 384 dimensiones. Realiza búsqueda por producto punto normalizado y extrae los fragmentos más relevantes ($\ge 0.40$).
+            </p>
           </div>
 
-          <div class="bento-sub-card">
-            <div>
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem;">
-                <span class="badge-role" style="background:rgba(168,85,247,0.12); color:#a855f7; font-size:0.75rem; padding:0.2rem 0.5rem; border-radius:4px; font-weight:800;">Capa 3</span>
-                <span style="font-family:var(--font-mono); font-size:0.75rem; color:#a855f7; font-weight:700;">lora_adapter.py</span>
-              </div>
-              <h5 class="bento-sub-title">3. Adaptador LoRA / Formateador JSON</h5>
-              <p class="bento-sub-desc">
-                Aplica pesos adaptativos entrenados (PEFT) o directivas estructuradas Few-Shot para forzar al modelo a responder con esquemas JSON válidos y tipados.
-              </p>
-            </div>
+          <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-top: 4px solid #a855f7; border-radius: 12px; padding: 1.4rem;">
+            <div style="font-family: var(--font-mono); font-size: 0.78rem; color: #a855f7; font-weight: 800; margin-bottom: 0.3rem;">CAPA 3 · INFERENCIA &amp; LORA</div>
+            <h4 style="font-family: var(--font-head); font-size: 1.05rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.5rem;">Generación Condicionada (Llama 3 / LoRA)</h4>
+            <p style="font-size: 0.86rem; color: var(--text-secondary); line-height: 1.6; margin: 0;">
+              El modelo Meta Llama 3 sintetiza la respuesta final basándose estrictamente en el contexto recuperado, o activa matrices LoRA ($r=8$) para formatear JSON estructurado.
+            </p>
           </div>
 
-          <div class="bento-sub-card">
-            <div>
-              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem;">
-                <span class="badge-role" style="background:rgba(5,150,105,0.12); color:var(--accent-success); font-size:0.75rem; padding:0.2rem 0.5rem; border-radius:4px; font-weight:800;">Capa 4</span>
-                <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--accent-success); font-weight:700;">api_server.py</span>
-              </div>
-              <h5 class="bento-sub-title">4. Microservicio API (FastAPI)</h5>
-              <p class="bento-sub-desc">
-                Expone endpoints REST asíncronos (`/v1/chat`) validados con modelos de Pydantic y documentación interactiva Swagger UI (`/docs`), listo para WhatsApp.
-              </p>
-            </div>
+          <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-top: 4px solid var(--accent-success); border-radius: 12px; padding: 1.4rem;">
+            <div style="font-family: var(--font-mono); font-size: 0.78rem; color: var(--accent-success); font-weight: 800; margin-bottom: 0.3rem;">CAPA 4 · INTEROPERABILIDAD</div>
+            <h4 style="font-family: var(--font-head); font-size: 1.05rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.5rem;">API RESTful (api_server.py)</h4>
+            <p style="font-size: 0.86rem; color: var(--text-secondary); line-height: 1.6; margin: 0;">
+              Servidor FastAPI asíncrono con CORS habilitado. Expone el endpoint <code>/v1/chat</code> para comunicación HTTP con validación mediante esquemas Pydantic.
+            </p>
           </div>
+
         </div>
       </div>
     </article>
 
     <!-- ======================================================================
-         SECCIÓN 13: GLOSARIO TÉCNICO EXHAUSTIVO
+         SECCIÓN 13: GLOSARIO TÉCNICO Y ANALOGÍAS DIDÁCTICAS
          ====================================================================== -->
     <article class="tema-card" id="glosario-tecnico" style="margin-bottom: 3.5rem;">
       <div class="tema-header">
-        <div class="tema-eyebrow">Marco Teórico · Glosario de Ingeniería</div>
-        <h3 class="tema-title">13. Glosario Técnico de Inteligencia Artificial Aplicada</h3>
+        <div class="tema-eyebrow">Conceptos Clave · Explicaciones Didácticas</div>
+        <h3 class="tema-title">13. Glosario Técnico y Analogías Intuitivas</h3>
       </div>
 
       <div class="tema-section-block">
         <p class="prose-p">
-          Definiciones conceptuales y directivas prácticas para comprender cada componente de tu sistema:
+          Para que cualquier participante o jurado comprenda los fundamentos técnicos del sistema sin confusiones conceptuales:
         </p>
 
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem; margin-top: 1.2rem;">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.4rem; margin: 1.5rem 0;">
           
-          <div class="glossary-card">
-            <div>
-              <div class="glossary-term">1. Prompt &amp; System Directives</div>
-              <p class="glossary-desc">
-                Conjunto de instrucciones estructuradas enviadas al modelo que definen su rol institucional, tono, restricciones operativas y contexto documental.
-              </p>
+          <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.4rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem;">
+              <strong style="font-size: 1rem; color: var(--text-primary);">RAG vs LLM Puro</strong>
+              <span style="font-size: 0.75rem; font-weight: 800; color: var(--meta-blue); background: var(--meta-blue-subtle); padding: 0.2rem 0.5rem; border-radius: 4px;">Analogía 1</span>
             </div>
-            <div class="glossary-rule">Regla: Delimitar el contexto con etiquetas claras (ej. <code>[CONTEXTO]...[/CONTEXTO]</code>).</div>
+            <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.65; margin: 0;">
+              <strong>La Analogía del Escritor y el Bibliotecario:</strong> Un LLM puro es como un escritor talentoso pero con memoria imperfecta: si le preguntas por las políticas de tu empresa, intentará adivinar o inventar (alucinación). RAG le pone al lado un bibliotecario veloz que le entrega exactamente la página oficial abierta; así, el escritor solo redacta la respuesta sustentada en ese papel.
+            </p>
           </div>
 
-          <div class="glossary-card">
-            <div>
-              <div class="glossary-term">2. Tokens &amp; Tokenización BPE</div>
-              <p class="glossary-desc">
-                Unidades atómicas de procesamiento textual generadas mediante algoritmos Byte-Pair Encoding. Un token representa aproximadamente 4 caracteres en idioma español.
-              </p>
+          <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.4rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem;">
+              <strong style="font-size: 1rem; color: var(--text-primary);">Embeddings &amp; Similitud Coseno</strong>
+              <span style="font-size: 0.75rem; font-weight: 800; color: #0284c7; background: rgba(2,132,199,0.12); padding: 0.2rem 0.5rem; border-radius: 4px;">Analogía 2</span>
             </div>
-            <div class="glossary-rule">Regla: Controlar la longitud del contexto para no exceder la ventana del modelo.</div>
+            <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.65; margin: 0;">
+              <strong>La Analogía del Mapa de la Ciudad:</strong> Un embedding convierte una frase en coordenadas GPS de 384 dimensiones. Dos frases como "¿Cómo pido mi dinero de vuelta?" y "Política de reembolsos y garantías" quedan ubicadas en la misma calle. La similitud coseno calcula la distancia en línea recta entre ambas coordenadas.
+            </p>
           </div>
 
-          <div class="glossary-card">
-            <div>
-              <div class="glossary-term">3. Incrustaciones Densas (Embeddings)</div>
-              <p class="glossary-desc">
-                Vectores numéricos continuos en $\mathbb{R}^{384}$ que capturan la semántica profunda de una oración, permitiendo búsquedas por similitud conceptual.
-              </p>
+          <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.4rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.6rem;">
+              <strong style="font-size: 1rem; color: var(--text-primary);">LoRA (PEFT)</strong>
+              <span style="font-size: 0.75rem; font-weight: 800; color: #a855f7; background: rgba(168,85,247,0.12); padding: 0.2rem 0.5rem; border-radius: 4px;">Analogía 3</span>
             </div>
-            <div class="glossary-rule">Regla: Normalizar vectores con norma $L_2$ para calcular similitud mediante producto punto.</div>
-          </div>
-
-          <div class="glossary-card">
-            <div>
-              <div class="glossary-term">4. RAG &amp; Similitud Coseno</div>
-              <p class="glossary-desc">
-                Técnica que extrae los $k$ fragmentos más relevantes de una base documental antes de la inferencia, garantizando respuestas 100% verificables.
-              </p>
-            </div>
-            <div class="glossary-rule">Regla: Fijar un umbral de corte mínimo ($\ge 0.40$) para descartar texto irrelevante.</div>
-          </div>
-
-          <div class="glossary-card">
-            <div>
-              <div class="glossary-term">5. LoRA (Low-Rank Adaptation)</div>
-              <p class="glossary-desc">
-                Técnica de adaptación supervisada eficiente (PEFT) que congela el modelo base e inyecta matrices de bajo rango $r \ll d$ en capas de atención.
-              </p>
-            </div>
-            <div class="glossary-rule">Regla: Usar $r=8$ y $\alpha=16$ para adaptar estilos y formatos con bajo consumo de VRAM.</div>
-          </div>
-
-          <div class="glossary-card">
-            <div>
-              <div class="glossary-term">6. Memoria VRAM &amp; GPU T4</div>
-              <p class="glossary-desc">
-                Memoria de alto ancho de banda de la tarjeta aceleradora. En Google Colab se dispone de 15 GB dedicados para alojar pesos, activaciones y KV-Cache.
-              </p>
-            </div>
-            <div class="glossary-rule">Regla: Usar cuantización en 4-bits (NF4/QLoRA) para modelos mayores a 3 mil millones de parámetros.</div>
-          </div>
-
-          <div class="glossary-card">
-            <div>
-              <div class="glossary-term">7. Reranking Cross-Encoder</div>
-              <p class="glossary-desc">
-                Modelo de clasificación binaria que procesa simultáneamente pregunta y documento, asignando un puntaje de relevancia contextual exacto.
-              </p>
-            </div>
-            <div class="glossary-rule">Regla: Aplicar sobre el $top\_10$ de la búsqueda vectorial para extraer los $2$ fragmentos óptimos.</div>
-          </div>
-
-          <div class="glossary-card">
-            <div>
-              <div class="glossary-term">8. Cuantización NF4 (NormalFloat4)</div>
-              <p class="glossary-desc">
-                Tipo de dato de 4 bits optimizado teóricamente para pesos con distribución gaussiana normal, reduciendo la memoria en un 75% sin pérdida de precisión.
-              </p>
-            </div>
-            <div class="glossary-rule">Regla: Habilitar con <code>load_in_4bit=True</code> y <code>bnb_4bit_quant_type="nf4"</code>.</div>
+            <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.65; margin: 0;">
+              <strong>La Analogía del Post-it en la Enciclopedia:</strong> Si tienes una enciclopedia médica de 20 tomos (el modelo base de 1B u 8B parámetros), no la reescribes para aprender un formato JSON nuevo; simplemente pegas una pequeña nota adhesiva (Post-it) en la portada con las reglas del formato. Eso es LoRA: congela el 99.9% de los pesos y solo entrena dos matrices pequeñas ($A$ y $B$).
+            </p>
           </div>
 
         </div>
@@ -1088,157 +985,206 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas de cliente
     </article>
 
     <!-- ======================================================================
-         SECCIÓN 14: CATÁLOGO DE 6 PLANTILLAS DE PROYECTOS
+         SECCIÓN 14: CATÁLOGO DE 6 PLANTILLAS DE PROYECTOS (HOMOGENEIZADO)
          ====================================================================== -->
     <article class="tema-card" id="catalogo-plantillas" style="margin-bottom: 3.5rem;">
       <div class="tema-header">
         <div class="tema-eyebrow">Catálogo de Proyectos · Entregables Listos</div>
-        <h3 class="tema-title">14. Seis Plantillas de Proyectos Listas para Adaptar</h3>
+        <h3 class="tema-title">14. Seis Plantillas de Proyectos Homogeneizadas y Listas para Adaptar</h3>
       </div>
 
       <div class="tema-section-block">
         <p class="prose-p">
-          Seleccione la plantilla que mejor se ajuste a su caso de estudio. Cada opción incluye su objetivo de negocio, dataset de ejemplo en español y módulos de código a configurar:
+          Seleccione la plantilla que mejor se ajuste a su caso de estudio. Cada una de las seis opciones está 100% homogeneizada con su objetivo de negocio, dataset factual en español, salida esperada y arquitectura modular:
         </p>
 
         <!-- PLANTILLA 1 -->
-        <div class="template-card-highlight" id="plantilla-a" style="border-left: 5px solid var(--meta-blue);">
+        <div class="template-card-highlight" id="plantilla-a" style="border-left: 5px solid var(--meta-blue); margin-bottom: 1.8rem;">
           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.6rem;">
             <span style="font-size:0.78rem; font-weight:800; text-transform:uppercase; color:var(--meta-blue); background:var(--meta-blue-subtle); padding:0.25rem 0.6rem; border-radius:6px;">PLANTILLA 1 · COMERCIO ELECTRÓNICO &amp; LOGÍSTICA</span>
-            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">Complejidad: Baja &bull; 100% Viable Colab</span>
+            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">Complejidad: Baja &bull; 100% Viable Colab T4</span>
           </div>
-          <h4 style="font-family:var(--font-head); font-size:1.2rem; font-weight:800; color:var(--text-primary); margin-bottom:0.5rem;">
+          <h4 style="font-family:var(--font-head); font-size:1.25rem; font-weight:800; color:var(--text-primary); margin-bottom:0.5rem;">
             Asistente de Atención al Cliente, Logística y Políticas de Devolución
           </h4>
           <p style="font-size:0.9rem; line-height:1.6; color:var(--text-secondary); margin-bottom:0.9rem;">
-            <b>Objetivo del Proyecto:</b> Resolver consultas frecuentes de usuarios sobre cobertura de envíos, costos, garantías técnicas y procedimientos de reembolso, sustentando cada respuesta en el compendio normativo de la tienda sin incurrir en alucinaciones.
+            <b>Objetivo de Negocio:</b> Resolver consultas frecuentes de usuarios sobre cobertura de envíos, costos, garantías de hardware y procedimientos de reembolso, sustentando cada respuesta en el compendio normativo de la tienda sin incurrir en alucinaciones.
           </p>
           <div style="background:var(--bg-subtle); border-radius:8px; padding:1rem 1.2rem; font-size:0.86rem; color:var(--text-primary); margin-bottom:0.9rem;">
-            <strong>Dataset de Documentos a Ingresar en `rag_engine.py`:</strong>
+            <strong>Dataset Factual de Documentos para `rag_engine.py`:</strong>
             <ul style="margin:0.5rem 0 0 0; padding-left:1.2rem; color:var(--text-secondary); line-height:1.6;">
               <li>"Política de Reembolsos (Art. 4): Las solicitudes de devolución aplican dentro de los primeros 30 días naturales posteriores a la entrega, presentando comprobante fiscal y empaque íntegro."</li>
               <li>"Tiempos de Entrega (Art. 2): Los envíos estándar dentro de la república demoran entre 2 y 4 días hábiles. El servicio exprés garantiza entrega en 24 horas hábiles."</li>
               <li>"Garantía de Hardware (Art. 7): Los equipos electrónicos cuentan con 12 meses de garantía directa del fabricante ante defectos de manufactura comprobables."</li>
             </ul>
           </div>
+          <div style="background:var(--bg-subtle-alt); border-radius:8px; padding:0.9rem 1.1rem; font-size:0.84rem; color:var(--text-primary); margin-bottom:0.9rem;">
+            <strong>Respuesta Generada por el Asistente (Prosa Fáctica):</strong>
+            <p style="margin:0.4rem 0 0 0; color:var(--text-secondary); line-height:1.55;">
+              "De acuerdo con nuestra Política de Reembolsos (Art. 4), puedes solicitar la devolución total de tu compra dentro de los primeros 30 días naturales presentando tu empaque original y ticket. Los envíos demoran de 2 a 4 días hábiles (Art. 2)."
+            </p>
+          </div>
           <div style="font-size:0.82rem; color:var(--text-muted);">
-            <strong>Archivos de Código Utilizados:</strong> <code>rag_engine.py</code> (Indexación y Búsqueda) + <code>api_server.py</code> (FastAPI Endpoint).
+            <strong>Archivos Utilizados:</strong> <code>rag_engine.py</code> (Indexación RAG) + <code>router.py</code> (Filtro Saludos) + <code>api_server.py</code> (Endpoint REST).
           </div>
         </div>
 
         <!-- PLANTILLA 2 -->
-        <div class="template-card-highlight" id="plantilla-b" style="border-left: 5px solid #0284c7;">
+        <div class="template-card-highlight" id="plantilla-b" style="border-left: 5px solid #0284c7; margin-bottom: 1.8rem;">
           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.6rem;">
-            <span style="font-size:0.78rem; font-weight:800; text-transform:uppercase; color:#0284c7; background:rgba(2,132,199,0.12); padding:0.25rem 0.6rem; border-radius:6px;">PLANTILLA 2 · NORMATIVA INSTITUCIONAL &amp; LEGAL</span>
-            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">Complejidad: Media &bull; Enfoque Fáctico</span>
+            <span style="font-size:0.78rem; font-weight:800; text-transform:uppercase; color:#0284c7; background:rgba(2,132,199,0.12); padding:0.25rem 0.6rem; border-radius:6px;">PLANTILLA 2 · NORMATIVA INSTITUCIONAL, LEGAL &amp; TRÁMITES</span>
+            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">Complejidad: Media &bull; Citas por Artículo</span>
           </div>
-          <h4 style="font-family:var(--font-head); font-size:1.2rem; font-weight:800; color:var(--text-primary); margin-bottom:0.5rem;">
+          <h4 style="font-family:var(--font-head); font-size:1.25rem; font-weight:800; color:var(--text-primary); margin-bottom:0.5rem;">
             Asesor Normativo Institucional y Trámites Regulatorios
           </h4>
           <p style="font-size:0.9rem; line-height:1.6; color:var(--text-secondary); margin-bottom:0.9rem;">
-            <b>Objetivo del Proyecto:</b> Proveer asesoría regulatoria para estudiantes o colaboradores institucionales, resolviendo dudas sobre requisitos de titulación, solicitudes de permisos laborales o reglamentos de operación, citando explícitamente el artículo legal correspondiente.
+            <b>Objetivo de Negocio:</b> Proveer asesoría regulatoria para estudiantes, docentes o colaboradores institucionales, resolviendo dudas sobre requisitos de titulación, solicitudes de permisos laborales o reglamentos de operación, citando explícitamente el artículo legal correspondiente.
           </p>
           <div style="background:var(--bg-subtle); border-radius:8px; padding:1rem 1.2rem; font-size:0.86rem; color:var(--text-primary); margin-bottom:0.9rem;">
-            <strong>Dataset de Documentos a Ingresar en `rag_engine.py`:</strong>
+            <strong>Dataset Factual de Documentos para `rag_engine.py`:</strong>
             <ul style="margin:0.5rem 0 0 0; padding-left:1.2rem; color:var(--text-secondary); line-height:1.6;">
               <li>"Reglamento de Titulación (Art. 12): Es requisito indispensable haber acreditado el 100% de los créditos curriculares, contar con la liberación del servicio social y constancia de dominio de idioma inglés nivel B2."</li>
               <li>"Estatuto Laboral (Art. 24): Las solicitudes de vacaciones deberán registrarse en el portal interno con un mínimo de 10 días hábiles de anticipación a la fecha de inicio del periodo solicitado."</li>
+              <li>"Código de Ética (Art. 3): El uso de credenciales ajenas o la falsificación de firmas constituye una falta grave que amerita suspensión temporal inmediata."</li>
             </ul>
           </div>
+          <div style="background:var(--bg-subtle-alt); border-radius:8px; padding:0.9rem 1.1rem; font-size:0.84rem; color:var(--text-primary); margin-bottom:0.9rem;">
+            <strong>Respuesta Generada por el Asistente:</strong>
+            <p style="margin:0.4rem 0 0 0; color:var(--text-secondary); line-height:1.55;">
+              "Conforme al Reglamento de Titulación (Art. 12), para iniciar tu trámite requieres haber cubierto el 100% de créditos, liberación de servicio social y acreditación de inglés B2. Para vacaciones, el Art. 24 exige 10 días hábiles de anticipación."
+            </p>
+          </div>
           <div style="font-size:0.82rem; color:var(--text-muted);">
-            <strong>Archivos de Código Utilizados:</strong> <code>rag_engine.py</code> (Búsqueda por Artículo) + <code>router.py</code> (Detección de Trámite).
+            <strong>Archivos Utilizados:</strong> <code>rag_engine.py</code> (Búsqueda Coseno) + <code>router.py</code> (Detección de Trámite) + <code>api_server.py</code>.
           </div>
         </div>
 
         <!-- PLANTILLA 3 -->
-        <div class="template-card-highlight" id="plantilla-c" style="border-left: 5px solid #a855f7;">
+        <div class="template-card-highlight" id="plantilla-c" style="border-left: 5px solid #a855f7; margin-bottom: 1.8rem;">
           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.6rem;">
-            <span style="font-size:0.78rem; font-weight:800; text-transform:uppercase; color:#a855f7; background:rgba(168,85,247,0.12); padding:0.25rem 0.6rem; border-radius:6px;">PLANTILLA 3 · AUTOMATIZACIÓN &amp; EXTRACCIÓN JSON</span>
-            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">Complejidad: Media &bull; Tipado Estricto Pydantic</span>
+            <span style="font-size:0.78rem; font-weight:800; text-transform:uppercase; color:#a855f7; background:rgba(168,85,247,0.12); padding:0.25rem 0.6rem; border-radius:6px;">PLANTILLA 3 · SOPORTE TI, MESA DE AYUDA &amp; EXTRACCIÓN JSON</span>
+            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">Complejidad: Media &bull; Adaptador LoRA PEFT ($r=8$)</span>
           </div>
-          <h4 style="font-family:var(--font-head); font-size:1.2rem; font-weight:800; color:var(--text-primary); margin-bottom:0.5rem;">
+          <h4 style="font-family:var(--font-head); font-size:1.25rem; font-weight:800; color:var(--text-primary); margin-bottom:0.5rem;">
             Clasificador de Incidencias Técnicas y Generador Estructurado JSON
           </h4>
           <p style="font-size:0.9rem; line-height:1.6; color:var(--text-secondary); margin-bottom:0.9rem;">
-            <b>Objetivo del Proyecto:</b> Ingerir reportes de fallas o mensajes libres de usuarios y transformarlos automáticamente en objetos JSON validados por esquemas de Pydantic (categoría de falla, nivel de severidad, resumen ejecutivo y acción sugerida).
+            <b>Objetivo de Negocio:</b> Ingerir reportes de fallas o mensajes libres de usuarios y transformarlos automáticamente en objetos JSON validados por esquemas de Pydantic (categoría de falla, nivel de severidad, resumen ejecutivo y acción sugerida).
           </p>
           <div style="background:var(--bg-subtle); border-radius:8px; padding:1rem 1.2rem; font-size:0.86rem; color:var(--text-primary); margin-bottom:0.9rem;">
-            <strong>Salida Estructurada Generada por el Modelo:</strong>
-            <pre style="margin:0.5rem 0 0 0; background:var(--bg-subtle-alt); padding:0.7rem; border-radius:6px; font-family:var(--font-mono); font-size:0.82rem; color:var(--text-primary);"><code>{
-  "categoria": "acceso_plataforma",
+            <strong>Dataset Factual de Entrenamiento Few-Shot / LoRA:</strong>
+            <ul style="margin:0.5rem 0 0 0; padding-left:1.2rem; color:var(--text-secondary); line-height:1.6;">
+              <li>"Mesa de Ayuda (Catálogo 1): Fallas de inicio de sesión o 2FA se clasifican como 'autenticacion' con severidad media."</li>
+              <li>"Mesa de Ayuda (Catálogo 2): Caídas de bases de datos o pasarelas de pago se tipifican como 'infraestructura_critica' con severidad alta."</li>
+              <li>"Mesa de Ayuda (Catálogo 3): Consultas de manuales o configuración se tipifican como 'consulta_general' con severidad baja."</li>
+            </ul>
+          </div>
+          <div style="background:var(--bg-subtle-alt); border-radius:8px; padding:0.9rem 1.1rem; font-size:0.84rem; color:var(--text-primary); margin-bottom:0.9rem;">
+            <strong>Salida Tipada JSON Generada:</strong>
+            <pre style="margin:0.4rem 0 0 0; background:var(--bg-surface); padding:0.7rem; border-radius:6px; font-family:var(--font-mono); font-size:0.82rem; color:var(--text-primary);"><code>{
+  "categoria": "infraestructura_critica",
   "severidad": "alta",
   "usuario_afectado": "usr_9481",
-  "resumen_incidencia": "Imposibilidad de autenticación con doble factor tras reinicio de sesión.",
-  "accion_automatica": "generar_ticket_seguridad"
+  "resumen": "Caida de pasarela de pagos con error HTTP 500.",
+  "accion_sugerida": "notificar_equipo_oncall_inmediato"
 }</code></pre>
           </div>
           <div style="font-size:0.82rem; color:var(--text-muted);">
-            <strong>Archivos de Código Utilizados:</strong> <code>lora_adapter.py</code> (o Prompt Few-Shot) + <code>api_server.py</code> (Pydantic Validation).
+            <strong>Archivos Utilizados:</strong> <code>lora_adapter.py</code> (LoRA PEFT) + <code>api_server.py</code> (Validación Pydantic).
           </div>
         </div>
 
         <!-- PLANTILLA 4 -->
-        <div class="template-card-highlight" id="plantilla-d" style="border-left: 5px solid var(--accent-success);">
+        <div class="template-card-highlight" id="plantilla-d" style="border-left: 5px solid var(--accent-success); margin-bottom: 1.8rem;">
           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.6rem;">
-            <span style="font-size:0.78rem; font-weight:800; text-transform:uppercase; color:var(--accent-success); background:rgba(5,150,105,0.12); padding:0.25rem 0.6rem; border-radius:6px;">PLANTILLA 4 · EDUCACIÓN &amp; EVALUACIÓN ADAPTATIVA</span>
-            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">Complejidad: Baja &bull; Método Socrático</span>
+            <span style="font-size:0.78rem; font-weight:800; text-transform:uppercase; color:var(--accent-success); background:rgba(5,150,105,0.12); padding:0.25rem 0.6rem; border-radius:6px;">PLANTILLA 4 · EDUCACIÓN SUPERIOR, TUTOR SOCRÁTICO &amp; EVALUACIÓN</span>
+            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">Complejidad: Media &bull; Método Socrático Interactivo</span>
           </div>
-          <h4 style="font-family:var(--font-head); font-size:1.2rem; font-weight:800; color:var(--text-primary); margin-bottom:0.5rem;">
+          <h4 style="font-family:var(--font-head); font-size:1.25rem; font-weight:800; color:var(--text-primary); margin-bottom:0.5rem;">
             Tutor Educativo Adaptativo y Evaluador Socrático
           </h4>
           <p style="font-size:0.9rem; line-height:1.6; color:var(--text-secondary); margin-bottom:0.9rem;">
-            <b>Objetivo del Proyecto:</b> Desglosar conceptos de ingeniería o ciencias de forma progresiva, aplicando formulación de preguntas interactivas para evaluar y retroalimentar el dominio conceptual del alumno en tiempo real.
+            <b>Objetivo de Negocio:</b> Desglosar conceptos de ingeniería o ciencias de forma progresiva, aplicando formulación de preguntas interactivas para evaluar y retroalimentar el dominio conceptual del alumno en tiempo real sin darle la respuesta resuelta de inmediato.
           </p>
+          <div style="background:var(--bg-subtle); border-radius:8px; padding:1rem 1.2rem; font-size:0.86rem; color:var(--text-primary); margin-bottom:0.9rem;">
+            <strong>Dataset Factual de Documentos para `rag_engine.py`:</strong>
+            <ul style="margin:0.5rem 0 0 0; padding-left:1.2rem; color:var(--text-secondary); line-height:1.6;">
+              <li>"Mecanismo de Auto-Atención (Tema 3): La auto-atención calcula la relevancia de cada palabra respecto a todas las demás mediante matrices Q (Query), K (Key) y V (Value)."</li>
+              <li>"Complejidad de Transformers (Tema 4): La atención global estándar tiene una complejidad computacional cuadrática $O(N^2)$ respecto a la longitud de la secuencia de entrada."</li>
+              <li>"Función Softmax en LLMs: Transforma las puntuaciones de similitud (logits) en una distribución de probabilidades normalizada que suma 1.0."</li>
+            </ul>
+          </div>
+          <div style="background:var(--bg-subtle-alt); border-radius:8px; padding:0.9rem 1.1rem; font-size:0.84rem; color:var(--text-primary); margin-bottom:0.9rem;">
+            <strong>Respuesta Pedagógica Generada:</strong>
+            <p style="margin:0.4rem 0 0 0; color:var(--text-secondary); line-height:1.55;">
+              "¡Excelente pregunta! Para entender por qué la atención es cuadrática $O(N^2)$, piensa en una reunión de 10 personas donde cada persona saluda a todas las demás. ¿Cuántos apretones de manos ocurren en total? Intenta responder para deducir la fórmula de matrices Q y K."
+            </p>
+          </div>
           <div style="font-size:0.82rem; color:var(--text-muted);">
-            <strong>Archivos de Código Utilizados:</strong> <code>rag_engine.py</code> (Temario) + Directivas Pedagógicas en Prompt + <code>api_server.py</code>.
+            <strong>Archivos Utilizados:</strong> <code>rag_engine.py</code> (Temario) + Directivas Pedagógicas en Prompt + <code>api_server.py</code>.
           </div>
         </div>
 
-        <!-- PLANTILLA 5 (NUEVA) -->
-        <div class="template-card-highlight" id="plantilla-e" style="border-left: 5px solid #ef4444;">
+        <!-- PLANTILLA 5 -->
+        <div class="template-card-highlight" id="plantilla-e" style="border-left: 5px solid #ef4444; margin-bottom: 1.8rem;">
           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.6rem;">
-            <span style="font-size:0.78rem; font-weight:800; text-transform:uppercase; color:#ef4444; background:rgba(239,68,68,0.12); padding:0.25rem 0.6rem; border-radius:6px;">PLANTILLA 5 · SALUD &amp; PROTOCOLOS CLÍNICOS</span>
-            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">Complejidad: Alta &bull; Restricciones Médicas</span>
+            <span style="font-size:0.78rem; font-weight:800; text-transform:uppercase; color:#ef4444; background:rgba(239,68,68,0.12); padding:0.25rem 0.6rem; border-radius:6px;">PLANTILLA 5 · SALUD INSTITUCIONAL, TRIAGE &amp; PROTOCOLOS CLÍNICOS</span>
+            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">Complejidad: Alta &bull; Cláusula Médica No Vinculante</span>
           </div>
-          <h4 style="font-family:var(--font-head); font-size:1.2rem; font-weight:800; color:var(--text-primary); margin-bottom:0.5rem;">
+          <h4 style="font-family:var(--font-head); font-size:1.25rem; font-weight:800; color:var(--text-primary); margin-bottom:0.5rem;">
             Asistente de Protocolos Clínicos Institucionales y Triage Informativo
           </h4>
           <p style="font-size:0.9rem; line-height:1.6; color:var(--text-secondary); margin-bottom:0.9rem;">
-            <b>Objetivo del Proyecto:</b> Orientar al personal administrativo o pacientes sobre requisitos de estudios de laboratorio, preparación para cirugías y guías de triage, incorporando siempre la cláusula de advertencia de que la IA no emite diagnósticos médicos vinculantes.
+            <b>Objetivo de Negocio:</b> Orientar al personal administrativo o pacientes sobre requisitos de estudios de laboratorio, preparación para cirugías y guías de triage, incorporando siempre la cláusula de advertencia de que la IA no emite diagnósticos médicos vinculantes.
           </p>
           <div style="background:var(--bg-subtle); border-radius:8px; padding:1rem 1.2rem; font-size:0.86rem; color:var(--text-primary); margin-bottom:0.9rem;">
-            <strong>Dataset de Documentos a Ingresar en `rag_engine.py`:</strong>
+            <strong>Dataset Factual de Documentos para `rag_engine.py`:</strong>
             <ul style="margin:0.5rem 0 0 0; padding-left:1.2rem; color:var(--text-secondary); line-height:1.6;">
               <li>"Protocolo de Química Sanguínea (Guía 3): Requiere ayuno estricto de 8 a 12 horas previas a la toma de muestra. Se permite ingesta moderada de agua simple."</li>
               <li>"Triage Respiratorio (Nivel 2): Pacientes con saturación &lt; 90% o disnea súbita deben ingresar de inmediato al área de choque sin trámite previo."</li>
+              <li>"Preparación de Ultrasonido Abdominal (Guía 6): Ingerir 1 litro de agua 45 minutos antes del estudio y retener orina para lograr ventana acústica óptima."</li>
             </ul>
           </div>
+          <div style="background:var(--bg-subtle-alt); border-radius:8px; padding:0.9rem 1.1rem; font-size:0.84rem; color:var(--text-primary); margin-bottom:0.9rem;">
+            <strong>Respuesta Generada con Disclaimer Médico:</strong>
+            <p style="margin:0.4rem 0 0 0; color:var(--text-secondary); line-height:1.55;">
+              "AVISO: Este sistema es informativo y no sustituye una consulta médica profesional. Para tu química sanguínea requieres un ayuno estricto de 8 a 12 horas (Guía 3). Si presentas dificultad respiratoria acude a urgencias inmediatamente."
+            </p>
+          </div>
           <div style="font-size:0.82rem; color:var(--text-muted);">
-            <strong>Archivos de Código Utilizados:</strong> <code>rag_engine.py</code> + Directivas de Seguridad Médica + <code>api_server.py</code>.
+            <strong>Archivos Utilizados:</strong> <code>rag_engine.py</code> + Directivas de Seguridad Médica + <code>api_server.py</code>.
           </div>
         </div>
 
-        <!-- PLANTILLA 6 (NUEVA) -->
-        <div class="template-card-highlight" id="plantilla-f" style="border-left: 5px solid #f59e0b;">
+        <!-- PLANTILLA 6 -->
+        <div class="template-card-highlight" id="plantilla-f" style="border-left: 5px solid #f59e0b; margin-bottom: 1.8rem;">
           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.6rem;">
-            <span style="font-size:0.78rem; font-weight:800; text-transform:uppercase; color:#f59e0b; background:rgba(245,158,11,0.12); padding:0.25rem 0.6rem; border-radius:6px;">PLANTILLA 6 · RECURSOS HUMANOS &amp; ONBOARDING</span>
-            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">Complejidad: Baja &bull; Corporativo</span>
+            <span style="font-size:0.78rem; font-weight:800; text-transform:uppercase; color:#f59e0b; background:rgba(245,158,11,0.12); padding:0.25rem 0.6rem; border-radius:6px;">PLANTILLA 6 · RECURSOS HUMANOS, ONBOARDING &amp; CULTURA CORPORATIVA</span>
+            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">Complejidad: Baja &bull; Corporativo &amp; Bienestar</span>
           </div>
-          <h4 style="font-family:var(--font-head); font-size:1.2rem; font-weight:800; color:var(--text-primary); margin-bottom:0.5rem;">
+          <h4 style="font-family:var(--font-head); font-size:1.25rem; font-weight:800; color:var(--text-primary); margin-bottom:0.5rem;">
             Asistente de Inducción Corporativa, Prestaciones y Cultura de Empresa
           </h4>
           <p style="font-size:0.9rem; line-height:1.6; color:var(--text-secondary); margin-bottom:0.9rem;">
-            <b>Objetivo del Proyecto:</b> Acompañar a nuevos empleados en su proceso de bienvenida, respondiendo dudas sobre póliza de gastos médicos, solicitud de equipo de cómputo, días económicos y código de ética.
+            <b>Objetivo de Negocio:</b> Acompañar a nuevos empleados en su proceso de bienvenida, respondiendo dudas sobre póliza de gastos médicos, solicitud de equipo de cómputo, días económicos y código de ética.
           </p>
           <div style="background:var(--bg-subtle); border-radius:8px; padding:1rem 1.2rem; font-size:0.86rem; color:var(--text-primary); margin-bottom:0.9rem;">
-            <strong>Dataset de Documentos a Ingresar en `rag_engine.py`:</strong>
+            <strong>Dataset Factual de Documentos para `rag_engine.py`:</strong>
             <ul style="margin:0.5rem 0 0 0; padding-left:1.2rem; color:var(--text-secondary); line-height:1.6;">
               <li>"Seguro de Gastos Médicos Mayores (Sección 5): La cobertura inicia desde el primer día laboral. La red de hospitales y credencial digital se consultan en el portal de nómina."</li>
               <li>"Vales de Despensa (Art. 8): Se abonan el día 15 de cada mes a la tarjeta electrónica empresarial proporcionada durante la semana de inducción."</li>
+              <li>"Días Económicos (Art. 14): Los colaboradores cuentan con 3 días con goce de sueldo al año para asuntos personales imprevistos, notificando a su líder directo."</li>
             </ul>
           </div>
+          <div style="background:var(--bg-subtle-alt); border-radius:8px; padding:0.9rem 1.1rem; font-size:0.84rem; color:var(--text-primary); margin-bottom:0.9rem;">
+            <strong>Respuesta Generada por el Asistente:</strong>
+            <p style="margin:0.4rem 0 0 0; color:var(--text-secondary); line-height:1.55;">
+              "¡Bienvenido al equipo! Tu seguro de gastos médicos está activo desde hoy (Sección 5). Los vales de despensa se depositan el 15 de cada mes (Art. 8) y dispones de 3 días económicos al año (Art. 14)."
+            </p>
+          </div>
           <div style="font-size:0.82rem; color:var(--text-muted);">
-            <strong>Archivos de Código Utilizados:</strong> <code>rag_engine.py</code> + <code>router.py</code> + <code>api_server.py</code>.
+            <strong>Archivos Utilizados:</strong> <code>rag_engine.py</code> + <code>router.py</code> + <code>api_server.py</code>.
           </div>
         </div>
 
@@ -1256,16 +1202,18 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas de cliente
 
       <div class="tema-section-block">
         <p class="prose-p">
-          Pruebe interactivamente la secuencia operativa de las cuatro capas de la arquitectura ante diversas tipologías de consulta:
+          Pruebe interactivamente la secuencia operativa de las cuatro capas de la arquitectura ante las 6 verticales de proyectos:
         </p>
 
         <!-- Consultas de Prueba Rápida -->
         <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:1rem;">
-          <span style="font-size:0.82rem; font-weight:700; color:var(--text-muted); align-self:center;">Casos de Prueba:</span>
-          <button type="button" class="btn-secondary sim-sample-btn" data-query="¿Puedo devolver un producto si ya abrí la caja original?" style="font-size:0.78rem; padding:0.35rem 0.75rem; border-radius:20px;">Caso 1: Reembolso</button>
-          <button type="button" class="btn-secondary sim-sample-btn" data-query="¿Cuánto tiempo demora en llegar un envío estándar?" style="font-size:0.78rem; padding:0.35rem 0.75rem; border-radius:20px;">Caso 2: Envíos</button>
-          <button type="button" class="btn-secondary sim-sample-btn" data-query="¿Qué cobertura tiene la garantía de equipos electrónicos?" style="font-size:0.78rem; padding:0.35rem 0.75rem; border-radius:20px;">Caso 3: Garantía</button>
-          <button type="button" class="btn-secondary sim-sample-btn" data-query="Genera una ficha técnica estructurada en formato JSON" style="font-size:0.78rem; padding:0.35rem 0.75rem; border-radius:20px;">Caso 4: Estructura JSON</button>
+          <span style="font-size:0.82rem; font-weight:700; color:var(--text-muted); align-self:center;">Casos de Prueba por Plantilla:</span>
+          <button type="button" class="btn-secondary sim-sample-btn" data-query="¿Puedo devolver un producto si ya abrí la caja original?" style="font-size:0.78rem; padding:0.35rem 0.75rem; border-radius:20px;">1: E-Commerce</button>
+          <button type="button" class="btn-secondary sim-sample-btn" data-query="¿Cuáles son los requisitos de titulación y servicio social?" style="font-size:0.78rem; padding:0.35rem 0.75rem; border-radius:20px;">2: Normativa</button>
+          <button type="button" class="btn-secondary sim-sample-btn" data-query="Genera una ficha técnica estructurada en formato JSON para falla de base de datos" style="font-size:0.78rem; padding:0.35rem 0.75rem; border-radius:20px;">3: TI / LoRA</button>
+          <button type="button" class="btn-secondary sim-sample-btn" data-query="Explícame cómo funciona el mecanismo de auto-atención en Transformers" style="font-size:0.78rem; padding:0.35rem 0.75rem; border-radius:20px;">4: Tutor Socrático</button>
+          <button type="button" class="btn-secondary sim-sample-btn" data-query="¿Cuántas horas de ayuno necesito para la química sanguínea?" style="font-size:0.78rem; padding:0.35rem 0.75rem; border-radius:20px;">5: Salud / Triage</button>
+          <button type="button" class="btn-secondary sim-sample-btn" data-query="¿Cuándo me depositan los vales de despensa y seguro médico?" style="font-size:0.78rem; padding:0.35rem 0.75rem; border-radius:20px;">6: RRHH</button>
         </div>
 
         <!-- Entrada de Texto y Ejecución -->
@@ -1301,19 +1249,25 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas de cliente
           <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1.5rem; margin-bottom:1.2rem;">
             <!-- Criterio 1 -->
             <div>
-              <label style="font-weight:800; font-size:0.9rem; color:var(--text-primary); display:block; margin-bottom:0.6rem;">1. Dominio de Aplicación:</label>
+              <label style="font-weight:800; font-size:0.9rem; color:var(--text-primary); display:block; margin-bottom:0.6rem;">1. Dominio / Plantilla de Aplicación:</label>
               <div style="display:flex; flex-direction:column; gap:0.5rem; font-size:0.86rem; color:var(--text-secondary);">
                 <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
-                  <input type="radio" name="wiz-project" value="ecommerce" checked> Comercio electrónico, logística o atención a clientes.
+                  <input type="radio" name="wiz-project" value="ecommerce" checked> 1. Comercio electrónico, logística o reembolsos.
                 </label>
                 <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
-                  <input type="radio" name="wiz-project" value="legal"> Reglamentación institucional, estatutos o manuales de trámites.
+                  <input type="radio" name="wiz-project" value="legal"> 2. Normativa institucional, estatutos o trámites.
                 </label>
                 <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
-                  <input type="radio" name="wiz-project" value="json_reports"> Extracción estructurada, clasificación y esquemas JSON.
+                  <input type="radio" name="wiz-project" value="it_helpdesk"> 3. Soporte TI, mesa de ayuda y esquemas JSON (LoRA).
                 </label>
                 <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
-                  <input type="radio" name="wiz-project" value="tutor"> Educación adaptativa y evaluación pedagógica formativa.
+                  <input type="radio" name="wiz-project" value="education"> 4. Educación superior y tutoría socrática.
+                </label>
+                <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
+                  <input type="radio" name="wiz-project" value="health"> 5. Salud, protocolos clínicos y triage no vinculante.
+                </label>
+                <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
+                  <input type="radio" name="wiz-project" value="hr"> 6. Recursos humanos, onboarding y prestaciones.
                 </label>
               </div>
             </div>
@@ -1352,7 +1306,6 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas de cliente
 
     <!-- ======================================================================
          SECCIÓN 17: HARDWARE, VRAM & GOOGLE COLAB
-         ====================================================================== -->
     <article class="tema-card" id="hardware-colab" style="margin-bottom: 3.5rem;">
       <div class="tema-header">
         <div class="tema-eyebrow">Dimensionamiento de Recursos · Planificación VRAM</div>
