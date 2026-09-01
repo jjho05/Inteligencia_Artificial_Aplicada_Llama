@@ -4,7 +4,7 @@
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Hackathon: Proyecto Integrador | IA Aplicada con Modelos Abiertos</title>
-  <meta name="description" content="Guía maestra de ingeniería, diseño, buenas prácticas y mentoría paso a paso para construir tu Proyecto Integrador de IA con Meta Llama: viabilidad de problemas, chunking, RAG, FastAPI y evaluación."/>
+  <meta name="description" content="Guía maestra exhaustiva, metodológica y técnica para construir tu Proyecto Integrador de IA con Meta Llama: viabilidad de problemas, chunking, RAG, LoRA, arquitectura modular de 4 capas, hardware VRAM, FastAPI y evaluación."/>
   
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -24,7 +24,7 @@
   <script defer src="js/hackathon.js"></script>
 
   <style>
-    /* Estilos profesionales para el Centro de Construcción del Hackathon */
+    /* Estilos profesionales y modulares para el Centro del Hackathon (Strict No-Emoji Edition) */
     .sim-step-card {
       display: flex;
       gap: 1.2rem;
@@ -121,6 +121,39 @@
       flex-shrink: 0;
       font-family: var(--font-head);
     }
+    .glossary-card {
+      background: var(--bg-surface-2);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 1.4rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .glossary-term {
+      font-family: var(--font-head);
+      font-size: 1.05rem;
+      font-weight: 800;
+      color: var(--meta-blue);
+      margin-bottom: 0.5rem;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .glossary-desc {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.6;
+      margin-bottom: 0.8rem;
+    }
+    .glossary-rule {
+      background: var(--bg-subtle);
+      border-radius: 6px;
+      padding: 0.5rem 0.7rem;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      border-left: 2px solid var(--meta-blue);
+    }
   </style>
 </head>
 <body>
@@ -140,11 +173,15 @@
         <a class="nav-link-item" href="#si-vs-no">3. SÍ vs NO</a>
         <a class="nav-link-item" href="#evaluador-viabilidad">4. Evaluador</a>
         <a class="nav-link-item" href="#plan-cinco-dias">5. Plan 5 Días</a>
-        <a class="nav-link-item" href="#catalogo-plantillas">6. 4 Plantillas</a>
-        <a class="nav-link-item" href="#simulador-vivo">7. Simulador</a>
-        <a class="nav-link-item" href="#bloques-codigo">8. Código</a>
-        <a class="nav-link-item" href="#manual-diagnostico">9. Diagnóstico</a>
-        <a class="nav-link-item" href="#checklist-final">10. Checklist</a>
+        <a class="nav-link-item" href="#arquitectura-modular">6. Arquitectura</a>
+        <a class="nav-link-item" href="#glosario-tecnico">7. Glosario</a>
+        <a class="nav-link-item" href="#catalogo-plantillas">8. 4 Plantillas</a>
+        <a class="nav-link-item" href="#simulador-vivo">9. Simulador</a>
+        <a class="nav-link-item" href="#arbol-decisiones">10. Decisión</a>
+        <a class="nav-link-item" href="#hardware-colab">11. Hardware</a>
+        <a class="nav-link-item" href="#bloques-codigo">12. Código</a>
+        <a class="nav-link-item" href="#manual-diagnostico">13. Diagnóstico</a>
+        <a class="nav-link-item" href="#checklist-final">14. Checklist</a>
         <a class="nav-link-item" href="modulo2-tema1.html" style="color: #3fb950; font-weight: 700;">Módulo 2 →</a>
       </nav>
       <div class="header-controls">
@@ -515,12 +552,200 @@
     </article>
 
     <!-- ======================================================================
-         SECCIÓN 6: CATÁLOGO DE 4 PLANTILLAS DE PROYECTOS
+         SECCIÓN 6: FUNDAMENTO ARQUITECTÓNICO & MODELO MENTAL
+         ====================================================================== -->
+    <article class="tema-card" id="arquitectura-modular" style="border-left: 5px solid var(--meta-blue); margin-bottom: 3.5rem;">
+      <div class="tema-header">
+        <div class="tema-eyebrow">Fundamento de Ingeniería · Principio de Desacoplamiento</div>
+        <h3 class="tema-title">6. Arquitectura Modular de Cuatro Capas: De la Consulta a la Respuesta</h3>
+      </div>
+
+      <div class="tema-section-block">
+        <p class="prose-p">
+          En el desarrollo de sistemas de IA de grado industrial, la regla de oro consiste en <b>desacoplar el motor de razonamiento (LLM) del repositorio de datos fácticos (Base de Conocimiento)</b>. Intentar resolver todo mediante prompts extensos genera tres fallas críticas: <i>alucinaciones por sobrecarga de contexto</i>, <i>latencia inaceptable (&gt; 5 segundos)</i> y <i>costos exponenciales por consumo de tokens</i>.
+        </p>
+
+        <!-- Tabla Comparativa APA 7 -->
+        <div class="table-container" style="overflow-x:auto; margin:1.5rem 0;">
+          <table class="apa-table" style="width:100%; border-collapse:collapse; font-size:0.88rem;">
+            <thead>
+              <tr style="background:var(--bg-surface-2); border-bottom:2px solid var(--border-subtle);">
+                <th style="padding:0.75rem; text-align:left; width:22%;">Criterio de Evaluación</th>
+                <th style="padding:0.75rem; text-align:left; width:39%;">Enfoque Monolítico (Prompt Relleno)</th>
+                <th style="padding:0.75rem; text-align:left; width:39%;">Arquitectura Modular (Router + RAG + LoRA)</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr style="border-bottom:1px solid var(--border-subtle);">
+                <td style="padding:0.7rem;"><strong>Control de Alucinaciones</strong></td>
+                <td style="padding:0.7rem; color:#ef4444;">Bajo: El modelo inventa respuestas cuando la información no está explícita.</td>
+                <td style="padding:0.7rem; color:var(--accent-success); font-weight:700;">Máximo: Filtro de similitud coseno $\ge 0.40$ con admisión estricta de ignorancia.</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--border-subtle);">
+                <td style="padding:0.7rem;"><strong>Latencia por Consulta</strong></td>
+                <td style="padding:0.7rem;">Alta ($3.0 - 8.0\text{ s}$ por procesar miles de tokens en cada turno).</td>
+                <td style="padding:0.7rem; color:var(--accent-success); font-weight:700;">Optimizada ($&lt; 0.8\text{ s}$ en consultas directas mediante Router).</td>
+              </tr>
+              <tr style="border-bottom:1px solid var(--border-subtle);">
+                <td style="padding:0.7rem;"><strong>Actualización de Datos</strong></td>
+                <td style="padding:0.7rem;">Manual y costosa (Reescribir prompts en cada modificación de políticas).</td>
+                <td style="padding:0.7rem; color:var(--accent-success); font-weight:700;">Instantánea (Actualizar archivos de texto en el índice vectorial).</td>
+              </tr>
+              <tr>
+                <td style="padding:0.7rem;"><strong>Estructura de Salida</strong></td>
+                <td style="padding:0.7rem;">Inconsistente (Agrega texto conversacional no deseado antes de JSON).</td>
+                <td style="padding:0.7rem; color:var(--accent-success); font-weight:700;">Garantizada mediante adaptadores LoRA y validación con Pydantic.</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Las 4 Capas del Sistema -->
+        <h4 class="tema-subheading"><span class="tema-subheading-tag">Estructura</span> Los Cuatro Componentes del Sistema</h4>
+
+        <div class="bento-layout-grid" style="margin: 1.5rem 0;">
+          <div class="bento-sub-card">
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem;">
+                <span class="badge-role" style="background:rgba(8,102,255,0.12); color:var(--meta-blue); font-size:0.75rem; padding:0.2rem 0.5rem; border-radius:4px; font-weight:800;">Capa 1</span>
+                <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--meta-blue); font-weight:700;">router.py</span>
+              </div>
+              <h5 class="bento-sub-title">1. Enrutador de Complejidad (Router)</h5>
+              <p class="bento-sub-desc">
+                Clasifica la intención del usuario. Despacha saludos y consultas triviales a inferencia rápida ($&lt; 0.5\text{ s}$), y deriva preguntas documentales al pipeline RAG.
+              </p>
+            </div>
+          </div>
+
+          <div class="bento-sub-card">
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem;">
+                <span class="badge-role" style="background:rgba(2,132,199,0.12); color:#0284c7; font-size:0.75rem; padding:0.2rem 0.5rem; border-radius:4px; font-weight:800;">Capa 2</span>
+                <span style="font-family:var(--font-mono); font-size:0.75rem; color:#0284c7; font-weight:700;">rag_engine.py</span>
+              </div>
+              <h5 class="bento-sub-title">2. Base de Conocimiento Vectorial (RAG)</h5>
+              <p class="bento-sub-desc">
+                Segmenta los documentos de la organización, calcula incrustaciones en $\mathbb{R}^{384}$ y recupera los fragmentos con mayor similitud coseno antes de llamar al LLM.
+              </p>
+            </div>
+          </div>
+
+          <div class="bento-sub-card">
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem;">
+                <span class="badge-role" style="background:rgba(168,85,247,0.12); color:#a855f7; font-size:0.75rem; padding:0.2rem 0.5rem; border-radius:4px; font-weight:800;">Capa 3</span>
+                <span style="font-family:var(--font-mono); font-size:0.75rem; color:#a855f7; font-weight:700;">lora_adapter.py</span>
+              </div>
+              <h5 class="bento-sub-title">3. Adaptador LoRA / Formateador JSON</h5>
+              <p class="bento-sub-desc">
+                Aplica pesos adaptativos entrenados (PEFT) o directivas estructuradas Few-Shot para forzar al modelo a responder con esquemas JSON válidos y tipados.
+              </p>
+            </div>
+          </div>
+
+          <div class="bento-sub-card">
+            <div>
+              <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem;">
+                <span class="badge-role" style="background:rgba(5,150,105,0.12); color:var(--accent-success); font-size:0.75rem; padding:0.2rem 0.5rem; border-radius:4px; font-weight:800;">Capa 4</span>
+                <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--accent-success); font-weight:700;">api_server.py</span>
+              </div>
+              <h5 class="bento-sub-title">4. Microservicio API (FastAPI)</h5>
+              <p class="bento-sub-desc">
+                Expone endpoints REST asíncronos (`/v1/chat`) validados con modelos de Pydantic y documentación interactiva Swagger UI (`/docs`), listo para WhatsApp.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- ======================================================================
+         SECCIÓN 7: GLOSARIO TÉCNICO EXHAUSTIVO
+         ====================================================================== -->
+    <article class="tema-card" id="glosario-tecnico" style="margin-bottom: 3.5rem;">
+      <div class="tema-header">
+        <div class="tema-eyebrow">Marco Teórico · Glosario de Ingeniería</div>
+        <h3 class="tema-title">7. Glosario Técnico de Inteligencia Artificial Aplicada</h3>
+      </div>
+
+      <div class="tema-section-block">
+        <p class="prose-p">
+          Definiciones conceptuales y directivas prácticas para comprender cada componente de tu sistema:
+        </p>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.2rem; margin-top: 1.2rem;">
+          
+          <div class="glossary-card">
+            <div>
+              <div class="glossary-term">1. Prompt &amp; System Directives</div>
+              <p class="glossary-desc">
+                Conjunto de instrucciones estructuradas enviadas al modelo que definen su rol institucional, tono, restricciones operativas y contexto documental.
+              </p>
+            </div>
+            <div class="glossary-rule">Regla: Delimitar el contexto con etiquetas claras (ej. <code>[CONTEXTO]...[/CONTEXTO]</code>).</div>
+          </div>
+
+          <div class="glossary-card">
+            <div>
+              <div class="glossary-term">2. Tokens &amp; Tokenización BPE</div>
+              <p class="glossary-desc">
+                Unidades atómicas de procesamiento textual generadas mediante algoritmos Byte-Pair Encoding. Un token representa aproximadamente 4 caracteres en idioma español.
+              </p>
+            </div>
+            <div class="glossary-rule">Regla: Controlar la longitud del contexto para no exceder la ventana del modelo.</div>
+          </div>
+
+          <div class="glossary-card">
+            <div>
+              <div class="glossary-term">3. Incrustaciones Densas (Embeddings)</div>
+              <p class="glossary-desc">
+                Vectores numéricos continuos en $\mathbb{R}^{384}$ que capturan la semántica profunda de una oración, permitiendo búsquedas por similitud conceptual.
+              </p>
+            </div>
+            <div class="glossary-rule">Regla: Normalizar vectores con norma $L_2$ para calcular similitud mediante producto punto.</div>
+          </div>
+
+          <div class="glossary-card">
+            <div>
+              <div class="glossary-term">4. RAG &amp; Similitud Coseno</div>
+              <p class="glossary-desc">
+                Técnica que extrae los $k$ fragmentos más relevantes de una base documental antes de la inferencia, garantizando respuestas 100% verificables.
+              </p>
+            </div>
+            <div class="glossary-rule">Regla: Fijar un umbral de corte mínimo ($\ge 0.40$) para descartar texto irrelevante.</div>
+          </div>
+
+          <div class="glossary-card">
+            <div>
+              <div class="glossary-term">5. LoRA (Low-Rank Adaptation)</div>
+              <p class="glossary-desc">
+                Técnica de adaptación supervisada eficiente (PEFT) que congela el modelo base e inyecta matrices de bajo rango $r \ll d$ en capas de atención.
+              </p>
+            </div>
+            <div class="glossary-rule">Regla: Usar $r=8$ y $\alpha=16$ para adaptar estilos y formatos con bajo consumo de VRAM.</div>
+          </div>
+
+          <div class="glossary-card">
+            <div>
+              <div class="glossary-term">6. Memoria VRAM &amp; GPU T4</div>
+              <p class="glossary-desc">
+                Memoria de alto ancho de banda de la tarjeta aceleradora. En Google Colab se dispone de 15 GB dedicados para alojar pesos, activaciones y KV-Cache.
+              </p>
+            </div>
+            <div class="glossary-rule">Regla: Usar cuantización en 4-bits (NF4/QLoRA) para modelos mayores a 3 mil millones de parámetros.</div>
+          </div>
+
+        </div>
+      </div>
+    </article>
+
+    <!-- ======================================================================
+         SECCIÓN 8: CATÁLOGO DE 4 PLANTILLAS DE PROYECTOS
          ====================================================================== -->
     <article class="tema-card" id="catalogo-plantillas" style="margin-bottom: 3.5rem;">
       <div class="tema-header">
         <div class="tema-eyebrow">Catálogo de Proyectos · Entregables Listos</div>
-        <h3 class="tema-title">6. Cuatro Plantillas de Proyectos Listas para Adaptar</h3>
+        <h3 class="tema-title">8. Cuatro Plantillas de Proyectos Listas para Adaptar</h3>
       </div>
 
       <div class="tema-section-block">
@@ -625,12 +850,12 @@
     </article>
 
     <!-- ======================================================================
-         SECCIÓN 7: SIMULADOR VISUAL E INTERACTIVO EN VIVO
+         SECCIÓN 9: SIMULADOR VISUAL E INTERACTIVO EN VIVO
          ====================================================================== -->
     <article class="tema-card" id="simulador-vivo" style="margin-bottom: 3.5rem; border-left: 5px solid var(--meta-blue);">
       <div class="tema-header">
         <div class="tema-eyebrow">Simulación de Inferencia · Pipeline Interactivo</div>
-        <h3 class="tema-title">7. Simulador en Vivo: Ejecución del Flujo de Procesamiento</h3>
+        <h3 class="tema-title">9. Simulador en Vivo: Ejecución del Flujo de Procesamiento</h3>
       </div>
 
       <div class="tema-section-block">
@@ -663,12 +888,121 @@
     </article>
 
     <!-- ======================================================================
-         SECCIÓN 8: BLOQUES DE CÓDIGO LEGO COMENTADOS
+         SECCIÓN 10: ÁRBOL DE DECISIONES ARQUITECTÓNICAS
+         ====================================================================== -->
+    <article class="tema-card" id="arbol-decisiones" style="margin-bottom: 3.5rem;">
+      <div class="tema-header">
+        <div class="tema-eyebrow">Diseño Técnico · Matriz de Decisión</div>
+        <h3 class="tema-title">10. Árbol de Decisiones: Configuración Óptima según tu Caso de Uso</h3>
+      </div>
+
+      <div class="tema-section-block">
+        <p class="prose-p">
+          Seleccione los parámetros operativos de su proyecto para calcular el stack técnico y la estrategia de código correspondiente:
+        </p>
+
+        <form id="friendly-wizard-form" style="background:var(--bg-surface-2); border:1px solid var(--border-subtle); border-radius:12px; padding:1.5rem; margin:1.2rem 0;">
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1.5rem; margin-bottom:1.2rem;">
+            <!-- Criterio 1 -->
+            <div>
+              <label style="font-weight:800; font-size:0.9rem; color:var(--text-primary); display:block; margin-bottom:0.6rem;">1. Dominio de Aplicación:</label>
+              <div style="display:flex; flex-direction:column; gap:0.5rem; font-size:0.86rem; color:var(--text-secondary);">
+                <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
+                  <input type="radio" name="wiz-project" value="ecommerce" checked> Comercio electrónico, logística o atención a clientes.
+                </label>
+                <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
+                  <input type="radio" name="wiz-project" value="legal"> Reglamentación institucional, estatutos o manuales de trámites.
+                </label>
+                <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
+                  <input type="radio" name="wiz-project" value="json_reports"> Extracción estructurada, clasificación y esquemas JSON.
+                </label>
+                <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
+                  <input type="radio" name="wiz-project" value="tutor"> Educación adaptativa y evaluación pedagógica formativa.
+                </label>
+              </div>
+            </div>
+
+            <!-- Criterio 2 -->
+            <div>
+              <label style="font-weight:800; font-size:0.9rem; color:var(--text-primary); display:block; margin-bottom:0.6rem;">2. Formato de Salida Requerido:</label>
+              <div style="display:flex; flex-direction:column; gap:0.5rem; font-size:0.86rem; color:var(--text-secondary);">
+                <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
+                  <input type="radio" name="wiz-output" value="friendly_text" checked> Lenguaje natural en prosa empática y estructurada.
+                </label>
+                <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
+                  <input type="radio" name="wiz-output" value="json_format"> Objeto JSON tipado estricto para interoperabilidad.
+                </label>
+              </div>
+            </div>
+
+            <!-- Criterio 3 -->
+            <div>
+              <label style="font-weight:800; font-size:0.9rem; color:var(--text-primary); display:block; margin-bottom:0.6rem;">3. Entorno de Ejecución:</label>
+              <div style="display:flex; flex-direction:column; gap:0.5rem; font-size:0.86rem; color:var(--text-secondary);">
+                <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
+                  <input type="radio" name="wiz-compute" value="colab_free" checked> Google Colab Gratuito (1x GPU Tesla T4 15 GB VRAM).
+                </label>
+                <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
+                  <input type="radio" name="wiz-compute" value="local_pc"> Entorno Local (CPU / Apple Silicon M-Series).
+                </label>
+              </div>
+            </div>
+          </div>
+        </form>
+
+        <div id="friendly-wizard-result"></div>
+      </div>
+    </article>
+
+    <!-- ======================================================================
+         SECCIÓN 11: HARDWARE, VRAM & GOOGLE COLAB
+         ====================================================================== -->
+    <article class="tema-card" id="hardware-colab" style="margin-bottom: 3.5rem;">
+      <div class="tema-header">
+        <div class="tema-eyebrow">Dimensionamiento de Recursos · Planificación VRAM</div>
+        <h3 class="tema-title">11. Presupuesto de Memoria VRAM y Factibilidad en Google Colab</h3>
+      </div>
+
+      <div class="tema-section-block">
+        <p class="prose-p">
+          El consumo de memoria de GPU durante la inferencia y el entrenamiento PEFT se rige por la ecuación formal:
+        </p>
+
+        <div class="formula-callout" style="background:var(--bg-surface-2); border:1px solid var(--border-subtle); border-radius:10px; padding:1.2rem; margin:1rem 0; text-align:center;">
+          $$\text{VRAM}_{\text{Total}} = \text{Memoria}_{\text{Pesos}} + \text{Memoria}_{\text{Optimizador (AdamW)}} + \text{Memoria}_{\text{KV-Cache}} + \text{Memoria}_{\text{Activaciones}} + \text{Sobrecarga CUDA}$$
+        </div>
+
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:1rem; background:var(--bg-surface-2); border:1px solid var(--border-subtle); border-radius:12px; padding:1.2rem; margin:1.2rem 0;">
+          <div>
+            <label style="font-size:0.82rem; font-weight:700; color:var(--text-primary); display:block; margin-bottom:0.3rem;">Modelo Fundacional Base:</label>
+            <select id="colab-model-choice" style="width:100%; padding:0.6rem; border-radius:8px; border:1px solid var(--border-subtle); background:var(--bg-surface); color:var(--text-primary); font-size:0.85rem;">
+              <option value="tinyllama" selected>TinyLlama 1.1B (1.1B Parámetros &bull; ~4.2 GB)</option>
+              <option value="llama_1b">Meta Llama 3.2 1B (1.2B Parámetros &bull; ~5.1 GB)</option>
+              <option value="llama_3b">Meta Llama 3.2 3B (3.2B Parámetros &bull; ~8.4 GB)</option>
+              <option value="llama_8b">Meta Llama 3.1 8B (8.0B Parámetros &bull; ~11.8 GB)</option>
+            </select>
+          </div>
+
+          <div>
+            <label style="font-size:0.82rem; font-weight:700; color:var(--text-primary); display:block; margin-bottom:0.3rem;">Régimen de Operación:</label>
+            <select id="colab-mode-choice" style="width:100%; padding:0.6rem; border-radius:8px; border:1px solid var(--border-subtle); background:var(--bg-surface); color:var(--text-primary); font-size:0.85rem;">
+              <option value="rag" selected>Inferencia con Motor Vectorial (RAG)</option>
+              <option value="lora">Entrenamiento Supervisado con LoRA (PEFT)</option>
+            </select>
+          </div>
+        </div>
+
+        <div id="colab-semaphore-box"></div>
+      </div>
+    </article>
+
+    <!-- ======================================================================
+         SECCIÓN 12: BLOQUES DE CÓDIGO LEGO COMENTADOS
          ====================================================================== -->
     <article class="tema-card" id="bloques-codigo" style="margin-bottom: 3.5rem;">
       <div class="tema-header">
         <div class="tema-eyebrow">Implementación Técnica · Bloques Reutilizables</div>
-        <h3 class="tema-title">8. Código Modular Comentado para el Starter Kit</h3>
+        <h3 class="tema-title">12. Código Modular Comentado para el Starter Kit</h3>
       </div>
 
       <div class="tema-section-block">
@@ -811,12 +1145,12 @@
     </article>
 
     <!-- ======================================================================
-         SECCIÓN 9: MANUAL DE DIAGNÓSTICO & PRIMEROS AUXILIOS TÉCNICOS
+         SECCIÓN 13: MANUAL DE DIAGNÓSTICO & PRIMEROS AUXILIOS TÉCNICOS
          ====================================================================== -->
     <article class="tema-card" id="manual-diagnostico" style="margin-bottom: 3.5rem;">
       <div class="tema-header">
         <div class="tema-eyebrow">Diagnóstico y Mitigación · Primeros Auxilios</div>
-        <h3 class="tema-title">9. Resolución Técnica de Bloqueos y Errores Frecuentes</h3>
+        <h3 class="tema-title">13. Resolución Técnica de Bloqueos y Errores Frecuentes</h3>
       </div>
 
       <div class="tema-section-block">
@@ -903,12 +1237,12 @@
     </article>
 
     <!-- ======================================================================
-         SECCIÓN 10: RÚBRICA OFICIAL & CHECKLIST INTERACTIVO
+         SECCIÓN 14: RÚBRICA OFICIAL & CHECKLIST INTERACTIVO
          ====================================================================== -->
     <article class="tema-card" id="checklist-final" style="margin-bottom: 3.5rem; border-left: 5px solid var(--accent-success);">
       <div class="tema-header">
         <div class="tema-eyebrow">Aseguramiento de Calidad · Rúbrica Oficial (100 Puntos)</div>
-        <h3 class="tema-title">10. Auditoría Pre-Entrega y Checklist de Calidad</h3>
+        <h3 class="tema-title">14. Auditoría Pre-Entrega y Checklist de Calidad</h3>
       </div>
 
       <div class="tema-section-block">
