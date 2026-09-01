@@ -315,6 +315,20 @@
 
         </div>
 
+        <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.4rem; margin: 1.5rem 0;">
+          <h4 style="font-family: var(--font-head); font-size: 1.05rem; font-weight: 800; color: var(--meta-blue); margin-bottom: 0.6rem;">
+            Analogía Sencilla para Entender RAG + LLM: El Escritor Inteligente y el Bibliotecario Veloz
+          </h4>
+          <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.65; margin: 0 0 0.8rem 0;">
+            Imagina que estás contratando a dos personas para atender la oficina de atención a clientes:
+          </p>
+          <ul style="margin: 0; padding-left: 1.2rem; font-size: 0.88rem; color: var(--text-secondary); line-height: 1.65;">
+            <li><strong>El Escritor (El LLM / Llama):</strong> Es una persona sumamente elocuente, amable y rápida redactando en español perfecto, pero <i>no se sabe de memoria los reglamentos internos de tu empresa</i>. Si le pides una política específica sin darle el manual, intentará adivinarla para no quedar mal (<b>Alucinación</b>).</li>
+            <li><strong>El Bibliotecario (El Motor RAG):</strong> Es un asistente veloz que tiene organizado todo el archivo de tu empresa. En menos de 20 milisegundos busca entre cientos de páginas y le entrega al Escritor exactamente el párrafo del reglamento que resuelve la duda del cliente.</li>
+            <li><strong>El Resultado (El Sistema Completo):</strong> El Escritor toma el fragmento que le trajo el Bibliotecario, lo lee con atención y le redacta al cliente una respuesta perfecta, empática y 100% verídica citando el artículo correspondiente.</li>
+          </ul>
+        </div>
+
         <div style="background: var(--bg-subtle-alt); border-radius: 10px; padding: 1.2rem 1.4rem; border: 1px solid var(--border-subtle); margin-top: 1rem;">
           <strong style="color: var(--text-primary); font-size: 0.92rem; display: block; margin-bottom: 0.3rem;">Definición del Alcance Mínimo Viable (MVP) para el Hackathon:</strong>
           <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; margin: 0;">
@@ -541,6 +555,20 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas de cliente
         <p class="prose-p">
           Al activar <code>normalize_embeddings=True</code> en <code>SentenceTransformer</code>, los vectores quedan proyectados sobre la hiperesfera unitaria ($\|\mathbf{q}\|_2 = 1, \|\mathbf{d}\|_2 = 1$), lo que reduce la similitud a un simple <b>producto punto matricial ($\mathbf{q} \cdot \mathbf{d}$)</b> ejecutable en microsegundos mediante NumPy o FAISS.
         </p>
+
+        <div style="background:var(--bg-surface-2); border:1px solid var(--border-subtle); border-radius:12px; padding:1.4rem; margin-top:1.2rem;">
+          <h4 style="font-family:var(--font-head); font-size:1.05rem; font-weight:800; color:var(--meta-blue); margin-bottom:0.6rem;">
+            ¿Cómo Entender un Embedding sin Saber Álgebra Lineal? La Analogía del Mapa de la Ciudad
+          </h4>
+          <p style="font-size:0.9rem; color:var(--text-secondary); line-height:1.65; margin:0 0 0.8rem 0;">
+            Imagina que a cada idea o concepto del mundo le asignamos una dirección geográfica (coordenadas de latitud y longitud):
+          </p>
+          <ul style="margin:0; padding-left:1.2rem; font-size:0.88rem; color:var(--text-secondary); line-height:1.65;">
+            <li>Si el usuario escribe <i>"coche"</i> y en tu documento dice <i>"automóvil"</i>, no comparten las mismas letras, pero en el mapa semántico <b>viven exactamente en la misma cuadra</b>. La distancia entre ellos es casi cero.</li>
+            <li>En cambio, la palabra <i>"lechuga"</i> vive en el extremo opuesto de la ciudad. Su distancia es enorme y el ángulo entre sus vectores es amplio ($\cos(\theta) \approx 0.05$).</li>
+            <li>El modelo de embeddings no memoriza letras; ubica cada oración en un mapa de 384 dimensiones. La <b>Similitud Coseno</b> simplemente mide qué tan cerca están dos ideas en ese mapa conceptual.</li>
+          </ul>
+        </div>
       </div>
     </article>
 
