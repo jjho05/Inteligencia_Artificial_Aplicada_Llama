@@ -181,12 +181,25 @@
       font-weight: 600;
     }
     .mac-body {
-      padding: 1.1rem;
+      padding: 1.2rem;
       color: #e2e8f0;
       font-family: var(--font-mono);
-      font-size: 0.85rem;
+      font-size: 0.84rem;
+      white-space: pre-wrap;
+      word-break: break-word;
       overflow-x: auto;
-      line-height: 1.6;
+      line-height: 1.65;
+    }
+    .mac-body pre {
+      margin: 0;
+      padding: 0;
+      background: transparent;
+      border: none;
+      color: inherit;
+      font-family: inherit;
+      font-size: inherit;
+      white-space: pre-wrap;
+      word-break: break-word;
     }
 
     /* Visual VRAM Memory Bar */
@@ -744,7 +757,7 @@
 
       <div class="tema-section-block">
         <p class="prose-p">
-          Un System Prompt profesional no es una simple frase informal. Debe estructurarse con **delimitadores semánticos**, **restricciones negativas explícitas** y **mecanismos deterministas de admisión de ignorancia**:
+          Un System Prompt profesional no es una simple frase informal. Debe estructurarse con <strong>delimitadores semánticos</strong>, <strong>restricciones negativas explícitas</strong> y <strong>mecanismos deterministas de admisión de ignorancia</strong>:
         </p>
 
         <div class="comparison-grid-dual">
@@ -758,7 +771,7 @@
               <span class="mac-title" style="color: #ef4444;">prompt_debil_inseguro.txt (Principiante)</span>
             </div>
             <div class="mac-body" style="color: #fca5a5;">
-Eres el asistente de la tienda TechStore. Responde las preguntas de los clientes usando la información de nuestras políticas. Sé muy amable y ayuda en todo lo que puedas.
+<pre style="margin:0; background:transparent; border:none; color:inherit; font-family:inherit; font-size:inherit; white-space:pre-wrap; word-break:break-word;"><code>Eres el asistente de la tienda TechStore. Responde las preguntas de los clientes usando la información de nuestras políticas. Sé muy amable y ayuda en todo lo que puedas.</code></pre>
             </div>
             <div style="padding: 0.8rem 1.1rem; background: rgba(239,68,68,0.08); border-top: 1px solid rgba(239,68,68,0.2); font-size: 0.78rem; color: #ef4444;">
               <b>Fallas Críticas:</b> Sin delimitadores de contexto, sin cláusula de admisión de ignorancia y sin restricción de formato de salida.
@@ -774,7 +787,7 @@ Eres el asistente de la tienda TechStore. Responde las preguntas de los clientes
               <span class="mac-title" style="color: #10b981;">system_prompt_industrial_llama3.txt (Estándar Meta)</span>
             </div>
             <div class="mac-body" style="color: #6ee7b7;">
-&lt;|begin_of_text|&gt;&lt;|start_header_id|&gt;system&lt;|end_header_id|&gt;
+<pre style="margin:0; background:transparent; border:none; color:inherit; font-family:inherit; font-size:inherit; white-space:pre-wrap; word-break:break-word;"><code><span class="code-kw">&lt;|begin_of_text|&gt;&lt;|start_header_id|&gt;system&lt;|end_header_id|&gt;</span>
 Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas basándote EXCLUSIVAMENTE en el fragmento provisto en [CONTEXTO].
 
 ### REGLAS OPERATIVAS ESTRICTAS:
@@ -785,11 +798,11 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas basándote
 4. NUNCA asumas precios, plazos o condiciones no presentes.
 
 [CONTEXTO]
-{contexto_recuperado_rag}
-[/CONTEXTO]&lt;|eot_id|&gt;
-&lt;|start_header_id|&gt;user&lt;|end_header_id|&gt;
-{pregunta_usuario}&lt;|eot_id|&gt;
-&lt;|start_header_id|&gt;assistant&lt;|end_header_id|&gt;
+<span class="code-var">{contexto_recuperado_rag}</span>
+[/CONTEXTO]<span class="code-kw">&lt;|eot_id|&gt;</span>
+<span class="code-kw">&lt;|start_header_id|&gt;user&lt;|end_header_id|&gt;</span>
+<span class="code-var">{pregunta_usuario}</span><span class="code-kw">&lt;|eot_id|&gt;</span>
+<span class="code-kw">&lt;|start_header_id|&gt;assistant&lt;|end_header_id|&gt;</span></code></pre>
             </div>
             <div style="padding: 0.8rem 1.1rem; background: rgba(16,185,129,0.08); border-top: 1px solid rgba(16,185,129,0.2); font-size: 0.78rem; color: #10b981;">
               <b>Garantía de Calidad:</b> Delimitación semántica limpia, anclaje estricto y cero alucinación garantizada.
@@ -811,7 +824,7 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas basándote
 
       <div class="tema-section-block">
         <p class="prose-p">
-          El 80% del éxito de un sistema RAG reside en la **calidad y pulcritud de los datos de entrada**. A continuación se presenta el pipeline formal de extracción y limpieza para ingerir PDFs, páginas web o archivos de texto:
+          El 80% del éxito de un sistema RAG reside en la <strong>calidad y pulcritud de los datos de entrada</strong>. A continuación se presenta el pipeline formal de extracción y limpieza para ingerir PDFs, páginas web o archivos de texto:
         </p>
 
         <!-- Mac Window Terminal para data_cleaner.py -->
@@ -823,7 +836,7 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas basándote
             <span class="mac-title">data_cleaner.py · Módulo de Sanitización Regex</span>
           </div>
           <div class="mac-body">
-<span class="code-kw">import</span> <span class="code-var">re</span>
+<pre style="margin:0; background:transparent; border:none; color:inherit; font-family:inherit; font-size:inherit; white-space:pre-wrap; word-break:break-word;"><code><span class="code-kw">import</span> <span class="code-var">re</span>
 
 <span class="code-kw">def</span> <span class="code-fn">sanitizar_texto</span>(<span class="code-var">texto_crudo</span>: <span class="code-cls">str</span>) -> <span class="code-cls">str</span>:
     <span class="code-str">"""Elimina encabezados repetitivos, saltos de linea huerfanos y caracteres no validos."""</span>
@@ -839,7 +852,32 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas basándote
     <span class="code-cm"># 4. Eliminar lineas vacias redundantes</span>
     <span class="code-var">t</span> = <span class="code-var">re</span>.<span class="code-fn">sub</span>(<span class="code-str">r"\n{3,}"</span>, <span class="code-str">"\n\n"</span>, <span class="code-var">t</span>)
     
-    <span class="code-kw">return</span> <span class="code-var">t</span>.<span class="code-fn">strip</span>()
+    <span class="code-kw">return</span> <span class="code-var">t</span>.<span class="code-fn">strip</span>()</code></pre>
+          </div>
+          <div style="padding: 0.8rem 1.1rem; background: rgba(8,102,255,0.06); border-top: 1px solid rgba(8,102,255,0.18); font-size: 0.78rem; color: var(--meta-blue);">
+            <b>Buenas Prácticas:</b> Ejecutar siempre <code>sanitizar_texto()</code> antes de dividir el texto en fragmentos con solapamiento.
+          </div>
+        </div>
+
+        <!-- Grid de 3 Etapas de Ingesta -->
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; margin-top: 1.2rem;">
+          <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 1.1rem;">
+            <strong style="color: var(--meta-blue); font-size: 0.88rem; display: block; margin-bottom: 0.3rem;">Fase 1: Extracción Limpia</strong>
+            <p style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.55; margin: 0;">
+              Extraer el texto de archivos PDF (usando <code>pypdf</code> o <code>pdfplumber</code>) o HTML, eliminando marcas de agua y cabeceras repetitivas.
+            </p>
+          </div>
+          <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 1.1rem;">
+            <strong style="color: #0284c7; font-size: 0.88rem; display: block; margin-bottom: 0.3rem;">Fase 2: Sanitización Regex</strong>
+            <p style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.55; margin: 0;">
+              Eliminar patrones de numeración de páginas (<code>Pág X de Y</code>), saltos de línea huérfanos y caracteres no UTF-8 que distorsionen los embeddings.
+            </p>
+          </div>
+          <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 1.1rem;">
+            <strong style="color: #10b981; font-size: 0.88rem; display: block; margin-bottom: 0.3rem;">Fase 3: Segmentación Semántica</strong>
+            <p style="font-size: 0.82rem; color: var(--text-secondary); line-height: 1.55; margin: 0;">
+              Dividir el texto resultante en párrafos coherentes con 10% a 15% de overlap antes de generar las representaciones en 384 dimensiones.
+            </p>
           </div>
         </div>
       </div>
@@ -856,7 +894,7 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas basándote
 
       <div class="tema-section-block">
         <p class="prose-p">
-          Segmentar textos arbitrariamente por número de caracteres puede cortar oraciones clave a la mitad. Para el Hackathon se recomienda implementar **Chunking Recursivo por Separadores Semánticos con Solapamiento (Overlap)**:
+          Segmentar textos arbitrariamente por número de caracteres puede cortar oraciones clave a la mitad. Para el Hackathon se recomienda implementar <strong>Chunking Recursivo por Separadores Semánticos con Solapamiento (Overlap)</strong>:
         </p>
 
         <!-- Visual Chunking Card -->
@@ -989,7 +1027,7 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas basándote
 
       <div class="tema-section-block">
         <p class="prose-p">
-          En documentos con vocabulario técnico similar, la búsqueda por embeddings bi-encoder puede recuperar fragmentos que comparten palabras clave pero no la semántica exacta. Un **Reranker Cross-Encoder** evalúa la pregunta y el fragmento de forma conjunta para reordenar los resultados con precisión milimétrica:
+          En documentos con vocabulario técnico similar, la búsqueda por embeddings bi-encoder puede recuperar fragmentos que comparten palabras clave pero no la semántica exacta. Un <strong>Reranker Cross-Encoder</strong> evalúa la pregunta y el fragmento de forma conjunta para reordenar los resultados con precisión milimétrica:
         </p>
 
         <div style="background:var(--bg-surface-2); border:1px solid var(--border-subtle); border-radius:12px; padding:1.2rem; margin:1.2rem 0;">
@@ -1332,13 +1370,13 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas basándote
               <span class="mac-title">Salida Generada · Inferencia con RAG Fáctico (Llama 3.2 1B)</span>
             </div>
             <div class="mac-body">
-<span class="code-kw">curl</span> -X POST http://localhost:8000/v1/chat \
+<pre style="margin:0; background:transparent; border:none; color:inherit; font-family:inherit; font-size:inherit; white-space:pre-wrap; word-break:break-word;"><code><span class="code-kw">curl</span> -X POST http://localhost:8000/v1/chat \
   -H <span class="code-str">"Content-Type: application/json"</span> \
   -d <span class="code-str">'{"query": "¿Puedo pedir reembolso de un producto después de 20 días?"}'</span>
 
 <span class="code-cm"># Respuesta del Asistente:</span>
-<span class="code-str">"De acuerdo con nuestra Política de Reembolsos (Art. 4), puedes solicitar la devolución total de tu compra dentro de los primeros 30 días naturales presentando tu empaque original y ticket de compra. Los envíos demoran de 2 a 4 días hábiles (Art. 2)."</span>
-            </div>
+<span class="code-str">"De acuerdo con nuestra Política de Reembolsos (Art. 4), puedes solicitar la devolución total de tu compra dentro de los primeros 30 días naturales presentando tu empaque original y ticket de compra. Los envíos demoran de 2 a 4 días hábiles (Art. 2)."</span></code></pre>
+</div>
           </div>
 
           <div style="font-size:0.82rem; color:var(--text-muted); display:flex; gap:0.5rem; flex-wrap:wrap;">
@@ -1381,13 +1419,13 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas basándote
               <span class="mac-title">Salida Generada · Citación de Artículos Regulatorios</span>
             </div>
             <div class="mac-body">
-<span class="code-kw">curl</span> -X POST http://localhost:8000/v1/chat \
+<pre style="margin:0; background:transparent; border:none; color:inherit; font-family:inherit; font-size:inherit; white-space:pre-wrap; word-break:break-word;"><code><span class="code-kw">curl</span> -X POST http://localhost:8000/v1/chat \
   -H <span class="code-str">"Content-Type: application/json"</span> \
   -d <span class="code-str">'{"query": "¿Con cuántos días de anticipación debo pedir mis vacaciones?"}'</span>
 
 <span class="code-cm"># Respuesta del Asistente:</span>
-<span class="code-str">"Conforme al Estatuto Laboral (Art. 24), las solicitudes de vacaciones deberán registrarse en el portal interno con un mínimo de 10 días hábiles de anticipación a la fecha de inicio deseada. Recuerda que no contar con aprobación previa invalida la ausencia."</span>
-            </div>
+<span class="code-str">"Conforme al Estatuto Laboral (Art. 24), las solicitudes de vacaciones deberán registrarse en el portal interno con un mínimo de 10 días hábiles de anticipación a la fecha de inicio deseada. Recuerda que no contar con aprobación previa invalida la ausencia."</span></code></pre>
+</div>
           </div>
 
           <div style="font-size:0.82rem; color:var(--text-muted); display:flex; gap:0.5rem; flex-wrap:wrap;">
@@ -1430,14 +1468,14 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas basándote
               <span class="mac-title">Salida Tipada JSON Validada · Pydantic Response</span>
             </div>
             <div class="mac-body">
-<span class="code-kw">{</span>
+<pre style="margin:0; background:transparent; border:none; color:inherit; font-family:inherit; font-size:inherit; white-space:pre-wrap; word-break:break-word;"><code><span class="code-kw">{</span>
   <span class="code-str">"categoria"</span>: <span class="code-str">"infraestructura_critica"</span>,
   <span class="code-str">"severidad"</span>: <span class="code-str">"alta"</span>,
   <span class="code-str">"usuario_afectado"</span>: <span class="code-str">"usr_9481"</span>,
   <span class="code-str">"resumen"</span>: <span class="code-str">"Caida de pasarela de pagos con error HTTP 500 en cluster de produccion."</span>,
   <span class="code-str">"accion_sugerida"</span>: <span class="code-str">"notificar_equipo_oncall_inmediato"</span>
-<span class="code-kw">}</span>
-            </div>
+<span class="code-kw">}</span></code></pre>
+</div>
           </div>
 
           <div style="font-size:0.82rem; color:var(--text-muted); display:flex; gap:0.5rem; flex-wrap:wrap;">
@@ -1479,13 +1517,13 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas basándote
               <span class="mac-title">Salida Pedagógica Socrática · Interacción Guiada</span>
             </div>
             <div class="mac-body">
-<span class="code-kw">curl</span> -X POST http://localhost:8000/v1/chat \
+<pre style="margin:0; background:transparent; border:none; color:inherit; font-family:inherit; font-size:inherit; white-space:pre-wrap; word-break:break-word;"><code><span class="code-kw">curl</span> -X POST http://localhost:8000/v1/chat \
   -H <span class="code-str">"Content-Type: application/json"</span> \
   -d <span class="code-str">'{"query": "¿Por qué la atención en Transformers es computacionalmente costosa?"}'</span>
 
 <span class="code-cm"># Respuesta del Tutor Socrático:</span>
-<span class="code-str">"¡Excelente pregunta! Para entender por qué la complejidad es cuadrática O(N²), imagina una reunión con 10 personas donde cada una debe estrechar la mano con todas las demás. ¿Cuántos apretones ocurren en total? Intenta responder para deducir cómo interactúan las matrices Q y K."</span>
-            </div>
+<span class="code-str">"¡Excelente pregunta! Para entender por qué la complejidad es cuadrática O(N²), imagina una reunión con 10 personas donde cada una debe estrechar la mano con todas las demás. ¿Cuántos apretones ocurren en total? Intenta responder para deducir cómo interactúan las matrices Q y K."</span></code></pre>
+</div>
           </div>
 
           <div style="font-size:0.82rem; color:var(--text-muted); display:flex; gap:0.5rem; flex-wrap:wrap;">
@@ -1528,13 +1566,13 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas basándote
               <span class="mac-title">Salida con Descargo de Responsabilidad Médica</span>
             </div>
             <div class="mac-body">
-<span class="code-kw">curl</span> -X POST http://localhost:8000/v1/chat \
+<pre style="margin:0; background:transparent; border:none; color:inherit; font-family:inherit; font-size:inherit; white-space:pre-wrap; word-break:break-word;"><code><span class="code-kw">curl</span> -X POST http://localhost:8000/v1/chat \
   -H <span class="code-str">"Content-Type: application/json"</span> \
   -d <span class="code-str">'{"query": "¿Puedo desayunar antes de mi prueba de química sanguínea?"}'</span>
 
 <span class="code-cm"># Respuesta del Asistente Clínico:</span>
-<span class="code-str">"[AVISO MÉDICO: Este sistema es puramente informativo y no constituye un diagnóstico clínico.] Para la prueba de Química Sanguínea (Guía 3) se requiere ayuno estricto de 8 a 12 horas. Solo se permite el consumo moderado de agua simple."</span>
-            </div>
+<span class="code-str">"[AVISO MÉDICO: Este sistema es puramente informativo y no constituye un diagnóstico clínico.] Para la prueba de Química Sanguínea (Guía 3) se requiere ayuno estricto de 8 a 12 horas. Solo se permite el consumo moderado de agua simple."</span></code></pre>
+</div>
           </div>
 
           <div style="font-size:0.82rem; color:var(--text-muted); display:flex; gap:0.5rem; flex-wrap:wrap;">
@@ -1577,13 +1615,13 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas basándote
               <span class="mac-title">Salida de Inducción y Bienestar Laboral</span>
             </div>
             <div class="mac-body">
-<span class="code-kw">curl</span> -X POST http://localhost:8000/v1/chat \
+<pre style="margin:0; background:transparent; border:none; color:inherit; font-family:inherit; font-size:inherit; white-space:pre-wrap; word-break:break-word;"><code><span class="code-kw">curl</span> -X POST http://localhost:8000/v1/chat \
   -H <span class="code-str">"Content-Type: application/json"</span> \
   -d <span class="code-str">'{"query": "¿Cuándo se depositan los vales de despensa y cuántos días económicos tengo?"}'</span>
 
 <span class="code-cm"># Respuesta del Asistente RRHH:</span>
-<span class="code-str">"¡Bienvenido al equipo! Los vales de despensa se depositan el día 15 de cada mes a tu tarjeta corporativa (Art. 8). Además, dispones de 3 días económicos con goce de sueldo al año (Art. 14)."</span>
-            </div>
+<span class="code-str">"¡Bienvenido al equipo! Los vales de despensa se depositan el día 15 de cada mes a tu tarjeta corporativa (Art. 8). Además, dispones de 3 días económicos con goce de sueldo al año (Art. 14)."</span></code></pre>
+</div>
           </div>
 
           <div style="font-size:0.82rem; color:var(--text-muted); display:flex; gap:0.5rem; flex-wrap:wrap;">
