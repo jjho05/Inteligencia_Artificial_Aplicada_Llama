@@ -24,7 +24,222 @@
   <script defer src="js/hackathon.js"></script>
 
   <style>
-    /* Estilos profesionales y modulares para el Centro del Hackathon (Strict No-Emoji Edition) */
+    /* Estilos profesionales, visuales y modulares para el Centro del Hackathon */
+    .hero-pillars-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 1rem;
+      margin-top: 1.8rem;
+    }
+    .pillar-card {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 1.1rem;
+      transition: all 0.25s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .pillar-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+    }
+    .pillar-header {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      margin-bottom: 0.5rem;
+    }
+    .pillar-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+    .pillar-title {
+      font-family: var(--font-head);
+      font-size: 0.92rem;
+      font-weight: 800;
+      color: var(--text-primary);
+      margin: 0;
+    }
+    .pillar-desc {
+      font-size: 0.8rem;
+      color: var(--text-secondary);
+      line-height: 1.5;
+      margin: 0;
+    }
+
+    /* Easy Explainer Box */
+    .easy-explainer-box {
+      background: rgba(8, 102, 255, 0.05);
+      border: 1px solid rgba(8, 102, 255, 0.2);
+      border-left: 5px solid var(--meta-blue);
+      border-radius: 12px;
+      padding: 1.2rem 1.4rem;
+      margin: 1.5rem 0;
+    }
+    .easy-header {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: var(--font-head);
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: var(--meta-blue);
+      margin-bottom: 0.5rem;
+    }
+    .easy-text {
+      font-size: 0.9rem;
+      line-height: 1.65;
+      color: var(--text-primary);
+      margin: 0;
+    }
+
+    /* Pro Tip Box */
+    .pro-tip-box {
+      background: rgba(245, 158, 11, 0.06);
+      border: 1px solid rgba(245, 158, 11, 0.25);
+      border-left: 5px solid #f59e0b;
+      border-radius: 12px;
+      padding: 1.2rem 1.4rem;
+      margin: 1.5rem 0;
+    }
+    .pro-tip-header {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-family: var(--font-head);
+      font-size: 0.95rem;
+      font-weight: 800;
+      color: #f59e0b;
+      margin-bottom: 0.5rem;
+    }
+    .pro-tip-text {
+      font-size: 0.9rem;
+      line-height: 1.65;
+      color: var(--text-primary);
+      margin: 0;
+    }
+
+    /* Comparison Grid Dual */
+    .comparison-grid-dual {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.2rem;
+      margin: 1.5rem 0;
+    }
+    .card-danger-zone {
+      background: rgba(239, 68, 68, 0.04);
+      border: 1px solid rgba(239, 68, 68, 0.25);
+      border-left: 5px solid #ef4444;
+      border-radius: 12px;
+      padding: 1.3rem;
+    }
+    .card-success-zone {
+      background: rgba(16, 185, 129, 0.04);
+      border: 1px solid rgba(16, 185, 129, 0.25);
+      border-left: 5px solid #10b981;
+      border-radius: 12px;
+      padding: 1.3rem;
+    }
+
+    /* Terminal Mac Window */
+    .mac-window {
+      background: #0b1120;
+      border-radius: 10px;
+      overflow: hidden;
+      border: 1px solid #1e293b;
+      margin: 1.2rem 0;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.35);
+    }
+    .mac-header {
+      background: #131d31;
+      padding: 0.5rem 0.9rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      border-bottom: 1px solid #1e293b;
+    }
+    .mac-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+    }
+    .mac-dot.red { background: #ef4444; }
+    .mac-dot.yellow { background: #f59e0b; }
+    .mac-dot.green { background: #10b981; }
+    .mac-title {
+      color: #94a3b8;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      margin-left: 0.5rem;
+      font-weight: 600;
+    }
+    .mac-body {
+      padding: 1.1rem;
+      color: #e2e8f0;
+      font-family: var(--font-mono);
+      font-size: 0.85rem;
+      overflow-x: auto;
+      line-height: 1.6;
+    }
+
+    /* Visual VRAM Memory Bar */
+    .vram-bar-container {
+      background: var(--bg-subtle);
+      border-radius: 8px;
+      height: 32px;
+      display: flex;
+      overflow: hidden;
+      margin: 1.2rem 0;
+      border: 1px solid var(--border-subtle);
+    }
+    .vram-segment {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 0.74rem;
+      font-weight: 800;
+      font-family: var(--font-mono);
+      letter-spacing: 0.03em;
+    }
+
+    /* Distinct Template Accent Themes */
+    .tpl-theme-ecommerce { border-left: 5px solid #0866ff !important; }
+    .tpl-theme-legal { border-left: 5px solid #6366f1 !important; }
+    .tpl-theme-it { border-left: 5px solid #a855f7 !important; }
+    .tpl-theme-education { border-left: 5px solid #f59e0b !important; }
+    .tpl-theme-health { border-left: 5px solid #10b981 !important; }
+    .tpl-theme-hr { border-left: 5px solid #f43f5e !important; }
+
+    /* Metric and Role Chips */
+    .metric-pill-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin: 0.8rem 0;
+    }
+    .metric-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      font-family: var(--font-mono);
+      font-size: 0.75rem;
+      font-weight: 750;
+      padding: 0.25rem 0.6rem;
+      border-radius: 6px;
+      background: var(--bg-subtle-alt);
+      border: 1px solid var(--border-subtle);
+      color: var(--text-primary);
+    }
+
+    /* Simulator step cards */
     .sim-step-card {
       display: flex;
       gap: 1.2rem;
@@ -257,6 +472,61 @@
         Esta plataforma integral acompaña a los ingenieros y participantes en la conceptualización del problema, la curaduría fáctica de datos, el cálculo matemático de segmentación (chunking), el dimensionamiento de recursos (VRAM), la implementación de código modular, la ejecución de pruebas de red teaming y la resolución de bloqueos para construir su propio sistema de inteligencia artificial antes de conectar con WhatsApp en el Módulo 2.
       </p>
 
+      <!-- 4 Pilares Bento Grid del Hackathon -->
+      <div class="hero-pillars-grid">
+        <div class="pillar-card" style="border-top: 3px solid #0284c7;">
+          <div>
+            <div class="pillar-header">
+              <div class="pillar-icon" style="background: rgba(2, 132, 199, 0.12); color: #0284c7;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+              </div>
+              <h5 class="pillar-title">1. Motor &amp; VRAM</h5>
+            </div>
+            <p class="pillar-desc">Dimensionamiento y benchmarking de Llama 3 (1B/3B) en GPU Tesla T4.</p>
+          </div>
+          <span style="font-family: var(--font-mono); font-size: 0.72rem; font-weight: 750; color: #0284c7; margin-top: 0.6rem;">Tema 1 · Challenge 1</span>
+        </div>
+
+        <div class="pillar-card" style="border-top: 3px solid #6366f1;">
+          <div>
+            <div class="pillar-header">
+              <div class="pillar-icon" style="background: rgba(99, 102, 241, 0.12); color: #6366f1;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+              </div>
+              <h5 class="pillar-title">2. Prompt Maestro</h5>
+            </div>
+            <p class="pillar-desc">Delimitadores especiales y control estricto de verdad sin alucinaciones.</p>
+          </div>
+          <span style="font-family: var(--font-mono); font-size: 0.72rem; font-weight: 750; color: #6366f1; margin-top: 0.6rem;">Tema 2 · Zero-Shot</span>
+        </div>
+
+        <div class="pillar-card" style="border-top: 3px solid #10b981;">
+          <div>
+            <div class="pillar-header">
+              <div class="pillar-icon" style="background: rgba(16, 185, 129, 0.12); color: #10b981;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+              </div>
+              <h5 class="pillar-title">3. RAG Vectorial</h5>
+            </div>
+            <p class="pillar-desc">Incrustaciones en 384D y búsqueda cosenoidal rápida con umbral &ge; 0.40.</p>
+          </div>
+          <span style="font-family: var(--font-mono); font-size: 0.72rem; font-weight: 750; color: #10b981; margin-top: 0.6rem;">Tema 3 · Challenge 2</span>
+        </div>
+
+        <div class="pillar-card" style="border-top: 3px solid #a855f7;">
+          <div>
+            <div class="pillar-header">
+              <div class="pillar-icon" style="background: rgba(168, 85, 247, 0.12); color: #a855f7;">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+              </div>
+              <h5 class="pillar-title">4. LoRA &amp; FastAPI</h5>
+            </div>
+            <p class="pillar-desc">Adaptadores PEFT (r=8) para JSON Schema tipado con contratos Pydantic.</p>
+          </div>
+          <span style="font-family: var(--font-mono); font-size: 0.72rem; font-weight: 750; color: #a855f7; margin-top: 0.6rem;">Tema 4 · Challenge 3</span>
+        </div>
+      </div>
+
       <div style="display: flex; gap: 0.8rem; align-items: center; justify-content: flex-start; flex-wrap: wrap; margin-top: 1.6rem;">
         <a class="btn-primary" href="#evaluador-viabilidad" style="display: inline-flex; align-items: center; gap: 0.6rem; text-decoration: none; padding: 0.75rem 1.4rem; border-radius: 10px; font-weight: 750; box-shadow: 0 4px 18px rgba(8, 102, 255, 0.25);">
           <svg fill="currentColor" height="18" viewBox="0 0 24 24" width="18"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
@@ -282,9 +552,19 @@
         <h3 class="tema-title">0. Mapa de Integración: Cómo se Ensamblan los 4 Temas y 3 Challenges en tu Proyecto</h3>
       </div>
 
+      <div class="easy-explainer-box">
+        <div class="easy-header">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18h6m-5 3h4m-7-9.5A6.5 6.5 0 1 1 18 11.5c0 2.5-1.5 4-2.5 5h-7c-1-1-2.5-2.5-2.5-5z"/></svg>
+          <span>¿No entendiste? Te lo explico fácil: La Orquesta Sinfónica de la IA</span>
+        </div>
+        <p class="easy-text">
+          Construir tu proyecto integrador no es empezar desde cero: es <b>ensamblar a los músicos que ya dominaste en cada reto</b>. El <b>Tema 1</b> elige el instrumento ideal (Llama 1B/3B con cuantización); el <b>Tema 2</b> le entrega la partitura exacta (System Prompt con delimitadores); el <b>Tema 3</b> le pasa el atril con los libros de tu empresa (Motor RAG 384D); y el <b>Tema 4</b> afina el tono para que responda en notas perfectas sin desafinar (Adaptador LoRA y JSON Schema con FastAPI).
+        </p>
+      </div>
+
       <div class="tema-section-block">
         <p class="prose-p">
-          El Proyecto Integrador del Hackathon no es una tarea aislada: es la <b>confluencia arquitectónica exacta de todo lo aprendido en el Módulo 1</b>. Cada lección y cada reto práctico te aportaron una pieza de ingeniería fundamental que ahora ensamblarás en un único sistema coherente:
+          El Proyecto Integrador del Hackathon es la <b>confluencia arquitectónica exacta de todo lo aprendido en el Módulo 1</b>. Cada lección y cada reto práctico te aportaron una pieza de ingeniería fundamental que ahora ensamblarás en un único microservicio HTTP:
         </p>
 
         <div class="table-container" style="overflow-x:auto; margin:1.5rem 0;">
@@ -337,59 +617,57 @@
         <h3 class="tema-title">1. ¿Cómo Concebir tu Proyecto? Qué SÍ Resuelve un LLM y Qué NO</h3>
       </div>
 
+      <div class="pro-tip-box">
+        <div class="pro-tip-header">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+          <span>Consejo Pro: El Filtro de la Naturaleza Probabilística</span>
+        </div>
+        <p class="pro-tip-text">
+          Los modelos de lenguaje como Meta Llama son <b>motores predictivos de lenguaje</b>, no calculadoras deterministas ni almacenes transaccionales. Si tu idea exige sumar centavos con precisión contable o guardar pedidos con persistencia ACID, <b>delega la lógica a Python tradicional o PostgreSQL</b> y utiliza Llama únicamente para comprender la intención del usuario y redactar la respuesta.
+        </p>
+      </div>
+
       <div class="tema-section-block">
         <p class="prose-p">
-          El error más costoso en ingeniería de Inteligencia Artificial es elegir un problema que no se adapta a la naturaleza probabilística de los modelos de lenguaje. Antes de escribir código, filtre su idea a través de este marco de decisión técnica:
+          Antes de escribir una sola línea de código, calibra el alcance técnico de tu propuesta evaluando esta matriz de viabilidad:
         </p>
 
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.4rem; margin: 1.5rem 0;">
+        <div class="comparison-grid-dual">
           
-          <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-left: 4px solid var(--accent-success); border-radius: 12px; padding: 1.4rem;">
+          <div class="card-success-zone">
             <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.8rem;">
-              <span class="badge-role" style="background: rgba(5,150,105,0.12); color: var(--accent-success); font-size: 0.78rem; font-weight: 800; padding: 0.25rem 0.6rem; border-radius: 4px;">Casos Óptimos</span>
-              <strong style="font-size: 1rem; color: var(--text-primary);">Problemas que un LLM + RAG Resuelve con Excelencia:</strong>
+              <span class="badge-role" style="background: rgba(16,185,129,0.15); color: #10b981; font-size: 0.78rem; font-weight: 800; padding: 0.25rem 0.6rem; border-radius: 4px;">Casos Óptimos</span>
+              <strong style="font-size: 0.98rem; color: var(--text-primary);">Problemas que Llama + RAG Resuelve con Excelencia:</strong>
             </div>
             <ul style="margin: 0; padding-left: 1.2rem; font-size: 0.88rem; color: var(--text-secondary); line-height: 1.65;">
-              <li><strong>Asistente Normativo / Políticas:</strong> Consultas sobre estatutos, reglamentos o manuales de procedimientos donde el usuario requiere citas fácticas y cero alucinación.</li>
-              <li><strong>Clasificación &amp; Extracción Estructurada:</strong> Convertir correos, quejas o mensajes libres en objetos JSON con tipado estricto (Pydantic).</li>
-              <li><strong>Tutoría Socrática Adaptativa:</strong> Explicar conceptos técnicos paso a paso, formulando preguntas de comprobación al alumno en lugar de dar toda la solución.</li>
-              <li><strong>Enrutamiento de Intenciones (Router):</strong> Filtrar en milisegundos si un mensaje es un saludo o si requiere consultar la base vectorial.</li>
+              <li><strong>Asistente Normativo / Reglamentario:</strong> Búsqueda sobre estatutos, manuales de procedimientos o garantías donde se exige citar el artículo exacto sin alucinación.</li>
+              <li><strong>Clasificación &amp; Extracción JSON (LoRA):</strong> Mapeo de quejas o tickets informales a objetos tipados validados por Pydantic.</li>
+              <li><strong>Tutoría Socrática Adaptativa:</strong> Desglose guiado de conceptos complejos mediante preguntas formativas.</li>
+              <li><strong>Enrutador Inteligente (Router):</strong> Clasificación ultrarrápida (&lt; 1 ms) para no sobrecargar el pipeline vectorial con saludos.</li>
             </ul>
           </div>
 
-          <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-left: 4px solid #ef4444; border-radius: 12px; padding: 1.4rem;">
+          <div class="card-danger-zone">
             <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.8rem;">
-              <span class="badge-role" style="background: rgba(239,68,68,0.12); color: #ef4444; font-size: 0.78rem; font-weight: 800; padding: 0.25rem 0.6rem; border-radius: 4px;">Antipatrones</span>
-              <strong style="font-size: 1rem; color: var(--text-primary);">Problemas que NO Debes Intentar Resolver con un LLM Puro:</strong>
+              <span class="badge-role" style="background: rgba(239,68,68,0.15); color: #ef4444; font-size: 0.78rem; font-weight: 800; padding: 0.25rem 0.6rem; border-radius: 4px;">Antipatrones Críticos</span>
+              <strong style="font-size: 0.98rem; color: var(--text-primary);">Problemas que NO Debes Resolver con un LLM Puro:</strong>
             </div>
             <ul style="margin: 0; padding-left: 1.2rem; font-size: 0.88rem; color: var(--text-secondary); line-height: 1.65;">
-              <li><strong>Cálculos Matemáticos / Contabilidad Exacta:</strong> Los LLMs son redes probabilísticas de predicción de tokens, no motores aritméticos. Para cálculos use Python tradicional.</li>
-              <li><strong>Base de Datos Transaccional (CRUD):</strong> Un LLM no almacena registros de forma determinista con propiedades ACID. Use PostgreSQL / SQLite.</li>
-              <li><strong>Predicciones Numéricas de Series de Tiempo:</strong> Para predecir precios de acciones o demanda cuantitativa use modelos de regresión (XGBoost, ARIMA).</li>
+              <li><strong>Cálculos Contables / Nómina Exacta:</strong> Los LLMs generan aproximaciones de punto flotante en texto. Conecte funciones Python (Function Calling).</li>
+              <li><strong>Base Transaccional (CRUD):</strong> Los modelos no garantizan integridad relacional. Use SQLite o PostgreSQL.</li>
+              <li><strong>Series de Tiempo Cuantitativas:</strong> Para predecir precios bursátiles use modelos de machine learning tabular (XGBoost / ARIMA).</li>
             </ul>
           </div>
 
         </div>
 
-        <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.4rem; margin: 1.5rem 0;">
-          <h4 style="font-family: var(--font-head); font-size: 1.05rem; font-weight: 800; color: var(--meta-blue); margin-bottom: 0.6rem;">
-            Analogía Sencilla para Entender RAG + LLM: El Escritor Inteligente y el Bibliotecario Veloz
-          </h4>
-          <p style="font-size: 0.9rem; color: var(--text-secondary); line-height: 1.65; margin: 0 0 0.8rem 0;">
-            Imagina que estás contratando a dos personas para atender la oficina de atención a clientes:
-          </p>
-          <ul style="margin: 0; padding-left: 1.2rem; font-size: 0.88rem; color: var(--text-secondary); line-height: 1.65;">
-            <li><strong>El Escritor (El LLM / Llama):</strong> Es una persona sumamente elocuente, amable y rápida redactando en español perfecto, pero <i>no se sabe de memoria los reglamentos internos de tu empresa</i>. Si le pides una política específica sin darle el manual, intentará adivinarla para no quedar mal (<b>Alucinación</b>).</li>
-            <li><strong>El Bibliotecario (El Motor RAG):</strong> Es un asistente veloz que tiene organizado todo el archivo de tu empresa. En menos de 20 milisegundos busca entre cientos de páginas y le entrega al Escritor exactamente el párrafo del reglamento que resuelve la duda del cliente.</li>
-            <li><strong>El Resultado (El Sistema Completo):</strong> El Escritor toma el fragmento que le trajo el Bibliotecario, lo lee con atención y le redacta al cliente una respuesta perfecta, empática y 100% verídica citando el artículo correspondiente.</li>
-          </ul>
-        </div>
-
-        <div style="background: var(--bg-subtle-alt); border-radius: 10px; padding: 1.2rem 1.4rem; border: 1px solid var(--border-subtle); margin-top: 1rem;">
-          <strong style="color: var(--text-primary); font-size: 0.92rem; display: block; margin-bottom: 0.3rem;">Definición del Alcance Mínimo Viable (MVP) para el Hackathon:</strong>
-          <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; margin: 0;">
-            Un proyecto de excelencia para este módulo <b>no requiere miles de páginas ni meses de entrenamiento</b>. Consiste en tres entregables claros y funcionales:
-            (1) Un archivo con 10 a 15 fragmentos de texto limpios de su temática, (2) Un motor RAG en Python con búsqueda cosenoidal calibrada, y (3) Un endpoint HTTP en FastAPI que reciba preguntas y devuelva respuestas fundamentadas.
+        <div class="easy-explainer-box">
+          <div class="easy-header">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+            <span>Analogía Didáctica: El Escritor Inteligente y el Bibliotecario Veloz</span>
+          </div>
+          <p class="easy-text">
+            Imagina que contratas a dos personas para tu mostrador de atención: el <b>Escritor (Meta Llama)</b> tiene una capacidad de redacción extraordinaria en español, pero no se sabe las políticas de tu negocio y si no le das un documento intentará inventarlo (<b>Alucinación</b>). El <b>Bibliotecario (Motor RAG)</b> busca en 15 milisegundos el fragmento exacto y se lo entrega en la mano al Escritor. El resultado: una respuesta impecable, profesional y 100% verídica.
           </p>
         </div>
       </div>
@@ -406,7 +684,7 @@
 
       <div class="tema-section-block">
         <p class="prose-p">
-          Una de las preguntas más frecuentes de los participantes es: <i>"¿Debo reentrenar el modelo (Fine-Tuning) o basta con hacer RAG?"</i>. La respuesta depende de si busca actualizar **conocimiento fáctico** o modificar el **estilo, formato y comportamiento**:
+          Una de las dudas más frecuentes de los equipos es: <i>"¿Debo reentrenar el modelo (Fine-Tuning) o basta con hacer RAG?"</i>. La regla de oro de la ingeniería de software en IA es separar el <b>conocimiento fáctico</b> del <b>comportamiento de formato</b>:
         </p>
 
         <div class="table-container" style="overflow-x:auto; margin:1.5rem 0;">
@@ -422,40 +700,35 @@
             </thead>
             <tbody>
               <tr style="border-bottom:1px solid var(--border-subtle);">
-                <td style="padding:0.7rem;"><strong>Prompting Directo</strong></td>
+                <td style="padding:0.7rem;"><span class="badge-role" style="background:rgba(2,132,199,0.12); color:#0284c7; font-weight:800;">Prompting Directo</span></td>
                 <td style="padding:0.7rem;">Tareas genéricas, redacción, traducción rápida.</td>
-                <td style="padding:0.7rem;">Estática (lo que el modelo aprendió en pre-entrenamiento).</td>
+                <td style="padding:0.7rem;">Estática (lo que aprendió en pre-entrenamiento).</td>
                 <td style="padding:0.7rem; color:var(--accent-success); font-weight:700;">Nulo (0 GPU horas).</td>
-                <td style="padding:0.7rem; color:#ef4444;">Alto en datos especializados.</td>
+                <td style="padding:0.7rem; color:#ef4444; font-weight:700;">Alto en datos propios.</td>
               </tr>
               <tr style="border-bottom:1px solid var(--border-subtle);">
-                <td style="padding:0.7rem;"><strong>RAG (Retrieval-Augmented Generation)</strong></td>
-                <td style="padding:0.7rem;">Consultas sobre políticas, catálogos, estatutos o documentación privada.</td>
-                <td style="padding:0.7rem; color:var(--accent-success); font-weight:700;">Instantánea (editar archivos de texto).</td>
-                <td style="padding:0.7rem; color:var(--accent-success); font-weight:700;">Muy Bajo (solo encodeo de embeddings).</td>
-                <td style="padding:0.7rem; color:var(--accent-success); font-weight:700;">Mínimo (anclado en contexto recuperado).</td>
+                <td style="padding:0.7rem;"><span class="badge-role" style="background:rgba(16,185,129,0.12); color:#10b981; font-weight:800;">RAG Vectorial</span></td>
+                <td style="padding:0.7rem;">Políticas, catálogos, manuales o documentación privada.</td>
+                <td style="padding:0.7rem; color:var(--accent-success); font-weight:700;">Instantánea (editar archivos .txt).</td>
+                <td style="padding:0.7rem; color:var(--accent-success); font-weight:700;">Muy Bajo (sólo embeddings 384D).</td>
+                <td style="padding:0.7rem; color:var(--accent-success); font-weight:700;">Mínimo (anclado a documentos).</td>
               </tr>
               <tr style="border-bottom:1px solid var(--border-subtle);">
-                <td style="padding:0.7rem;"><strong>LoRA / QLoRA (Fine-Tuning PEFT)</strong></td>
-                <td style="padding:0.7rem;">Enseñar formatos JSON estrictos, jerga técnica específica o tono conversacional propio.</td>
-                <td style="padding:0.7rem;">Requiere reentrenar adaptadores con nuevo dataset.</td>
-                <td style="padding:0.7rem; color:#f59e0b;">Medio (10 - 30 min en GPU T4).</td>
-                <td style="padding:0.7rem; color:#f59e0b;">Medio si se pregunta fuera del dataset.</td>
+                <td style="padding:0.7rem;"><span class="badge-role" style="background:rgba(168,85,247,0.12); color:#a855f7; font-weight:800;">LoRA PEFT (r=8)</span></td>
+                <td style="padding:0.7rem;">Enseñar sintaxis JSON estricta o jerga especializada.</td>
+                <td style="padding:0.7rem;">Requiere reentrenar adaptadores (~15 min).</td>
+                <td style="padding:0.7rem; color:#f59e0b; font-weight:700;">Medio (Tesla T4 en Colab).</td>
+                <td style="padding:0.7rem; color:#f59e0b; font-weight:700;">Medio fuera del dataset.</td>
               </tr>
               <tr>
-                <td style="padding:0.7rem;"><strong>Arquitectura Híbrida (Router + RAG + LoRA)</strong></td>
-                <td style="padding:0.7rem;">Sistemas completos de grado industrial para empresas.</td>
-                <td style="padding:0.7rem; color:var(--accent-success); font-weight:700;">Instantánea para datos + Robusta en formato.</td>
-                <td style="padding:0.7rem; color:var(--accent-success); font-weight:700;">Balanceado para Google Colab.</td>
-                <td style="padding:0.7rem; color:var(--accent-success); font-weight:700;">Cero alucinaciones con umbral cosenoidal.</td>
+                <td style="padding:0.7rem;"><span class="badge-role" style="background:rgba(8,102,255,0.15); color:var(--meta-blue); font-weight:800;">Arquitectura Híbrida</span></td>
+                <td style="padding:0.7rem;">Sistemas integrales de grado industrial listos para producción.</td>
+                <td style="padding:0.7rem; color:var(--accent-success); font-weight:700;">Instantánea en datos + Robusta en formato.</td>
+                <td style="padding:0.7rem; color:var(--accent-success); font-weight:700;">Óptimo en Google Colab gratuito.</td>
+                <td style="padding:0.7rem; color:var(--accent-success); font-weight:700;">Cero alucinación con umbral &ge; 0.40.</td>
               </tr>
             </tbody>
           </table>
-        </div>
-
-        <div style="background:var(--bg-subtle-alt); border-left:4px solid var(--meta-blue); padding:1rem 1.2rem; border-radius:8px; font-size:0.88rem; color:var(--text-primary); line-height:1.6;">
-          <strong>Regla de Oro para el Hackathon:</strong>
-          Si su proyecto requiere responder preguntas sobre normas, productos o trámites que pueden cambiar con el tiempo, <b>utilice RAG como base</b>. Si además necesita que la salida sea un JSON sin texto adicional, <b>combine RAG con validación Pydantic o un adaptador LoRA</b>.
         </div>
       </div>
     </article>
@@ -471,52 +744,55 @@
 
       <div class="tema-section-block">
         <p class="prose-p">
-          Un System Prompt profesional no es una simple frase como <i>"Eres un asistente amable"</i>. Debe estructurarse con **delimitadores semánticos**, **restricciones negativas explícitas** y **mecanismos de admisión de ignorancia**:
+          Un System Prompt profesional no es una simple frase informal. Debe estructurarse con **delimitadores semánticos**, **restricciones negativas explícitas** y **mecanismos deterministas de admisión de ignorancia**:
         </p>
 
-        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(320px, 1fr)); gap:1.4rem; margin:1.5rem 0;">
+        <div class="comparison-grid-dual">
           
-          <!-- Prompt Débil -->
-          <div style="background:var(--bg-surface-2); border:1px solid #ef4444; border-radius:12px; padding:1.4rem;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem;">
-              <strong style="color:#ef4444; font-size:0.95rem;">Prompt Débil (Principiante)</strong>
-              <span style="font-size:0.75rem; background:rgba(239,68,68,0.12); color:#ef4444; padding:0.2rem 0.5rem; border-radius:4px; font-weight:800;">Alta Alucinación</span>
+          <!-- Prompt Débil Terminal -->
+          <div class="mac-window" style="border-color: rgba(239, 68, 68, 0.4);">
+            <div class="mac-header">
+              <div class="mac-dot red"></div>
+              <div class="mac-dot yellow"></div>
+              <div class="mac-dot green"></div>
+              <span class="mac-title" style="color: #ef4444;">prompt_debil_inseguro.txt (Principiante)</span>
             </div>
-            <pre style="background:var(--bg-subtle-alt); padding:0.8rem; border-radius:6px; font-size:0.82rem; color:var(--text-secondary); line-height:1.5; white-space:pre-wrap; margin:0;"><code>Eres el asistente de la tienda TechStore. Responde las preguntas de los clientes usando la información de nuestras políticas. Sé muy amable y ayuda en todo lo que puedas.</code></pre>
-            <p style="font-size:0.8rem; color:#ef4444; margin:0.6rem 0 0 0; line-height:1.4;">
-              <b>Fallas:</b> No delimita qué parte es contexto, no prohíbe inventar respuestas cuando falta información y no define formato de salida.
-            </p>
+            <div class="mac-body" style="color: #fca5a5;">
+Eres el asistente de la tienda TechStore. Responde las preguntas de los clientes usando la información de nuestras políticas. Sé muy amable y ayuda en todo lo que puedas.
+            </div>
+            <div style="padding: 0.8rem 1.1rem; background: rgba(239,68,68,0.08); border-top: 1px solid rgba(239,68,68,0.2); font-size: 0.78rem; color: #ef4444;">
+              <b>Fallas Críticas:</b> Sin delimitadores de contexto, sin cláusula de admisión de ignorancia y sin restricción de formato de salida.
+            </div>
           </div>
 
-          <!-- Prompt Industrial -->
-          <div style="background:var(--bg-surface-2); border:1px solid var(--accent-success); border-radius:12px; padding:1.4rem;">
-            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem;">
-              <strong style="color:var(--accent-success); font-size:0.95rem;">Prompt Industrial (Meta Llama Standard)</strong>
-              <span style="font-size:0.75rem; background:rgba(5,150,105,0.12); color:var(--accent-success); padding:0.2rem 0.5rem; border-radius:4px; font-weight:800;">Cero Alucinación</span>
+          <!-- Prompt Industrial Terminal -->
+          <div class="mac-window" style="border-color: rgba(16, 185, 129, 0.4);">
+            <div class="mac-header">
+              <div class="mac-dot red"></div>
+              <div class="mac-dot yellow"></div>
+              <div class="mac-dot green"></div>
+              <span class="mac-title" style="color: #10b981;">system_prompt_industrial_llama3.txt (Estándar Meta)</span>
             </div>
-            <pre style="background:var(--bg-subtle-alt); padding:0.8rem; border-radius:6px; font-size:0.82rem; color:var(--text-primary); line-height:1.5; white-space:pre-wrap; margin:0;"><code>&lt;|begin_of_text|&gt;&lt;|start_header_id|&gt;system&lt;|end_header_id|&gt;
-Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas de clientes basándote EXCLUSIVAMENTE en el fragmento provisto en [CONTEXTO].
+            <div class="mac-body" style="color: #6ee7b7;">
+&lt;|begin_of_text|&gt;&lt;|start_header_id|&gt;system&lt;|end_header_id|&gt;
+Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas basándote EXCLUSIVAMENTE en el fragmento provisto en [CONTEXTO].
 
 ### REGLAS OPERATIVAS ESTRICTAS:
-1. Responde de forma concisa, profesional y empática en idioma español.
-2. Cita textualmente el número de artículo o cláusula cuando esté disponible en el contexto.
-3. Si la respuesta NO se encuentra de forma explícita en el [CONTEXTO], responde EXACTAMENTE:
-   "No cuento con información oficial sobre este tema en el reglamento vigente. Por favor contacte a soporte@techstore.com".
-4. NUNCA asumas, inventes precios, plazos o condiciones que no figuren en el texto.
+1. Responde de forma concisa, profesional y en español.
+2. Cita textualmente el número de artículo del contexto.
+3. Si la respuesta NO está en el contexto, responde:
+   "No cuento con información oficial sobre este trámite en el reglamento vigente."
+4. NUNCA asumas precios, plazos o condiciones no presentes.
 
 [CONTEXTO]
 {contexto_recuperado_rag}
 [/CONTEXTO]&lt;|eot_id|&gt;
 &lt;|start_header_id|&gt;user&lt;|end_header_id|&gt;
 {pregunta_usuario}&lt;|eot_id|&gt;
-&lt;|start_header_id|&gt;assistant&lt;|end_header_id|&gt;</code></pre>
-          </div>
-
-        </div>
-      </div>
-    </article>
-
-    <!-- ======================================================================
+&lt;|start_header_id|&gt;assistant&lt;|end_header_id|&gt;
+            </div>
+            <div style="padding: 0.8rem 1.1rem; background: rgba(16,185,129,0.08); border-top: 1px solid rgba(16,185,129,0.2); font-size: 0.78rem; color: #10b981;">
+                 <!-- ======================================================================
          SECCIÓN 4: INGENIERÍA DE DATOS & LIMPIEZA DOCUMENTAL
          ====================================================================== -->
     <article class="tema-card" id="ingenieria-datos" style="margin-bottom: 3.5rem;">
@@ -527,25 +803,26 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas de cliente
 
       <div class="tema-section-block">
         <p class="prose-p">
-          El 80% del éxito de un sistema RAG reside en la **calidad de los datos de entrada**. A continuación se presenta el pipeline formal de extracción y limpieza para ingerir PDFs, páginas web o archivos de texto:
+          El 80% del éxito de un sistema RAG reside en la **calidad y pulcritud de los datos de entrada**. A continuación se presenta el pipeline formal de extracción y limpieza para ingerir PDFs, páginas web o archivos de texto:
         </p>
 
-        <div class="code-box" style="margin: 1.2rem 0;">
-          <div class="code-header">
-            <span>data_cleaner.py</span>
-            <div class="code-actions">
-              <button class="btn-copy-code" onclick="copyCode(this)">Copiar</button>
-              <button class="btn-download-code" onclick="downloadCode(this)">Descargar</button>
-            </div>
+        <!-- Mac Window Terminal para data_cleaner.py -->
+        <div class="mac-window">
+          <div class="mac-header">
+            <div class="mac-dot red"></div>
+            <div class="mac-dot yellow"></div>
+            <div class="mac-dot green"></div>
+            <span class="mac-title">data_cleaner.py · Módulo de Sanitización Regex</span>
           </div>
-          <pre class="code-content"><code><span class="code-kw">import</span> <span class="code-var">re</span>
+          <div class="mac-body">
+<span class="code-kw">import</span> <span class="code-var">re</span>
 
 <span class="code-kw">def</span> <span class="code-fn">sanitizar_texto</span>(<span class="code-var">texto_crudo</span>: <span class="code-cls">str</span>) -> <span class="code-cls">str</span>:
     <span class="code-str">"""Elimina encabezados repetitivos, saltos de linea huerfanos y caracteres no validos."""</span>
     <span class="code-cm"># 1. Normalizar saltos de linea y tabulaciones</span>
     <span class="code-var">t</span> = <span class="code-var">texto_crudo</span>.<span class="code-fn">replace</span>(<span class="code-str">"\r\n"</span>, <span class="code-str">"\n"</span>).<span class="code-fn">replace</span>(<span class="code-str">"\t"</span>, <span class="code-str">" "</span>)
     
-    <span class="code-cm"># 2. Eliminar numeros de pagina y cabeceras OCR comunes (ej. "Pagina 12 de 50")</span>
+    <span class="code-cm"># 2. Eliminar numeros de pagina y cabeceras OCR comunes</span>
     <span class="code-var">t</span> = <span class="code-var">re</span>.<span class="code-fn">sub</span>(<span class="code-str">r"P[aá]gina\s+\d+\s+de\s+\d+"</span>, <span class="code-str">""</span>, <span class="code-var">t</span>, <span class="code-var">flags</span>=<span class="code-var">re</span>.<span class="code-var">IGNORECASE</span>)
     
     <span class="code-cm"># 3. Eliminar multiples espacios en blanco consecutivos</span>
@@ -554,7 +831,8 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas de cliente
     <span class="code-cm"># 4. Eliminar lineas vacias redundantes</span>
     <span class="code-var">t</span> = <span class="code-var">re</span>.<span class="code-fn">sub</span>(<span class="code-str">r"\n{3,}"</span>, <span class="code-str">"\n\n"</span>, <span class="code-var">t</span>)
     
-    <span class="code-kw">return</span> <span class="code-var">t</span>.<span class="code-fn">strip</span>()</code></pre>
+    <span class="code-kw">return</span> <span class="code-var">t</span>.<span class="code-fn">strip</span>()
+          </div>
         </div>
       </div>
     </article>
@@ -570,22 +848,34 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas de cliente
 
       <div class="tema-section-block">
         <p class="prose-p">
-          Segmentar textos arbitrariamente por número de caracteres puede cortar oraciones clave a la mitad. Para el Hackathon se recomienda implementar **Chunking Recursivo por Separadores Semánticos**:
+          Segmentar textos arbitrariamente por número de caracteres puede cortar oraciones clave a la mitad. Para el Hackathon se recomienda implementar **Chunking Recursivo por Separadores Semánticos con Solapamiento (Overlap)**:
         </p>
 
-        <div style="background:var(--bg-surface-2); border:1px solid var(--border-subtle); border-radius:12px; padding:1.4rem; margin:1.2rem 0;">
-          <h4 style="font-size:1rem; font-weight:800; color:var(--text-primary); margin-bottom:0.6rem;">Jerarquía de Separadores Semánticos:</h4>
-          <ol style="margin:0; padding-left:1.2rem; font-size:0.88rem; color:var(--text-secondary); line-height:1.7;">
-            <li><code>\n\n</code> &rarr; División por párrafos completos (preserva unidades temáticas).</li>
-            <li><code>\n</code> &rarr; División por líneas o cláusulas.</li>
-            <li><code>. </code> &rarr; División por oraciones completas.</li>
-            <li><code> </code> &rarr; División por palabras (último recurso).</li>
-          </ol>
+        <!-- Visual Chunking Card -->
+        <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.4rem; margin: 1.2rem 0;">
+          <h4 style="font-size: 1rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.6rem;">
+            Demostración Visual: Ventana Deslizante con Solapamiento del 10%
+          </h4>
+          <div style="display: flex; flex-direction: column; gap: 0.8rem; margin-top: 0.8rem;">
+            <div style="background: var(--bg-subtle-alt); border-left: 4px solid var(--meta-blue); padding: 0.8rem 1rem; border-radius: 6px; font-size: 0.85rem;">
+              <strong style="color: var(--meta-blue); display: block; margin-bottom: 0.2rem;">Fragmento 1 (Longitud: 300 caracteres):</strong>
+              "Política de Devoluciones (Art. 4): Las solicitudes aplican dentro de 30 días naturales con empaque original. <span style="background: rgba(245, 158, 11, 0.25); color: #f59e0b; font-weight: 700; padding: 0.1rem 0.3rem; border-radius: 3px;">Para equipos electrónicos con sello roto aplican restricciones especiales de garantía.</span>"
+            </div>
+            <div style="background: var(--bg-subtle-alt); border-left: 4px solid #10b981; padding: 0.8rem 1rem; border-radius: 6px; font-size: 0.85rem;">
+              <strong style="color: #10b981; display: block; margin-bottom: 0.2rem;">Fragmento 2 (Solapamiento en Ámbar preserva la continuidad):</strong>
+              "<span style="background: rgba(245, 158, 11, 0.25); color: #f59e0b; font-weight: 700; padding: 0.1rem 0.3rem; border-radius: 3px;">Para equipos electrónicos con sello roto aplican restricciones especiales de garantía.</span> En estos casos, el centro de servicio evaluará el reporte en un plazo no mayor a 72 horas hábiles."
+            </div>
+          </div>
         </div>
 
-        <div style="background:var(--bg-subtle-alt); border-left:4px solid #a855f7; padding:1rem 1.2rem; border-radius:8px; font-size:0.88rem; color:var(--text-primary); line-height:1.6;">
-          <strong>Efecto "Lost in the Middle" (Liu et al., 2023):</strong>
-          Los LLMs procesan con mayor precisión la información ubicada al <b>principio</b> y al <b>final</b> del prompt. Al inyectar $k$ fragmentos recuperados en el System Prompt, ordene los documentos más relevantes con mayor puntaje de confianza en las posiciones extremas.
+        <div class="pro-tip-box">
+          <div class="pro-tip-header">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/></svg>
+            <span>Efecto "Lost in the Middle" (Liu et al., 2023)</span>
+          </div>
+          <p class="pro-tip-text">
+            Los LLMs procesan con mayor agudeza atencional la información ubicada al <b>principio</b> y al <b>final</b> del bloque de contexto. Al inyectar fragmentos recuperados en el System Prompt, coloca siempre el documento con el puntaje cosenoidal más alto en la primera posición.
+          </p>
         </div>
       </div>
     </article>
@@ -608,22 +898,25 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas de cliente
           $$\text{Similitud Coseno}(\mathbf{q}, \mathbf{d}) = \cos(\theta) = \frac{\mathbf{q} \cdot \mathbf{d}}{\|\mathbf{q}\|_2 \|\mathbf{d}\|_2} = \frac{\sum_{i=1}^{d} q_i d_i}{\sqrt{\sum_{i=1}^{d} q_i^2} \sqrt{\sum_{i=1}^{d} d_i^2}}$$
         </div>
 
-        <p class="prose-p">
-          Al activar <code>normalize_embeddings=True</code> en <code>SentenceTransformer</code>, los vectores quedan proyectados sobre la hiperesfera unitaria ($\|\mathbf{q}\|_2 = 1, \|\mathbf{d}\|_2 = 1$), lo que reduce la similitud a un simple <b>producto punto matricial ($\mathbf{q} \cdot \mathbf{d}$)</b> ejecutable en microsegundos mediante NumPy o FAISS.
-        </p>
-
-        <div style="background:var(--bg-surface-2); border:1px solid var(--border-subtle); border-radius:12px; padding:1.4rem; margin-top:1.2rem;">
-          <h4 style="font-family:var(--font-head); font-size:1.05rem; font-weight:800; color:var(--meta-blue); margin-bottom:0.6rem;">
-            ¿Cómo Entender un Embedding sin Saber Álgebra Lineal? La Analogía del Mapa de la Ciudad
+        <!-- Semáforo Visual de Umbral Coseno -->
+        <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.3rem; margin: 1.2rem 0;">
+          <h4 style="font-size: 0.95rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.6rem;">
+            Calibración del Umbral Cosenoidal en rag_engine.py:
           </h4>
-          <p style="font-size:0.9rem; color:var(--text-secondary); line-height:1.65; margin:0 0 0.8rem 0;">
-            Imagina que a cada idea o concepto del mundo le asignamos una dirección geográfica (coordenadas de latitud y longitud):
-          </p>
-          <ul style="margin:0; padding-left:1.2rem; font-size:0.88rem; color:var(--text-secondary); line-height:1.65;">
-            <li>Si el usuario escribe <i>"coche"</i> y en tu documento dice <i>"automóvil"</i>, no comparten las mismas letras, pero en el mapa semántico <b>viven exactamente en la misma cuadra</b>. La distancia entre ellos es casi cero.</li>
-            <li>En cambio, la palabra <i>"lechuga"</i> vive en el extremo opuesto de la ciudad. Su distancia es enorme y el ángulo entre sus vectores es amplio ($\cos(\theta) \approx 0.05$).</li>
-            <li>El modelo de embeddings no memoriza letras; ubica cada oración en un mapa de 384 dimensiones. La <b>Similitud Coseno</b> simplemente mide qué tan cerca están dos ideas en ese mapa conceptual.</li>
-          </ul>
+          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 0.8rem;">
+            <div style="background: rgba(239,68,68,0.06); border-left: 3px solid #ef4444; padding: 0.7rem; border-radius: 6px;">
+              <strong style="color: #ef4444; font-size: 0.85rem;">Score &lt; 0.30: Ruido</strong>
+              <p style="font-size: 0.78rem; color: var(--text-secondary); margin: 0.2rem 0 0 0;">Descartar de inmediato. La pregunta no guarda relación con el documento.</p>
+            </div>
+            <div style="background: rgba(245,158,11,0.06); border-left: 3px solid #f59e0b; padding: 0.7rem; border-radius: 6px;">
+              <strong style="color: #f59e0b; font-size: 0.85rem;">Score 0.30 - 0.39: Zona Gris</strong>
+              <p style="font-size: 0.78rem; color: var(--text-secondary); margin: 0.2rem 0 0 0;">Coincidencias superficiales de palabras. Riesgo de alucinación.</p>
+            </div>
+            <div style="background: rgba(16,185,129,0.06); border-left: 3px solid #10b981; padding: 0.7rem; border-radius: 6px;">
+              <strong style="color: #10b981; font-size: 0.85rem;">Score &ge; 0.40: Anclaje Óptimo</strong>
+              <p style="font-size: 0.78rem; color: var(--text-secondary); margin: 0.2rem 0 0 0;">Umbral dorado. Certeza fáctica para alimentar el System Prompt.</p>
+            </div>
+          </div>
         </div>
       </div>
     </article>
@@ -654,19 +947,19 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas de cliente
             </thead>
             <tbody>
               <tr style="border-bottom:1px solid var(--border-subtle);">
-                <td style="padding:0.7rem;"><strong>NumPy (In-Memory)</strong></td>
+                <td style="padding:0.7rem;"><span class="badge-role" style="background:rgba(16,185,129,0.12); color:#10b981; font-weight:800;">NumPy (In-Memory)</span></td>
                 <td style="padding:0.7rem;">En memoria RAM</td>
                 <td style="padding:0.7rem;">&lt; 50,000 vectores</td>
                 <td style="padding:0.7rem; color:var(--accent-success); font-weight:700;">Recomendado MVP (0 dependencias extra).</td>
               </tr>
               <tr style="border-bottom:1px solid var(--border-subtle);">
-                <td style="padding:0.7rem;"><strong>Meta FAISS (faiss-cpu)</strong></td>
+                <td style="padding:0.7rem;"><span class="badge-role" style="background:rgba(8,102,255,0.12); color:var(--meta-blue); font-weight:800;">Meta FAISS (faiss-cpu)</span></td>
                 <td style="padding:0.7rem;">Index local en disco</td>
                 <td style="padding:0.7rem;">&gt; 10,000,000 vectores</td>
                 <td style="padding:0.7rem; color:var(--meta-blue); font-weight:700;">Excelente para proyectos avanzados.</td>
               </tr>
               <tr>
-                <td style="padding:0.7rem;"><strong>ChromaDB / Qdrant</strong></td>
+                <td style="padding:0.7rem;"><span class="badge-role" style="background:rgba(168,85,247,0.12); color:#a855f7; font-weight:800;">ChromaDB / Qdrant</span></td>
                 <td style="padding:0.7rem;">Base de datos embebida / Servidor</td>
                 <td style="padding:0.7rem;">Millones con metadatos</td>
                 <td style="padding:0.7rem;">Opcional para producción Módulo 2.</td>
@@ -742,7 +1035,7 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas de cliente
               </tr>
               <tr style="border-bottom: 1px solid var(--border-subtle);">
                 <td style="padding: 0.75rem;"><strong>Salidas Tipadas (JSON)</strong></td>
-<td style="padding: 0.75rem; color: var(--text-primary);">Validar la respuesta con modelos <code>Pydantic</code> en FastAPI antes de retornarla.</td>
+                <td style="padding: 0.75rem; color: var(--text-primary);">Validar la respuesta con modelos <code>Pydantic</code> en FastAPI antes de retornarla.</td>
                 <td style="padding: 0.75rem; color: var(--text-secondary);">Asumir que el LLM siempre devolverá JSON perfecto sin agregar texto conversacional no estructurado.</td>
               </tr>
               <tr>
@@ -999,10 +1292,13 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas de cliente
         </p>
 
         <!-- PLANTILLA 1 -->
-        <div class="template-card-highlight" id="plantilla-a" style="border-left: 5px solid var(--meta-blue); margin-bottom: 1.8rem;">
+        <div class="template-card-highlight tpl-theme-ecommerce" id="plantilla-a" style="margin-bottom: 2rem;">
           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.6rem;">
-            <span style="font-size:0.78rem; font-weight:800; text-transform:uppercase; color:var(--meta-blue); background:var(--meta-blue-subtle); padding:0.25rem 0.6rem; border-radius:6px;">PLANTILLA 1 · COMERCIO ELECTRÓNICO &amp; LOGÍSTICA</span>
-            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">Complejidad: Baja &bull; 100% Viable Colab T4</span>
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <span class="badge-role" style="background:rgba(8,102,255,0.12); color:#0866ff; font-weight:800;">PLANTILLA 1 · E-COMMERCE &amp; LOGÍSTICA</span>
+              <span class="badge-role" style="background:rgba(16,185,129,0.12); color:#10b981;">Complejidad: Baja</span>
+            </div>
+            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">100% Viable Colab T4 (0.4s latencia)</span>
           </div>
           <h4 style="font-family:var(--font-head); font-size:1.25rem; font-weight:800; color:var(--text-primary); margin-bottom:0.5rem;">
             Asistente de Atención al Cliente, Logística y Políticas de Devolución
@@ -1011,29 +1307,47 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas de cliente
             <b>Objetivo de Negocio:</b> Resolver consultas frecuentes de usuarios sobre cobertura de envíos, costos, garantías de hardware y procedimientos de reembolso, sustentando cada respuesta en el compendio normativo de la tienda sin incurrir en alucinaciones.
           </p>
           <div style="background:var(--bg-subtle); border-radius:8px; padding:1rem 1.2rem; font-size:0.86rem; color:var(--text-primary); margin-bottom:0.9rem;">
-            <strong>Dataset Factual de Documentos para `rag_engine.py`:</strong>
+            <strong style="color:var(--text-primary);">Dataset Factual de Documentos para <code>rag_engine.py</code>:</strong>
             <ul style="margin:0.5rem 0 0 0; padding-left:1.2rem; color:var(--text-secondary); line-height:1.6;">
               <li>"Política de Reembolsos (Art. 4): Las solicitudes de devolución aplican dentro de los primeros 30 días naturales posteriores a la entrega, presentando comprobante fiscal y empaque íntegro."</li>
               <li>"Tiempos de Entrega (Art. 2): Los envíos estándar dentro de la república demoran entre 2 y 4 días hábiles. El servicio exprés garantiza entrega en 24 horas hábiles."</li>
               <li>"Garantía de Hardware (Art. 7): Los equipos electrónicos cuentan con 12 meses de garantía directa del fabricante ante defectos de manufactura comprobables."</li>
             </ul>
           </div>
-          <div style="background:var(--bg-subtle-alt); border-radius:8px; padding:0.9rem 1.1rem; font-size:0.84rem; color:var(--text-primary); margin-bottom:0.9rem;">
-            <strong>Respuesta Generada por el Asistente (Prosa Fáctica):</strong>
-            <p style="margin:0.4rem 0 0 0; color:var(--text-secondary); line-height:1.55;">
-              "De acuerdo con nuestra Política de Reembolsos (Art. 4), puedes solicitar la devolución total de tu compra dentro de los primeros 30 días naturales presentando tu empaque original y ticket. Los envíos demoran de 2 a 4 días hábiles (Art. 2)."
-            </p>
+          
+          <!-- Mac Window Terminal Simulation -->
+          <div class="mac-window" style="margin-bottom:0.9rem;">
+            <div class="mac-header">
+              <div class="mac-dot red"></div>
+              <div class="mac-dot yellow"></div>
+              <div class="mac-dot green"></div>
+              <span class="mac-title">Salida Generada · Inferencia con RAG Fáctico (Llama 3.2 1B)</span>
+            </div>
+            <div class="mac-body">
+<span class="code-kw">curl</span> -X POST http://localhost:8000/v1/chat \
+  -H <span class="code-str">"Content-Type: application/json"</span> \
+  -d <span class="code-str">'{"query": "¿Puedo pedir reembolso de un producto después de 20 días?"}'</span>
+
+<span class="code-cm"># Respuesta del Asistente:</span>
+<span class="code-str">"De acuerdo con nuestra Política de Reembolsos (Art. 4), puedes solicitar la devolución total de tu compra dentro de los primeros 30 días naturales presentando tu empaque original y ticket de compra. Los envíos demoran de 2 a 4 días hábiles (Art. 2)."</span>
+            </div>
           </div>
-          <div style="font-size:0.82rem; color:var(--text-muted);">
-            <strong>Archivos Utilizados:</strong> <code>rag_engine.py</code> (Indexación RAG) + <code>router.py</code> (Filtro Saludos) + <code>api_server.py</code> (Endpoint REST).
+
+          <div style="font-size:0.82rem; color:var(--text-muted); display:flex; gap:0.5rem; flex-wrap:wrap;">
+            <span class="badge-role">rag_engine.py (Indexación RAG)</span>
+            <span class="badge-role">router.py (Filtro Saludos)</span>
+            <span class="badge-role">api_server.py (Endpoint REST)</span>
           </div>
         </div>
 
         <!-- PLANTILLA 2 -->
-        <div class="template-card-highlight" id="plantilla-b" style="border-left: 5px solid #0284c7; margin-bottom: 1.8rem;">
+        <div class="template-card-highlight tpl-theme-legal" id="plantilla-b" style="margin-bottom: 2rem;">
           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.6rem;">
-            <span style="font-size:0.78rem; font-weight:800; text-transform:uppercase; color:#0284c7; background:rgba(2,132,199,0.12); padding:0.25rem 0.6rem; border-radius:6px;">PLANTILLA 2 · NORMATIVA INSTITUCIONAL, LEGAL &amp; TRÁMITES</span>
-            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">Complejidad: Media &bull; Citas por Artículo</span>
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <span class="badge-role" style="background:rgba(99,102,241,0.12); color:#6366f1; font-weight:800;">PLANTILLA 2 · NORMATIVA LEGAL &amp; TRÁMITES</span>
+              <span class="badge-role" style="background:rgba(2,132,199,0.12); color:#0284c7;">Complejidad: Media</span>
+            </div>
+            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">Citas Legales por Artículo Estricto</span>
           </div>
           <h4 style="font-family:var(--font-head); font-size:1.25rem; font-weight:800; color:var(--text-primary); margin-bottom:0.5rem;">
             Asesor Normativo Institucional y Trámites Regulatorios
@@ -1042,29 +1356,47 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas de cliente
             <b>Objetivo de Negocio:</b> Proveer asesoría regulatoria para estudiantes, docentes o colaboradores institucionales, resolviendo dudas sobre requisitos de titulación, solicitudes de permisos laborales o reglamentos de operación, citando explícitamente el artículo legal correspondiente.
           </p>
           <div style="background:var(--bg-subtle); border-radius:8px; padding:1rem 1.2rem; font-size:0.86rem; color:var(--text-primary); margin-bottom:0.9rem;">
-            <strong>Dataset Factual de Documentos para `rag_engine.py`:</strong>
+            <strong style="color:var(--text-primary);">Dataset Factual de Documentos para <code>rag_engine.py</code>:</strong>
             <ul style="margin:0.5rem 0 0 0; padding-left:1.2rem; color:var(--text-secondary); line-height:1.6;">
               <li>"Reglamento de Titulación (Art. 12): Es requisito indispensable haber acreditado el 100% de los créditos curriculares, contar con la liberación del servicio social y constancia de dominio de idioma inglés nivel B2."</li>
               <li>"Estatuto Laboral (Art. 24): Las solicitudes de vacaciones deberán registrarse en el portal interno con un mínimo de 10 días hábiles de anticipación a la fecha de inicio del periodo solicitado."</li>
               <li>"Código de Ética (Art. 3): El uso de credenciales ajenas o la falsificación de firmas constituye una falta grave que amerita suspensión temporal inmediata."</li>
             </ul>
           </div>
-          <div style="background:var(--bg-subtle-alt); border-radius:8px; padding:0.9rem 1.1rem; font-size:0.84rem; color:var(--text-primary); margin-bottom:0.9rem;">
-            <strong>Respuesta Generada por el Asistente:</strong>
-            <p style="margin:0.4rem 0 0 0; color:var(--text-secondary); line-height:1.55;">
-              "Conforme al Reglamento de Titulación (Art. 12), para iniciar tu trámite requieres haber cubierto el 100% de créditos, liberación de servicio social y acreditación de inglés B2. Para vacaciones, el Art. 24 exige 10 días hábiles de anticipación."
-            </p>
+          
+          <!-- Mac Window Terminal Simulation -->
+          <div class="mac-window" style="margin-bottom:0.9rem;">
+            <div class="mac-header">
+              <div class="mac-dot red"></div>
+              <div class="mac-dot yellow"></div>
+              <div class="mac-dot green"></div>
+              <span class="mac-title">Salida Generada · Citación de Artículos Regulatorios</span>
+            </div>
+            <div class="mac-body">
+<span class="code-kw">curl</span> -X POST http://localhost:8000/v1/chat \
+  -H <span class="code-str">"Content-Type: application/json"</span> \
+  -d <span class="code-str">'{"query": "¿Con cuántos días de anticipación debo pedir mis vacaciones?"}'</span>
+
+<span class="code-cm"># Respuesta del Asistente:</span>
+<span class="code-str">"Conforme al Estatuto Laboral (Art. 24), las solicitudes de vacaciones deberán registrarse en el portal interno con un mínimo de 10 días hábiles de anticipación a la fecha de inicio deseada. Recuerda que no contar con aprobación previa invalida la ausencia."</span>
+            </div>
           </div>
-          <div style="font-size:0.82rem; color:var(--text-muted);">
-            <strong>Archivos Utilizados:</strong> <code>rag_engine.py</code> (Búsqueda Coseno) + <code>router.py</code> (Detección de Trámite) + <code>api_server.py</code>.
+
+          <div style="font-size:0.82rem; color:var(--text-muted); display:flex; gap:0.5rem; flex-wrap:wrap;">
+            <span class="badge-role">rag_engine.py (Búsqueda Coseno)</span>
+            <span class="badge-role">router.py (Detección de Trámite)</span>
+            <span class="badge-role">api_server.py</span>
           </div>
         </div>
 
         <!-- PLANTILLA 3 -->
-        <div class="template-card-highlight" id="plantilla-c" style="border-left: 5px solid #a855f7; margin-bottom: 1.8rem;">
+        <div class="template-card-highlight tpl-theme-it" id="plantilla-c" style="margin-bottom: 2rem;">
           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.6rem;">
-            <span style="font-size:0.78rem; font-weight:800; text-transform:uppercase; color:#a855f7; background:rgba(168,85,247,0.12); padding:0.25rem 0.6rem; border-radius:6px;">PLANTILLA 3 · SOPORTE TI, MESA DE AYUDA &amp; EXTRACCIÓN JSON</span>
-            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">Complejidad: Media &bull; Adaptador LoRA PEFT ($r=8$)</span>
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <span class="badge-role" style="background:rgba(168,85,247,0.12); color:#a855f7; font-weight:800;">PLANTILLA 3 · SOPORTE TI &amp; LORA JSON</span>
+              <span class="badge-role" style="background:rgba(168,85,247,0.12); color:#a855f7;">Complejidad: Media</span>
+            </div>
+            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">Adaptador LoRA PEFT (r=8, alpha=16)</span>
           </div>
           <h4 style="font-family:var(--font-head); font-size:1.25rem; font-weight:800; color:var(--text-primary); margin-bottom:0.5rem;">
             Clasificador de Incidencias Técnicas y Generador Estructurado JSON
@@ -1073,33 +1405,47 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas de cliente
             <b>Objetivo de Negocio:</b> Ingerir reportes de fallas o mensajes libres de usuarios y transformarlos automáticamente en objetos JSON validados por esquemas de Pydantic (categoría de falla, nivel de severidad, resumen ejecutivo y acción sugerida).
           </p>
           <div style="background:var(--bg-subtle); border-radius:8px; padding:1rem 1.2rem; font-size:0.86rem; color:var(--text-primary); margin-bottom:0.9rem;">
-            <strong>Dataset Factual de Entrenamiento Few-Shot / LoRA:</strong>
+            <strong style="color:var(--text-primary);">Dataset Factual de Entrenamiento Few-Shot / LoRA:</strong>
             <ul style="margin:0.5rem 0 0 0; padding-left:1.2rem; color:var(--text-secondary); line-height:1.6;">
               <li>"Mesa de Ayuda (Catálogo 1): Fallas de inicio de sesión o 2FA se clasifican como 'autenticacion' con severidad media."</li>
               <li>"Mesa de Ayuda (Catálogo 2): Caídas de bases de datos o pasarelas de pago se tipifican como 'infraestructura_critica' con severidad alta."</li>
               <li>"Mesa de Ayuda (Catálogo 3): Consultas de manuales o configuración se tipifican como 'consulta_general' con severidad baja."</li>
             </ul>
           </div>
-          <div style="background:var(--bg-subtle-alt); border-radius:8px; padding:0.9rem 1.1rem; font-size:0.84rem; color:var(--text-primary); margin-bottom:0.9rem;">
-            <strong>Salida Tipada JSON Generada:</strong>
-            <pre style="margin:0.4rem 0 0 0; background:var(--bg-surface); padding:0.7rem; border-radius:6px; font-family:var(--font-mono); font-size:0.82rem; color:var(--text-primary);"><code>{
-  "categoria": "infraestructura_critica",
-  "severidad": "alta",
-  "usuario_afectado": "usr_9481",
-  "resumen": "Caida de pasarela de pagos con error HTTP 500.",
-  "accion_sugerida": "notificar_equipo_oncall_inmediato"
-}</code></pre>
+          
+          <!-- Mac Window Terminal Simulation -->
+          <div class="mac-window" style="margin-bottom:0.9rem;">
+            <div class="mac-header">
+              <div class="mac-dot red"></div>
+              <div class="mac-dot yellow"></div>
+              <div class="mac-dot green"></div>
+              <span class="mac-title">Salida Tipada JSON Validada · Pydantic Response</span>
+            </div>
+            <div class="mac-body">
+<span class="code-kw">{</span>
+  <span class="code-str">"categoria"</span>: <span class="code-str">"infraestructura_critica"</span>,
+  <span class="code-str">"severidad"</span>: <span class="code-str">"alta"</span>,
+  <span class="code-str">"usuario_afectado"</span>: <span class="code-str">"usr_9481"</span>,
+  <span class="code-str">"resumen"</span>: <span class="code-str">"Caida de pasarela de pagos con error HTTP 500 en cluster de produccion."</span>,
+  <span class="code-str">"accion_sugerida"</span>: <span class="code-str">"notificar_equipo_oncall_inmediato"</span>
+<span class="code-kw">}</span>
+            </div>
           </div>
-          <div style="font-size:0.82rem; color:var(--text-muted);">
-            <strong>Archivos Utilizados:</strong> <code>lora_adapter.py</code> (LoRA PEFT) + <code>api_server.py</code> (Validación Pydantic).
+
+          <div style="font-size:0.82rem; color:var(--text-muted); display:flex; gap:0.5rem; flex-wrap:wrap;">
+            <span class="badge-role">lora_adapter.py (PEFT r=8)</span>
+            <span class="badge-role">api_server.py (Pydantic Schema)</span>
           </div>
         </div>
 
         <!-- PLANTILLA 4 -->
-        <div class="template-card-highlight" id="plantilla-d" style="border-left: 5px solid var(--accent-success); margin-bottom: 1.8rem;">
+        <div class="template-card-highlight tpl-theme-education" id="plantilla-d" style="margin-bottom: 2rem;">
           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.6rem;">
-            <span style="font-size:0.78rem; font-weight:800; text-transform:uppercase; color:var(--accent-success); background:rgba(5,150,105,0.12); padding:0.25rem 0.6rem; border-radius:6px;">PLANTILLA 4 · EDUCACIÓN SUPERIOR, TUTOR SOCRÁTICO &amp; EVALUACIÓN</span>
-            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">Complejidad: Media &bull; Método Socrático Interactivo</span>
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <span class="badge-role" style="background:rgba(245,158,11,0.12); color:#f59e0b; font-weight:800;">PLANTILLA 4 · EDUCACIÓN &amp; TUTOR SOCRÁTICO</span>
+              <span class="badge-role" style="background:rgba(245,158,11,0.12); color:#f59e0b;">Complejidad: Media</span>
+            </div>
+            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">Diálogo Guiado Interactivo</span>
           </div>
           <h4 style="font-family:var(--font-head); font-size:1.25rem; font-weight:800; color:var(--text-primary); margin-bottom:0.5rem;">
             Tutor Educativo Adaptativo y Evaluador Socrático
@@ -1108,29 +1454,47 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas de cliente
             <b>Objetivo de Negocio:</b> Desglosar conceptos de ingeniería o ciencias de forma progresiva, aplicando formulación de preguntas interactivas para evaluar y retroalimentar el dominio conceptual del alumno en tiempo real sin darle la respuesta resuelta de inmediato.
           </p>
           <div style="background:var(--bg-subtle); border-radius:8px; padding:1rem 1.2rem; font-size:0.86rem; color:var(--text-primary); margin-bottom:0.9rem;">
-            <strong>Dataset Factual de Documentos para `rag_engine.py`:</strong>
+            <strong style="color:var(--text-primary);">Dataset Factual de Documentos para <code>rag_engine.py</code>:</strong>
             <ul style="margin:0.5rem 0 0 0; padding-left:1.2rem; color:var(--text-secondary); line-height:1.6;">
               <li>"Mecanismo de Auto-Atención (Tema 3): La auto-atención calcula la relevancia de cada palabra respecto a todas las demás mediante matrices Q (Query), K (Key) y V (Value)."</li>
               <li>"Complejidad de Transformers (Tema 4): La atención global estándar tiene una complejidad computacional cuadrática $O(N^2)$ respecto a la longitud de la secuencia de entrada."</li>
               <li>"Función Softmax en LLMs: Transforma las puntuaciones de similitud (logits) en una distribución de probabilidades normalizada que suma 1.0."</li>
             </ul>
           </div>
-          <div style="background:var(--bg-subtle-alt); border-radius:8px; padding:0.9rem 1.1rem; font-size:0.84rem; color:var(--text-primary); margin-bottom:0.9rem;">
-            <strong>Respuesta Pedagógica Generada:</strong>
-            <p style="margin:0.4rem 0 0 0; color:var(--text-secondary); line-height:1.55;">
-              "¡Excelente pregunta! Para entender por qué la atención es cuadrática $O(N^2)$, piensa en una reunión de 10 personas donde cada persona saluda a todas las demás. ¿Cuántos apretones de manos ocurren en total? Intenta responder para deducir la fórmula de matrices Q y K."
-            </p>
+          
+          <!-- Mac Window Terminal Simulation -->
+          <div class="mac-window" style="margin-bottom:0.9rem;">
+            <div class="mac-header">
+              <div class="mac-dot red"></div>
+              <div class="mac-dot yellow"></div>
+              <div class="mac-dot green"></div>
+              <span class="mac-title">Salida Pedagógica Socrática · Interacción Guiada</span>
+            </div>
+            <div class="mac-body">
+<span class="code-kw">curl</span> -X POST http://localhost:8000/v1/chat \
+  -H <span class="code-str">"Content-Type: application/json"</span> \
+  -d <span class="code-str">'{"query": "¿Por qué la atención en Transformers es computacionalmente costosa?"}'</span>
+
+<span class="code-cm"># Respuesta del Tutor Socrático:</span>
+<span class="code-str">"¡Excelente pregunta! Para entender por qué la complejidad es cuadrática O(N²), imagina una reunión con 10 personas donde cada una debe estrechar la mano con todas las demás. ¿Cuántos apretones ocurren en total? Intenta responder para deducir cómo interactúan las matrices Q y K."</span>
+            </div>
           </div>
-          <div style="font-size:0.82rem; color:var(--text-muted);">
-            <strong>Archivos Utilizados:</strong> <code>rag_engine.py</code> (Temario) + Directivas Pedagógicas en Prompt + <code>api_server.py</code>.
+
+          <div style="font-size:0.82rem; color:var(--text-muted); display:flex; gap:0.5rem; flex-wrap:wrap;">
+            <span class="badge-role">rag_engine.py (Temario)</span>
+            <span class="badge-role">Prompt Directivas Pedagógicas</span>
+            <span class="badge-role">api_server.py</span>
           </div>
         </div>
 
         <!-- PLANTILLA 5 -->
-        <div class="template-card-highlight" id="plantilla-e" style="border-left: 5px solid #ef4444; margin-bottom: 1.8rem;">
+        <div class="template-card-highlight tpl-theme-health" id="plantilla-e" style="margin-bottom: 2rem;">
           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.6rem;">
-            <span style="font-size:0.78rem; font-weight:800; text-transform:uppercase; color:#ef4444; background:rgba(239,68,68,0.12); padding:0.25rem 0.6rem; border-radius:6px;">PLANTILLA 5 · SALUD INSTITUCIONAL, TRIAGE &amp; PROTOCOLOS CLÍNICOS</span>
-            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">Complejidad: Alta &bull; Cláusula Médica No Vinculante</span>
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <span class="badge-role" style="background:rgba(16,185,129,0.12); color:#10b981; font-weight:800;">PLANTILLA 5 · SALUD &amp; TRIAGE CLÍNICO</span>
+              <span class="badge-role" style="background:rgba(239,68,68,0.12); color:#ef4444;">Complejidad: Alta</span>
+            </div>
+            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">Cláusula Médica No Vinculante Obligatoria</span>
           </div>
           <h4 style="font-family:var(--font-head); font-size:1.25rem; font-weight:800; color:var(--text-primary); margin-bottom:0.5rem;">
             Asistente de Protocolos Clínicos Institucionales y Triage Informativo
@@ -1139,29 +1503,47 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas de cliente
             <b>Objetivo de Negocio:</b> Orientar al personal administrativo o pacientes sobre requisitos de estudios de laboratorio, preparación para cirugías y guías de triage, incorporando siempre la cláusula de advertencia de que la IA no emite diagnósticos médicos vinculantes.
           </p>
           <div style="background:var(--bg-subtle); border-radius:8px; padding:1rem 1.2rem; font-size:0.86rem; color:var(--text-primary); margin-bottom:0.9rem;">
-            <strong>Dataset Factual de Documentos para `rag_engine.py`:</strong>
+            <strong style="color:var(--text-primary);">Dataset Factual de Documentos para <code>rag_engine.py</code>:</strong>
             <ul style="margin:0.5rem 0 0 0; padding-left:1.2rem; color:var(--text-secondary); line-height:1.6;">
               <li>"Protocolo de Química Sanguínea (Guía 3): Requiere ayuno estricto de 8 a 12 horas previas a la toma de muestra. Se permite ingesta moderada de agua simple."</li>
               <li>"Triage Respiratorio (Nivel 2): Pacientes con saturación &lt; 90% o disnea súbita deben ingresar de inmediato al área de choque sin trámite previo."</li>
               <li>"Preparación de Ultrasonido Abdominal (Guía 6): Ingerir 1 litro de agua 45 minutos antes del estudio y retener orina para lograr ventana acústica óptima."</li>
             </ul>
           </div>
-          <div style="background:var(--bg-subtle-alt); border-radius:8px; padding:0.9rem 1.1rem; font-size:0.84rem; color:var(--text-primary); margin-bottom:0.9rem;">
-            <strong>Respuesta Generada con Disclaimer Médico:</strong>
-            <p style="margin:0.4rem 0 0 0; color:var(--text-secondary); line-height:1.55;">
-              "AVISO: Este sistema es informativo y no sustituye una consulta médica profesional. Para tu química sanguínea requieres un ayuno estricto de 8 a 12 horas (Guía 3). Si presentas dificultad respiratoria acude a urgencias inmediatamente."
-            </p>
+          
+          <!-- Mac Window Terminal Simulation -->
+          <div class="mac-window" style="margin-bottom:0.9rem;">
+            <div class="mac-header">
+              <div class="mac-dot red"></div>
+              <div class="mac-dot yellow"></div>
+              <div class="mac-dot green"></div>
+              <span class="mac-title">Salida con Descargo de Responsabilidad Médica</span>
+            </div>
+            <div class="mac-body">
+<span class="code-kw">curl</span> -X POST http://localhost:8000/v1/chat \
+  -H <span class="code-str">"Content-Type: application/json"</span> \
+  -d <span class="code-str">'{"query": "¿Puedo desayunar antes de mi prueba de química sanguínea?"}'</span>
+
+<span class="code-cm"># Respuesta del Asistente Clínico:</span>
+<span class="code-str">"[AVISO MÉDICO: Este sistema es puramente informativo y no constituye un diagnóstico clínico.] Para la prueba de Química Sanguínea (Guía 3) se requiere ayuno estricto de 8 a 12 horas. Solo se permite el consumo moderado de agua simple."</span>
+            </div>
           </div>
-          <div style="font-size:0.82rem; color:var(--text-muted);">
-            <strong>Archivos Utilizados:</strong> <code>rag_engine.py</code> + Directivas de Seguridad Médica + <code>api_server.py</code>.
+
+          <div style="font-size:0.82rem; color:var(--text-muted); display:flex; gap:0.5rem; flex-wrap:wrap;">
+            <span class="badge-role">rag_engine.py (Protocolos)</span>
+            <span class="badge-role">Prompt Hardening Anti-Diagnóstico</span>
+            <span class="badge-role">api_server.py</span>
           </div>
         </div>
 
         <!-- PLANTILLA 6 -->
-        <div class="template-card-highlight" id="plantilla-f" style="border-left: 5px solid #f59e0b; margin-bottom: 1.8rem;">
+        <div class="template-card-highlight tpl-theme-hr" id="plantilla-f" style="margin-bottom: 2rem;">
           <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.6rem;">
-            <span style="font-size:0.78rem; font-weight:800; text-transform:uppercase; color:#f59e0b; background:rgba(245,158,11,0.12); padding:0.25rem 0.6rem; border-radius:6px;">PLANTILLA 6 · RECURSOS HUMANOS, ONBOARDING &amp; CULTURA CORPORATIVA</span>
-            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">Complejidad: Baja &bull; Corporativo &amp; Bienestar</span>
+            <div style="display:flex; align-items:center; gap:0.5rem;">
+              <span class="badge-role" style="background:rgba(244,63,94,0.12); color:#f43f5e; font-weight:800;">PLANTILLA 6 · RRHH &amp; ONBOARDING</span>
+              <span class="badge-role" style="background:rgba(16,185,129,0.12); color:#10b981;">Complejidad: Baja</span>
+            </div>
+            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">Cultura Corporativa &amp; Prestaciones</span>
           </div>
           <h4 style="font-family:var(--font-head); font-size:1.25rem; font-weight:800; color:var(--text-primary); margin-bottom:0.5rem;">
             Asistente de Inducción Corporativa, Prestaciones y Cultura de Empresa
@@ -1170,21 +1552,36 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas de cliente
             <b>Objetivo de Negocio:</b> Acompañar a nuevos empleados en su proceso de bienvenida, respondiendo dudas sobre póliza de gastos médicos, solicitud de equipo de cómputo, días económicos y código de ética.
           </p>
           <div style="background:var(--bg-subtle); border-radius:8px; padding:1rem 1.2rem; font-size:0.86rem; color:var(--text-primary); margin-bottom:0.9rem;">
-            <strong>Dataset Factual de Documentos para `rag_engine.py`:</strong>
+            <strong style="color:var(--text-primary);">Dataset Factual de Documentos para <code>rag_engine.py</code>:</strong>
             <ul style="margin:0.5rem 0 0 0; padding-left:1.2rem; color:var(--text-secondary); line-height:1.6;">
               <li>"Seguro de Gastos Médicos Mayores (Sección 5): La cobertura inicia desde el primer día laboral. La red de hospitales y credencial digital se consultan en el portal de nómina."</li>
               <li>"Vales de Despensa (Art. 8): Se abonan el día 15 de cada mes a la tarjeta electrónica empresarial proporcionada durante la semana de inducción."</li>
               <li>"Días Económicos (Art. 14): Los colaboradores cuentan con 3 días con goce de sueldo al año para asuntos personales imprevistos, notificando a su líder directo."</li>
             </ul>
           </div>
-          <div style="background:var(--bg-subtle-alt); border-radius:8px; padding:0.9rem 1.1rem; font-size:0.84rem; color:var(--text-primary); margin-bottom:0.9rem;">
-            <strong>Respuesta Generada por el Asistente:</strong>
-            <p style="margin:0.4rem 0 0 0; color:var(--text-secondary); line-height:1.55;">
-              "¡Bienvenido al equipo! Tu seguro de gastos médicos está activo desde hoy (Sección 5). Los vales de despensa se depositan el 15 de cada mes (Art. 8) y dispones de 3 días económicos al año (Art. 14)."
-            </p>
+          
+          <!-- Mac Window Terminal Simulation -->
+          <div class="mac-window" style="margin-bottom:0.9rem;">
+            <div class="mac-header">
+              <div class="mac-dot red"></div>
+              <div class="mac-dot yellow"></div>
+              <div class="mac-dot green"></div>
+              <span class="mac-title">Salida de Inducción y Bienestar Laboral</span>
+            </div>
+            <div class="mac-body">
+<span class="code-kw">curl</span> -X POST http://localhost:8000/v1/chat \
+  -H <span class="code-str">"Content-Type: application/json"</span> \
+  -d <span class="code-str">'{"query": "¿Cuándo se depositan los vales de despensa y cuántos días económicos tengo?"}'</span>
+
+<span class="code-cm"># Respuesta del Asistente RRHH:</span>
+<span class="code-str">"¡Bienvenido al equipo! Los vales de despensa se depositan el día 15 de cada mes a tu tarjeta corporativa (Art. 8). Además, dispones de 3 días económicos con goce de sueldo al año (Art. 14)."</span>
+            </div>
           </div>
-          <div style="font-size:0.82rem; color:var(--text-muted);">
-            <strong>Archivos Utilizados:</strong> <code>rag_engine.py</code> + <code>router.py</code> + <code>api_server.py</code>.
+
+          <div style="font-size:0.82rem; color:var(--text-muted); display:flex; gap:0.5rem; flex-wrap:wrap;">
+            <span class="badge-role">rag_engine.py (Compendio)</span>
+            <span class="badge-role">router.py (Clasificación)</span>
+            <span class="badge-role">api_server.py</span>
           </div>
         </div>
 
@@ -1306,6 +1703,7 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas de cliente
 
     <!-- ======================================================================
          SECCIÓN 17: HARDWARE, VRAM & GOOGLE COLAB
+         ====================================================================== -->
     <article class="tema-card" id="hardware-colab" style="margin-bottom: 3.5rem;">
       <div class="tema-header">
         <div class="tema-eyebrow">Dimensionamiento de Recursos · Planificación VRAM</div>
@@ -1319,6 +1717,19 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas de cliente
 
         <div class="formula-callout" style="background:var(--bg-surface-2); border:1px solid var(--border-subtle); border-radius:10px; padding:1.2rem; margin:1rem 0; text-align:center;">
           $$\text{VRAM}_{\text{Total}} = \text{Memoria}_{\text{Pesos}} + \text{Memoria}_{\text{Optimizador (AdamW)}} + \text{Memoria}_{\text{KV-Cache}} + \text{Memoria}_{\text{Activaciones}} + \text{Sobrecarga CUDA}$$
+        </div>
+
+        <!-- Barra Visual de Distribución de Memoria VRAM -->
+        <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.4rem; margin: 1.2rem 0;">
+          <h4 style="font-size: 0.95rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.6rem;">
+            Desglose de Memoria en GPU Tesla T4 (15.0 GB Totales) con Llama 3.1 8B (QLoRA 4-bit):
+          </h4>
+          <div class="vram-bar-container">
+            <div class="vram-segment" style="width: 30%; background: #0866ff;">Pesos 4-bit (4.5 GB)</div>
+            <div class="vram-segment" style="width: 10%; background: #10b981;">KV-Cache (1.5 GB)</div>
+            <div class="vram-segment" style="width: 8%; background: #a855f7;">LoRA $r=8$ (1.2 GB)</div>
+            <div class="vram-segment" style="width: 52%; background: rgba(255,255,255,0.06); color: var(--text-muted);">VRAM Libre (7.8 GB)</div>
+          </div>
         </div>
 
         <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:1rem; background:var(--bg-surface-2); border:1px solid var(--border-subtle); border-radius:12px; padding:1.2rem; margin:1.2rem 0;">
