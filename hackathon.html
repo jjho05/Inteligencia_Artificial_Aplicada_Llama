@@ -130,7 +130,8 @@
     .comparison-grid-dual {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-      gap: 1.2rem;
+      gap: 1.4rem;
+      align-items: start;
       margin: 1.5rem 0;
     }
     .card-danger-zone {
@@ -420,65 +421,17 @@
   <main class="main-container">
     <!-- ======================================================================
          HERO PRINCIPAL DEL CENTRO DE HACKATHON
-         ====================================================================== -->
-    <section class="course-hero" id="overview">
+         =============================================    <section class="course-hero" id="overview">
       <div class="hero-badge-pill">
         <span class="hero-badge-num">MÓDULO 1</span>
         <span class="hero-badge-divider"></span>
         <span class="hero-badge-label">PROYECTO INTEGRADOR · CIERRE PRÁCTICO DEL MÓDULO 1</span>
       </div>
 
-      <h1 class="hero-title">Hackathon 1: Construir un Asistente Inteligente con Llama — El Cierre del Módulo 1</h1>
+      <h1 class="hero-title">Hackathon 1: Construir un Asistente Inteligente con Llama</h1>
       <p class="hero-subtitle">
-        Demuestra tu dominio técnico construyendo un asistente inteligente funcional basado en Meta Llama que resuelva un problema real, aplicando la confluencia de las masterclasses en vivo y el e-learning del Módulo 1.
+        Demuestra tu dominio técnico construyendo un asistente inteligente funcional en equipo que resuelva un problema real, aplicando la confluencia de las 3 masterclasses en vivo y el e-learning del Módulo 1.
       </p>
-
-      <!-- 3 Tarjetas de Fundamentos Oficiales del Hackathon -->
-      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 1.2rem; margin: 1.5rem 0;">
-        <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-top: 4px solid var(--meta-blue); border-radius: 12px; padding: 1.4rem;">
-          <h4 style="font-family: var(--font-head); font-size: 1.05rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v20M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
-            <span>¿Qué es este Hackathon?</span>
-          </h4>
-          <p style="font-size: 0.86rem; color: var(--text-secondary); line-height: 1.6; margin: 0 0 0.6rem 0;">
-            Este Hackathon es una <strong>sesión de trabajo intensivo y presencial</strong> donde construyes, en equipo, un asistente funcional basado en Llama que resuelva un problema real. No es un examen de conocimientos teóricos: es la demostración de que puedes aplicar lo aprendido en las tres masterclasses en vivo del Módulo 1, sin que el sensei enseñe contenido nuevo ese día.
-          </p>
-          <p style="font-size: 0.84rem; color: var(--text-muted); line-height: 1.55; margin: 0;">
-            Cada equipo define su propio problema y entrega un asistente probado y presentable. Aquí <strong>el sensei es tu consultor de dudas técnicas, no tu instructor</strong>: tú defines el problema, tú construyes la solución y tú la presentas.
-          </p>
-        </div>
-
-        <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-top: 4px solid #a855f7; border-radius: 12px; padding: 1.4rem;">
-          <h4 style="font-family: var(--font-head); font-size: 1.05rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
-            <span>¿De dónde viene este Hackathon?</span>
-          </h4>
-          <p style="font-size: 0.86rem; color: var(--text-secondary); line-height: 1.6; margin: 0 0 0.6rem 0;">
-            Es el <strong>punto de convergencia de las tres masterclasses en vivo y el e-learning del Módulo 1</strong>:
-          </p>
-          <ul style="font-size: 0.83rem; color: var(--text-secondary); line-height: 1.55; margin: 0; padding-left: 1.1rem;">
-            <li><strong>Masterclass 1:</strong> Fundamentos de LLMs y arquitectura Transformer de Llama.</li>
-            <li><strong>Masterclass 2:</strong> Prompt engineering y RAG para responder con información real.</li>
-            <li><strong>Masterclass 3:</strong> Fine-tuning con LoRA y evaluación de adaptadores.</li>
-            <li><strong>E-Learning:</strong> Pipeline completo, de datos a modelo desplegado en endpoint.</li>
-          </ul>
-        </div>
-
-        <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-top: 4px solid #10b981; border-radius: 12px; padding: 1.4rem;">
-          <h4 style="font-family: var(--font-head); font-size: 1.05rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
-            <span>¿Qué debes resolver?</span>
-          </h4>
-          <p style="font-size: 0.86rem; color: var(--text-secondary); line-height: 1.6; margin: 0 0 0.6rem 0;">
-            <strong>El reto es abierto:</strong> Tu equipo elige un problema real (de su propio contexto o propuesto por el sensei) que un asistente con Llama pueda resolver con solidez:
-          </p>
-          <ul style="font-size: 0.83rem; color: var(--text-secondary); line-height: 1.55; margin: 0; padding-left: 1.1rem;">
-            <li>Asistente de preguntas frecuentes usando RAG sobre documentos reales.</li>
-            <li>Asistente ajustado con LoRA para responder en un tono o formato JSON específico.</li>
-            <li>Asistente integral que combine RAG y fine-tuning para un caso de uso completo.</li>
-          </ul>
-        </div>
-      </div>
 
       <!-- 4 Pilares Bento Grid del Hackathon -->
       <div class="hero-pillars-grid">
@@ -556,9 +509,57 @@
          ====================================================================== -->
     <article class="tema-card" id="mapa-integracion" style="border-left: 5px solid #a855f7; margin-bottom: 3.5rem;">
       <div class="tema-header">
-        <div class="tema-eyebrow">Síntesis Formativa · Confluencia de Conocimiento</div>
-        <h3 class="tema-title">0. Mapa de Integración: Cómo se Ensamblan los 4 Temas y 3 Challenges en tu Proyecto</h3>
+        <div class="tema-eyebrow">Síntesis Formativa · Dinámica del Hackathon</div>
+        <h3 class="tema-title">0. Mapa de Integración: Marco del Hackathon y Confluencia de Módulos</h3>
       </div>
+
+      <!-- 3 Tarjetas de Fundamentos Oficiales del Hackathon -->
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.2rem; margin: 1.5rem 0;">
+        <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-top: 4px solid var(--meta-blue); border-radius: 12px; padding: 1.4rem;">
+          <h4 style="font-family: var(--font-head); font-size: 1.02rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>
+            <span>¿Qué es este Hackathon?</span>
+          </h4>
+          <p style="font-size: 0.86rem; color: var(--text-secondary); line-height: 1.6; margin: 0 0 0.6rem 0;">
+            Es una <strong>sesión de trabajo intensivo y presencial</strong> donde construyes, en equipo, un asistente funcional basado en Llama que resuelva un problema real. No es un examen teórico: es la demostración práctica de que puedes aplicar lo aprendido en las tres masterclasses en vivo del Módulo 1, sin que el sensei enseñe contenido nuevo ese día.
+          </p>
+          <p style="font-size: 0.84rem; color: var(--text-muted); line-height: 1.55; margin: 0;">
+            Aquí <strong>el sensei es tu consultor de dudas técnicas, no tu instructor</strong>: tú defines el problema, tú construyes la solución y tú la presentas.
+          </p>
+        </div>
+
+        <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-top: 4px solid #a855f7; border-radius: 12px; padding: 1.4rem;">
+          <h4 style="font-family: var(--font-head); font-size: 1.02rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+            <span>¿De dónde viene este Hackathon?</span>
+          </h4>
+          <p style="font-size: 0.86rem; color: var(--text-secondary); line-height: 1.6; margin: 0 0 0.6rem 0;">
+            Es el <strong>punto de convergencia de las tres masterclasses en vivo y el e-learning del Módulo 1</strong>:
+          </p>
+          <ul style="font-size: 0.83rem; color: var(--text-secondary); line-height: 1.55; margin: 0; padding-left: 1.1rem;">
+            <li><strong>Masterclass 1:</strong> Fundamentos de LLMs y arquitectura Transformer de Llama.</li>
+            <li><strong>Masterclass 2:</strong> Prompt engineering y RAG para responder con datos reales.</li>
+            <li><strong>Masterclass 3:</strong> Fine-tuning con LoRA y evaluación de adaptadores.</li>
+            <li><strong>E-Learning:</strong> Pipeline completo, de datos a endpoint en producción.</li>
+          </ul>
+        </div>
+
+        <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-top: 4px solid #10b981; border-radius: 12px; padding: 1.4rem;">
+          <h4 style="font-family: var(--font-head); font-size: 1.02rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.5rem; display: flex; align-items: center; gap: 0.5rem;">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
+            <span>¿Qué debes resolver?</span>
+          </h4>
+          <p style="font-size: 0.86rem; color: var(--text-secondary); line-height: 1.6; margin: 0 0 0.6rem 0;">
+            <strong>El reto es abierto:</strong> Tu equipo elige un problema real (de su contexto o propuesto por el sensei) que un asistente resuelva sólidamente:
+          </p>
+          <ul style="font-size: 0.83rem; color: var(--text-secondary); line-height: 1.55; margin: 0; padding-left: 1.1rem;">
+            <li>Asistente FAQ con <strong>RAG</strong> sobre documentos reales.</li>
+            <li>Asistente ajustado con <strong>LoRA</strong> para formato JSON estructurado.</li>
+            <li>Asistente integral que combine <strong>RAG y fine-tuning</strong>.</li>
+          </ul>
+        </div>
+      </div>
+
 
       <div class="easy-explainer-box">
         <div class="easy-header">
@@ -800,21 +801,34 @@
         <div class="comparison-grid-dual">
           
           <!-- Prompt Débil Code-Box -->
-          <div class="code-box" style="margin: 0; border: 1px solid rgba(239, 68, 68, 0.4);">
+          <div class="code-box" style="margin: 0; border: 1px solid rgba(239, 68, 68, 0.4); display: flex; flex-direction: column;">
             <div class="code-header" style="background: #251616; border-bottom: 1px solid rgba(239, 68, 68, 0.3);">
               <span style="color: #ef4444;">prompt_debil_inseguro.txt (Principiante)</span>
               <div class="code-actions">
                 <button class="btn-copy-code" onclick="copyCode(this)">Copiar</button>
               </div>
             </div>
-            <pre class="code-content" style="color: #fca5a5; line-height: 1.5; white-space: pre-wrap;"><code>Eres el asistente de la tienda TechStore. Responde las preguntas de los clientes usando la información de nuestras políticas. Sé muy amable y ayuda en todo lo que puedas.</code></pre>
-            <div style="padding: 0.8rem 1.1rem; background: rgba(239,68,68,0.08); border-top: 1px solid rgba(239,68,68,0.2); font-size: 0.78rem; color: #ef4444;">
-              <b>Fallas Críticas:</b> Sin delimitadores de contexto, sin cláusula de admisión de ignorancia y sin restricción de formato de salida.
+            <pre class="code-content" style="color: #fca5a5; line-height: 1.55; white-space: pre-wrap;"><code><span class="code-cm"># 1. System Prompt Informal (Sin Delimitadores ni Reglas)</span>
+Eres el asistente de la tienda TechStore. Responde las preguntas de los clientes usando la información de nuestras políticas. Sé muy amable y ayuda en todo lo que puedas.
+
+<span class="code-cm"># 2. Consulta del Usuario (Trámite no documentado):</span>
+"¿Cuánto cuesta el trámite exprés de devolución y a qué cuenta bancaria hago la transferencia?"
+
+<span class="code-cm"># 3. Respuesta Generada por el LLM (Alucinación Crítica):</span>
+"El trámite exprés cuesta $250 MXN y puedes transferir a la cuenta CLABE 012180001234567890 a nombre de TechStore Oficial. ¡Te llegará en 2 horas!"</code></pre>
+            <div style="padding: 0.9rem 1.1rem; background: rgba(239,68,68,0.08); border-top: 1px solid rgba(239,68,68,0.2); font-size: 0.8rem; color: #ef4444; line-height: 1.55;">
+              <b>Fallas Críticas Detectadas:</b>
+              <ul style="margin: 0.3rem 0 0 0; padding-left: 1.1rem;">
+                <li>Sin delimitadores semánticos Meta Llama 3 (<code>&lt;|start_header_id|&gt;</code>).</li>
+                <li>Inventa números de cuenta bancaria y tarifas no existentes (Alucinación).</li>
+                <li>Vulnerable a inyecciones de prompt y jailbreaks de usuarios maliciosos.</li>
+                <li>Sin mecanismo determinista de admisión explícita de ignorancia.</li>
+              </ul>
             </div>
           </div>
 
           <!-- Prompt Industrial Code-Box -->
-          <div class="code-box" style="margin: 0; border: 1px solid rgba(16, 185, 129, 0.4);">
+          <div class="code-box" style="margin: 0; border: 1px solid rgba(16, 185, 129, 0.4); display: flex; flex-direction: column;">
             <div class="code-header" style="background: #13251c; border-bottom: 1px solid rgba(16, 185, 129, 0.3);">
               <span style="color: #10b981;">system_prompt_industrial_llama3.txt (Estándar Meta)</span>
               <div class="code-actions">
@@ -822,7 +836,7 @@
                 <button class="btn-download-code" onclick="downloadCode(this)">Descargar</button>
               </div>
             </div>
-            <pre class="code-content" style="color: #6ee7b7; line-height: 1.5; white-space: pre-wrap;"><code><span class="code-kw">&lt;|begin_of_text|&gt;&lt;|start_header_id|&gt;system&lt;|end_header_id|&gt;</span>
+            <pre class="code-content" style="color: #6ee7b7; line-height: 1.55; white-space: pre-wrap;"><code><span class="code-kw">&lt;|begin_of_text|&gt;&lt;|start_header_id|&gt;system&lt;|end_header_id|&gt;</span>
 Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas basándote EXCLUSIVAMENTE en el fragmento provisto en [CONTEXTO].
 
 ### REGLAS OPERATIVAS ESTRICTAS:
@@ -830,7 +844,7 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas basándote
 2. Cita textualmente el número de artículo del contexto.
 3. Si la respuesta NO está en el contexto, responde:
    "No cuento con información oficial sobre este trámite en el reglamento vigente."
-4. NUNCA asumas precios, plazos o condiciones no presentes.
+4. NUNCA asumas precios, cuentas bancarias ni plazos ausentes.
 
 [CONTEXTO]
 <span class="code-var">{contexto_recuperado_rag}</span>
@@ -838,8 +852,14 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas basándote
 <span class="code-kw">&lt;|start_header_id|&gt;user&lt;|end_header_id|&gt;</span>
 <span class="code-var">{pregunta_usuario}</span><span class="code-kw">&lt;|eot_id|&gt;</span>
 <span class="code-kw">&lt;|start_header_id|&gt;assistant&lt;|end_header_id|&gt;</span></code></pre>
-            <div style="padding: 0.8rem 1.1rem; background: rgba(16,185,129,0.08); border-top: 1px solid rgba(16,185,129,0.2); font-size: 0.78rem; color: #10b981;">
-              <b>Garantía de Calidad:</b> Delimitación semántica limpia, anclaje estricto y cero alucinación garantizada.
+            <div style="padding: 0.9rem 1.1rem; background: rgba(16,185,129,0.08); border-top: 1px solid rgba(16,185,129,0.2); font-size: 0.8rem; color: #10b981; line-height: 1.55;">
+              <b>Garantías de Ingeniería y Robustez:</b>
+              <ul style="margin: 0.3rem 0 0 0; padding-left: 1.1rem;">
+                <li>Delimitación semántica con tokens de control oficiales Meta Llama.</li>
+                <li>Anclaje fáctico estricto en el bloque de contexto inyectado.</li>
+                <li>Cláusula negativa obligatoria que bloquea invenciones financieras.</li>
+                <li>Cero alucinaciones con fallback seguro a canales humanos oficiales.</li>
+              </ul>
             </div>
           </div>
 
