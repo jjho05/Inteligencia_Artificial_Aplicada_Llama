@@ -119,6 +119,9 @@
     if (btn) {
       btn.onclick = function(e) {
         e.preventDefault();
+        if (window.SOUND && typeof window.SOUND.playPop === "function") {
+          window.SOUND.playPop(480);
+        }
         setLanguage(currentLang === "es" ? "en" : "es");
       };
     }

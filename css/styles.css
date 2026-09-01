@@ -343,6 +343,29 @@ font {
   color: var(--meta-blue);
 }
 
+.btn-icon.sound-active,
+#sound-btn.sound-active {
+  background: rgba(8, 102, 255, 0.12) !important;
+  border-color: var(--meta-blue) !important;
+  color: var(--meta-blue) !important;
+  box-shadow: 0 0 10px rgba(8, 102, 255, 0.22) !important;
+}
+
+.btn-icon.sound-muted,
+#sound-btn.sound-muted {
+  background: var(--bg-subtle) !important;
+  border-color: var(--border-subtle) !important;
+  color: #ef4444 !important;
+  opacity: 0.75 !important;
+}
+
+.btn-icon.sound-muted:hover,
+#sound-btn.sound-muted:hover {
+  opacity: 1 !important;
+  border-color: #ef4444 !important;
+  background: rgba(239, 68, 68, 0.08) !important;
+}
+
 .btn-menu-toggle {
   display: none;
   background: var(--bg-subtle);

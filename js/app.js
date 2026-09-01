@@ -14,6 +14,9 @@
 
   /* 0. MOTOR GLOBAL DE DESPLAZAMIENTO UNIVERSAL */
   window.scrollToTop = function() {
+    if (window.SOUND && typeof window.SOUND.playPop === "function") {
+      window.SOUND.playPop(420);
+    }
     try {
       window.scrollTo({ top: 0, left: 0, behavior: "smooth" });
     } catch (e) {
@@ -33,6 +36,9 @@
   };
 
   window.scrollToBottom = function() {
+    if (window.SOUND && typeof window.SOUND.playPop === "function") {
+      window.SOUND.playPop(360);
+    }
     var maxScroll = Math.max(
       document.body.scrollHeight || 0,
       document.documentElement.scrollHeight || 0,
@@ -141,83 +147,158 @@
  loop();
  })();
 
- /* 2. SELECTOR DE TEMA CON ICONOS SVG VECTORIALES */
- var themeBtn = document.getElementById("theme-btn");
- var themeIconContainer = document.getElementById("theme-icon-container");
- var themeLabel = document.getElementById("theme-label");
+  /* 2. SELECTOR DE TEMA CON ICONOS SVG VECTORIALES */
+  var themeBtn = document.getElementById("theme-btn");
+  var themeIconContainer = document.getElementById("theme-icon-container");
+  var themeLabel = document.getElementById("theme-label");
 
- var sunSvg = '<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58a.996.996 0 00-1.41 0 .996.996 0 000 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37a.996.996 0 00-1.41 0 .996.996 0 000 1.41l1.06 1.06c.39.39 1.03.39 1.41 0a.996.996 0 000-1.41l-1.06-1.06zm1.06-10.96a.996.996 0 000-1.41.996.996 0 000-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36a.996.996 0 000-1.41.996.996 0 000-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"/></svg>';
- var moonSvg = '<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12.3 2a10 10 0 0 0-1.9 19.8 10 10 0 0 0 11.4-11.4A10 10 0 0 0 12.3 2zm-1 17.8A8 8 0 0 1 9.5 4a8.2 8.2 0 0 0 8.7 8.7 8 8 0 0 1-6.9 7.1z"/></svg>';
+  var sunSvg = '<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58a.996.996 0 00-1.41 0 .996.996 0 000 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37a.996.996 0 00-1.41 0 .996.996 0 000 1.41l1.06 1.06c.39.39 1.03.39 1.41 0a.996.996 0 000-1.41l-1.06-1.06zm1.06-10.96a.996.996 0 000-1.41.996.996 0 000-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36a.996.996 0 000-1.41.996.996 0 000-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"/></svg>';
+  var moonSvg = '<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12.3 2a10 10 0 0 0-1.9 19.8 10 10 0 0 0 11.4-11.4A10 10 0 0 0 12.3 2zm-1 17.8A8 8 0 0 1 9.5 4a8.2 8.2 0 0 0 8.7 8.7 8 8 0 0 1-6.9 7.1z"/></svg>';
 
- var savedTheme = localStorage.getItem("meta_theme") || "light";
- document.documentElement.setAttribute("data-theme", savedTheme);
- updateThemeState(savedTheme);
+  var savedTheme = localStorage.getItem("meta_theme") || "dark";
+  document.documentElement.setAttribute("data-theme", savedTheme);
+  updateThemeState(savedTheme);
 
- if(themeBtn){
- themeBtn.addEventListener("click", function(){
- var curr = document.documentElement.getAttribute("data-theme");
- var next = curr === "light" ? "dark" : "light";
- document.documentElement.setAttribute("data-theme", next);
- localStorage.setItem("meta_theme", next);
- updateThemeState(next);
- });
- }
+  if(themeBtn){
+    themeBtn.addEventListener("click", function(){
+      var curr = document.documentElement.getAttribute("data-theme");
+      var next = curr === "light" ? "dark" : "light";
+      document.documentElement.setAttribute("data-theme", next);
+      localStorage.setItem("meta_theme", next);
+      updateThemeState(next);
+      if(window.SOUND && typeof window.SOUND.playPop === "function") {
+        window.SOUND.playPop(520);
+      }
+    });
+  }
 
- function updateThemeState(t){
- if(themeIconContainer) themeIconContainer.innerHTML = t === "light" ? sunSvg : moonSvg;
- if(themeBtn) themeBtn.title = t === "light" ? "Cambiar a Modo Oscuro" : "Cambiar a Modo Claro";
- if(themeLabel) themeLabel.textContent = t === "light" ? "Modo Claro" : "Modo Oscuro";
- }
+  function updateThemeState(t){
+    if(themeIconContainer) themeIconContainer.innerHTML = t === "light" ? sunSvg : moonSvg;
+    if(themeBtn) themeBtn.title = t === "light" ? "Cambiar a Modo Oscuro" : "Cambiar a Modo Claro";
+    if(themeLabel) themeLabel.textContent = t === "light" ? "Modo Claro" : "Modo Oscuro";
+  }
 
- /* 3. SINTETIZADOR DE AUDIO */
- window.SOUND = (function(){
- var ctx = null;
- var muted = false;
- function init(){ if(!ctx && typeof AudioContext !== "undefined"){ ctx = new (window.AudioContext || window.webkitAudioContext)(); } }
- return {
- toggle: function(){ muted = !muted; return muted; },
- playPop: function(f){
- if(muted) return;
- init();
- if(!ctx) return;
- try {
- var osc = ctx.createOscillator(), g = ctx.createGain();
- osc.type = "sine";
- osc.frequency.setValueAtTime(f || 440, ctx.currentTime);
- g.gain.setValueAtTime(0.08, ctx.currentTime);
- g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.06);
- osc.connect(g); g.connect(ctx.destination);
- osc.start(); osc.stop(ctx.currentTime + 0.06);
- } catch(e){}
- },
- playChime: function(){
- if(muted) return;
- init();
- if(!ctx) return;
- try {
- var osc = ctx.createOscillator(), g = ctx.createGain();
- osc.type = "triangle";
- osc.frequency.setValueAtTime(587.33, ctx.currentTime);
- g.gain.setValueAtTime(0.06, ctx.currentTime);
- g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.2);
- osc.connect(g); g.connect(ctx.destination);
- osc.start(); osc.stop(ctx.currentTime + 0.2);
- } catch(e){}
- }
- };
- })();
+  /* 3. SINTETIZADOR DE AUDIO ROBUSTO (WEB AUDIO API CON ICONO Y ESTADO VISUAL) */
+  var soundOnSvg = '<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"/></svg>';
+  var soundOffSvg = '<svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M16.5 12c0-1.77-1.02-3.29-2.5-4.03v2.21l2.45 2.45c.03-.2.05-.41.05-.63zm2.5 0c0 .94-.2 1.82-.54 2.64l1.51 1.51C20.63 14.91 21 13.5 21 12c0-4.28-2.99-7.86-7-8.77v2.06c2.89.86 5 3.54 5 6.71zM4.27 3L3 4.27 7.73 9H3v6h4l5 5v-6.73l4.25 4.25c-.67.52-1.42.93-2.25 1.18v2.06c1.38-.31 2.63-.95 3.69-1.81L19.73 21 21 19.73l-9-9L4.27 3zM12 4L9.91 6.09 12 8.18V4z"/></svg>';
 
- var soundBtn = document.getElementById("sound-btn");
- var soundIconContainer = document.getElementById("sound-icon-container");
- var soundLabel = document.getElementById("sound-label");
+  window.SOUND = (function(){
+    var ctx = null;
+    var savedSound = localStorage.getItem("meta_sound_enabled");
+    var enabled = savedSound !== null ? (savedSound === "true") : true;
 
- if(soundBtn){
- soundBtn.addEventListener("click", function(){
- var isMuted = window.SOUND.toggle();
- soundBtn.title = isMuted ? "Activar Efectos de Audio" : "Silenciar Audio";
- if(soundLabel) soundLabel.textContent = isMuted ? "Audio OFF" : "Audio ON";
- });
- }
+    function getContext(){
+      if(!ctx && typeof AudioContext !== "undefined"){
+        var AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if(AudioCtx) {
+          try { ctx = new AudioCtx(); } catch(e){}
+        }
+      }
+      if(ctx && ctx.state === "suspended"){
+        ctx.resume().catch(function(){});
+      }
+      return ctx;
+    }
+
+    // Desbloqueo de AudioContext ante el primer toque o clic
+    function unlockContext(){
+      var c = getContext();
+      if(c && c.state === "suspended"){
+        c.resume().catch(function(){});
+      }
+    }
+    ["click", "touchstart", "keydown"].forEach(function(evt){
+      document.addEventListener(evt, unlockContext, { passive: true, once: true });
+    });
+
+    function updateSoundUI(){
+      var btn = document.getElementById("sound-btn");
+      var icon = document.getElementById("sound-icon-container");
+      var label = document.getElementById("sound-label");
+      if(!btn) return;
+      if(icon) icon.innerHTML = enabled ? soundOnSvg : soundOffSvg;
+      if(label) label.textContent = enabled ? "Audio ON" : "Audio OFF";
+      btn.title = enabled ? "Efectos de Audio: ACTIVADOS (Clic para silenciar)" : "Efectos de Audio: SILENCIADOS (Clic para activar)";
+      btn.setAttribute("aria-pressed", enabled ? "true" : "false");
+      if(enabled){
+        btn.classList.add("sound-active");
+        btn.classList.remove("sound-muted");
+      } else {
+        btn.classList.add("sound-muted");
+        btn.classList.remove("sound-active");
+      }
+    }
+
+    return {
+      isEnabled: function(){ return enabled; },
+      toggle: function(){
+        enabled = !enabled;
+        localStorage.setItem("meta_sound_enabled", enabled ? "true" : "false");
+        updateSoundUI();
+        if(enabled){
+          this.playPop(540);
+        }
+        return enabled;
+      },
+      initUI: function(){
+        updateSoundUI();
+      },
+      playPop: function(f){
+        if(!enabled) return;
+        var c = getContext();
+        if(!c) return;
+        try {
+          var freq = f || 440;
+          var now = c.currentTime;
+          var osc = c.createOscillator();
+          var g = c.createGain();
+          osc.type = "sine";
+          osc.frequency.setValueAtTime(freq, now);
+          osc.frequency.exponentialRampToValueAtTime(Math.max(20, freq * 0.85), now + 0.06);
+          g.gain.setValueAtTime(0.12, now);
+          g.gain.exponentialRampToValueAtTime(0.0001, now + 0.06);
+          osc.connect(g);
+          g.connect(c.destination);
+          osc.start(now);
+          osc.stop(now + 0.06);
+        } catch(e){}
+      },
+      playChime: function(){
+        if(!enabled) return;
+        var c = getContext();
+        if(!c) return;
+        try {
+          var now = c.currentTime;
+          [587.33, 880].forEach(function(freq, idx){
+            var osc = c.createOscillator();
+            var g = c.createGain();
+            osc.type = "triangle";
+            osc.frequency.setValueAtTime(freq, now + (idx * 0.08));
+            g.gain.setValueAtTime(0.09, now + (idx * 0.08));
+            g.gain.exponentialRampToValueAtTime(0.0001, now + (idx * 0.08) + 0.22);
+            osc.connect(g);
+            g.connect(c.destination);
+            osc.start(now + (idx * 0.08));
+            osc.stop(now + (idx * 0.08) + 0.22);
+          });
+        } catch(e){}
+      }
+    };
+  })();
+
+  var soundBtn = document.getElementById("sound-btn");
+  if(soundBtn){
+    soundBtn.addEventListener("click", function(){
+      window.SOUND.toggle();
+    });
+  }
+  if(document.readyState === "loading"){
+    document.addEventListener("DOMContentLoaded", function(){
+      window.SOUND.initUI();
+    });
+  } else {
+    window.SOUND.initUI();
+  }
 
  /* 4. BARRA DE PROGRESO DE SCROLL */
  var progressBar = document.getElementById("progress-bar");
