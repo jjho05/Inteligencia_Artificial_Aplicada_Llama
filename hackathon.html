@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Centro de Acompañamiento del Hackathon | Proyecto Integrador IA</title>
-  <meta name="description" content="Centro de mentoría, asesoría técnica, bloques de código aceleradores, calculadora de VRAM y resolución de dudas para construir tu Proyecto Integrador de IA con Modelos Abiertos y Llama 3."/>
+  <title>Centro de Construcción &amp; Mentoría del Hackathon | Proyecto Integrador IA</title>
+  <meta name="description" content="Guía amigable, paso a paso y accesible para construir tu propio Proyecto de IA con Llama 3: analogías simples, 4 plantillas listas, simulador en vivo, código explicado y resolución de dudas."/>
   
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
@@ -22,6 +22,81 @@
   <!-- Scripts Modulares -->
   <script defer src="js/app.js"></script>
   <script defer src="js/hackathon.js"></script>
+
+  <style>
+    /* Estilos específicos para componentes didácticos del Hackathon */
+    .sim-step-card {
+      display: flex;
+      gap: 1rem;
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 12px;
+      padding: 1.2rem;
+      margin-bottom: 0.9rem;
+      transition: all 0.3s ease;
+      animation: mainFadeIn 0.3s ease;
+    }
+    .sim-step-num {
+      width: 36px;
+      height: 36px;
+      border-radius: 50%;
+      background: var(--meta-blue);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 800;
+      font-family: var(--font-head);
+      flex-shrink: 0;
+    }
+    .sim-step-body h5 {
+      margin: 0 0 0.3rem 0;
+      font-size: 0.98rem;
+      font-weight: 800;
+      color: var(--text-primary);
+    }
+    .sim-step-body p {
+      margin: 0 0 0.4rem 0;
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      line-height: 1.55;
+    }
+    .sim-step-badge {
+      display: inline-block;
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--meta-blue);
+      background: var(--meta-blue-subtle);
+      padding: 0.2rem 0.55rem;
+      border-radius: 6px;
+      margin-bottom: 0.3rem;
+    }
+    .sim-step-sub {
+      font-size: 0.82rem !important;
+      color: var(--text-muted) !important;
+    }
+    .sim-retrieved-quote {
+      background: var(--bg-subtle-alt);
+      border-left: 3px solid #0284c7;
+      padding: 0.6rem 0.8rem;
+      border-radius: 6px;
+      font-size: 0.84rem;
+      color: var(--text-primary);
+      margin-top: 0.4rem;
+    }
+    .template-card-highlight {
+      background: var(--bg-surface);
+      border: 1px solid var(--border-subtle);
+      border-radius: 14px;
+      padding: 1.5rem;
+      margin-bottom: 1.8rem;
+      transition: transform 0.2s ease, border-color 0.2s ease;
+    }
+    .template-card-highlight:hover {
+      border-color: var(--meta-blue);
+      transform: translateY(-2px);
+    }
+  </style>
 </head>
 <body>
   <!-- Header Principal con Navegación y Controles -->
@@ -35,11 +110,13 @@
       </a>
       <nav class="nav-links">
         <a class="nav-link-item" href="modulo1-challenge3.html" style="color: var(--meta-blue); font-weight: 700;">← Challenge 3</a>
-        <a class="nav-link-item" href="#decision-wizard">Árbol de Decisiones</a>
-        <a class="nav-link-item" href="#vram-calculator">Calculadora VRAM</a>
-        <a class="nav-link-item" href="#starter-kit">Bloques de Código</a>
-        <a class="nav-link-item" href="#faq-troubleshooting">Resolución de Dudas</a>
-        <a class="nav-link-item" href="#checklist-entrega">Checklist de Calidad</a>
+        <a class="nav-link-item" href="#analogia-restaurante">¿Qué es?</a>
+        <a class="nav-link-item" href="#glosario-facil">Glosario Fácil</a>
+        <a class="nav-link-item" href="#plantillas-proyectos">4 Plantillas</a>
+        <a class="nav-link-item" href="#simulador-vivo">Simulador en Vivo</a>
+        <a class="nav-link-item" href="#paso-a-paso">Paso a Paso</a>
+        <a class="nav-link-item" href="#codigo-lego">Código Explicado</a>
+        <a class="nav-link-item" href="#primeros-auxilios">Primeros Auxilios</a>
         <a class="nav-link-item" href="modulo2-tema1.html" style="color: #3fb950; font-weight: 700;">Módulo 2 →</a>
       </nav>
       <div class="header-controls">
@@ -90,7 +167,7 @@
 
   <main class="main-container">
     <!-- ======================================================================
-         HERO PRINCIPAL DEL CENTRO DE HACKATHON
+         HERO PRINCIPAL DEL HACKATHON
          ====================================================================== -->
     <section class="course-hero" id="overview">
       <div class="hero-badge-pill">
@@ -99,53 +176,52 @@
         <span class="hero-badge-label">HACKATHON DE INGENIERÍA IA · CENTRO DE MENTORÍA &amp; CONSTRUCCIÓN</span>
       </div>
 
-      <h1 class="hero-title">Centro de Acompañamiento Técnico para tu Proyecto Integrador</h1>
+      <h1 class="hero-title">Construye tu Propio Proyecto de IA con Modelos Abiertos</h1>
       <p class="hero-subtitle">
-        <b>Tu mesa de trabajo interactiva para diseñar, construir y depurar tu propio sistema de IA aplicada</b>. Aquí no vienes a ver un proyecto terminado, sino a recibir asesoría paso a paso: evalúa la arquitectura ideal para tu idea con el <i>Árbol de Decisiones</i>, calcula el consumo de VRAM en Colab con el <i>Simulador de Recursos</i>, toma los <i>Bloques de Código Aceleradores</i> y resuelve cualquier error técnico antes de avanzar al Módulo 2.
+        <b>No necesitas ser un científico de datos para crear tu propio sistema inteligente</b>. Esta página es tu taller interactivo: te explicamos cómo funciona la IA con analogías simples de la vida real, te damos <b>4 plantillas de proyectos listas para elegir</b>, te mostramos un simulador interactivo en vivo y te entregamos el código listo para probar en Google Colab totalmente gratis.
       </p>
 
       <div style="display: flex; gap: 0.8rem; align-items: center; justify-content: center; flex-wrap: wrap; margin-top: 1.5rem;">
-        <a class="btn-primary" href="#decision-wizard" style="display: inline-flex; align-items: center; gap: 0.6rem; text-decoration: none; padding: 0.75rem 1.4rem; border-radius: 10px; font-weight: 750; box-shadow: 0 4px 18px rgba(8, 102, 255, 0.25);">
-          <svg fill="currentColor" height="20" viewBox="0 0 24 24" width="20"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"></path></svg>
-          <span>1. Iniciar Árbol de Decisiones</span>
+        <a class="btn-primary" href="#plantillas-proyectos" style="display: inline-flex; align-items: center; gap: 0.6rem; text-decoration: none; padding: 0.75rem 1.4rem; border-radius: 10px; font-weight: 750; box-shadow: 0 4px 18px rgba(8, 102, 255, 0.25);">
+          <svg fill="currentColor" height="20" viewBox="0 0 24 24" width="20"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+          <span>1. Ver 4 Plantillas Listas</span>
         </a>
-        <a class="btn-secondary" href="#starter-kit" style="display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; padding: 0.75rem 1.2rem; border-radius: 10px; font-weight: 700;">
-          <svg fill="currentColor" height="18" viewBox="0 0 24 24" width="18"><path d="M9.4 16.6L4.8 12l4.6-4.6L8 6l-6 6 6 6 1.4-1.4zm5.2 0l4.6-4.6-4.6-4.6L16 6l6 6-6 6-1.4-1.4z"></path></svg>
-          <span>2. Ver Bloques de Código</span>
+        <a class="btn-secondary" href="#simulador-vivo" style="display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; padding: 0.75rem 1.2rem; border-radius: 10px; font-weight: 700;">
+          <svg fill="currentColor" height="18" viewBox="0 0 24 24" width="18"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-9l6 4.5-6 4.5z"/></svg>
+          <span>2. Probar Simulador en Vivo</span>
         </a>
-        <a class="btn-secondary" href="#faq-troubleshooting" style="display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; padding: 0.75rem 1.2rem; border-radius: 10px; font-weight: 700; color: #a855f7;">
-          <svg fill="currentColor" height="18" viewBox="0 0 24 24" width="18"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 16h-2v-2h2v2zm1.07-7.75l-.9.92C12.45 11.9 12 12.5 12 14h-2v-.5c0-1.1.45-2.1 1.17-2.83l1.24-1.26c.37-.36.59-.86.59-1.41 0-1.1-.9-2-2-2s-2 .9-2 2H7c0-2.76 2.24-5 5-5s5 2.24 5 5c0 .88-.36 1.68-.93 2.25z"></path></svg>
-          <span>3. Resolver Dudas &amp; Errores</span>
+        <a class="btn-secondary" href="https://colab.research.google.com/github/jjho05/meta-llama-engineering-labs/blob/main/notebooks/04_Hackathon_Starter_Kit_Llama.ipynb" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; padding: 0.75rem 1.2rem; border-radius: 10px; font-weight: 700; color: #a855f7;">
+          <svg fill="currentColor" height="18" viewBox="0 0 24 24" width="18"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+          <span>3. Abrir Cuaderno en Colab</span>
         </a>
       </div>
     </section>
 
     <!-- ======================================================================
-         SECCIÓN 1: CÓMO MODELAR TU PROYECTO (FRAMEWORK CONCEPTUAL)
+         MÓDULO 0: ¿QUÉ ES EL HACKATHON? LA ANALOGÍA DEL RESTAURANTE
          ====================================================================== -->
-    <article class="tema-card" id="guia-conceptual" style="border-left: 5px solid var(--meta-blue); margin-bottom: 3.5rem;">
+    <article class="tema-card" id="analogia-restaurante" style="border-left: 5px solid var(--meta-blue); margin-bottom: 3.5rem;">
       <div class="tema-header">
-        <div class="tema-eyebrow">Metodología de Desarrollo · De la Idea al Código</div>
-        <h3 class="tema-title">¿Cómo Convertir tu Idea en un Pipeline Funcional de Inteligencia Artificial?</h3>
+        <div class="tema-eyebrow">Concepto Intuitivo · Para Todo Público</div>
+        <h3 class="tema-title">¿Cómo Funciona tu Sistema de IA? La Analogía del Restaurante</h3>
       </div>
 
       <div class="tema-section-block">
-        <h4 class="tema-subheading"><span class="tema-subheading-tag">1. El Enfoque Modular</span> Cuatro Capas de Ingeniería para tu Sistema</h4>
         <p class="prose-p">
-          Cualquier proyecto de IA generativa robusto en el mundo real (sea un asistente médico, asesor legal, bot bancario, recomendador de e-commerce o tutor universitario) se compone de <b>cuatro capas desacopladas</b>. No intentes resolver todo dentro del prompt: asigna a cada módulo su responsabilidad técnica.
+          Para construir tu proyecto no necesitas memorizar fórmulas matemáticas. Imagina que tu sistema de Inteligencia Artificial es como un <b>Restaurante Gourmet Inteligente</b> que atiende clientes. Cada parte de tu código tiene un trabajo muy claro:
         </p>
 
-        <!-- Bento Grid de las 4 Capas -->
-        <div class="bento-layout-grid" style="margin: 1.5rem 0;">
+        <!-- Bento Grid: 4 Componentes del Restaurante -->
+        <div class="bento-layout-grid" style="margin: 1.8rem 0;">
           <div class="bento-sub-card">
             <div>
               <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem;">
-                <span class="tema-subheading-tag" style="margin:0;">Capa 1</span>
-                <span style="font-family:var(--font-mono); font-size:0.75rem; font-weight:800; color:var(--meta-blue);">Inferencia</span>
+                <span class="tema-subheading-tag" style="margin:0; background:rgba(8,102,255,0.15); color:var(--meta-blue);">Pieza 1</span>
+                <span style="font-family:var(--font-mono); font-size:0.75rem; font-weight:800; color:var(--meta-blue);">router.py</span>
               </div>
-              <h5 class="bento-sub-title">1. Enrutador Inteligente (Router)</h5>
+              <h5 class="bento-sub-title">1. El Mesero Amable (Router)</h5>
               <p class="bento-sub-desc">
-                <b>Tu función:</b> Filtra las consultas del usuario. Envía preguntas triviales al modelo rápido ($&lt; 0.8\text{ s}$) y redirige consultas complejas al motor analítico.
+                Escucha lo que dice el cliente. Si solo pide un vaso de agua o saluda ("Hola, ¿cómo están?"), responde al instante. Si pide un platillo complejo o una duda de la carta, corre a la cocina.
               </p>
             </div>
           </div>
@@ -153,12 +229,12 @@
           <div class="bento-sub-card">
             <div>
               <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem;">
-                <span class="tema-subheading-tag" style="margin:0;">Capa 2</span>
-                <span style="font-family:var(--font-mono); font-size:0.75rem; font-weight:800; color:#38bdf8;">Memoria</span>
+                <span class="tema-subheading-tag" style="margin:0; background:rgba(2,132,199,0.15); color:#0284c7;">Pieza 2</span>
+                <span style="font-family:var(--font-mono); font-size:0.75rem; font-weight:800; color:#0284c7;">rag_engine.py</span>
               </div>
-              <h5 class="bento-sub-title">2. Base de Conocimiento (RAG)</h5>
+              <h5 class="bento-sub-title">2. El Menú y Recetario (RAG)</h5>
               <p class="bento-sub-desc">
-                <b>Tu función:</b> Indexa tus documentos en vectores $\mathbb{R}^{384}$. Recupera los 2-3 fragmentos más similares mediante similitud coseno antes de llamar al LLM.
+                Es la libreta con las políticas, precios y manuales de tu empresa. El mesero consulta la receta exacta antes de hablar para <b>no inventar ingredientes (cero alucinaciones)</b>.
               </p>
             </div>
           </div>
@@ -166,12 +242,12 @@
           <div class="bento-sub-card">
             <div>
               <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem;">
-                <span class="tema-subheading-tag" style="margin:0;">Capa 3</span>
-                <span style="font-family:var(--font-mono); font-size:0.75rem; font-weight:800; color:#a855f7;">Especialización</span>
+                <span class="tema-subheading-tag" style="margin:0; background:rgba(168,85,247,0.15); color:#a855f7;">Pieza 3</span>
+                <span style="font-family:var(--font-mono); font-size:0.75rem; font-weight:800; color:#a855f7;">lora_adapter.py</span>
               </div>
-              <h5 class="bento-sub-title">3. Tono &amp; Formato (LoRA / Prompt)</h5>
+              <h5 class="bento-sub-title">3. La Escuela de Cocina (LoRA)</h5>
               <p class="bento-sub-desc">
-                <b>Tu función:</b> Fuerza al modelo a contestar con la personalidad de tu marca y con salida estrictamente estructurada (JSON, Markdown o SQL).
+                Es el entrenamiento especial para que el chef sirva la comida con el estilo y protocolo de la casa: por ejemplo, emplatar siempre en un formato cuadrado y ordenado (formato JSON).
               </p>
             </div>
           </div>
@@ -179,12 +255,12 @@
           <div class="bento-sub-card">
             <div>
               <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.6rem;">
-                <span class="tema-subheading-tag" style="margin:0;">Capa 4</span>
-                <span style="font-family:var(--font-mono); font-size:0.75rem; font-weight:800; color:#22c55e;">Producción</span>
+                <span class="tema-subheading-tag" style="margin:0; background:rgba(5,150,105,0.15); color:var(--accent-success);">Pieza 4</span>
+                <span style="font-family:var(--font-mono); font-size:0.75rem; font-weight:800; color:var(--accent-success);">api_server.py</span>
               </div>
-              <h5 class="bento-sub-title">4. Microservicio API (FastAPI)</h5>
+              <h5 class="bento-sub-title">4. La Ventana de Entrega (FastAPI)</h5>
               <p class="bento-sub-desc">
-                <b>Tu función:</b> Empaqueta tu lógica en endpoints HTTP tipados con Pydantic y streaming SSE, listo para ser consumido por WhatsApp o tu frontend.
+                Es el mostrador oficial donde cualquier persona (desde una página web o desde un bot de WhatsApp) puede hacer pedidos por internet y recibir su respuesta calientita y rápida.
               </p>
             </div>
           </div>
@@ -193,198 +269,388 @@
     </article>
 
     <!-- ======================================================================
-         SECCIÓN 2: ÁRBOL INTERACTIVO DE DECISIONES (DECISION WIZARD)
+         MÓDULO 1: GLOSARIO AMIGABLE "LA IA CON PERAS Y MANZANAS"
          ====================================================================== -->
-    <article class="tema-card" id="decision-wizard" style="margin-bottom: 3.5rem;">
+    <article class="tema-card" id="glosario-facil" style="margin-bottom: 3.5rem;">
       <div class="tema-header">
-        <div class="tema-eyebrow">Asistente de Diseño · Wizard Interactivo</div>
-        <h3 class="tema-title">Árbol de Decisiones: ¿Qué Arquitectura Conviene a tu Idea?</h3>
+        <div class="tema-eyebrow">Diccionario Sin Complicaciones · Vocabulario Práctico</div>
+        <h3 class="tema-title">Glosario Fácil: La Inteligencia Artificial Explicada con Peras y Manzanas</h3>
+      </div>
+
+      <div class="tema-section-block">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; margin-top: 1rem;">
+          <div style="background:var(--bg-surface-2); border:1px solid var(--border-subtle); border-radius:10px; padding:1.2rem;">
+            <strong style="color:var(--meta-blue); font-size:1rem; display:block; margin-bottom:0.4rem;">💬 1. Prompt</strong>
+            <p style="font-size:0.86rem; color:var(--text-secondary); line-height:1.55; margin:0;">
+              Es la instrucción o pregunta que tú le escribes a la IA. Entre más claro y específico seas con tu orden, mejor será el resultado.
+            </p>
+          </div>
+
+          <div style="background:var(--bg-surface-2); border:1px solid var(--border-subtle); border-radius:10px; padding:1.2rem;">
+            <strong style="color:#0284c7; font-size:1rem; display:block; margin-bottom:0.4rem;">🧩 2. Token</strong>
+            <p style="font-size:0.86rem; color:var(--text-secondary); line-height:1.55; margin:0;">
+              Son los pedacitos en los que la IA divide las palabras para leerlas (como sílabas). 100 palabras son aproximadamente 130 tokens.
+            </p>
+          </div>
+
+          <div style="background:var(--bg-surface-2); border:1px solid var(--border-subtle); border-radius:10px; padding:1.2rem;">
+            <strong style="color:#38bdf8; font-size:1rem; display:block; margin-bottom:0.4rem;">🗺️ 3. Embedding</strong>
+            <p style="font-size:0.86rem; color:var(--text-secondary); line-height:1.55; margin:0;">
+              Es como la "huella digital" del significado de una frase. Permite buscar ideas parecidas aunque usen palabras completamente diferentes.
+            </p>
+          </div>
+
+          <div style="background:var(--bg-surface-2); border:1px solid var(--border-subtle); border-radius:10px; padding:1.2rem;">
+            <strong style="color:#a855f7; font-size:1rem; display:block; margin-bottom:0.4rem;">📖 4. RAG (Recuperación)</strong>
+            <p style="font-size:0.86rem; color:var(--text-secondary); line-height:1.55; margin:0;">
+              Es como hacer un <b>examen a libro abierto</b>: en lugar de que la IA responda de memoria, le pasas tus documentos para que lea la respuesta correcta.
+            </p>
+          </div>
+
+          <div style="background:var(--bg-surface-2); border:1px solid var(--border-subtle); border-radius:10px; padding:1.2rem;">
+            <strong style="color:#ec4899; font-size:1rem; display:block; margin-bottom:0.4rem;">👓 5. LoRA (Adaptación)</strong>
+            <p style="font-size:0.86rem; color:var(--text-secondary); line-height:1.55; margin:0;">
+              Ponerle unos <b>lentes de aumento especializados</b> al modelo para que aprenda un formato especial o jerga técnica sin gastar millones de dólares.
+            </p>
+          </div>
+
+          <div style="background:var(--bg-surface-2); border:1px solid var(--border-subtle); border-radius:10px; padding:1.2rem;">
+            <strong style="color:var(--accent-success); font-size:1rem; display:block; margin-bottom:0.4rem;">⚡ 6. VRAM (Memoria GPU)</strong>
+            <p style="font-size:0.86rem; color:var(--text-secondary); line-height:1.55; margin:0;">
+              La memoria ultra rápida de la tarjeta gráfica donde vive el cerebro de la IA mientras piensa. En Google Colab te prestan 15 GB gratis.
+            </p>
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- ======================================================================
+         MÓDULO 2: 4 PLANTILLAS DE PROYECTOS LISTAS PARA USAR
+         ====================================================================== -->
+    <article class="tema-card" id="plantillas-proyectos" style="margin-bottom: 3.5rem;">
+      <div class="tema-header">
+        <div class="tema-eyebrow">Elige tu Idea en 5 Minutos · Proyectos Listos</div>
+        <h3 class="tema-title">4 Ideas de Proyectos Listas para Adaptar y Presentar</h3>
       </div>
 
       <div class="tema-section-block">
         <p class="prose-p">
-          Selecciona las características de tu proyecto para que el evaluador determine la combinación tecnológica óptima, el stack sugerido y los bloques de código exactos que debes utilizar:
+          ¿No sabes qué proyecto construir? <b>Elige una de estas 4 plantillas reales</b>. Ya están diseñadas con sus datos de ejemplo para que solo tengas que cambiar los textos y tener tu proyecto listo:
         </p>
 
-        <!-- Formulario del Wizard -->
-        <form id="wizard-form" style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.5rem; margin: 1.2rem 0;">
-          <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-bottom: 1.5rem;">
-            <!-- Pregunta 1: Naturaleza del Conocimiento -->
+        <!-- PLANTILLA A -->
+        <div class="template-card-highlight" id="plantilla-a" style="border-left: 5px solid var(--meta-blue);">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.6rem;">
+            <span style="font-size:0.78rem; font-weight:800; text-transform:uppercase; color:var(--meta-blue); background:var(--meta-blue-subtle); padding:0.25rem 0.6rem; border-radius:6px;">PLANTILLA A · E-COMMERCE &amp; NEGOCIOS</span>
+            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">Dificultad: Súper Fácil ★☆☆</span>
+          </div>
+          <h4 style="font-family:var(--font-head); font-size:1.2rem; font-weight:800; color:var(--text-primary); margin-bottom:0.5rem;">
+            🛍️ Asistente de Atención al Cliente y Políticas de Devolución
+          </h4>
+          <p style="font-size:0.9rem; line-height:1.6; color:var(--text-secondary); margin-bottom:0.9rem;">
+            <b>¿Para qué sirve?</b> Responde dudas sobre garantías, tiempos de envío y cómo devolver productos de una tienda en línea sin inventar información.
+          </p>
+          <div style="background:var(--bg-subtle); border-radius:8px; padding:0.9rem 1.1rem; font-size:0.86rem; color:var(--text-primary); margin-bottom:0.8rem;">
+            <strong>Textos que vas a ingresar en tu RAG:</strong>
+            <ul style="margin:0.4rem 0 0 0; padding-left:1.2rem; color:var(--text-secondary);">
+              <li>"Los reembolsos se procesan en un máximo de 15 días con ticket original."</li>
+              <li>"Los envíos a todo el país demoran de 2 a 4 días hábiles."</li>
+              <li>"Todos los artículos electrónicos tienen 1 año de garantía ante defectos de fábrica."</li>
+            </ul>
+          </div>
+          <span style="font-size:0.8rem; color:var(--text-muted);">📁 <strong>Archivos que utilizarás:</strong> <code>rag_engine.py</code> + <code>api_server.py</code></span>
+        </div>
+
+        <!-- PLANTILLA B -->
+        <div class="template-card-highlight" id="plantilla-b" style="border-left: 5px solid #0284c7;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.6rem;">
+            <span style="font-size:0.78rem; font-weight:800; text-transform:uppercase; color:#0284c7; background:rgba(2,132,199,0.12); padding:0.25rem 0.6rem; border-radius:6px;">PLANTILLA B · LEGAL &amp; EDUCATIVO</span>
+            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">Dificultad: Intermedia ★★☆</span>
+          </div>
+          <h4 style="font-family:var(--font-head); font-size:1.2rem; font-weight:800; color:var(--text-primary); margin-bottom:0.5rem;">
+            ⚖️ Asesor de Reglamentos Escolares, Laborales o Contratos
+          </h4>
+          <p style="font-size:0.9rem; line-height:1.6; color:var(--text-secondary); margin-bottom:0.9rem;">
+            <b>¿Para qué sirve?</b> Responde dudas a estudiantes o empleados sobre cómo titularse, pedir vacaciones o cumplir las normas de la empresa, citando el número de artículo exacto.
+          </p>
+          <div style="background:var(--bg-subtle); border-radius:8px; padding:0.9rem 1.1rem; font-size:0.86rem; color:var(--text-primary); margin-bottom:0.8rem;">
+            <strong>Textos que vas a ingresar en tu RAG:</strong>
+            <ul style="margin:0.4rem 0 0 0; padding-left:1.2rem; color:var(--text-secondary);">
+              <li>"Artículo 12: Para iniciar el trámite de titulación se requiere haber liberado el servicio social y contar con el 100% de créditos."</li>
+              <li>"Artículo 24: Las solicitudes de vacaciones deben enviarse con 10 días de anticipación al departamento de Recursos Humanos."</li>
+            </ul>
+          </div>
+          <span style="font-size:0.8rem; color:var(--text-muted);">📁 <strong>Archivos que utilizarás:</strong> <code>rag_engine.py</code> + <code>router.py</code></span>
+        </div>
+
+        <!-- PLANTILLA C -->
+        <div class="template-card-highlight" id="plantilla-c" style="border-left: 5px solid #a855f7;">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.6rem;">
+            <span style="font-size:0.78rem; font-weight:800; text-transform:uppercase; color:#a855f7; background:rgba(168,85,247,0.12); padding:0.25rem 0.6rem; border-radius:6px;">PLANTILLA C · SISTEMAS &amp; AUTOMATIZACIÓN</span>
+            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">Dificultad: Intermedia ★★☆</span>
+          </div>
+          <h4 style="font-family:var(--font-head); font-size:1.2rem; font-weight:800; color:var(--text-primary); margin-bottom:0.5rem;">
+            📊 Clasificador de Mensajes y Generador de Tickets en JSON
+          </h4>
+          <p style="font-size:0.9rem; line-height:1.6; color:var(--text-secondary); margin-bottom:0.9rem;">
+            <b>¿Para qué sirve?</b> Lee quejas o reportes de clientes y los convierte automáticamente en una ficha ordenada en JSON (con categoría, urgencia y resumen) para enviarlos a una base de datos.
+          </p>
+          <div style="background:var(--bg-subtle); border-radius:8px; padding:0.9rem 1.1rem; font-size:0.86rem; color:var(--text-primary); margin-bottom:0.8rem;">
+            <strong>Salida estructurada que generará tu modelo:</strong>
+            <pre style="margin:0.4rem 0 0 0; background:var(--bg-subtle-alt); padding:0.6rem; border-radius:6px; font-family:var(--font-mono); font-size:0.78rem;"><code>{
+  "categoria": "fallo_tecnico",
+  "urgencia": "alta",
+  "resumen": "El cliente no puede iniciar sesion tras actualizar la contrasena."
+}</code></pre>
+          </div>
+          <span style="font-size:0.8rem; color:var(--text-muted);">📁 <strong>Archivos que utilizarás:</strong> <code>lora_adapter.py</code> o Prompt Few-Shot + <code>api_server.py</code></span>
+        </div>
+
+        <!-- PLANTILLA D -->
+        <div class="template-card-highlight" id="plantilla-d" style="border-left: 5px solid var(--accent-success);">
+          <div style="display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:0.5rem; margin-bottom:0.6rem;">
+            <span style="font-size:0.78rem; font-weight:800; text-transform:uppercase; color:var(--accent-success); background:rgba(5,150,105,0.12); padding:0.25rem 0.6rem; border-radius:6px;">PLANTILLA D · EDUCACIÓN &amp; TUTORÍAS</span>
+            <span style="font-family:var(--font-mono); font-size:0.75rem; color:var(--text-muted);">Dificultad: Súper Fácil ★☆☆</span>
+          </div>
+          <h4 style="font-family:var(--font-head); font-size:1.2rem; font-weight:800; color:var(--text-primary); margin-bottom:0.5rem;">
+            🎓 Tutor de Estudio Personalizado y Evaluador Socrático
+          </h4>
+          <p style="font-size:0.9rem; line-height:1.6; color:var(--text-secondary); margin-bottom:0.9rem;">
+            <b>¿Para qué sirve?</b> Explica temas difíciles con palabras sencillas y luego le hace preguntas de repaso al estudiante para poner a prueba lo que aprendió.
+          </p>
+          <span style="font-size:0.8rem; color:var(--text-muted);">📁 <strong>Archivos que utilizarás:</strong> <code>rag_engine.py</code> + Prompt de Profesor Paciente + <code>api_server.py</code></span>
+        </div>
+      </div>
+    </article>
+
+    <!-- ======================================================================
+         MÓDULO 3: SIMULADOR VISUAL E INTERACTIVO EN VIVO
+         ====================================================================== -->
+    <article class="tema-card" id="simulador-vivo" style="margin-bottom: 3.5rem; border-left: 5px solid var(--meta-blue);">
+      <div class="tema-header">
+        <div class="tema-eyebrow">Taller Interactivo · Laboratorio en Tiempo Real</div>
+        <h3 class="tema-title">Simulador en Vivo: Mira Cómo Viaja una Pregunta por tu Sistema de IA</h3>
+      </div>
+
+      <div class="tema-section-block">
+        <p class="prose-p">
+          Prueba este simulador para ver exactamente qué pasa por dentro cuando una persona le escribe a tu asistente inteligente. Escribe tu propia pregunta o haz clic en los ejemplos:
+        </p>
+
+        <!-- Preguntas de prueba rápida -->
+        <div style="display:flex; gap:0.5rem; flex-wrap:wrap; margin-bottom:1rem;">
+          <span style="font-size:0.82rem; font-weight:700; color:var(--text-muted); align-self:center;">Preguntas de prueba:</span>
+          <button type="button" class="btn-secondary sim-sample-btn" data-query="¿Puedo devolver un producto si ya abrí la caja?" style="font-size:0.78rem; padding:0.35rem 0.75rem; border-radius:20px;">"¿Cómo devolver un producto?"</button>
+          <button type="button" class="btn-secondary sim-sample-btn" data-query="¿Cuánto tiempo tarda en llegar un envío estándar?" style="font-size:0.78rem; padding:0.35rem 0.75rem; border-radius:20px;">"¿Tiempos de envío?"</button>
+          <button type="button" class="btn-secondary sim-sample-btn" data-query="¿Qué cubre la garantía de los artículos electrónicos?" style="font-size:0.78rem; padding:0.35rem 0.75rem; border-radius:20px;">"¿Garantía de productos?"</button>
+          <button type="button" class="btn-secondary sim-sample-btn" data-query="Genera una ficha en formato JSON del reporte" style="font-size:0.78rem; padding:0.35rem 0.75rem; border-radius:20px;">"Generar JSON"</button>
+        </div>
+
+        <!-- Caja de entrada y botón de acción -->
+        <div style="display:flex; gap:0.8rem; flex-wrap:wrap; margin-bottom:1.5rem;">
+          <input type="text" id="sim-query-input" value="¿Puedo devolver un producto si ya abrí la caja?" placeholder="Escribe aquí cualquier pregunta de prueba..." style="flex:1; min-width:280px; padding:0.8rem 1.1rem; border-radius:10px; border:1px solid var(--border-subtle); background:var(--bg-surface); color:var(--text-primary); font-size:0.95rem; font-family:var(--font-sans);">
+          <button type="button" id="sim-run-btn" class="btn-primary" style="display:inline-flex; align-items:center; gap:0.5rem; padding:0.8rem 1.4rem; border-radius:10px; font-weight:750; cursor:pointer;">
+            <svg fill="currentColor" height="18" viewBox="0 0 24 24" width="18"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-9l6 4.5-6 4.5z"/></svg>
+            <span>Simular Proceso de IA</span>
+          </button>
+        </div>
+
+        <!-- Contenedores de animación paso a paso -->
+        <div id="sim-steps-container"></div>
+        <div id="sim-final-result" style="display:none; margin-top:1.2rem;"></div>
+      </div>
+    </article>
+
+    <!-- ======================================================================
+         MÓDULO 4: ÁRBOL DE DECISIONES INTERACTIVO SÚPER AMIGABLE
+         ====================================================================== -->
+    <article class="tema-card" id="arbol-decisiones" style="margin-bottom: 3.5rem;">
+      <div class="tema-header">
+        <div class="tema-eyebrow">Asistente de Diseño · Enfoque Intuitivo</div>
+        <h3 class="tema-title">Árbol de Decisiones: ¿Qué Receta Tecnológica Necesita tu Idea?</h3>
+      </div>
+
+      <div class="tema-section-block">
+        <p class="prose-p">
+          Responde estas 3 sencillas preguntas para que el asistente te diga exactamente qué herramientas usar y qué pasos seguir:
+        </p>
+
+        <form id="friendly-wizard-form" style="background:var(--bg-surface-2); border:1px solid var(--border-subtle); border-radius:12px; padding:1.5rem; margin:1.2rem 0;">
+          <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(280px, 1fr)); gap:1.5rem; margin-bottom:1.2rem;">
+            <!-- Pregunta 1 -->
             <div>
-              <label style="font-weight: 800; font-size: 0.9rem; color: var(--text-primary); display: block; margin-bottom: 0.6rem;">1. Tipo de Información de tu Proyecto:</label>
-              <div style="display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.86rem; color: var(--text-secondary);">
-                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
-                  <input type="radio" name="wizard-knowledge" value="dynamic" checked> Manuales, PDFs, políticas o datos que cambian frecuentemente.
+              <label style="font-weight:800; font-size:0.9rem; color:var(--text-primary); display:block; margin-bottom:0.6rem;">1. ¿De qué trata tu proyecto?</label>
+              <div style="display:flex; flex-direction:column; gap:0.5rem; font-size:0.86rem; color:var(--text-secondary);">
+                <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
+                  <input type="radio" name="wiz-project" value="ecommerce" checked> Tienda, productos, envíos o atención al cliente.
                 </label>
-                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
-                  <input type="radio" name="wizard-knowledge" value="specialized"> Jerga técnica médica/legal muy especializada o formato fijo.
+                <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
+                  <input type="radio" name="wiz-project" value="legal"> Reglamentos, leyes, trámites de escuela o trabajo.
                 </label>
-                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
-                  <input type="radio" name="wizard-knowledge" value="hybrid"> Mixto: Documentos dinámicos + Jerga/formato estricto.
+                <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
+                  <input type="radio" name="wiz-project" value="json_reports"> Generar reportes o fichas técnicas en JSON.
                 </label>
-                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
-                  <input type="radio" name="wizard-knowledge" value="general"> Preguntas generales de atención con variada complejidad.
+                <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
+                  <input type="radio" name="wiz-project" value="tutor"> Explicar temas escolares o dar clases a alumnos.
                 </label>
               </div>
             </div>
 
-            <!-- Pregunta 2: Formato de Salida Requerido -->
+            <!-- Pregunta 2 -->
             <div>
-              <label style="font-weight: 800; font-size: 0.9rem; color: var(--text-primary); display: block; margin-bottom: 0.6rem;">2. Formato de Respuesta Esperado:</label>
-              <div style="display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.86rem; color: var(--text-secondary);">
-                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
-                  <input type="radio" name="wizard-output" value="text" checked> Texto en lenguaje natural (Español conversacional empático).
+              <label style="font-weight:800; font-size:0.9rem; color:var(--text-primary); display:block; margin-bottom:0.6rem;">2. ¿Cómo quieres que responda?</label>
+              <div style="display:flex; flex-direction:column; gap:0.5rem; font-size:0.86rem; color:var(--text-secondary);">
+                <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
+                  <input type="radio" name="wiz-output" value="friendly_text" checked> En español natural, amable y conversacional.
                 </label>
-                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
-                  <input type="radio" name="wizard-output" value="json"> Objeto JSON estructurado estricto para consumo de APIs.
-                </label>
-                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
-                  <input type="radio" name="wizard-output" value="sql"> Consultas SQL o código ejecutable.
+                <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
+                  <input type="radio" name="wiz-output" value="json_format"> En código JSON estricto para conectarse a otra app.
                 </label>
               </div>
             </div>
 
-            <!-- Pregunta 3: Entorno de Cómputo Disponible -->
+            <!-- Pregunta 3 -->
             <div>
-              <label style="font-weight: 800; font-size: 0.9rem; color: var(--text-primary); display: block; margin-bottom: 0.6rem;">3. Entorno de Ejecución:</label>
-              <div style="display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.86rem; color: var(--text-secondary);">
-                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
-                  <input type="radio" name="wizard-hw" value="colab" checked> Google Colab Gratuito (1x GPU Tesla T4 de 15 GB).
+              <label style="font-weight:800; font-size:0.9rem; color:var(--text-primary); display:block; margin-bottom:0.6rem;">3. ¿Dónde lo vas a probar?</label>
+              <div style="display:flex; flex-direction:column; gap:0.5rem; font-size:0.86rem; color:var(--text-secondary);">
+                <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
+                  <input type="radio" name="wiz-compute" value="colab_free" checked> En Google Colab Gratuito (100% en la nube sin pagar).
                 </label>
-                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
-                  <input type="radio" name="wizard-hw" value="groq"> API de Hardware LPU (Groq / Inferencia ultrarrápida en nube).
-                </label>
-                <label style="display: flex; align-items: center; gap: 0.5rem; cursor: pointer;">
-                  <input type="radio" name="wizard-hw" value="local"> Computadora local (CPU / Mac Apple Silicon M1-M4).
+                <label style="display:flex; align-items:center; gap:0.5rem; cursor:pointer;">
+                  <input type="radio" name="wiz-compute" value="local_pc"> En mi propia computadora (Mac / Windows / Linux).
                 </label>
               </div>
             </div>
           </div>
         </form>
 
-        <!-- Contenedor Reactivo de Salida del Wizard -->
-        <div id="wizard-result-box"></div>
+        <div id="friendly-wizard-result"></div>
       </div>
     </article>
 
     <!-- ======================================================================
-         SECCIÓN 3: CALCULADORA DINÁMICA DE VRAM & RECURSOS
+         MÓDULO 5: SEMÁFORO DE HARDWARE & GOOGLE COLAB GRATUITO
          ====================================================================== -->
-    <article class="tema-card" id="vram-calculator" style="margin-bottom: 3.5rem;">
+    <article class="tema-card" id="semaforo-hardware" style="margin-bottom: 3.5rem;">
       <div class="tema-header">
-        <div class="tema-eyebrow">Planificación de Cómputo · Estimador en Vivo</div>
-        <h3 class="tema-title">Calculadora Interactiva de Memoria VRAM y Factibilidad de Hardware</h3>
+        <div class="tema-eyebrow">Tranquilidad Técnica · Sin Gastar Dinero</div>
+        <h3 class="tema-title">Semáforo de Hardware: ¿Cabe tu Proyecto en Google Colab Gratis?</h3>
       </div>
 
       <div class="tema-section-block">
         <p class="prose-p">
-          Antes de escribir código o lanzar un entrenamiento en Google Colab, simula cuántos gigabytes de VRAM consumirá tu modelo para evitar el temido error <code>CUDA Out of Memory (OOM)</code>:
+          Una duda muy común es: <em>"¿Necesito una supercomputadora para hacer mi proyecto de IA?"</em>. <b>La respuesta es NO.</b> Google te presta una tarjeta gráfica de 15 GB totalmente gratis. Usa este semáforo para verificar que tu modelo cabe sin problemas:
         </p>
 
-        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 1rem; background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 12px; padding: 1.2rem; margin: 1.2rem 0;">
+        <div style="display:grid; grid-template-columns:repeat(auto-fit, minmax(220px, 1fr)); gap:1rem; background:var(--bg-surface-2); border:1px solid var(--border-subtle); border-radius:12px; padding:1.2rem; margin:1.2rem 0;">
           <div>
-            <label style="font-size:0.82rem; font-weight:700; color:var(--text-primary); display:block; margin-bottom:0.3rem;">Modelo Base:</label>
-            <select id="vram-model-select" class="interactive-select" style="width:100%; padding:0.6rem; border-radius:8px; border:1px solid var(--border-subtle); background:var(--bg-surface); color:var(--text-primary); font-family:var(--font-mono); font-size:0.85rem;">
-              <option value="tinyllama-1.1b" selected>TinyLlama 1.1B (1.1B params)</option>
-              <option value="llama-3.2-1b">Meta Llama 3.2 1B (1.2B params)</option>
-              <option value="llama-3.2-3b">Meta Llama 3.2 3B (3.2B params)</option>
-              <option value="llama-3.1-8b">Meta Llama 3.1 8B (8.0B params)</option>
+            <label style="font-size:0.82rem; font-weight:700; color:var(--text-primary); display:block; margin-bottom:0.3rem;">Tamaño del Modelo de IA:</label>
+            <select id="colab-model-choice" style="width:100%; padding:0.6rem; border-radius:8px; border:1px solid var(--border-subtle); background:var(--bg-surface); color:var(--text-primary); font-size:0.85rem;">
+              <option value="tinyllama" selected>TinyLlama 1.1B (Muy ligero &bull; ~4.2 GB)</option>
+              <option value="llama_1b">Meta Llama 3.2 1B (Recomendado &bull; ~5.1 GB)</option>
+              <option value="llama_3b">Meta Llama 3.2 3B (Potente &bull; ~8.4 GB)</option>
+              <option value="llama_8b">Meta Llama 3.1 8B (Avanzado &bull; ~11.8 GB)</option>
             </select>
           </div>
 
           <div>
-            <label style="font-size:0.82rem; font-weight:700; color:var(--text-primary); display:block; margin-bottom:0.3rem;">Precisión / Cuantización:</label>
-            <select id="vram-quant-select" class="interactive-select" style="width:100%; padding:0.6rem; border-radius:8px; border:1px solid var(--border-subtle); background:var(--bg-surface); color:var(--text-primary); font-family:var(--font-mono); font-size:0.85rem;">
-              <option value="fp16" selected>FP16 (Media Precisión 16-bit)</option>
-              <option value="int8">INT8 (Cuantización 8-bit)</option>
-              <option value="nf4">NF4 4-bit (QLoRA NormalFloat4)</option>
-            </select>
-          </div>
-
-          <div>
-            <label style="font-size:0.82rem; font-weight:700; color:var(--text-primary); display:block; margin-bottom:0.3rem;">Modo de Ejecución:</label>
-            <select id="vram-mode-select" class="interactive-select" style="width:100%; padding:0.6rem; border-radius:8px; border:1px solid var(--border-subtle); background:var(--bg-surface); color:var(--text-primary); font-family:var(--font-mono); font-size:0.85rem;">
-              <option value="inference">Solo Inferencia (Generación)</option>
-              <option value="rag">Inferencia + RAG (Vector Store)</option>
-              <option value="lora_r8" selected>Entrenamiento LoRA (r=8, alpha=16)</option>
-              <option value="lora_r16">Entrenamiento LoRA (r=16, alpha=32)</option>
-              <option value="full_sft">Full Fine-Tuning (100% Pesos)</option>
-            </select>
-          </div>
-
-          <div>
-            <label style="font-size:0.82rem; font-weight:700; color:var(--text-primary); display:block; margin-bottom:0.3rem;">Batch Size por Dispositivo:</label>
-            <select id="vram-batch-select" class="interactive-select" style="width:100%; padding:0.6rem; border-radius:8px; border:1px solid var(--border-subtle); background:var(--bg-surface); color:var(--text-primary); font-family:var(--font-mono); font-size:0.85rem;">
-              <option value="1">1 (Mínimo consumo VRAM)</option>
-              <option value="2">2 (Recomendado Colab)</option>
-              <option value="4">4 (Óptimo para 1B/3B)</option>
-              <option value="8">8 (Dataset grande)</option>
+            <label style="font-size:0.82rem; font-weight:700; color:var(--text-primary); display:block; margin-bottom:0.3rem;">Tipo de Trabajo:</label>
+            <select id="colab-mode-choice" style="width:100%; padding:0.6rem; border-radius:8px; border:1px solid var(--border-subtle); background:var(--bg-surface); color:var(--text-primary); font-size:0.85rem;">
+              <option value="rag" selected>RAG (Buscar en Documentos y Responder)</option>
+              <option value="lora">Entrenamiento LoRA (Aprender Estilo Fijo)</option>
             </select>
           </div>
         </div>
 
-        <div id="vram-result-box"></div>
+        <div id="colab-semaphore-box"></div>
       </div>
     </article>
 
     <!-- ======================================================================
-         SECCIÓN 4: BLOQUES ACELERADORES DE CÓDIGO (LEGO STARTER KIT)
+         MÓDULO 6: LA RUTA EN 5 FASES PASO A PASO
          ====================================================================== -->
-    <article class="tema-card" id="starter-kit" style="margin-bottom: 3.5rem;">
+    <article class="tema-card" id="paso-a-paso" style="margin-bottom: 3.5rem;">
       <div class="tema-header">
-        <div class="tema-eyebrow">Aceleradores de Código · Lego Building Blocks</div>
-        <h3 class="tema-title">Bloques Reutilizables de Código: Ensambla tu Proyecto</h3>
+        <div class="tema-eyebrow">Hoja de Ruta · Guía Paso a Paso</div>
+        <h3 class="tema-title">Cómo Construir tu Proyecto en 5 Sencillos Pasos</h3>
       </div>
 
       <div class="tema-section-block">
-        <p class="prose-p">
-          No empieces desde una hoja en blanco. Toma estos <b>cuatro módulos pre-construidos y testeados</b>, adáptalos con tu propio dataset y conéctalos para tener un prototipo funcional en menos de una hora:
-        </p>
-
-        <!-- BLOQUE A: ROUTER -->
-        <div id="router_py" style="margin-bottom: 2rem;">
-          <h4 class="tema-subheading"><span class="tema-subheading-tag">Bloque A</span> router.py · Enrutador de Complejidad y Model Switching</h4>
-          <p class="prose-p" style="font-size: 0.88rem;">
-            Evalúa la longitud y palabras clave de la consulta del usuario para decidir si responder al instante con el modelo ligero de Groq o enviar al pipeline RAG/LoRA.
-          </p>
-
-          <div class="code-box">
-            <div class="code-header">
-              <span>router.py</span>
-              <div class="code-actions">
-                <button class="btn-copy-code" onclick="copyCode(this)">Copiar</button>
-                <button class="btn-download-code" onclick="downloadCode(this)">Descargar</button>
-              </div>
+        <div style="display:flex; flex-direction:column; gap:1.2rem; margin-top:1.2rem;">
+          
+          <div style="display:flex; gap:1rem; background:var(--bg-surface); border:1px solid var(--border-subtle); border-radius:12px; padding:1.2rem;">
+            <div style="width:34px; height:34px; border-radius:50%; background:var(--meta-blue); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800; flex-shrink:0;">1</div>
+            <div>
+              <strong style="color:var(--text-primary); font-size:1rem; display:block; margin-bottom:0.3rem;">Fase 1: Define tu Problema y Prepara tus Textos</strong>
+              <p style="font-size:0.88rem; color:var(--text-secondary); line-height:1.6; margin:0;">
+                Elige de qué va a saber tu IA (ej. tu negocio, tu escuela o tu tema favorito). Escribe de 5 a 10 párrafos con las respuestas oficiales en un archivo de texto o blog de notas.
+              </p>
             </div>
-            <pre class="code-content"><code><span class="code-kw">import</span> <span class="code-var">re</span>
-
-<span class="code-kw">class</span> <span class="code-cls">ModelRouter</span>:
-    <span class="code-str">"""Clasifica la intencion de la consulta para optimizar latencia y costo."""</span>
-    <span class="code-kw">def</span> <span class="code-fn">__init__</span>(<span class="code-var">self</span>):
-        <span class="code-var">self</span>.<span class="code-var">palabras_clave_rag</span> = [<span class="code-str">"politica"</span>, <span class="code-str">"reembolso"</span>, <span class="code-str">"garantia"</span>, <span class="code-str">"manual"</span>, <span class="code-str">"horario"</span>, <span class="code-str">"costo"</span>]
-        <span class="code-var">self</span>.<span class="code-var">palabras_clave_lora</span> = [<span class="code-str">"formato json"</span>, <span class="code-str">"esquema"</span>, <span class="code-str">"diagnostico"</span>, <span class="code-str">"codigo"</span>]
-
-    <span class="code-kw">def</span> <span class="code-fn">route</span>(<span class="code-var">self</span>, <span class="code-var">consulta</span>: <span class="code-cls">str</span>) -> <span class="code-cls">str</span>:
-        <span class="code-var">texto</span> = <span class="code-var">consulta</span>.<span class="code-fn">lower</span>()
-        
-        <span class="code-cm"># 1. Si requiere datos especificos de documentos -> RAG</span>
-        <span class="code-kw">if</span> <span class="code-fn">any</span>(<span class="code-var">k</span> <span class="code-kw">in</span> <span class="code-var">texto</span> <span class="code-kw">for</span> <span class="code-var">k</span> <span class="code-kw">in</span> <span class="code-var">self</span>.<span class="code-var">palabras_clave_rag</span>):
-            <span class="code-kw">return</span> <span class="code-str">"RAG_PIPELINE"</span>
-            
-        <span class="code-cm"># 2. Si requiere formato estricto o jerga -> LoRA</span>
-        <span class="code-kw">if</span> <span class="code-fn">any</span>(<span class="code-var">k</span> <span class="code-kw">in</span> <span class="code-var">texto</span> <span class="code-kw">for</span> <span class="code-var">k</span> <span class="code-kw">in</span> <span class="code-var">self</span>.<span class="code-var">palabras_clave_lora</span>):
-            <span class="code-kw">return</span> <span class="code-str">"LORA_ADAPTER"</span>
-            
-        <span class="code-cm"># 3. Consultas generales o saludos -> Fast LLM Inferencia Directa</span>
-        <span class="code-kw">return</span> <span class="code-str">"FAST_LLM"</span></code></pre>
           </div>
-        </div>
 
-        <!-- BLOQUE B: RAG ENGINE -->
-        <div id="rag_engine_py" style="margin-bottom: 2rem;">
-          <h4 class="tema-subheading"><span class="tema-subheading-tag">Bloque B</span> rag_engine.py · Motor Vectorial y Búsqueda por Similitud Coseno</h4>
+          <div style="display:flex; gap:1rem; background:var(--bg-surface); border:1px solid var(--border-subtle); border-radius:12px; padding:1.2rem;">
+            <div style="width:34px; height:34px; border-radius:50%; background:#0284c7; color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800; flex-shrink:0;">2</div>
+            <div>
+              <strong style="color:var(--text-primary); font-size:1rem; display:block; margin-bottom:0.3rem;">Fase 2: Conecta tus Textos a `rag_engine.py`</strong>
+              <p style="font-size:0.88rem; color:var(--text-secondary); line-height:1.6; margin:0;">
+                Pega tus párrafos en la lista de textos de <code>rag_engine.py</code>. El sistema calculará automáticamente sus huellas digitales (embeddings) para encontrar las respuestas en milisegundos.
+              </p>
+            </div>
+          </div>
+
+          <div style="display:flex; gap:1rem; background:var(--bg-surface); border:1px solid var(--border-subtle); border-radius:12px; padding:1.2rem;">
+            <div style="width:34px; height:34px; border-radius:50%; background:#a855f7; color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800; flex-shrink:0;">3</div>
+            <div>
+              <strong style="color:var(--text-primary); font-size:1rem; display:block; margin-bottom:0.3rem;">Fase 3: Define la Personalidad de tu Asistente</strong>
+              <p style="font-size:0.88rem; color:var(--text-secondary); line-height:1.6; margin:0;">
+                En el System Prompt indícale: <em>"Eres el asistente oficial de [Mi Empresa]. Responde siempre con amabilidad usando únicamente la información proporcionada. Si no sabes la respuesta, dilo con honestidad."</em>
+              </p>
+            </div>
+          </div>
+
+          <div style="display:flex; gap:1rem; background:var(--bg-surface); border:1px solid var(--border-subtle); border-radius:12px; padding:1.2rem;">
+            <div style="width:34px; height:34px; border-radius:50%; background:var(--accent-success); color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800; flex-shrink:0;">4</div>
+            <div>
+              <strong style="color:var(--text-primary); font-size:1rem; display:block; margin-bottom:0.3rem;">Fase 4: Ejecuta tu Cuaderno en Google Colab</strong>
+              <p style="font-size:0.88rem; color:var(--text-secondary); line-height:1.6; margin:0;">
+                Abre el cuaderno oficial en Google Colab con el botón de arriba, dale "Play" a las celdas en orden y hazle tus primeras preguntas de prueba.
+              </p>
+            </div>
+          </div>
+
+          <div style="display:flex; gap:1rem; background:var(--bg-surface); border:1px solid var(--border-subtle); border-radius:12px; padding:1.2rem;">
+            <div style="width:34px; height:34px; border-radius:50%; background:#f59e0b; color:#fff; display:flex; align-items:center; justify-content:center; font-weight:800; flex-shrink:0;">5</div>
+            <div>
+              <strong style="color:var(--text-primary); font-size:1rem; display:block; margin-bottom:0.3rem;">Fase 5: Prueba tu Servidor Web (FastAPI)</strong>
+              <p style="font-size:0.88rem; color:var(--text-secondary); line-height:1.6; margin:0;">
+                Ejecuta <code>api_server.py</code> para ver tu panel interactivo de pruebas Swagger UI (<code>/docs</code>), listo para conectarse a cualquier aplicación o bot en el Módulo 2.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </article>
+
+    <!-- ======================================================================
+         MÓDULO 7: BLOQUES DE CÓDIGO LEGO EXPLICADOS
+         ====================================================================== -->
+    <article class="tema-card" id="codigo-lego" style="margin-bottom: 3.5rem;">
+      <div class="tema-header">
+        <div class="tema-eyebrow">Código Listo para Usar · Piezas Lego</div>
+        <h3 class="tema-title">Bloques de Código Comentados en Español Sencillo</h3>
+      </div>
+
+      <div class="tema-section-block">
+        <p class="prose-p">
+          Aquí tienes los 3 bloques principales de código que necesitas para tu proyecto. Cada línea tiene un comentario en español explicando qué hace y <b>dónde poner tus propios datos</b>:
+        </p>
+
+        <!-- BLOQUE 1: RAG -->
+        <div style="margin-bottom: 2rem;">
+          <h4 class="tema-subheading"><span class="tema-subheading-tag">Pieza 1</span> rag_engine.py · El Buscador de Documentos de tu Proyecto</h4>
           <p class="prose-p" style="font-size: 0.88rem;">
-            Indexa cualquier lista de documentos de texto, calcula incrustaciones densas en $\mathbb{R}^{384}$ y recupera el contexto más relevante aplicando umbral de corte.
+            Este código guarda los textos de tu negocio y encuentra automáticamente el párrafo que responde la pregunta del usuario:
           </p>
 
           <div class="code-box">
@@ -400,75 +666,85 @@
 
 <span class="code-kw">class</span> <span class="code-cls">VectorRAGEngine</span>:
     <span class="code-kw">def</span> <span class="code-fn">__init__</span>(<span class="code-var">self</span>, <span class="code-var">model_name</span>=<span class="code-str">"all-MiniLM-L6-v2"</span>):
+        <span class="code-cm"># Cargamos el modelo traductor de texto a vectores de significado</span>
         <span class="code-var">self</span>.<span class="code-var">embedder</span> = <span class="code-cls">SentenceTransformer</span>(<span class="code-var">model_name</span>)
         <span class="code-var">self</span>.<span class="code-var">documentos</span> = []
         <span class="code-var">self</span>.<span class="code-var">embeddings</span> = <span class="code-kw">None</span>
 
     <span class="code-kw">def</span> <span class="code-fn">index_documents</span>(<span class="code-var">self</span>, <span class="code-var">docs</span>: <span class="code-cls">list</span>[<span class="code-cls">str</span>]):
+        <span class="code-cm"># Guarda tus textos y calcula sus huellas digitales en segundos</span>
         <span class="code-var">self</span>.<span class="code-var">documentos</span> = <span class="code-var">docs</span>
-        <span class="code-cm"># Genera vectores y normaliza L2 para que el producto punto equivalga al coseno</span>
         <span class="code-var">self</span>.<span class="code-var">embeddings</span> = <span class="code-var">self</span>.<span class="code-var">embedder</span>.<span class="code-fn">encode</span>(<span class="code-var">docs</span>, <span class="code-var">normalize_embeddings</span>=<span class="code-kw">True</span>)
 
-    <span class="code-kw">def</span> <span class="code-fn">search</span>(<span class="code-var">self</span>, <span class="code-var">query</span>: <span class="code-cls">str</span>, <span class="code-var">top_k</span>=2, <span class="code-var">threshold</span>=0.40):
-        <span class="code-var">q_emb</span> = <span class="code-var">self</span>.<span class="code-var">embedder</span>.<span class="code-fn">encode</span>([<span class="code-var">query</span>], <span class="code-var">normalize_embeddings</span>=<span class="code-kw">True</span>)[0]
-        <span class="code-var">scores</span> = <span class="code-var">np</span>.<span class="code-fn">dot</span>(<span class="code-var">self</span>.<span class="code-var">embeddings</span>, <span class="code-var">q_emb</span>)
-        <span class="code-var">indices</span> = <span class="code-var">np</span>.<span class="code-fn">argsort</span>(<span class="code-var">scores</span>)[::-1][:top_k]
+    <span class="code-kw">def</span> <span class="code-fn">search</span>(<span class="code-var">self</span>, <span class="code-var">pregunta</span>: <span class="code-cls">str</span>, <span class="code-var">top_k</span>=2, <span class="code-var">umbral_minimo</span>=0.40):
+        <span class="code-cm"># Compara la pregunta contra todos los textos y devuelve los 2 mas parecidos</span>
+        <span class="code-var">q_emb</span> = <span class="code-var">self</span>.<span class="code-var">embedder</span>.<span class="code-fn">encode</span>([<span class="code-var">pregunta</span>], <span class="code-var">normalize_embeddings</span>=<span class="code-kw">True</span>)[0]
+        <span class="code-var">similitudes</span> = <span class="code-var">np</span>.<span class="code-fn">dot</span>(<span class="code-var">self</span>.<span class="code-var">embeddings</span>, <span class="code-var">q_emb</span>)
+        <span class="code-var">mejores_indices</span> = <span class="code-var">np</span>.<span class="code-fn">argsort</span>(<span class="code-var">similitudes</span>)[::-1][:top_k]
         
         <span class="code-var">resultados</span> = []
-        <span class="code-kw">for</span> <span class="code-var">idx</span> <span class="code-kw">in</span> <span class="code-var">indices</span>:
-            <span class="code-kw">if</span> <span class="code-var">scores</span>[<span class="code-var">idx</span>] >= <span class="code-var">threshold</span>:
-                <span class="code-var">resultados</span>.<span class="code-fn">append</span>({<span class="code-str">"texto"</span>: <span class="code-var">self</span>.<span class="code-var">documentos</span>[<span class="code-var">idx</span>], <span class="code-str">"score"</span>: <span class="code-fn">float</span>(<span class="code-var">scores</span>[<span class="code-var">idx</span>])})
-        <span class="code-kw">return</span> <span class="code-var">resultados</span></code></pre>
+        <span class="code-kw">for</span> <span class="code-var">idx</span> <span class="code-kw">in</span> <span class="code-var">mejores_indices</span>:
+            <span class="code-kw">if</span> <span class="code-var">similitudes</span>[<span class="code-var">idx</span>] >= <span class="code-var">umbral_minimo</span>:
+                <span class="code-var">resultados</span>.<span class="code-fn">append</span>({<span class="code-str">"texto"</span>: <span class="code-var">self</span>.<span class="code-var">documentos</span>[<span class="code-var">idx</span>], <span class="code-str">"confianza"</span>: <span class="code-fn">float</span>(<span class="code-var">similitudes</span>[<span class="code-var">idx</span>])})
+        <span class="code-kw">return</span> <span class="code-var">resultados</span>
+
+<span class="code-cm"># ==========================================</span>
+<span class="code-cm"># AQUI PEGAS LOS TEXTOS DE TU PROPIO PROYECTO:</span>
+<span class="code-cm"># ==========================================</span>
+<span class="code-var">mis_documentos_de_prueba</span> = [
+    <span class="code-str">"Los reembolsos se solicitan en un plazo maximo de 30 dias con comprobante."</span>,
+    <span class="code-str">"Los envios normales demoran de 2 a 4 dias habiles en llegar a tu domicilio."</span>,
+    <span class="code-str">"Todos los productos cuentan con 12 meses de garantia oficial de fabrica."</span>
+]
+
+<span class="code-var">rag</span> = <span class="code-cls">VectorRAGEngine</span>()
+<span class="code-var">rag</span>.<span class="code-fn">index_documents</span>(<span class="code-var">mis_documentos_de_prueba</span>)
+<span class="code-fn">print</span>(<span class="code-str">"Prueba de busqueda:"</span>, <span class="code-var">rag</span>.<span class="code-fn">search</span>(<span class="code-str">"¿Puedo devolver un producto?"</span>))</code></pre>
           </div>
         </div>
 
-        <!-- BLOQUE C: LORA ADAPTER -->
-        <div id="lora_adapter_py" style="margin-bottom: 2rem;">
-          <h4 class="tema-subheading"><span class="tema-subheading-tag">Bloque C</span> lora_adapter.py · Inferencia con Adaptadores PEFT</h4>
+        <!-- BLOQUE 2: ROUTER -->
+        <div style="margin-bottom: 2rem;">
+          <h4 class="tema-subheading"><span class="tema-subheading-tag">Pieza 2</span> router.py · El Mesero Inteligente</h4>
           <p class="prose-p" style="font-size: 0.88rem;">
-            Carga el modelo base y enlaza los pesos adaptados entrenados con LoRA ($W_0 + \frac{\alpha}{r}BA$) para inferencia en GPU o CPU.
+            Filtra si la persona está saludando amablemente o si está preguntando algo de la empresa:
           </p>
 
           <div class="code-box">
             <div class="code-header">
-              <span>lora_adapter.py</span>
+              <span>router.py</span>
               <div class="code-actions">
                 <button class="btn-copy-code" onclick="copyCode(this)">Copiar</button>
                 <button class="btn-download-code" onclick="downloadCode(this)">Descargar</button>
               </div>
             </div>
-            <pre class="code-content"><code><span class="code-kw">import</span> <span class="code-var">torch</span>
-<span class="code-kw">from</span> <span class="code-var">transformers</span> <span class="code-kw">import</span> <span class="code-cls">AutoModelForCausalLM</span>, <span class="code-cls">AutoTokenizer</span>
-<span class="code-kw">from</span> <span class="code-var">peft</span> <span class="code-kw">import</span> <span class="code-cls">PeftModel</span>
+            <pre class="code-content"><code><span class="code-kw">class</span> <span class="code-cls">ModelRouter</span>:
+    <span class="code-kw">def</span> <span class="code-fn">__init__</span>(<span class="code-var">self</span>):
+        <span class="code-cm"># Palabras clave que indican que debemos buscar en tus documentos</span>
+        <span class="code-var">self</span>.<span class="code-var">palabras_documento</span> = [<span class="code-str">"politica"</span>, <span class="code-str">"reembolso"</span>, <span class="code-str">"devolucion"</span>, <span class="code-str">"garantia"</span>, <span class="code-str">"envio"</span>, <span class="code-str">"precio"</span>, <span class="code-str">"costo"</span>]
+        <span class="code-var">self</span>.<span class="code-var">palabras_formato_json</span> = [<span class="code-str">"json"</span>, <span class="code-str">"esquema"</span>, <span class="code-str">"ticket"</span>, <span class="code-str">"ficha"</span>]
 
-<span class="code-kw">class</span> <span class="code-cls">LoRAInferenceEngine</span>:
-    <span class="code-kw">def</span> <span class="code-fn">__init__</span>(<span class="code-var">self</span>, <span class="code-var">base_model_id</span>=<span class="code-str">"TinyLlama/TinyLlama-1.1B-Chat-v1.0"</span>, <span class="code-var">adapter_path</span>=<span class="code-str">"./lora_checkpoint"</span>):
-        <span class="code-var">self</span>.<span class="code-var">tokenizer</span> = <span class="code-cls">AutoTokenizer</span>.<span class="code-fn">from_pretrained</span>(<span class="code-var">base_model_id</span>)
-        <span class="code-var">self</span>.<span class="code-var">base_model</span> = <span class="code-cls">AutoModelForCausalLM</span>.<span class="code-fn">from_pretrained</span>(
-            <span class="code-var">base_model_id</span>, 
-            <span class="code-var">dtype</span>=<span class="code-var">torch</span>.<span class="code-var">float16</span> <span class="code-kw">if</span> <span class="code-var">torch</span>.<span class="code-var">cuda</span>.<span class="code-fn">is_available</span>() <span class="code-kw">else</span> <span class="code-var">torch</span>.<span class="code-var">float32</span>,
-            <span class="code-var">device_map</span>=<span class="code-str">"auto"</span>
-        )
-        <span class="code-cm"># Fusion o enlace de adaptadores de bajo rango</span>
-        <span class="code-kw">try</span>:
-            <span class="code-var">self</span>.<span class="code-var">model</span> = <span class="code-cls">PeftModel</span>.<span class="code-fn">from_pretrained</span>(<span class="code-var">self</span>.<span class="code-var">base_model</span>, <span class="code-var">adapter_path</span>)
-        <span class="code-kw">except</span> <span class="code-cls">Exception</span>:
-            <span class="code-var">self</span>.<span class="code-var">model</span> = <span class="code-var">self</span>.<span class="code-var">base_model</span>
-
-    <span class="code-kw">def</span> <span class="code-fn">generate</span>(<span class="code-var">self</span>, <span class="code-var">prompt</span>: <span class="code-cls">str</span>, <span class="code-var">max_new_tokens</span>=80) -> <span class="code-cls">str</span>:
-        <span class="code-var">inputs</span> = <span class="code-var">self</span>.<span class="code-var">tokenizer</span>(<span class="code-var">prompt</span>, <span class="code-var">return_tensors</span>=<span class="code-str">"pt"</span>).<span class="code-fn">to</span>(<span class="code-var">self</span>.<span class="code-var">model</span>.<span class="code-var">device</span>)
-        <span class="code-kw">with</span> <span class="code-var">torch</span>.<span class="code-fn">no_grad</span>():
-            <span class="code-var">outputs</span> = <span class="code-var">self</span>.<span class="code-var">model</span>.<span class="code-fn">generate</span>(**<span class="code-var">inputs</span>, <span class="code-var">max_new_tokens</span>=<span class="code-var">max_new_tokens</span>, <span class="code-var">do_sample</span>=<span class="code-kw">False</span>)
-        <span class="code-var">new_tokens</span> = <span class="code-var">outputs</span>[0][<span class="code-var">inputs</span>[<span class="code-str">"input_ids"</span>].<span class="code-var">shape</span>[1]:]
-        <span class="code-kw">return</span> <span class="code-var">self</span>.<span class="code-var">tokenizer</span>.<span class="code-fn">decode</span>(<span class="code-var">new_tokens</span>, <span class="code-var">skip_special_tokens</span>=<span class="code-kw">True</span>).<span class="code-fn">strip</span>()</code></pre>
+    <span class="code-kw">def</span> <span class="code-fn">route</span>(<span class="code-var">self</span>, <span class="code-var">mensaje_usuario</span>: <span class="code-cls">str</span>) -> <span class="code-cls">str</span>:
+        <span class="code-var">texto</span> = <span class="code-var">mensaje_usuario</span>.<span class="code-fn">lower</span>()
+        
+        <span class="code-cm"># Si pregunta por politicas -> Usamos RAG</span>
+        <span class="code-kw">if</span> <span class="code-fn">any</span>(<span class="code-var">p</span> <span class="code-kw">in</span> <span class="code-var">texto</span> <span class="code-kw">for</span> <span class="code-var">p</span> <span class="code-kw">in</span> <span class="code-var">self</span>.<span class="code-var">palabras_documento</span>):
+            <span class="code-kw">return</span> <span class="code-str">"RAG_PIPELINE"</span>
+            
+        <span class="code-cm"># Si pide un formato tecnico -> Usamos el formateador JSON</span>
+        <span class="code-kw">if</span> <span class="code-fn">any</span>(<span class="code-var">p</span> <span class="code-kw">in</span> <span class="code-var">texto</span> <span class="code-kw">for</span> <span class="code-var">p</span> <span class="code-kw">in</span> <span class="code-var">self</span>.<span class="code-var">palabras_formato_json</span>):
+            <span class="code-kw">return</span> <span class="code-str">"LORA_ADAPTER"</span>
+            
+        <span class="code-cm"># Si es un saludo normal -> Respuesta directa</span>
+        <span class="code-kw">return</span> <span class="code-str">"FAST_LLM"</span></code></pre>
           </div>
         </div>
 
-        <!-- BLOQUE D: FASTAPI SERVER -->
-        <div id="api_server_py" style="margin-bottom: 2rem;">
-          <h4 class="tema-subheading"><span class="tema-subheading-tag">Bloque D</span> api_server.py · Servidor Web Asíncrono con FastAPI</h4>
+        <!-- BLOQUE 3: API FASTAPI -->
+        <div style="margin-bottom: 2rem;">
+          <h4 class="tema-subheading"><span class="tema-subheading-tag">Pieza 3</span> api_server.py · El Servidor Web para Conectar a Internet</h4>
           <p class="prose-p" style="font-size: 0.88rem;">
-            Expone la arquitectura completa como un microservicio REST tipado con Pydantic y documentación OpenAPI interactiva (`/docs`).
+            Permite que cualquier persona o aplicación web consulte a tu asistente a través de un endpoint HTTP seguro:
           </p>
 
           <div class="code-box">
@@ -483,31 +759,31 @@
 <span class="code-kw">from</span> <span class="code-var">pydantic</span> <span class="code-kw">import</span> <span class="code-cls">BaseModel</span>
 <span class="code-kw">import</span> <span class="code-var">time</span>
 
-<span class="code-var">app</span> = <span class="code-cls">FastAPI</span>(<span class="code-var">title</span>=<span class="code-str">"Motor de Asistencia IA Hackathon"</span>, <span class="code-var">version</span>=<span class="code-str">"1.0.0"</span>)
+<span class="code-var">app</span> = <span class="code-cls">FastAPI</span>(<span class="code-var">title</span>=<span class="code-str">"Mi Asistente de IA - Proyecto Hackathon"</span>, <span class="code-var">version</span>=<span class="code-str">"1.0.0"</span>)
 
-<span class="code-kw">class</span> <span class="code-cls">ChatRequest</span>(<span class="code-cls">BaseModel</span>):
+<span class="code-cm"># Definimos la forma del mensaje que nos envian</span>
+<span class="code-kw">class</span> <span class="code-cls">MensajeEntrada</span>(<span class="code-cls">BaseModel</span>):
     <span class="code-var">mensaje</span>: <span class="code-cls">str</span>
-    <span class="code-var">usuario_id</span>: <span class="code-cls">str</span> = <span class="code-str">"usr_demo"</span>
+    <span class="code-var">usuario</span>: <span class="code-cls">str</span> = <span class="code-str">"invitado"</span>
 
-<span class="code-kw">class</span> <span class="code-cls">ChatResponse</span>(<span class="code-cls">BaseModel</span>):
+<span class="code-cm"># Definimos la forma de la respuesta que entregamos</span>
+<span class="code-kw">class</span> <span class="code-cls">RespuestaSalida</span>(<span class="code-cls">BaseModel</span>):
     <span class="code-var">respuesta</span>: <span class="code-cls">str</span>
-    <span class="code-var">ruta_usada</span>: <span class="code-cls">str</span>
-    <span class="code-var">latencia_ms</span>: <span class="code-cls">float</span>
-    <span class="code-var">fuentes</span>: <span class="code-cls">list</span>[<span class="code-cls">str</span>] = []
+    <span class="code-var">tiempo_milisegundos</span>: <span class="code-cls">float</span>
+    <span class="code-var">fuente</span>: <span class="code-cls">str</span>
 
-<span class="code-nd">@app.post</span>(<span class="code-str">"/v1/chat"</span>, <span class="code-var">response_model</span>=<span class="code-cls">ChatResponse</span>)
-<span class="code-kw">async def</span> <span class="code-fn">procesar_mensaje</span>(<span class="code-var">req</span>: <span class="code-cls">ChatRequest</span>):
-    <span class="code-var">t0</span> = <span class="code-var">time</span>.<span class="code-fn">perf_counter</span>()
-    <span class="code-kw">if not</span> <span class="code-var">req</span>.<span class="code-var">mensaje</span>.<span class="code-fn">strip</span>():
-        <span class="code-kw">raise</span> <span class="code-cls">HTTPException</span>(<span class="code-var">status_code</span>=400, <span class="code-var">detail</span>=<span class="code-str">"El mensaje no puede estar vacio."</span>)
+<span class="code-nd">@app.post</span>(<span class="code-str">"/v1/chat"</span>, <span class="code-var">response_model</span>=<span class="code-cls">RespuestaSalida</span>)
+<span class="code-kw">async def</span> <span class="code-fn">chatear</span>(<span class="code-var">entrada</span>: <span class="code-cls">MensajeEntrada</span>):
+    <span class="code-var">inicio</span> = <span class="code-var">time</span>.<span class="code-fn">perf_counter</span>()
+    <span class="code-kw">if not</span> <span class="code-var">entrada</span>.<span class="code-var">mensaje</span>.<span class="code-fn">strip</span>():
+        <span class="code-kw">raise</span> <span class="code-cls">HTTPException</span>(<span class="code-var">status_code</span>=400, <span class="code-var">detail</span>=<span class="code-str">"Por favor escribe un mensaje valido."</span>)
     
-    <span class="code-cm"># Pipeline Integrado: Routing -> RAG -> Generation</span>
-    <span class="code-var">latencia</span> = (<span class="code-var">time</span>.<span class="code-fn">perf_counter</span>() - <span class="code-var">t0</span>) * 1000
-    <span class="code-kw">return</span> <span class="code-cls">ChatResponse</span>(
-        <span class="code-var">respuesta</span>=<span class="code-str">"Respuesta procesada correctamente con el pipeline de IA."</span>,
-        <span class="code-var">ruta_usada</span>=<span class="code-str">"RAG_PIPELINE"</span>,
-        <span class="code-var">latencia_ms</span>=<span class="code-fn">round</span>(<span class="code-var">latencia</span>, 2),
-        <span class="code-var">fuentes</span>=[<span class="code-str">"Documento_Politicas_Seccion_3"</span>]
+    <span class="code-cm"># Aqui se procesa el mensaje con RAG o el LLM</span>
+    <span class="code-var">tiempo</span> = (<span class="code-var">time</span>.<span class="code-fn">perf_counter</span>() - <span class="code-var">inicio</span>) * 1000
+    <span class="code-kw">return</span> <span class="code-cls">RespuestaSalida</span>(
+        <span class="code-var">respuesta</span>=<span class="code-str">"¡Hola! Segun nuestras politicas oficiales: los reembolsos se gestionan en 30 dias con ticket."</span>,
+        <span class="code-var">tiempo_milisegundos</span>=<span class="code-fn">round</span>(<span class="code-var">tiempo</span>, 2),
+        <span class="code-var">fuente</span>=<span class="code-str">"Politica_Devoluciones_Art4"</span>
     )</code></pre>
           </div>
         </div>
@@ -515,129 +791,88 @@
     </article>
 
     <!-- ======================================================================
-         SECCIÓN 5: RESOLUCIÓN DE DUDAS TÉCNICAS & TROUBLESHOOTING (FAQ)
+         MÓDULO 8: PRIMEROS AUXILIOS TÉCNICOS & PREGUNTAS FRECUENTES
          ====================================================================== -->
-    <article class="tema-card" id="faq-troubleshooting" style="margin-bottom: 3.5rem;">
+    <article class="tema-card" id="primeros-auxilios" style="margin-bottom: 3.5rem;">
       <div class="tema-header">
-        <div class="tema-eyebrow">Diagnóstico Técnico · Preguntas Frecuentes</div>
-        <h3 class="tema-title">Centro de Resolución de Dudas y Errores Comunes</h3>
+        <div class="tema-eyebrow">Primeros Auxilios · Solución de Problemas</div>
+        <h3 class="tema-title">Resolución Rápida de Dudas y Tropiezos Frecuentes</h3>
       </div>
 
       <div class="tema-section-block">
         <p class="prose-p">
-          ¿Tuviste un error durante la construcción de tu proyecto? Consulta las soluciones directas a los 8 problemas más comunes reportados por desarrolladores de IA:
+          ¿Tuviste algún tropiezo o duda técnica? Consulta las soluciones con explicaciones sencillas:
         </p>
 
-        <div style="display: flex; flex-direction: column; gap: 0.9rem; margin-top: 1.2rem;">
-          <!-- FAQ 1 -->
+        <div style="display:flex; flex-direction:column; gap:0.9rem; margin-top:1.2rem;">
           <details class="breakdown-details-box">
             <summary class="breakdown-summary-btn">
-              <span>1. ¿Cómo evitar que mi RAG recupere información basura o fragmentos irrelevantes?</span>
-              <span class="breakdown-count-tag" style="background:rgba(239,68,68,0.15); color:#ef4444;">Filtro &amp; Chunking</span>
+              <span>1. ¿Cómo hago para que la IA nunca invente cosas que no están en mis textos?</span>
+              <span class="breakdown-count-tag" style="background:rgba(5,150,105,0.15); color:var(--accent-success);">Cero Alucinaciones</span>
             </summary>
             <div class="breakdown-content-wrap">
-              <p style="font-size:0.88rem; line-height:1.65; color:var(--text-secondary); margin-bottom:0.6rem;">
-                <b>Causa raíz:</b> Chunks demasiado grandes (&gt; 1,000 tokens) diluyen la densidad semántica, o la ausencia de un umbral de similitud obliga al sistema a inyectar siempre los peores fragmentos.
-              </p>
               <p style="font-size:0.88rem; line-height:1.65; color:var(--text-secondary); margin:0;">
-                <b>Solución:</b> Divide tu texto en fragmentos de <b>300 a 500 caracteres con un 15% de overlap</b>. Normaliza los vectores con $L_2$ y aplica un <code>threshold &gt;= 0.42</code>. Si ninguna similitud supera el umbral, indica al LLM que admita que no tiene información en lugar de obligarlo a responder.
+                En tu prompt del sistema agrega esta regla de oro: <em>"Responde únicamente usando el texto del Contexto. Si el Contexto no contiene la respuesta, di textualmente: 'No cuento con información oficial sobre este tema en mis manuales'."</em> Además, fija el <code>umbral_minimo = 0.40</code> en tu RAG para ignorar textos que no tengan que ver.
               </p>
             </div>
           </details>
 
-          <!-- FAQ 2 -->
           <details class="breakdown-details-box">
             <summary class="breakdown-summary-btn">
-              <span>2. Error `CUDA Out of memory (OOM)` en Google Colab al cargar el modelo o entrenar</span>
-              <span class="breakdown-count-tag" style="background:rgba(245,158,11,0.15); color:var(--accent-warning);">Memoria VRAM</span>
+              <span>2. ¿Qué hago si me sale un error rojo de `CUDA Out of memory` en Colab?</span>
+              <span class="breakdown-count-tag" style="background:rgba(239,68,68,0.15); color:#ef4444;">Memoria VRAM</span>
             </summary>
             <div class="breakdown-content-wrap">
-              <p style="font-size:0.88rem; line-height:1.65; color:var(--text-secondary); margin-bottom:0.6rem;">
-                <b>Causa raíz:</b> El optimizador AdamW y los tensores de activación superan los 15 GB de la GPU Tesla T4.
-              </p>
               <p style="font-size:0.88rem; line-height:1.65; color:var(--text-secondary); margin:0;">
-                <b>Solución:</b> En tu `TrainingArguments`/`SFTConfig`, fija <code>per_device_train_batch_size=1</code> y activa <code>gradient_accumulation_steps=4</code>. Inyecta LoRA únicamente en <code>target_modules=["q_proj", "v_proj"]</code> y usa <code>torch.float16</code>. Si usas Llama 3.1 8B, cárgalo con QLoRA 4-bit (<code>BitsAndBytesConfig</code>).
+                Significa que le pediste a la tarjeta gráfica más de lo que puede cargar a la vez. <b>Solución súper fácil:</b> Cambia el modelo a uno de 1B (como <code>TinyLlama/TinyLlama-1.1B-Chat-v1.0</code> o <code>meta-llama/Llama-3.2-1B-Instruct</code>) o fija <code>per_device_train_batch_size = 1</code>.
               </p>
             </div>
           </details>
 
-          <!-- FAQ 3 -->
           <details class="breakdown-details-box">
             <summary class="breakdown-summary-btn">
-              <span>3. El modelo no respeta el formato JSON y agrega texto conversacional antes del corchete</span>
-              <span class="breakdown-count-tag" style="background:rgba(8,102,255,0.15); color:var(--meta-blue);">Prompting &amp; JSON</span>
+              <span>3. ¿Cómo puedo subir mis propios archivos PDF o Word a Google Colab?</span>
+              <span class="breakdown-count-tag">Archivos Propios</span>
             </summary>
             <div class="breakdown-content-wrap">
-              <p style="font-size:0.88rem; line-height:1.65; color:var(--text-secondary); margin-bottom:0.6rem;">
-                <b>Causa raíz:</b> Los LLMs son predictores probabilísticos de texto libre y por defecto intentan ser conversacionales.
-              </p>
               <p style="font-size:0.88rem; line-height:1.65; color:var(--text-secondary); margin:0;">
-                <b>Solución:</b> Incluye 2 ejemplos <b>Few-Shot</b> en el prompt del sistema mostrando la salida exacta comenzando con <code>{</code> y terminando con <code>}</code>. Si usas la API de Groq, agrega <code>response_format={"type": "json_object"}</code>. En Python, envuelve la decodificación con <code>json.loads()</code> y un validador Pydantic.
+                En Google Colab, haz clic en el icono de carpetita a la izquierda y arrastra tu archivo <code>.txt</code> o <code>.pdf</code>. En Python puedes leerlo fácilmente con <code>with open("mi_archivo.txt") as f: textos = f.readlines()</code> y pasarlo directo a <code>rag.index_documents(textos)</code>.
               </p>
             </div>
           </details>
 
-          <!-- FAQ 4 -->
           <details class="breakdown-details-box">
             <summary class="breakdown-summary-btn">
-              <span>4. ¿Cómo conectar mi propio archivo PDF, CSV o TXT al sistema de RAG?</span>
-              <span class="breakdown-count-tag">Extracción de Datos</span>
+              <span>4. ¿Cómo pruebo mi servidor FastAPI desde el navegador?</span>
+              <span class="breakdown-count-tag" style="background:rgba(8,102,255,0.15); color:var(--meta-blue);">Swagger UI</span>
             </summary>
             <div class="breakdown-content-wrap">
-              <p style="font-size:0.88rem; line-height:1.65; color:var(--text-secondary); margin-bottom:0.6rem;">
-                <b>Solución:</b> En Python, instala <code>pypdf</code> o <code>pandas</code>. Extrae el texto plano de cada página o fila, divídelo en párrafos semánticos con <code>text.split("\n\n")</code> y pásalo como lista de strings a tu <code>VectorRAGEngine.index_documents(lista_textos)</code>.
+              <p style="font-size:0.88rem; line-height:1.65; color:var(--text-secondary); margin:0;">
+                Cuando ejecutes tu servidor localmente, abre en tu navegador <code>http://localhost:8000/docs</code>. Verás una pantalla interactiva con botones para mandar mensajes de prueba y ver las respuestas al instante.
               </p>
             </div>
           </details>
 
-          <!-- FAQ 5 -->
           <details class="breakdown-details-box">
             <summary class="breakdown-summary-btn">
-              <span>5. ¿Cómo probar y documentar mis endpoints de FastAPI localmente?</span>
-              <span class="breakdown-count-tag">Swagger UI</span>
+              <span>5. ¿Cómo forzar al modelo a que conteste estrictamente en formato JSON?</span>
+              <span class="breakdown-count-tag" style="background:rgba(168,85,247,0.15); color:#a855f7;">Formato JSON</span>
             </summary>
             <div class="breakdown-content-wrap">
               <p style="font-size:0.88rem; line-height:1.65; color:var(--text-secondary); margin:0;">
-                <b>Solución:</b> Inicia tu servidor con <code>uvicorn api_server:app --reload --port 8000</code>. Abre tu navegador en <code>http://localhost:8000/docs</code> para acceder a la interfaz gráfica interactiva de Swagger UI, donde puedes enviar payloads JSON de prueba y ver las respuestas en tiempo real.
+                Pon 2 ejemplos claros en el prompt mostrando cómo empieza con <code>{</code> y termina con <code>}</code>. Indícale: <em>"Responde únicamente con el bloque JSON, sin introducciones ni despedidas."</em>
               </p>
             </div>
           </details>
 
-          <!-- FAQ 6 -->
           <details class="breakdown-details-box">
             <summary class="breakdown-summary-btn">
-              <span>6. Error `Rate Limit 429` al hacer llamadas masivas a la API</span>
-              <span class="breakdown-count-tag" style="background:rgba(239,68,68,0.15); color:#ef4444;">Rate Limiting</span>
+              <span>6. ¿Qué pasa si Google Colab se desconecta por inactividad?</span>
+              <span class="breakdown-count-tag">Sesiones Colab</span>
             </summary>
             <div class="breakdown-content-wrap">
               <p style="font-size:0.88rem; line-height:1.65; color:var(--text-secondary); margin:0;">
-                <b>Solución:</b> Implementa un decorador de reintentos con <b>Exponential Backoff y Jitter</b> (ej. con la librería <code>tenacity</code>): espera $2^n \times \text{random}(0.5, 1.5)$ segundos antes de reintentar ante excepciones de tipo `RateLimitError`.
-              </p>
-            </div>
-          </details>
-
-          <!-- FAQ 7 -->
-          <details class="breakdown-details-box">
-            <summary class="breakdown-summary-btn">
-              <span>7. ¿Cómo combinar RAG y LoRA en una sola respuesta sin duplicar el contexto?</span>
-              <span class="breakdown-count-tag" style="background:rgba(168,85,247,0.15); color:#a855f7;">Arquitectura Híbrida</span>
-            </summary>
-            <div class="breakdown-content-wrap">
-              <p style="font-size:0.88rem; line-height:1.65; color:var(--text-secondary); margin:0;">
-                <b>Solución:</b> LoRA debe especializarse en el <i>estilo, tono y estructura de salida</i> (aprender cómo responder), mientras que el RAG se encarga de inyectar las <i>citas documentales y hechos</i> (aprender qué responder). El prompt final tiene la forma: <code>Contexto: {rag_chunk}\nPregunta: {user_query}\nRespuesta:</code>.
-              </p>
-            </div>
-          </details>
-
-          <!-- FAQ 8 -->
-          <details class="breakdown-details-box">
-            <summary class="breakdown-summary-btn">
-              <span>8. ¿Cómo desplegar mi backend en un endpoint público gratuito para pruebas?</span>
-              <span class="breakdown-count-tag" style="background:rgba(5,150,105,0.15); color:var(--accent-success);">Despliegue</span>
-            </summary>
-            <div class="breakdown-content-wrap">
-              <p style="font-size:0.88rem; line-height:1.65; color:var(--text-secondary); margin:0;">
-                <b>Solución:</b> Si estás en Google Colab, usa <code>pyngrok</code> o <code>localtunnel</code> (<code>npx localtunnel --port 8000</code>) para obtener una URL pública HTTPS que puedes conectar a cualquier frontend o webhook de WhatsApp. Para despliegues permanentes, usa <b>Hugging Face Spaces (Gradio/FastAPI)</b> o <b>Render Free Tier</b>.
+                No te preocupes. Solo vuelve a darle clic a "Conectar" en la esquina superior derecha y dale "Ejecutar todas las celdas" (Runtime &rarr; Run all). Todo tu código se vuelve a cargar en menos de 1 minuto.
               </p>
             </div>
           </details>
@@ -646,143 +881,71 @@
     </article>
 
     <!-- ======================================================================
-         SECCIÓN 6: CHECKLIST INTERACTIVO PRE-ENTREGA
+         MÓDULO 9: CHECKLIST INTERACTIVO DE CALIDAD & RÚBRICA
          ====================================================================== -->
-    <article class="tema-card" id="checklist-entrega" style="margin-bottom: 3.5rem; border-left: 5px solid var(--accent-success);">
+    <article class="tema-card" id="checklist-final" style="margin-bottom: 3.5rem; border-left: 5px solid var(--accent-success);">
       <div class="tema-header">
-        <div class="tema-eyebrow">Aseguramiento de Calidad · Checklist Pre-Entrega</div>
-        <h3 class="tema-title">Auditoría Interactiva de Calidad de tu Proyecto</h3>
+        <div class="tema-eyebrow">Autoevaluación · Checklist de Calidad</div>
+        <h3 class="tema-title">Lista de Verificación de tu Proyecto Antes de Entregar</h3>
       </div>
 
       <div class="tema-section-block">
         <p class="prose-p">
-          Antes de entregar tu proyecto o presentarlo en tu portafolio, marca las casillas para validar que tu solución cumple con las mejores prácticas de la industria:
+          Marca cada casilla conforme completes tu proyecto. Al llegar al 100%, ¡recibirás una felicitación con confeti!
         </p>
 
-        <!-- Barra de Progreso del Checklist -->
-        <div style="background: var(--bg-surface-2); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 1rem 1.4rem; margin: 1.2rem 0;">
-          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
-            <span style="font-size: 0.82rem; font-weight: 700; color: var(--text-primary);">Progreso de Verificación:</span>
-            <span id="checklist-progress-text" style="font-family: var(--font-mono); font-size: 0.85rem; font-weight: 800; color: var(--accent-success);">0 de 8 verificados (0%)</span>
+        <!-- Barra de Progreso -->
+        <div style="background:var(--bg-surface-2); border:1px solid var(--border-subtle); border-radius:10px; padding:1rem 1.4rem; margin:1.2rem 0;">
+          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:0.5rem;">
+            <span style="font-size:0.82rem; font-weight:700; color:var(--text-primary);">Tu Progreso de Proyecto:</span>
+            <span id="friendly-progress-text" style="font-family:var(--font-mono); font-size:0.85rem; font-weight:800; color:var(--accent-success);">0 de 6 pasos (0%)</span>
           </div>
-          <div style="width: 100%; height: 8px; background: var(--bg-subtle-alt); border-radius: 4px; overflow: hidden;">
-            <div id="checklist-progress-bar" style="width: 0%; height: 100%; background: var(--accent-success); transition: width 0.3s ease;"></div>
+          <div style="width:100%; height:8px; background:var(--bg-subtle-alt); border-radius:4px; overflow:hidden;">
+            <div id="friendly-progress-bar" style="width:0%; height:100%; background:var(--accent-success); transition:width 0.3s ease;"></div>
           </div>
         </div>
 
-        <div id="hackathon-checklist" style="display: flex; flex-direction: column; gap: 0.75rem; font-size: 0.88rem; color: var(--text-primary);">
-          <label style="display: flex; align-items: flex-start; gap: 0.7rem; cursor: pointer; background: var(--bg-surface); padding: 0.8rem 1rem; border-radius: 8px; border: 1px solid var(--border-subtle);">
-            <input type="checkbox" style="margin-top: 0.2rem; cursor: pointer;">
-            <div>
-              <strong>1. Desacoplamiento de Datos:</strong> El conocimiento del sistema proviene de una base vectorial o dataset externo, sin estar hardcodeado en el texto del prompt.
-            </div>
+        <div id="checklist-celebration-msg" style="display:none; background:rgba(5,150,105,0.12); border:1px solid var(--accent-success); border-radius:10px; padding:1rem 1.2rem; margin-bottom:1rem; text-align:center; animation:mainFadeIn 0.4s ease;">
+          <strong style="color:var(--accent-success); font-size:1.1rem; display:block; margin-bottom:0.3rem;">🎉 ¡Felicidades! Tu proyecto cumple al 100% con los estándares de ingeniería.</strong>
+          <span style="font-size:0.88rem; color:var(--text-primary);">Estás completamente listo para avanzar al Módulo 2 y conectar tu IA a WhatsApp.</span>
+        </div>
+
+        <div id="friendly-checklist-container" style="display:flex; flex-direction:column; gap:0.75rem; font-size:0.88rem; color:var(--text-primary);">
+          <label style="display:flex; align-items:flex-start; gap:0.7rem; cursor:pointer; background:var(--bg-surface); padding:0.8rem 1rem; border-radius:8px; border:1px solid var(--border-subtle);">
+            <input type="checkbox" style="margin-top:0.2rem; cursor:pointer;">
+            <div><strong>1. Tema Definido:</strong> Elegí una de las 4 plantillas o un tema propio y preparé mis textos.</div>
           </label>
 
-          <label style="display: flex; align-items: flex-start; gap: 0.7rem; cursor: pointer; background: var(--bg-surface); padding: 0.8rem 1rem; border-radius: 8px; border: 1px solid var(--border-subtle);">
-            <input type="checkbox" style="margin-top: 0.2rem; cursor: pointer;">
-            <div>
-              <strong>2. Seguridad de Credenciales:</strong> Ningún token secreto (`HF_TOKEN`, `GROQ_API_KEY`) está escrito en código plano; se leen desde variables de entorno o Colab Secrets.
-            </div>
+          <label style="display:flex; align-items:flex-start; gap:0.7rem; cursor:pointer; background:var(--bg-surface); padding:0.8rem 1rem; border-radius:8px; border:1px solid var(--border-subtle);">
+            <input type="checkbox" style="margin-top:0.2rem; cursor:pointer;">
+            <div><strong>2. Motor RAG Conectado:</strong> Mis textos están indexados en <code>rag_engine.py</code> y la búsqueda devuelve resultados.</div>
           </label>
 
-          <label style="display: flex; align-items: flex-start; gap: 0.7rem; cursor: pointer; background: var(--bg-surface); padding: 0.8rem 1rem; border-radius: 8px; border: 1px solid var(--border-subtle);">
-            <input type="checkbox" style="margin-top: 0.2rem; cursor: pointer;">
-            <div>
-              <strong>3. Control de Latencia:</strong> Las consultas estándar se resuelven en menos de 2.0 segundos mediante enrutamiento inteligente o cuantización adecuada.
-            </div>
+          <label style="display:flex; align-items:flex-start; gap:0.7rem; cursor:pointer; background:var(--bg-surface); padding:0.8rem 1rem; border-radius:8px; border:1px solid var(--border-subtle);">
+            <input type="checkbox" style="margin-top:0.2rem; cursor:pointer;">
+            <div><strong>3. Sin Alucinaciones:</strong> El modelo responde únicamente con la evidencia y admite cuando no sabe.</div>
           </label>
 
-          <label style="display: flex; align-items: flex-start; gap: 0.7rem; cursor: pointer; background: var(--bg-surface); padding: 0.8rem 1rem; border-radius: 8px; border: 1px solid var(--border-subtle);">
-            <input type="checkbox" style="margin-top: 0.2rem; cursor: pointer;">
-            <div>
-              <strong>4. Prevención de Alucinaciones:</strong> El motor RAG aplica un umbral mínimo de similitud coseno ($\ge 0.40$) y admite ignorancia cuando no encuentra evidencia.
-            </div>
+          <label style="display:flex; align-items:flex-start; gap:0.7rem; cursor:pointer; background:var(--bg-surface); padding:0.8rem 1rem; border-radius:8px; border:1px solid var(--border-subtle);">
+            <input type="checkbox" style="margin-top:0.2rem; cursor:pointer;">
+            <div><strong>4. Probado en Google Colab:</strong> Ejecuté el cuaderno de Colab sin errores de memoria (VRAM).</div>
           </label>
 
-          <label style="display: flex; align-items: flex-start; gap: 0.7rem; cursor: pointer; background: var(--bg-surface); padding: 0.8rem 1rem; border-radius: 8px; border: 1px solid var(--border-subtle);">
-            <input type="checkbox" style="margin-top: 0.2rem; cursor: pointer;">
-            <div>
-              <strong>5. Validación de Esquemas HTTP:</strong> Los payloads de entrada y salida en FastAPI están tipados y validados con modelos de Pydantic.
-            </div>
+          <label style="display:flex; align-items:flex-start; gap:0.7rem; cursor:pointer; background:var(--bg-surface); padding:0.8rem 1rem; border-radius:8px; border:1px solid var(--border-subtle);">
+            <input type="checkbox" style="margin-top:0.2rem; cursor:pointer;">
+            <div><strong>5. Servidor FastAPI Listo:</strong> El archivo <code>api_server.py</code> responde consultas en formato JSON.</div>
           </label>
 
-          <label style="display: flex; align-items: flex-start; gap: 0.7rem; cursor: pointer; background: var(--bg-surface); padding: 0.8rem 1rem; border-radius: 8px; border: 1px solid var(--border-subtle);">
-            <input type="checkbox" style="margin-top: 0.2rem; cursor: pointer;">
-            <div>
-              <strong>6. Robustez ante Errores (Try/Except):</strong> El backend maneja excepciones ante inputs vacíos, caídas de red o errores de parseo sin tumbar el servidor.
-            </div>
-          </label>
-
-          <label style="display: flex; align-items: flex-start; gap: 0.7rem; cursor: pointer; background: var(--bg-surface); padding: 0.8rem 1rem; border-radius: 8px; border: 1px solid var(--border-subtle);">
-            <input type="checkbox" style="margin-top: 0.2rem; cursor: pointer;">
-            <div>
-              <strong>7. Reproducibilidad Técnica:</strong> Se especifica un archivo `requirements.txt` con versiones compatibles de librerías para ejecutar en cualquier máquina.
-            </div>
-          </label>
-
-          <label style="display: flex; align-items: flex-start; gap: 0.7rem; cursor: pointer; background: var(--bg-surface); padding: 0.8rem 1rem; border-radius: 8px; border: 1px solid var(--border-subtle);">
-            <input type="checkbox" style="margin-top: 0.2rem; cursor: pointer;">
-            <div>
-              <strong>8. Documentación Clara (README.md):</strong> Se incluye una breve explicación de la arquitectura, instrucciones de instalación y un ejemplo de consulta.
-            </div>
+          <label style="display:flex; align-items:flex-start; gap:0.7rem; cursor:pointer; background:var(--bg-surface); padding:0.8rem 1rem; border-radius:8px; border:1px solid var(--border-subtle);">
+            <input type="checkbox" style="margin-top:0.2rem; cursor:pointer;">
+            <div><strong>6. Seguridad de Claves:</strong> No escribí contraseñas ni tokens en el código; usé variables de entorno.</div>
           </label>
         </div>
       </div>
     </article>
 
     <!-- ======================================================================
-         SECCIÓN 7: RÚBRICA OFICIAL DE EVALUACIÓN (100 PUNTOS)
-         ====================================================================== -->
-    <article class="tema-card" id="rubrica-evaluacion" style="margin-bottom: 4.5rem;">
-      <div class="tema-header">
-        <div class="tema-eyebrow">Evaluación Académica · Rúbrica APA 7</div>
-        <h3 class="tema-title">Criterios de Evaluación y Distribución de Puntaje</h3>
-      </div>
-
-      <div class="tema-section-block">
-        <div class="table-container" style="overflow-x: auto; margin: 1.2rem 0;">
-          <table class="apa-table" style="width: 100%; border-collapse: collapse; font-size: 0.88rem;">
-            <thead>
-              <tr style="background: var(--bg-surface-2); border-bottom: 2px solid var(--border-subtle);">
-                <th style="padding: 0.75rem; text-align: left; width: 25%;">Dimensión de Evaluación</th>
-                <th style="padding: 0.75rem; text-align: left; width: 45%;">Criterio Técnico Esperado</th>
-                <th style="padding: 0.75rem; text-align: center; width: 15%;">Ponderación</th>
-                <th style="padding: 0.75rem; text-align: center; width: 15%;">Evidencia Requerida</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr style="border-bottom: 1px solid var(--border-subtle);">
-                <td style="padding: 0.7rem;"><strong>1. Arquitectura &amp; Routing</strong></td>
-                <td style="padding: 0.7rem;">Enrutamiento inteligente de consultas con medición empírica de latencia y selección de modelo.</td>
-                <td style="padding: 0.7rem; text-align: center; font-weight: 700; color: var(--meta-blue);">25 Pts</td>
-                <td style="padding: 0.7rem; text-align: center;"><code>router.py</code></td>
-              </tr>
-              <tr style="border-bottom: 1px solid var(--border-subtle);">
-                <td style="padding: 0.7rem;"><strong>2. Vector Store &amp; RAG</strong></td>
-                <td style="padding: 0.7rem;">Chunking con overlap, incrustaciones normalizadas $\mathbb{R}^{384}$, similitud coseno y control de alucinación.</td>
-                <td style="padding: 0.7rem; text-align: center; font-weight: 700; color: #38bdf8;">25 Pts</td>
-                <td style="padding: 0.7rem; text-align: center;"><code>rag_engine.py</code></td>
-              </tr>
-              <tr style="border-bottom: 1px solid var(--border-subtle);">
-                <td style="padding: 0.7rem;"><strong>3. Especialización LoRA / Prompt</strong></td>
-                <td style="padding: 0.7rem;">Adopción de tono o formato JSON estricto mediante adaptadores PEFT o prompting estructurado.</td>
-                <td style="padding: 0.7rem; text-align: center; font-weight: 700; color: #a855f7;">25 Pts</td>
-                <td style="padding: 0.7rem; text-align: center;"><code>lora_adapter.py</code></td>
-              </tr>
-              <tr>
-                <td style="padding: 0.7rem;"><strong>4. API REST &amp; Calidad de Código</strong></td>
-                <td style="padding: 0.7rem;">Microservicio FastAPI con esquemas Pydantic, manejo de errores y documentación Swagger UI.</td>
-                <td style="padding: 0.7rem; text-align: center; font-weight: 700; color: var(--accent-success);">25 Pts</td>
-                <td style="padding: 0.7rem; text-align: center;"><code>api_server.py</code></td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-      </div>
-    </article>
-
-    <!-- ======================================================================
-         BARRA DE NAVEGACIÓN INFERIOR (PAGINACIÓN ENTRE RETOS)
+         BARRA DE NAVEGACIÓN INFERIOR
          ====================================================================== -->
     <div class="bottom-pagination-nav" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; margin: 3rem 0 5rem 0; padding: 1.5rem 0; border-top: 1px solid var(--border-subtle); border-bottom: 1px solid var(--border-subtle);">
       <a href="modulo1-challenge3.html" class="btn-secondary" style="display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; padding: 0.7rem 1.2rem; border-radius: 10px; font-weight: 700;">
