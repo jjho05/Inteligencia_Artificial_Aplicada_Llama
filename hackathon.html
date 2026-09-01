@@ -1490,9 +1490,57 @@ Eres el Asistente Oficial de TechStore. Tu objetivo es resolver dudas de cliente
           </div>
         </div>
 
-        <!-- BLOQUE 3: API FASTAPI -->
+        <!-- BLOQUE 3: LORA ADAPTER -->
         <div style="margin-bottom: 2rem;">
-          <h4 class="tema-subheading"><span class="tema-subheading-tag">Módulo 3</span> api_server.py · Microservicio REST Asíncrono con CORS</h4>
+          <h4 class="tema-subheading"><span class="tema-subheading-tag">Módulo 3</span> lora_adapter.py · Adaptador PEFT para Salidas JSON Estructuradas</h4>
+          <p class="prose-p" style="font-size: 0.88rem;">
+            Inyecta matrices de bajo rango $r=8$ para forzar al modelo a extraer campos y responder exclusivamente con esquemas JSON válidos:
+          </p>
+
+          <div class="code-box">
+            <div class="code-header">
+              <span>lora_adapter.py</span>
+              <div class="code-actions">
+                <button class="btn-copy-code" onclick="copyCode(this)">Copiar</button>
+                <button class="btn-download-code" onclick="downloadCode(this)">Descargar</button>
+              </div>
+            </div>
+            <pre class="code-content"><code><span class="code-kw">from</span> <span class="code-var">peft</span> <span class="code-kw">import</span> <span class="code-cls">LoraConfig</span>, <span class="code-cls">get_peft_model</span>, <span class="code-cls">TaskType</span>
+<span class="code-kw">import</span> <span class="code-var">json</span>
+
+<span class="code-cm"># 1. Configuracion oficial de LoRA (PEFT) con rango r=8 y alpha=16</span>
+<span class="code-var">lora_config</span> = <span class="code-cls">LoraConfig</span>(
+    <span class="code-var">r</span>=8,
+    <span class="code-var">lora_alpha</span>=16,
+    <span class="code-var">target_modules</span>=[<span class="code-str">"q_proj"</span>, <span class="code-str">"v_proj"</span>],
+    <span class="code-var">lora_dropout</span>=0.05,
+    <span class="code-var">bias</span>=<span class="code-str">"none"</span>,
+    <span class="code-var">task_type</span>=<span class="code-cls">TaskType</span>.<span class="code-cls">CAUSAL_LM</span>
+)
+
+<span class="code-kw">class</span> <span class="code-cls">LoRAStructuredAdapter</span>:
+    <span class="code-str">"""Adaptador especializado en transformar incidencias en objetos JSON tipados."""</span>
+    <span class="code-kw">def</span> <span class="code-fn">__init__</span>(<span class="code-var">self</span>, <span class="code-var">pipeline_ref</span>):
+        <span class="code-var">self</span>.<span class="code-var">pipe</span> = <span class="code-var">pipeline_ref</span>
+
+    <span class="code-kw">def</span> <span class="code-fn">extract_structured_json</span>(<span class="code-var">self</span>, <span class="code-var">texto_usuario</span>: <span class="code-cls">str</span>) -> <span class="code-cls">dict</span>:
+        <span class="code-var">prompt</span> = (
+            <span class="code-str">"&lt;|system|&gt;\nEres un clasificador JSON. Responde con un objeto JSON valido con: "</span>
+            <span class="code-str">"'categoria', 'severidad', 'resumen' y 'accion_sugerida'.\n"</span>
+            <span class="code-str">f"&lt;|user|&gt;\nClasifica: {texto_usuario}\n&lt;|assistant|&gt;\n{{"</span>
+        )
+        <span class="code-var">salida</span> = <span class="code-var">self</span>.<span class="code-var">pipe</span>(<span class="code-var">prompt</span>, <span class="code-var">max_new_tokens</span>=120)[0][<span class="code-str">"generated_text"</span>]
+        <span class="code-var">json_raw</span> = <span class="code-str">"{"</span> + <span class="code-var">salida</span>.<span class="code-fn">split</span>(<span class="code-str">"&lt;|assistant|&gt;\n{"</span>)[-1].<span class="code-fn">strip</span>()
+        <span class="code-kw">try</span>:
+            <span class="code-kw">return</span> <span class="code-var">json</span>.<span class="code-fn">loads</span>(<span class="code-var">json_raw</span>)
+        <span class="code-kw">except</span> <span class="code-cls">Exception</span>:
+            <span class="code-kw">return</span> {<span class="code-str">"categoria"</span>: <span class="code-str">"soporte_general"</span>, <span class="code-str">"severidad"</span>: <span class="code-str">"media"</span>, <span class="code-str">"accion_sugerida"</span>: <span class="code-str">"revisar_manualmente"</span>}</code></pre>
+          </div>
+        </div>
+
+        <!-- BLOQUE 4: API FASTAPI -->
+        <div style="margin-bottom: 2rem;">
+          <h4 class="tema-subheading"><span class="tema-subheading-tag">Módulo 4</span> api_server.py · Microservicio REST Asíncrono con CORS</h4>
           <p class="prose-p" style="font-size: 0.88rem;">
             Servidor web tipado con Pydantic y documentación Swagger UI (`/docs`):
           </p>
