@@ -107,17 +107,17 @@
       </div>
     </section>
 
-    <!-- SECCIÓN 1: FÓRMULA DE LATENCIA DE CICLO -->
-    <article class="tema-card" id="latencia-ciclo" style="border-left: 5px solid var(--meta-blue); margin-bottom: 3.5rem;">
+    <!-- SECCIÓN 1: FÓRMULA DE LATENCIA DE CICLO Y TEORÍA DE FUNCTION CALLING -->
+    <article class="tema-card" id="function-calling-teoria" style="border-left: 5px solid var(--meta-blue); margin-bottom: 3.5rem;">
       <div class="tema-header">
-        <div class="tema-eyebrow">Métricas SRE de Producción</div>
-        <h3 class="tema-title">Cálculo de la Latencia de Ciclo Total ($T_{total}$)</h3>
+        <div class="tema-eyebrow">Métricas SRE &amp; Razonamiento</div>
+        <h3 class="tema-title">Teoría de Function Calling y Latencia de Ciclo ($T_{total}$)</h3>
       </div>
       <p style="color: var(--text-secondary); line-height: 1.7; font-size: 0.95rem;">
         La experiencia del usuario en WhatsApp no depende únicamente del tiempo que Llama tarda en generar texto; depende de la acumulación de todas las fases del ciclo conversacional y de la ejecución externa de herramientas.
       </p>
 
-      <div class="formula-card" style="margin: 1.5rem 0;">
+      <div class="formula-card" id="latencia-ciclo" style="margin: 1.5rem 0;">
         <div class="formula-header">
           <span class="formula-tag">Presupuesto de Tiempo E2E</span>
           <span class="formula-title">Latencia Acumulada de Inferencia en Dos Pasos</span>
@@ -188,6 +188,47 @@ Selecciona una consulta arriba para ver la síntesis en vivo.
           <span style="font-size: 0.85rem; color: var(--text-secondary);">Latencia E2E Total del Ciclo: <strong id="fc-total-latency" style="color: #38bdf8;">-- ms</strong></span>
           <span id="fc-sla-badge" style="font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 6px; background: rgba(5,150,105,0.1); color: var(--accent-success); font-weight: 700;">SLA OK (&lt; 3.0s)</span>
         </div>
+      </div>
+    </article>
+
+    <!-- SECCIÓN: CÓDIGO PYTHON COMPLETO -->
+    <article class="tema-card" id="script-completo" style="margin-bottom: 3.5rem;">
+      <div class="tema-header">
+        <div class="tema-eyebrow">Implementación de Producción</div>
+        <h3 class="tema-title">Código Python: Orquestación de Function Calling en 2 Pasos</h3>
+      </div>
+      <div class="code-box-wrapper" style="position: relative; margin-top: 1rem;">
+        <pre><code class="language-python">from groq import Groq
+import json
+
+client = Groq()
+
+def resolver_function_calling(mensajes: list, tools_catalog: list):
+    # Paso 1: Inferencia con catalogo de herramientas
+    response = client.chat.completions.create(
+        model="llama-3.3-70b-versatile",
+        messages=mensajes,
+        tools=tools_catalog,
+        tool_choice="auto"
+    )
+    msg = response.choices[0].message
+    if not msg.tool_calls:
+        return msg.content
+
+    # Paso 2: Ejecucion local del tool call
+    call = msg.tool_calls[0]
+    args = json.loads(call.function.arguments)
+    resultado = ejecutar_herramienta_local(call.function.name, args)
+
+    mensajes.append(msg)
+    mensajes.append({"role": "tool", "tool_call_id": call.id, "content": json.dumps(resultado)})
+
+    # Paso 3: Sintesis final conversacional
+    synth = client.chat.completions.create(
+        model="llama-3.3-70b-versatile",
+        messages=mensajes
+    )
+    return synth.choices[0].message.content</code></pre>
       </div>
     </article>
 

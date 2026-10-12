@@ -269,6 +269,34 @@
       </div>
     </article>
 
+    <!-- SECCIÓN: DOCKER DE PRODUCCIÓN -->
+    <article class="tema-card" id="docker-prod" style="margin-bottom: 3.5rem;">
+      <div class="tema-header">
+        <div class="tema-eyebrow">Despliegue Continuo &amp; Contenedorización</div>
+        <h3 class="tema-title">Contenedor Docker Multi-Stage para Producción Continua</h3>
+      </div>
+      <p style="color: var(--text-secondary); font-size: 0.93rem; line-height: 1.65;">
+        Para transicionar de prototipos locales con ngrok a un servicio 24/7 de alta disponibilidad, empaquetamos el backend en una imagen Docker ligera (<code>python:3.11-slim</code>) con compilación en dos etapas para minimizar la superficie de ataque y asegurar un tiempo de arranque instantáneo:
+      </p>
+      <div class="code-box-wrapper" style="position: relative; margin-top: 1rem;">
+        <pre><code class="language-dockerfile">FROM python:3.11-slim AS builder
+WORKDIR /app
+RUN apt-get update && apt-get install -y --no-install-recommends build-essential && rm -rf /var/lib/apt/lists/*
+COPY requirements.txt .
+RUN pip install --no-cache-dir --user -r requirements.txt
+
+FROM python:3.11-slim AS runner
+WORKDIR /app
+COPY --from=builder /root/.local /root/.local
+COPY . .
+ENV PATH=/root/.local/bin:$PATH
+ENV PYTHONUNBUFFERED=1
+
+EXPOSE 8000
+CMD ["uvicorn", "main:app", "--host", "0.0.0.0", "--port", "8000"]</code></pre>
+      </div>
+    </article>
+
     <!-- RÚBRICA DE EVALUACIÓN OFICIAL -->
     <article class="tema-card" id="rubrica-evaluacion" style="margin-bottom: 3.5rem;">
       <div class="tema-header">

@@ -142,6 +142,22 @@
           </div>
         </details>
       </div>
+
+      <!-- PARTE 1: HANDSHAKE GET -->
+      <div id="parte1-handshake" style="margin-top: 2rem; padding-top: 1.5rem; border-top: 1px solid var(--border-subtle);">
+        <h4 style="font-family: var(--font-head); font-size: 1.1rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.5rem;">Fase 1: Handshake de Verificación GET (Apretón de Manos)</h4>
+        <p style="color: var(--text-secondary); font-size: 0.92rem; line-height: 1.65; margin: 0 0 1rem;">
+          Cuando registras tu URL en el panel de Meta, sus servidores envían una petición <code>GET /webhook</code> con tres parámetros de consulta (<i>query params</i>): <code>hub.mode=subscribe</code>, <code>hub.challenge=&lt;número_aleatorio&gt;</code> y <code>hub.verify_token=&lt;tu_token&gt;</code>. Tu servidor debe validar que el token coincida exactamente con tu secreto local y devolver el valor crudo de <code>hub.challenge</code> en texto plano con código <b>200 OK</b>.
+        </p>
+      </div>
+
+      <!-- PARTE 2: INGESTA POST -->
+      <div id="parte2-ingesta" style="margin-top: 1.8rem; padding-top: 1.5rem; border-top: 1px solid var(--border-subtle);">
+        <h4 style="font-family: var(--font-head); font-size: 1.1rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.5rem;">Fase 2: Ingesta de Eventos POST &amp; Deduplicación por WAMID</h4>
+        <p style="color: var(--text-secondary); font-size: 0.92rem; line-height: 1.65; margin: 0;">
+          Cada vez que un cliente envía un mensaje o cambia su estado de lectura, Meta despacha un payload JSON complejo en <code>POST /webhook</code>. Para garantizar un comportamiento idempotente ante reintentos de red de Meta, almacenamos los identificadores únicos <code>wamid</code> en un caché LRU en memoria. Si un <code>wamid</code> ya fue procesado en los últimos 10 minutos, se responde de inmediato <b>200 OK</b> sin ejecutar lógica adicional.
+        </p>
+      </div>
     </article>
 
     <!-- SECCIÓN 2: SIMULADOR INTERACTIVO LIVE -->
@@ -250,6 +266,24 @@ async def receive_meta_event(request: Request):
         
     # Procesar mensaje de forma asincrona
     return {"status": "message_received", "from": remitente, "text": texto, "wamid": wamid}</code></pre>
+      </div>
+    </article>
+
+    <!-- SECCIÓN DE PREGUNTAS FRECUENTES (FAQ) -->
+    <article class="tema-card" id="faq-section" style="margin-bottom: 3.5rem;">
+      <div class="tema-header">
+        <div class="tema-eyebrow">Resolución de Dudas Frecuentes</div>
+        <h3 class="tema-title">Preguntas Frecuentes: Webhooks &amp; Meta Cloud API</h3>
+      </div>
+      <div style="display: flex; flex-direction: column; gap: 1rem; margin-top: 1rem;">
+        <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 1.1rem;">
+          <h4 style="font-size: 0.95rem; font-weight: 750; color: var(--text-primary); margin: 0 0 0.4rem;">¿Por qué Meta devuelve error de verificación al configurar mi URL en ngrok?</h4>
+          <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; margin: 0;">Asegúrate de que tu servidor responda al parámetro <code>hub.challenge</code> en texto plano puro (<code>text/plain</code>) y con código HTTP 200, no encapsulado en un JSON ni con comillas dobles.</p>
+        </div>
+        <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 1.1rem;">
+          <h4 style="font-size: 0.95rem; font-weight: 750; color: var(--text-primary); margin: 0 0 0.4rem;">¿Por qué recibo el mismo mensaje múltiples veces en producción?</h4>
+          <p style="font-size: 0.88rem; color: var(--text-secondary); line-height: 1.6; margin: 0;">Si tu endpoint tarda más de 3 segundos en responder 200 OK a Meta, su infraestructura asume un fallo transitorio de red y reintenta la entrega. Debes responder 200 OK de inmediato y procesar la inferencia en segundo plano (BackgroundTasks), deduplicando por <code>wamid</code>.</p>
+        </div>
       </div>
     </article>
 

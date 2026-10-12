@@ -191,6 +191,49 @@
       </div>
     </article>
 
+    <!-- SECCIÓN: CANDADOS DE CONCURRENCIA -->
+    <article class="tema-card" id="concurrencia-locks" style="margin-bottom: 3.5rem;">
+      <div class="tema-header">
+        <div class="tema-eyebrow">Concurrencia Asíncrona</div>
+        <h3 class="tema-title">Serialización por Usuario con Candados (asyncio.Lock)</h3>
+      </div>
+      <p style="color: var(--text-secondary); font-size: 0.93rem; line-height: 1.65;">
+        Si un usuario envía tres mensajes seguidos en WhatsApp en menos de 2 segundos, procesarlos en paralelo provocaría <b>condiciones de carrera (Race Conditions)</b>, desordenando el historial de conversación. Implementamos un diccionario de candados por usuario (<code>user_locks: Dict[str, asyncio.Lock]</code>) para serializar las peticiones de cada remitente de forma no bloqueante para el resto de los clientes.
+      </p>
+    </article>
+
+    <!-- SECCIÓN: CÓDIGO PYTHON -->
+    <article class="tema-card" id="codigo-session-manager" style="margin-bottom: 3.5rem;">
+      <div class="tema-header">
+        <div class="tema-eyebrow">Implementación de Producción</div>
+        <h3 class="tema-title">Código Python: Gestor de Memoria con Ventana Deslizante</h3>
+      </div>
+      <div class="code-box-wrapper" style="position: relative; margin-top: 1rem;">
+        <pre><code class="language-python">import asyncio
+from typing import Dict, List
+
+class SessionManager:
+    def __init__(self, max_turns: int = 4):
+        self.max_turns = max_turns
+        self.sessions: Dict[str, List[dict]] = {}
+        self.locks: Dict[str, asyncio.Lock] = {}
+        self.escalations: Dict[str, bool] = {}
+
+    def get_lock(self, user_id: str) -> asyncio.Lock:
+        if user_id not in self.locks:
+            self.locks[user_id] = asyncio.Lock()
+        return self.locks[user_id]
+
+    def add_turn(self, user_id: str, role: str, content: str):
+        if user_id not in self.sessions:
+            self.sessions[user_id] = []
+        self.sessions[user_id].append({"role": role, "content": content})
+        # Poda con ventana deslizante (2 * max_turns mensajes)
+        if len(self.sessions[user_id]) > self.max_turns * 2:
+            self.sessions[user_id] = self.sessions[user_id][-(self.max_turns * 2):]</code></pre>
+      </div>
+    </article>
+
     <!-- NAVEGACIÓN INFERIOR -->
     <div class="pagination-container" style="display: flex; justify-content: space-between; gap: 1rem; margin-top: 3rem; flex-wrap: wrap;">
       <a href="modulo2-challenge1.html" class="pagination-link" style="text-decoration: none; display: flex; align-items: center; gap: 0.6rem; padding: 0.8rem 1.4rem; background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: 10px; color: var(--text-primary); font-weight: 700;">
