@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="es-MX" data-theme="dark">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Challenge 3 (Módulo 2): Integración Llama & WhatsApp con Function Calling | IA Aplicada con Modelos Abiertos</title>
+  <meta name="description" content="Laboratorio interactivo del Challenge 3 del Módulo 2: Orquestación de Meta Llama como motor de razonamiento con Function Calling en dos pasos, esquemas formales JSON Schema, ejecución de herramientas y cálculo de latencia de ciclo total."/>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet"/>
+  
+  <!-- KaTeX -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css"/>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+  
+  <!-- Estilos Modulares -->
+  <link rel="stylesheet" href="css/styles.css"/>
+  
+  <!-- Scripts Modulares -->
+  <script defer src="js/app.js"></script>
+  <script defer src="js/modulo2-challenge3.js"></script>
+</head>
+<body>
+  <!-- Header Principal -->
+  <header class="top-header">
+    <div class="header-inner">
+      <a class="brand-wrapper notranslate" href="index.html" title="Volver al Portal Principal">
+        <svg class="meta-logo-svg" viewBox="0 0 36 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M18 13.9C16.2 11.2 13.7 9.4 10.7 9.4C5.9 9.4 2 13.3 2 18.1C2 22.9 5.9 26.8 10.7 26.8C13.7 26.8 16.2 25 18 22.3C19.8 25 22.3 26.8 25.3 26.8C30.1 26.8 34 22.9 34 18.1C34 13.3 30.1 9.4 25.3 9.4C22.3 9.4 19.8 11.2 18 13.9ZM10.7 22.8C8.1 22.8 6 20.7 6 18.1C6 15.5 8.1 13.4 10.7 13.4C12.7 13.4 14.5 14.7 15.8 16.7C15 18.8 13.8 20.7 12.3 22.1C11.8 22.6 11.3 22.8 10.7 22.8ZM25.3 22.8C24.7 22.8 24.2 22.6 23.7 22.1C22.2 20.7 21 18.8 20.2 16.7C21.5 14.7 23.3 13.4 25.3 13.4C27.9 13.4 30 15.5 30 18.1C30 20.7 27.9 22.8 25.3 22.8Z" transform="translate(0, -6)"></path>
+        </svg>
+        <span class="brand-text notranslate">Meta AI</span>
+      </a>
+      <nav class="nav-links">
+        <a class="nav-link-item" href="modulo2-challenge2.html" style="color: var(--meta-blue); font-weight: 700;">← Challenge 2</a>
+        <a class="nav-link-item" href="#function-calling-teoria">Function Calling</a>
+        <a class="nav-link-item" href="#simulador-function-calling">Simulador en 2 Pasos</a>
+        <a class="nav-link-item" href="#latencia-ciclo">Latencia de Ciclo</a>
+        <a class="nav-link-item" href="#script-completo">Código Python</a>
+        <a class="nav-link-item" href="modulo2-hackathon.html" style="color: #a855f7; font-weight: 700;">Hackathon 2 →</a>
+      </nav>
+      <div class="header-controls">
+        <button class="lang-toggle-btn notranslate" id="lang-switcher-btn" title="Cambiar idioma / Switch language" type="button" translate="no"><span class="lang-code lang-active notranslate" translate="no">ES</span><span class="lang-sep notranslate" translate="no">/</span><span class="lang-code notranslate" translate="no">EN</span></button>
+        <button class="btn-icon" id="sound-btn" title="Alternar Efectos de Audio">
+          <span id="sound-icon-container">
+            <svg fill="currentColor" height="16" viewBox="0 0 24 24" width="16"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"></path></svg>
+          </span>
+          <span class="btn-text-label" id="sound-label">Audio ON</span>
+        </button>
+        <button class="btn-icon" id="theme-btn" title="Alternar Modo Claro / Oscuro">
+          <span id="theme-icon-container">
+            <svg fill="currentColor" height="16" viewBox="0 0 24 24" width="16"><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58a.996.996 0 00-1.41 0 .996.996 0 000 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37a.996.996 0 00-1.41 0 .996.996 0 000 1.41l1.06 1.06c.39.39 1.03.39 1.41 0a.996.996 0 000-1.41l-1.06-1.06zm1.06-10.96a.996.996 0 000-1.41.996.996 0 000-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36a.996.996 0 000-1.41.996.996 0 000-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"></path></svg>
+          </span>
+          <span class="btn-text-label" id="theme-label">Tema</span>
+        </button>
+        <button aria-expanded="false" aria-label="Abrir menú de navegación" class="btn-menu-toggle" id="menu-toggle-btn">
+          <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" width="20">
+            <line x1="3" x2="21" y1="6" y2="6"></line>
+            <line x1="3" x2="21" y1="12" y2="12"></line>
+            <line x1="3" x2="21" y1="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Drawer Móvil -->
+  <div aria-hidden="true" class="mobile-backdrop" id="mobile-backdrop"></div>
+  <div aria-label="Menú de Navegación" aria-modal="true" class="mobile-drawer" id="mobile-drawer" role="dialog">
+    <div class="mobile-drawer-header">
+      <div class="mobile-drawer-title">
+        <span>Menú Challenge 3 (Mód. 2)</span>
+      </div>
+      <button aria-label="Cerrar menú" class="mobile-drawer-close" id="mobile-drawer-close">
+        <svg fill="none" height="18" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" width="18"><path d="M18 6L6 18M6 6l12 12"></path></svg>
+      </button>
+    </div>
+    <nav class="mobile-drawer-nav" id="mobile-drawer-nav"></nav>
+  </div>
+
+  <div id="progress-bar"></div>
+
+  <main class="main-container">
+    <!-- HERO PRINCIPAL -->
+    <section class="course-hero" id="overview">
+      <div class="hero-badge-pill">
+        <span class="hero-badge-num">MÓDULO 2</span>
+        <span class="hero-badge-divider"></span>
+        <span class="hero-badge-label">CHALLENGE 3 · FUNCTION CALLING &amp; TOOLS</span>
+      </div>
+      <h1 class="hero-title">Function Calling en Dos Pasos &amp; Herramientas Empresariales</h1>
+      <p class="hero-subtitle">
+        <b>Convierte a Meta Llama en un motor de razonamiento activo capaz de consultar bases de datos y ejecutar acciones reales</b>. Describe contratos tipados en JSON Schema, procesa llamadas estructuradas (<code>tool_calls</code>) sin alucinaciones y mide la latencia de ciclo total para experiencias ultra-fluidas en WhatsApp.
+      </p>
+
+      <div style="display: flex; gap: 0.8rem; align-items: center; justify-content: center; flex-wrap: wrap; margin-top: 1.5rem;">
+        <a href="https://colab.research.google.com/github/jjho05/meta-llama-engineering-labs/blob/main/notebooks/07_Modulo2_Challenge3_Integracion_Llama_WhatsApp_FunctionCalling.ipynb" target="_blank" rel="noopener noreferrer" class="btn-primary" style="display: inline-flex; align-items: center; gap: 0.6rem; text-decoration: none; padding: 0.75rem 1.4rem; border-radius: 10px; font-weight: 750; box-shadow: 0 4px 18px rgba(8, 102, 255, 0.25);">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-9l6 4.5-6 4.5z"/></svg>
+          <span>Abrir Cuaderno en Google Colab</span>
+        </a>
+        <a href="https://github.com/jjho05/meta-llama-engineering-labs/blob/main/docs/modulo-2-automatizacion-agentes-whatsapp/challenge-3-integracion-function-calling.md" target="_blank" rel="noopener noreferrer" class="btn-secondary" style="display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; padding: 0.75rem 1.2rem; border-radius: 10px; font-weight: 700;">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          <span>Ver Manual Técnico en GitHub</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 1: FÓRMULA DE LATENCIA DE CICLO -->
+    <article class="tema-card" id="latencia-ciclo" style="border-left: 5px solid var(--meta-blue); margin-bottom: 3.5rem;">
+      <div class="tema-header">
+        <div class="tema-eyebrow">Métricas SRE de Producción</div>
+        <h3 class="tema-title">Cálculo de la Latencia de Ciclo Total ($T_{total}$)</h3>
+      </div>
+      <p style="color: var(--text-secondary); line-height: 1.7; font-size: 0.95rem;">
+        La experiencia del usuario en WhatsApp no depende únicamente del tiempo que Llama tarda en generar texto; depende de la acumulación de todas las fases del ciclo conversacional y de la ejecución externa de herramientas.
+      </p>
+
+      <div class="formula-card" style="margin: 1.5rem 0;">
+        <div class="formula-header">
+          <span class="formula-tag">Presupuesto de Tiempo E2E</span>
+          <span class="formula-title">Latencia Acumulada de Inferencia en Dos Pasos</span>
+        </div>
+        <div class="formula-math">
+          $$T_{total} = T_{webhook} + T_{llama\_call} + T_{exec\_tool} + T_{llama\_synth} + T_{meta\_send} \le 3000\text{ ms}$$
+        </div>
+        <details class="formula-breakdown-details" open>
+          <summary class="formula-breakdown-summary">
+            <span>Desglose Exhaustivo de las 5 Fases de Latencia</span>
+            <span class="formula-breakdown-arrow">▼</span>
+          </summary>
+          <div class="formula-breakdown-content">
+            <ul class="breakdown-list">
+              <li><b>$T_{webhook}$</b>: Tiempo de recepción, validación de firma HMAC y extracción de datos del webhook (~30-50 ms).</li>
+              <li><b>$T_{llama\_call}$</b>: Primera llamada a Llama para razonar sobre la intención y emitir el JSON de la herramienta (~300-600 ms en Groq LPU).</li>
+              <li><b>$T_{exec\_tool}$</b>: Ejecución en tu backend de la función real (consulta SQL, CRM o API de inventario, ~100-250 ms).</li>
+              <li><b>$T_{llama\_synth}$</b>: Segunda llamada a Llama con el resultado inyectado para redactar el mensaje conversacional final (~400-800 ms).</li>
+              <li><b>$T_{meta\_send}$</b>: Petición HTTP POST a Meta Graph API para entregar el mensaje en el teléfono del usuario (~200-400 ms).</li>
+            </ul>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SECCIÓN 2: SIMULADOR DE FUNCTION CALLING EN VIVO -->
+    <article class="tema-card" id="simulador-function-calling" style="margin-bottom: 3.5rem;">
+      <div class="tema-header">
+        <div class="tema-eyebrow">Laboratorio Interactivo</div>
+        <h3 class="tema-title">Simulador de Ejecución de Function Calling en 2 Pasos</h3>
+      </div>
+      <p style="color: var(--text-secondary); font-size: 0.93rem; line-height: 1.65;">
+        Selecciona una consulta de negocio o ingresa una propia para observar cómo Llama decide emitir una llamada a función, cómo el backend la resuelve y cómo se ensambla la respuesta final.
+      </p>
+
+      <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: 14px; padding: 1.5rem; margin-top: 1rem;">
+        <div style="display: flex; gap: 0.5rem; margin-bottom: 1rem; flex-wrap: wrap;">
+          <button class="btn-prompt-fc btn-primary" data-query="¿Dónde está mi pedido 4521?" style="font-size: 0.8rem; padding: 0.4rem 0.8rem;">1. Rastrear Pedido 4521</button>
+          <button class="btn-prompt-fc btn-secondary" data-query="Quiero agendar una cita de frenos el viernes a las 11am" style="font-size: 0.8rem; padding: 0.4rem 0.8rem;">2. Agendar Cita Taller</button>
+          <button class="btn-prompt-fc btn-secondary" data-query="¿Cuánto cobran por el cambio de aceite y afinación?" style="font-size: 0.8rem; padding: 0.4rem 0.8rem;">3. Catálogo de Precios</button>
+        </div>
+
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1rem;">
+          <!-- Paso 1: Llamada emitida por Llama -->
+          <div style="background: var(--bg-primary); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 1rem;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+              <span style="font-size: 0.8rem; font-weight: 750; color: #a855f7;">Paso 1: Decisión Llama (Tool Call)</span>
+              <span id="fc-step1-latency" style="font-size: 0.75rem; color: var(--text-muted);">-- ms</span>
+            </div>
+            <pre id="fc-step1-box" style="margin: 0; font-family: var(--font-mono); font-size: 0.78rem; color: var(--text-secondary); white-space: pre-wrap; height: 160px; overflow-y: auto;">
+Esperando ejecución...
+            </pre>
+          </div>
+
+          <!-- Paso 2: Ejecución backend y respuesta final -->
+          <div style="background: var(--bg-primary); border: 1px solid var(--border-subtle); border-radius: 10px; padding: 1rem;">
+            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+              <span style="font-size: 0.8rem; font-weight: 750; color: #3fb950;">Paso 2: Respuesta WhatsApp Final</span>
+              <span id="fc-step2-latency" style="font-size: 0.75rem; color: var(--text-muted);">-- ms</span>
+            </div>
+            <div id="fc-step2-box" style="font-size: 0.85rem; line-height: 1.55; color: var(--text-primary); height: 160px; overflow-y: auto; padding: 0.4rem;">
+Selecciona una consulta arriba para ver la síntesis en vivo.
+            </div>
+          </div>
+        </div>
+
+        <div style="margin-top: 1rem; border-top: 1px solid var(--border-subtle); padding-top: 0.8rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+          <span style="font-size: 0.85rem; color: var(--text-secondary);">Latencia E2E Total del Ciclo: <strong id="fc-total-latency" style="color: #38bdf8;">-- ms</strong></span>
+          <span id="fc-sla-badge" style="font-size: 0.75rem; padding: 0.2rem 0.6rem; border-radius: 6px; background: rgba(5,150,105,0.1); color: var(--accent-success); font-weight: 700;">SLA OK (&lt; 3.0s)</span>
+        </div>
+      </div>
+    </article>
+
+    <!-- NAVEGACIÓN INFERIOR -->
+    <div class="pagination-container" style="display: flex; justify-content: space-between; gap: 1rem; margin-top: 3rem; flex-wrap: wrap;">
+      <a href="modulo2-challenge2.html" class="pagination-link" style="text-decoration: none; display: flex; align-items: center; gap: 0.6rem; padding: 0.8rem 1.4rem; background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: 10px; color: var(--text-primary); font-weight: 700;">
+        <span>← Challenge 2: Memoria &amp; Escalamiento</span>
+      </a>
+      <a href="modulo2-hackathon.html" class="pagination-link" style="text-decoration: none; display: flex; align-items: center; gap: 0.6rem; padding: 0.8rem 1.4rem; background: #a855f7; color: #ffffff; border-radius: 10px; font-weight: 700; box-shadow: 0 4px 14px rgba(168, 85, 247, 0.3);">
+        <span>Hackathon 2: Proyecto Integrador →</span>
+      </a>
+    </div>
+  </main>
+</body>
+</html>

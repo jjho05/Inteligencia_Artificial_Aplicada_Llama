@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="es-MX" data-theme="dark">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Challenge 2 (Módulo 2): Memoria Conversacional & Escalamiento Humano | IA Aplicada con Modelos Abiertos</title>
+  <meta name="description" content="Laboratorio interactivo del Challenge 2 del Módulo 2: Gestión de estado conversacional multi-turno, ventana deslizante de tokens, serialización de concurrencia por usuario y reglas duras de escalamiento a operadores humanos."/>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin=""/>
+  <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@500;600;700;800;900&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet"/>
+  
+  <!-- KaTeX -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css"/>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body, {delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}]});"></script>
+  
+  <!-- Estilos Modulares -->
+  <link rel="stylesheet" href="css/styles.css"/>
+  
+  <!-- Scripts Modulares -->
+  <script defer src="js/app.js"></script>
+  <script defer src="js/modulo2-challenge2.js"></script>
+</head>
+<body>
+  <!-- Header Principal -->
+  <header class="top-header">
+    <div class="header-inner">
+      <a class="brand-wrapper notranslate" href="index.html" title="Volver al Portal Principal">
+        <svg class="meta-logo-svg" viewBox="0 0 36 24" xmlns="http://www.w3.org/2000/svg">
+          <path d="M18 13.9C16.2 11.2 13.7 9.4 10.7 9.4C5.9 9.4 2 13.3 2 18.1C2 22.9 5.9 26.8 10.7 26.8C13.7 26.8 16.2 25 18 22.3C19.8 25 22.3 26.8 25.3 26.8C30.1 26.8 34 22.9 34 18.1C34 13.3 30.1 9.4 25.3 9.4C22.3 9.4 19.8 11.2 18 13.9ZM10.7 22.8C8.1 22.8 6 20.7 6 18.1C6 15.5 8.1 13.4 10.7 13.4C12.7 13.4 14.5 14.7 15.8 16.7C15 18.8 13.8 20.7 12.3 22.1C11.8 22.6 11.3 22.8 10.7 22.8ZM25.3 22.8C24.7 22.8 24.2 22.6 23.7 22.1C22.2 20.7 21 18.8 20.2 16.7C21.5 14.7 23.3 13.4 25.3 13.4C27.9 13.4 30 15.5 30 18.1C30 20.7 27.9 22.8 25.3 22.8Z" transform="translate(0, -6)"></path>
+        </svg>
+        <span class="brand-text notranslate">Meta AI</span>
+      </a>
+      <nav class="nav-links">
+        <a class="nav-link-item" href="modulo2-challenge1.html" style="color: var(--meta-blue); font-weight: 700;">← Challenge 1</a>
+        <a class="nav-link-item" href="#teoria-memoria">Teoría de Estado</a>
+        <a class="nav-link-item" href="#simulador-chat-memoria">Simulador Chat &amp; Memoria</a>
+        <a class="nav-link-item" href="#concurrencia-locks">Candados de Concurrencia</a>
+        <a class="nav-link-item" href="#codigo-session-manager">Código Python</a>
+        <a class="nav-link-item" href="modulo2-challenge3.html" style="color: #3fb950; font-weight: 700;">Challenge 3 →</a>
+      </nav>
+      <div class="header-controls">
+        <button class="lang-toggle-btn notranslate" id="lang-switcher-btn" title="Cambiar idioma / Switch language" type="button" translate="no"><span class="lang-code lang-active notranslate" translate="no">ES</span><span class="lang-sep notranslate" translate="no">/</span><span class="lang-code notranslate" translate="no">EN</span></button>
+        <button class="btn-icon" id="sound-btn" title="Alternar Efectos de Audio">
+          <span id="sound-icon-container">
+            <svg fill="currentColor" height="16" viewBox="0 0 24 24" width="16"><path d="M3 9v6h4l5 5V4L7 9H3zm13.5 3c0-1.77-1.02-3.29-2.5-4.03v8.05c1.48-.73 2.5-2.25 2.5-4.02zM14 3.23v2.06c2.89.86 5 3.54 5 6.71s-2.11 5.85-5 6.71v2.06c4.01-.91 7-4.49 7-8.77s-2.99-7.86-7-8.77z"></path></svg>
+          </span>
+          <span class="btn-text-label" id="sound-label">Audio ON</span>
+        </button>
+        <button class="btn-icon" id="theme-btn" title="Alternar Modo Claro / Oscuro">
+          <span id="theme-icon-container">
+            <svg fill="currentColor" height="16" viewBox="0 0 24 24" width="16"><path d="M12 7c-2.76 0-5 2.24-5 5s2.24 5 5 5 5-2.24 5-5-2.24-5-5-5zM2 13h2c.55 0 1-.45 1-1s-.45-1-1-1H2c-.55 0-1 .45-1 1s.45 1 1 1zm18 0h2c.55 0 1-.45 1-1s-.45-1-1-1h-2c-.55 0-1 .45-1 1s.45 1 1 1zM11 2v2c0 .55.45 1 1 1s1-.45 1-1V2c0-.55-.45-1-1-1s-1 .45-1 1zm0 18v2c0 .55.45 1 1 1s1-.45 1-1v-2c0-.55-.45-1-1-1s-1 .45-1 1zM5.99 4.58a.996.996 0 00-1.41 0 .996.996 0 000 1.41l1.06 1.06c.39.39 1.03.39 1.41 0s.39-1.03 0-1.41L5.99 4.58zm12.37 12.37a.996.996 0 00-1.41 0 .996.996 0 000 1.41l1.06 1.06c.39.39 1.03.39 1.41 0a.996.996 0 000-1.41l-1.06-1.06zm1.06-10.96a.996.996 0 000-1.41.996.996 0 000-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06zM7.05 18.36a.996.996 0 000-1.41.996.996 0 000-1.41 0l-1.06 1.06c-.39.39-.39 1.03 0 1.41s1.03.39 1.41 0l1.06-1.06z"></path></svg>
+          </span>
+          <span class="btn-text-label" id="theme-label">Tema</span>
+        </button>
+        <button aria-expanded="false" aria-label="Abrir menú de navegación" class="btn-menu-toggle" id="menu-toggle-btn">
+          <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewBox="0 0 24 24" width="20">
+            <line x1="3" x2="21" y1="6" y2="6"></line>
+            <line x1="3" x2="21" y1="12" y2="12"></line>
+            <line x1="3" x2="21" y1="18" y2="18"></line>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- Drawer Móvil -->
+  <div aria-hidden="true" class="mobile-backdrop" id="mobile-backdrop"></div>
+  <div aria-label="Menú de Navegación" aria-modal="true" class="mobile-drawer" id="mobile-drawer" role="dialog">
+    <div class="mobile-drawer-header">
+      <div class="mobile-drawer-title">
+        <span>Menú Challenge 2 (Mód. 2)</span>
+      </div>
+      <button aria-label="Cerrar menú" class="mobile-drawer-close" id="mobile-drawer-close">
+        <svg fill="none" height="18" stroke="currentColor" stroke-width="2.5" viewBox="0 0 24 24" width="18"><path d="M18 6L6 18M6 6l12 12"></path></svg>
+      </button>
+    </div>
+    <nav class="mobile-drawer-nav" id="mobile-drawer-nav"></nav>
+  </div>
+
+  <div id="progress-bar"></div>
+
+  <main class="main-container">
+    <!-- HERO PRINCIPAL -->
+    <section class="course-hero" id="overview">
+      <div class="hero-badge-pill">
+        <span class="hero-badge-num">MÓDULO 2</span>
+        <span class="hero-badge-divider"></span>
+        <span class="hero-badge-label">CHALLENGE 2 · AGENTES CONVERSACIONALES &amp; MEMORIA</span>
+      </div>
+      <h1 class="hero-title">Memoria Multi-Turno &amp; Escalamiento a Operador Humano</h1>
+      <p class="hero-subtitle">
+        <b>Transición de respuestas aisladas a una conversación fluida y contextual</b>. Diseña la capa de estado desacoplada fuera de Llama mediante identificadores de teléfono, aplica poda con ventana deslizante ($W_k$), implementa candados de concurrencia asíncronos y activa reglas fijas inquebrantables de derivación a agentes humanos.
+      </p>
+
+      <div style="display: flex; gap: 0.8rem; align-items: center; justify-content: center; flex-wrap: wrap; margin-top: 1.5rem;">
+        <a href="https://colab.research.google.com/github/jjho05/meta-llama-engineering-labs/blob/main/notebooks/06_Modulo2_Challenge2_Agentes_Conversacionales_Memoria.ipynb" target="_blank" rel="noopener noreferrer" class="btn-primary" style="display: inline-flex; align-items: center; gap: 0.6rem; text-decoration: none; padding: 0.75rem 1.4rem; border-radius: 10px; font-weight: 750; box-shadow: 0 4px 18px rgba(8, 102, 255, 0.25);">
+          <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-9l6 4.5-6 4.5z"/></svg>
+          <span>Abrir Cuaderno en Google Colab</span>
+        </a>
+        <a href="https://github.com/jjho05/meta-llama-engineering-labs/blob/main/docs/modulo-2-automatizacion-agentes-whatsapp/challenge-2-agente-conversacional-memoria.md" target="_blank" rel="noopener noreferrer" class="btn-secondary" style="display: inline-flex; align-items: center; gap: 0.5rem; text-decoration: none; padding: 0.75rem 1.2rem; border-radius: 10px; font-weight: 700;">
+          <svg viewBox="0 0 24 24" width="18" height="18" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+          <span>Ver Manual Técnico en GitHub</span>
+        </a>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 1: FÓRMULA DE VENTANA DESLIZANTE -->
+    <article class="tema-card" id="teoria-memoria" style="border-left: 5px solid var(--meta-blue); margin-bottom: 3.5rem;">
+      <div class="tema-header">
+        <div class="tema-eyebrow">Ingeniería de Contexto</div>
+        <h3 class="tema-title">Matemática de la Ventana Deslizante y Consumo de Tokens</h3>
+      </div>
+      <p style="color: var(--text-secondary); line-height: 1.7; font-size: 0.95rem;">
+        Un modelo de lenguaje es estrictamente sin estado (<i>stateless</i>). Para que recuerde referencias anafóricas ("quiero una cita el jueves"), reinyectamos los últimos $k$ turnos manteniendo el consumo de tokens dentro del límite físico de la ventana de contexto.
+      </p>
+
+      <div class="formula-card" style="margin: 1.5rem 0;">
+        <div class="formula-header">
+          <span class="formula-tag">Ventana Deslizante (Sliding Window)</span>
+          <span class="formula-title">Presupuesto de Tokens por Inferencia</span>
+        </div>
+        <div class="formula-math">
+          $$C_{total} = C_{system} + \sum_{i=n-k+1}^{n} \left( T_{user, i} + T_{assistant, i} \right) \le L_{max}$$
+        </div>
+        <details class="formula-breakdown-details" open>
+          <summary class="formula-breakdown-summary">
+            <span>Desglose Exhaustivo de Variables de Memoria</span>
+            <span class="formula-breakdown-arrow">▼</span>
+          </summary>
+          <div class="formula-breakdown-content">
+            <ul class="breakdown-list">
+              <li><b>$C_{total}$</b>: Número total de tokens consumidos en el prompt de la llamada actual.</li>
+              <li><b>$C_{system}$</b>: Longitud en tokens del System Prompt maestro (reglas fijas, directrices y rol).</li>
+              <li><b>$k$</b>: Tamaño de la ventana deslizante (número de turnos bidireccionales recientes preservados, ej. $k=4$).</li>
+              <li><b>$T_{user, i}, T_{assistant, i}$</b>: Tokens generados en los mensajes del usuario y asistente en el turno $i$.</li>
+              <li><b>$L_{max}$</b>: Límite máximo de contexto asignado para evitar saturación de VRAM o degradación de atención ($4096$ o $8192$ tokens).</li>
+            </ul>
+          </div>
+        </details>
+      </div>
+    </article>
+
+    <!-- SECCIÓN 2: SIMULADOR DE CHAT Y MEMORIA -->
+    <article class="tema-card" id="simulador-chat-memoria" style="margin-bottom: 3.5rem;">
+      <div class="tema-header">
+        <div class="tema-eyebrow">Laboratorio Interactivo</div>
+        <h3 class="tema-title">Simulador de Conversación Multi-Turno con Escalamiento</h3>
+      </div>
+      <p style="color: var(--text-secondary); font-size: 0.93rem; line-height: 1.65;">
+        Escribe mensajes consecutivos en el chat. Observa cómo el sistema recuerda tus respuestas anteriores y poda automáticamente los turnos más antiguos al superar el límite de $k=4$ turnos.
+      </p>
+
+      <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.4rem; margin-top: 1.2rem;">
+        <!-- Chat Interactivo -->
+        <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: 14px; padding: 1.2rem; display: flex; flex-direction: column; height: 420px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-subtle); padding-bottom: 0.6rem; margin-bottom: 0.8rem;">
+            <span style="font-weight: 750; font-size: 0.9rem; color: var(--text-primary);">WhatsApp Chat (Usuario: 5215512345678)</span>
+            <span id="chat-status-pill" style="font-size: 0.72rem; padding: 0.2rem 0.5rem; border-radius: 6px; background: rgba(5,150,105,0.1); color: var(--accent-success); font-weight: 700;">BOT ACTIVO</span>
+          </div>
+          
+          <div id="chat-messages-box" style="flex: 1; overflow-y: auto; display: flex; flex-direction: column; gap: 0.6rem; padding-right: 0.4rem;">
+            <div style="align-self: flex-start; background: var(--bg-primary); border: 1px solid var(--border-subtle); padding: 0.6rem 0.8rem; border-radius: 10px; max-width: 85%; font-size: 0.85rem; color: var(--text-primary);">
+              Hola, bienvenido al asistente de servicio. ¿En qué puedo apoyarte hoy?
+            </div>
+          </div>
+
+          <div style="display: flex; gap: 0.5rem; margin-top: 0.8rem;">
+            <input type="text" id="chat-input" placeholder="Escribe un mensaje..." style="flex: 1; background: var(--bg-primary); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 0.6rem; color: var(--text-primary); font-size: 0.85rem;"/>
+            <button id="chat-send-btn" class="btn-primary" style="padding: 0.6rem 1rem; font-size: 0.85rem; font-weight: 700;">Enviar</button>
+          </div>
+          <div style="display: flex; gap: 0.4rem; margin-top: 0.5rem; flex-wrap: wrap;">
+            <button class="btn-prompt-sugerido" data-prompt="Quiero una cita de frenos" style="font-size: 0.75rem; background: var(--bg-primary); border: 1px solid var(--border-subtle); color: var(--text-secondary); padding: 0.2rem 0.5rem; border-radius: 6px; cursor: pointer;">1. Cita frenos</button>
+            <button class="btn-prompt-sugerido" data-prompt="¿Tienen libre el jueves a las 10am?" style="font-size: 0.75rem; background: var(--bg-primary); border: 1px solid var(--border-subtle); color: var(--text-secondary); padding: 0.2rem 0.5rem; border-radius: 6px; cursor: pointer;">2. ¿Jueves 10am?</button>
+            <button class="btn-prompt-sugerido" data-prompt="Quiero hablar con un humano" style="font-size: 0.75rem; background: var(--bg-primary); border: 1px solid var(--border-subtle); color: #ef4444; padding: 0.2rem 0.5rem; border-radius: 6px; cursor: pointer;">3. Escalar a Humano</button>
+          </div>
+        </div>
+
+        <!-- Inspector de Memoria de Sesión -->
+        <div style="background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: 14px; padding: 1.2rem; display: flex; flex-direction: column; height: 420px;">
+          <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid var(--border-subtle); padding-bottom: 0.6rem; margin-bottom: 0.8rem;">
+            <span style="font-weight: 750; font-size: 0.9rem; color: var(--text-primary);">Estado de Sesión Interno ($W_k$)</span>
+            <span id="memory-turns-pill" style="font-size: 0.72rem; padding: 0.2rem 0.5rem; border-radius: 6px; background: var(--bg-primary); color: var(--text-secondary);">Turnos: 0 / 4</span>
+          </div>
+          <div id="memory-inspector-box" style="flex: 1; background: var(--bg-primary); border: 1px solid var(--border-subtle); border-radius: 8px; padding: 0.8rem; font-family: var(--font-mono); font-size: 0.78rem; color: #38bdf8; overflow-y: auto; white-space: pre-wrap;">
+// Historial de sesión vacío. Envía un mensaje en el chat para registrar el contexto...
+          </div>
+        </div>
+      </div>
+    </article>
+
+    <!-- NAVEGACIÓN INFERIOR -->
+    <div class="pagination-container" style="display: flex; justify-content: space-between; gap: 1rem; margin-top: 3rem; flex-wrap: wrap;">
+      <a href="modulo2-challenge1.html" class="pagination-link" style="text-decoration: none; display: flex; align-items: center; gap: 0.6rem; padding: 0.8rem 1.4rem; background: var(--bg-surface); border: 1px solid var(--border-subtle); border-radius: 10px; color: var(--text-primary); font-weight: 700;">
+        <span>← Challenge 1: WhatsApp Cloud API</span>
+      </a>
+      <a href="modulo2-challenge3.html" class="pagination-link" style="text-decoration: none; display: flex; align-items: center; gap: 0.6rem; padding: 0.8rem 1.4rem; background: var(--meta-blue); color: #ffffff; border-radius: 10px; font-weight: 700; box-shadow: 0 4px 14px rgba(8, 102, 255, 0.3);">
+        <span>Challenge 3: Function Calling →</span>
+      </a>
+    </div>
+  </main>
+</body>
+</html>
