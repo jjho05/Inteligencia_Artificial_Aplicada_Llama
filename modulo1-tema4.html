@@ -2093,6 +2093,139 @@ Algoritmo de paralelización por bloques de SRAM que acelera el cálculo de aten
 </div>
 </div>
 </section>
+
+<!-- ==========================================================================
+  FASE PRÁCTICA: RETOS TÉCNICOS & HACKATHON DEL MÓDULO 1
+  ========================================================================== -->
+<section class="tema-card" id="retos-practicos-modulo1" style="border-left: 5px solid var(--meta-blue); margin-bottom: 3.5rem;">
+  <div class="tema-header">
+    <div style="display: flex; justify-content: space-between; align-items: center; width: 100%; flex-wrap: wrap; gap: 0.5rem;">
+      <div class="tema-eyebrow" style="color: var(--meta-blue);">FASE PRÁCTICA DE LABORATORIOS Y EVALUACIÓN FINAL</div>
+      <span style="font-size: 0.8rem; font-weight: 800; color: var(--meta-blue); background: var(--meta-blue-subtle); border: 1px solid var(--meta-blue-border); padding: 0.25rem 0.75rem; border-radius: 20px;">
+        Módulo 1 · 3 Challenges &amp; 1 Hackathon
+      </span>
+    </div>
+    <h3 class="tema-title">Challenges Prácticos &amp; Hackathon de Integración · Módulo 1</h3>
+  </div>
+
+  <p class="prose-p">
+    Has finalizado los 4 temas teóricos y arquitectónicos del Módulo 1. Ahora debes validar tu dominio técnico ejecutando los tres laboratorios oficiales en Google Colab con hardware acelerado (Groq LPU y GPU T4) antes de abordar el proyecto integrador:
+  </p>
+
+  <!-- CUADRÍCULA DE LOS 3 CHALLENGES DEL MÓDULO 1 -->
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(290px, 1fr)); gap: 1.25rem; margin: 2rem 0;">
+    <!-- CHALLENGE 1 -->
+    <div class="deliverable-card" style="display: flex; flex-direction: column; justify-content: space-between;">
+      <div>
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.8rem;">
+          <div class="deliverable-icon-box" style="background: rgba(8, 102, 255, 0.1); color: var(--meta-blue);">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M4 6h16v2H4zm0 5h16v2H4zm0 5h16v2H4z"/></svg>
+          </div>
+          <span class="deliverable-badge" style="background: var(--meta-blue-subtle); color: var(--meta-blue); border-color: var(--meta-blue-border);">Challenge 1 · Oficial</span>
+        </div>
+        <h4 class="deliverable-title">Comparador Multi-Modelo en LPU</h4>
+        <p class="deliverable-desc">
+          Evaluación empírica y comparativa de latencias, velocidad de generación (tokens/segundo) y fidelidad conceptual entre Meta Llama 3 20B, 120B y 27B en hardware Groq LPU.
+        </p>
+      </div>
+      <div style="margin-top: 1.2rem; display: flex; gap: 0.6rem; flex-wrap: wrap;">
+        <a href="modulo1-challenge1.html" class="btn-primary" style="flex: 1; text-align: center; text-decoration: none; padding: 0.55rem 0.9rem; font-size: 0.82rem; border-radius: 8px;">
+          Abrir Challenge 1 &rarr;
+        </a>
+        <a href="https://colab.research.google.com/github/jjho05/meta-llama-engineering-labs/blob/main/notebooks/01_Challenge1_Comparador_Multi_Modelo_Llama.ipynb" target="_blank" rel="noopener noreferrer" class="btn-secondary" style="text-decoration: none; padding: 0.55rem 0.8rem; font-size: 0.82rem; border-radius: 8px;" title="Abrir en Google Colab">
+          Colab
+        </a>
+      </div>
+    </div>
+
+    <!-- CHALLENGE 2 -->
+    <div class="deliverable-card" style="display: flex; flex-direction: column; justify-content: space-between;">
+      <div>
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.8rem;">
+          <div class="deliverable-icon-box" style="background: rgba(2, 132, 199, 0.1); color: var(--accent-info);">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></svg>
+          </div>
+          <span class="deliverable-badge" style="background: rgba(2, 132, 199, 0.08); color: var(--accent-info); border-color: rgba(2, 132, 199, 0.25);">Challenge 2 · Oficial</span>
+        </div>
+        <h4 class="deliverable-title">Asistente RAG de Políticas</h4>
+        <p class="deliverable-desc">
+          Indexación vectorial densa con SentenceTransformers, chunking con overlap, cálculo de Similitud Coseno y generación aumentada por recuperación con eliminación total de alucinaciones.
+        </p>
+      </div>
+      <div style="margin-top: 1.2rem; display: flex; gap: 0.6rem; flex-wrap: wrap;">
+        <a href="modulo1-challenge2.html" class="btn-primary" style="flex: 1; text-align: center; text-decoration: none; padding: 0.55rem 0.9rem; font-size: 0.82rem; border-radius: 8px; background: var(--accent-info); box-shadow: 0 4px 14px rgba(2, 132, 199, 0.25);">
+          Abrir Challenge 2 &rarr;
+        </a>
+        <a href="https://colab.research.google.com/github/jjho05/meta-llama-engineering-labs/blob/main/notebooks/02_Challenge2_Asistente_RAG_Politicas_Llama.ipynb" target="_blank" rel="noopener noreferrer" class="btn-secondary" style="text-decoration: none; padding: 0.55rem 0.8rem; font-size: 0.82rem; border-radius: 8px;" title="Abrir en Google Colab">
+          Colab
+        </a>
+      </div>
+    </div>
+
+    <!-- CHALLENGE 3 -->
+    <div class="deliverable-card" style="display: flex; flex-direction: column; justify-content: space-between;">
+      <div>
+        <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.8rem;">
+          <div class="deliverable-icon-box" style="background: rgba(124, 58, 237, 0.1); color: var(--accent-easy);">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3c-4.97 0-9 4.03-9 9 0 2.12.74 4.07 1.97 5.61L4.35 20.3c-.39.39-.39 1.02 0 1.41.39.39 1.02.39 1.41 0l2.69-.62C9.93 21.26 11.88 22 14 22c4.97 0 9-4.03 9-9s-4.03-9-9-9z"/></svg>
+          </div>
+          <span class="deliverable-badge" style="background: rgba(124, 58, 237, 0.08); color: var(--accent-easy); border-color: rgba(124, 58, 237, 0.25);">Challenge 3 · Oficial</span>
+        </div>
+        <h4 class="deliverable-title">Fine-Tuning LoRA (PEFT)</h4>
+        <p class="deliverable-desc">
+          Entrenamiento supervisado con matrices de bajo rango en GPU NVIDIA T4, cuantización 4-bit (QLoRA NF4), preparación de dataset JSONL y medición de pérdida y perplejidad.
+        </p>
+      </div>
+      <div style="margin-top: 1.2rem; display: flex; gap: 0.6rem; flex-wrap: wrap;">
+        <a href="modulo1-challenge3.html" class="btn-primary" style="flex: 1; text-align: center; text-decoration: none; padding: 0.55rem 0.9rem; font-size: 0.82rem; border-radius: 8px; background: var(--accent-easy); box-shadow: 0 4px 14px rgba(124, 58, 237, 0.25);">
+          Abrir Challenge 3 &rarr;
+        </a>
+        <a href="https://colab.research.google.com/github/jjho05/meta-llama-engineering-labs/blob/main/notebooks/03_Challenge3_FineTuning_LoRA_PEFT_Llama.ipynb" target="_blank" rel="noopener noreferrer" class="btn-secondary" style="text-decoration: none; padding: 0.55rem 0.8rem; font-size: 0.82rem; border-radius: 8px;" title="Abrir en Google Colab">
+          Colab
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- BANNER HERO DEL HACKATHON 1 -->
+  <div style="background: linear-gradient(135deg, rgba(8, 102, 255, 0.1) 0%, rgba(124, 58, 237, 0.08) 100%); border: 1.5px solid rgba(8, 102, 255, 0.35); border-radius: 16px; padding: 1.8rem; margin-top: 1.5rem; position: relative; overflow: hidden;">
+    <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 0.6rem; margin-bottom: 0.8rem;">
+      <div style="display: flex; align-items: center; gap: 0.5rem;">
+        <span class="badge-role" style="background: var(--meta-blue); color: #fff; font-weight: 800; font-size: 0.76rem; padding: 0.25rem 0.65rem; border-radius: 6px;">
+          HACKATHON 1 · PROYECTO INTEGRADOR MÓDULO 1
+        </span>
+        <span style="font-size: 0.76rem; color: var(--text-secondary); font-weight: 600;">Proyecto Integrador</span>
+      </div>
+      <span style="font-size: 0.74rem; background: var(--meta-blue-subtle); color: var(--meta-blue); border: 1px solid var(--meta-blue-border); padding: 0.2rem 0.6rem; border-radius: 20px; font-weight: 700;">
+        FastAPI + RAG + LoRA
+      </span>
+    </div>
+
+    <h4 style="font-family: var(--font-head); font-size: 1.35rem; font-weight: 800; color: var(--text-primary); margin-bottom: 0.6rem;">
+      Construir un Asistente Inteligente Completo con Meta Llama 3
+    </h4>
+
+    <p style="font-size: 0.92rem; color: var(--text-secondary); line-height: 1.65; margin: 0 0 1.4rem;">
+      Integra en un solo microservicio productivo la comparación de rendimiento, el motor de recuperación RAG con similitud coseno, los adaptadores LoRA entrenados y la exposición HTTP tipada con FastAPI y streaming Server-Sent Events (SSE).
+    </p>
+
+    <div style="display: flex; gap: 0.8rem; flex-wrap: wrap; align-items: center;">
+      <a href="hackathon.html" class="btn-primary" style="text-decoration: none; padding: 0.75rem 1.6rem; border-radius: 10px; font-weight: 800; font-size: 0.92rem; display: inline-flex; align-items: center; gap: 0.5rem;">
+        <span>Ingresar al Hackathon 1</span>
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+      </a>
+      <a href="https://colab.research.google.com/github/jjho05/meta-llama-engineering-labs/blob/main/notebooks/04_Hackathon1_Proyecto_Integrador_Asistente_Llama.ipynb" target="_blank" rel="noopener noreferrer" class="btn-secondary" style="text-decoration: none; padding: 0.72rem 1.2rem; border-radius: 10px; font-weight: 700; font-size: 0.88rem; display: inline-flex; align-items: center; gap: 0.4rem;">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 14.5v-9l6 4.5-6 4.5z"/></svg>
+        <span>Notebook Google Colab</span>
+      </a>
+      <a href="https://github.com/jjho05/meta-llama-engineering-labs/blob/main/docs/modulo-1-fundamentos-ia/hackathon-1-guia-participante.md" target="_blank" rel="noopener noreferrer" class="btn-secondary" style="border-color: var(--meta-blue-border); color: var(--meta-blue); text-decoration: none; padding: 0.72rem 1.2rem; border-radius: 10px; font-weight: 700; font-size: 0.88rem; display: inline-flex; align-items: center; gap: 0.4rem;">
+        <span>Guía de Evaluación en GitHub</span>
+        <svg fill="none" height="14" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" width="14"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6M15 3h6v6M10 14L21 3"></path></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
 <!-- PAGINACIÓN INFERIOR ESTILO GITHUB (ANTERIOR / SIGUIENTE) -->
 <nav aria-label="Navegación del Curso" class="course-pagination-nav">
 <a class="pagination-link pagination-link--prev" href="modulo1-tema3.html">

@@ -53,7 +53,7 @@
  <a href="#introduccion" class="nav-link-item">Introducción</a>
  <a href="#modulos" class="nav-link-item">Módulos</a>
  <a href="#flujo" class="nav-link-item">Flujo Extremo a Extremo</a>
- <a href="#roadmap" class="nav-link-item">Ruta de 8 Hitos</a>
+ <a href="#roadmap" class="nav-link-item">Ruta de 11 Hitos</a>
  <a href="#entregables" class="nav-link-item">Proyectos</a>
  <a href="#faq" class="nav-link-item">FAQ</a>
  </nav>
@@ -135,7 +135,7 @@
         <span>Explorar Plan de Estudios</span>
       </a>
       <a href="#roadmap" class="btn-secondary" style="border-radius: 24px; padding: 0.65rem 1.25rem;">
-        <span>Ruta de 8 Hitos</span>
+        <span>Ruta de 11 Hitos</span>
       </a>
     </div>
   </section>
@@ -323,37 +323,71 @@
 
  <!-- DESGLOSE DE UNIDADES 1.1 A 1.4 -->
  <div style="display: flex; flex-direction: column; gap: 0.9rem; margin: 1.8rem 0;">
- <div class="unit-item-row">
+ <a href="modulo1-tema1.html" class="unit-item-row" title="Abrir Tema 1.1">
  <span class="unit-num-badge">Tema 1.1</span>
  <div>
  <div class="unit-title-txt">Fundamentos de LLMs y Arquitectura de Llama: qué hay dentro de un modelo de pesos abiertos</div>
  <p class="unit-desc-txt">Predicción autoregresiva de tokens, muestreo con Temperatura y Top-p, tokenización Byte-Pair Encoding (BPE) de 128,256 tokens, espacios vectoriales de significado y matrices de atención QKV con compresión Grouped-Query Attention (GQA).</p>
  </div>
- </div>
+ </a>
 
- <div class="unit-item-row">
+ <a href="modulo1-tema2.html" class="unit-item-row" title="Abrir Tema 1.2">
  <span class="unit-num-badge">Tema 1.2</span>
  <div>
  <div class="unit-title-txt">Prompt Engineering y RAG con Llama: cuándo pedir mejor y cuándo darle documentos reales</div>
  <p class="unit-desc-txt">Diseño de instrucciones Zero-shot, Few-shot y Chain-of-Thought (CoT), mitigación de alucinaciones fácticas, chunking de documentos, generación de embeddings densos y búsqueda por similitud coseno en bases vectoriales.</p>
  </div>
- </div>
+ </a>
 
- <div class="unit-item-row">
+ <a href="modulo1-tema3.html" class="unit-item-row" title="Abrir Tema 1.3">
  <span class="unit-num-badge">Tema 1.3</span>
  <div>
  <div class="unit-title-txt">Fine-tuning y Evaluación de Modelos: ajustar Llama sin reentrenarlo desde cero</div>
  <p class="unit-desc-txt">Matemática de matrices de bajo rango ($W_0 + B \cdot A$), cuantización 4-bit NormalFloat (NF4), preparación de datasets en formato JSONL, entrenamiento de adaptadores en 1x GPU comercial y evaluación con Perplexity, BLEU y ROUGE.</p>
  </div>
- </div>
+ </a>
 
- <div class="unit-item-row">
+ <a href="modulo1-tema4.html" class="unit-item-row" title="Abrir Tema 1.4">
  <span class="unit-num-badge">Tema 1.4</span>
  <div>
  <div class="unit-title-txt">Pipeline Completo: por qué un modelo que funciona en el notebook no es lo mismo que un modelo en producción</div>
  <p class="unit-desc-txt">Construcción de microservicios HTTP asíncronos con FastAPI, validación de datos con Pydantic, streaming de tokens Server-Sent Events (SSE), pruebas unitarias automatizadas con PyTest y optimización de latencia de inferencia.</p>
  </div>
+ </a>
  </div>
+
+ <!-- CIERRE PRÁCTICO MÓDULO 1: CHALLENGES & HACKATHON -->
+ <div style="margin-top: 1.5rem; padding-top: 1.2rem; border-top: 1px dashed var(--border-subtle);">
+   <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.8rem;">
+     <span style="font-size: 0.8rem; font-weight: 800; color: var(--meta-blue); text-transform: uppercase; letter-spacing: 0.5px;">Fase Práctica y Proyecto de Cierre · Módulo 1</span>
+     <span style="font-size: 0.74rem; background: var(--meta-blue-subtle); color: var(--meta-blue); padding: 0.15rem 0.5rem; border-radius: 4px; font-weight: 700;">Google Colab &amp; Hardware LPU</span>
+   </div>
+   <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0.8rem;">
+     <a href="modulo1-challenge1.html" class="step-flow-item" style="border-left: 3px solid var(--meta-blue); text-decoration: none; padding: 0.8rem;" title="Abrir Challenge 1">
+       <div class="step-flow-content">
+         <b style="font-size: 0.88rem; color: var(--text-primary);">Challenge 1 · Comparador Multi-Modelo</b>
+         <p style="font-size: 0.78rem; margin: 0.2rem 0 0; color: var(--text-secondary);">Benchmark de 20B, 120B y 27B en Groq LPU.</p>
+       </div>
+     </a>
+     <a href="modulo1-challenge2.html" class="step-flow-item" style="border-left: 3px solid var(--accent-info); text-decoration: none; padding: 0.8rem;" title="Abrir Challenge 2">
+       <div class="step-flow-content">
+         <b style="font-size: 0.88rem; color: var(--text-primary);">Challenge 2 · Asistente RAG Políticas</b>
+         <p style="font-size: 0.78rem; margin: 0.2rem 0 0; color: var(--text-secondary);">Indexación vectorial y similitud coseno.</p>
+       </div>
+     </a>
+     <a href="modulo1-challenge3.html" class="step-flow-item" style="border-left: 3px solid var(--accent-easy); text-decoration: none; padding: 0.8rem;" title="Abrir Challenge 3">
+       <div class="step-flow-content">
+         <b style="font-size: 0.88rem; color: var(--text-primary);">Challenge 3 · Fine-Tuning LoRA (PEFT)</b>
+         <p style="font-size: 0.78rem; margin: 0.2rem 0 0; color: var(--text-secondary);">Adaptación con matrices de bajo rango en GPU T4.</p>
+       </div>
+     </a>
+     <a href="hackathon.html" class="step-flow-item" style="border-left: 3px solid #a855f7; text-decoration: none; padding: 0.8rem; background: rgba(168, 85, 247, 0.05);" title="Ingresar al Hackathon 1">
+       <div class="step-flow-content">
+         <b style="font-size: 0.88rem; color: #a855f7;">Hackathon 1 · Proyecto Integrador</b>
+         <p style="font-size: 0.78rem; margin: 0.2rem 0 0; color: var(--text-secondary);">Asistente completo: RAG + LoRA + FastAPI.</p>
+       </div>
+     </a>
+   </div>
  </div>
  </article>
 
@@ -385,43 +419,77 @@
 
  <!-- DESGLOSE DE UNIDADES 2.1 A 2.4 -->
  <div style="display: flex; flex-direction: column; gap: 0.9rem; margin: 1.8rem 0;">
- <div class="unit-item-row">
+ <a href="modulo2-tema1.html" class="unit-item-row" title="Abrir Tema 2.1 · WhatsApp Cloud API">
  <span class="unit-num-badge" style="color: var(--accent-success); background: rgba(5, 150, 105, 0.1); border-color: rgba(5, 150, 105, 0.25);">Tema 2.1</span>
  <div>
  <div class="unit-title-txt">WhatsApp Cloud API: arquitectura y casos de uso para llevar tu agente de Llama a producción</div>
  <p class="unit-desc-txt">Arquitectura alojada por Meta, registro de Business Accounts, verificación criptográfica de firmas HMAC SHA-256 (X-Hub-Signature-256), túneles seguros para desarrollo local y ciclo de recepción y envío bidireccional de mensajes.</p>
  </div>
- </div>
+ </a>
 
- <div class="unit-item-row">
+ <a href="modulo2-tema2.html" class="unit-item-row" title="Abrir Tema 2.2 · Diseño de Agentes Conversacionales">
  <span class="unit-num-badge" style="color: var(--accent-success); background: rgba(5, 150, 105, 0.1); border-color: rgba(5, 150, 105, 0.25);">Tema 2.2</span>
  <div>
  <div class="unit-title-txt">Diseño de Agentes Conversacionales: cómo darle memoria y estructura a una conversación con Llama</div>
  <p class="unit-desc-txt">Persistencia de estado fuera del modelo por número telefónico, compresión de historial de diálogo con ventanas deslizantes, diseño de flujos híbridos basados en reglas y lenguaje natural, y orquestación con Llama Stack.</p>
  </div>
- </div>
+ </a>
 
- <div class="unit-item-row">
+ <a href="modulo2-tema3.html" class="unit-item-row" title="Abrir Tema 2.3 · Integración Llama + WhatsApp">
  <span class="unit-num-badge" style="color: var(--accent-success); background: rgba(5, 150, 105, 0.1); border-color: rgba(5, 150, 105, 0.25);">Tema 2.3</span>
  <div>
  <div class="unit-title-txt">Integración Llama + WhatsApp: cómo conectar el modelo como motor de razonamiento detrás del canal</div>
  <p class="unit-desc-txt">Definición de esquemas JSON estructurados para herramientas, consultas a bases de datos relacionales SQL, consumo de APIs REST externas y ejecución segura de funciones con validación estricta de parámetros.</p>
  </div>
- </div>
+ </a>
 
- <div class="unit-item-row">
+ <a href="modulo2-tema4.html" class="unit-item-row" title="Abrir Tema 2.4 · Proyecto Integrador hacia Producción">
  <span class="unit-num-badge" style="color: var(--accent-success); background: rgba(5, 150, 105, 0.1); border-color: rgba(5, 150, 105, 0.25);">Tema 2.4</span>
  <div>
  <div class="unit-title-txt">Proyecto Integrador: qué necesita un agente para pasar de prototipo a producción</div>
  <p class="unit-desc-txt">Despliegue integral de un bot corporativo en producción con defensas en profundidad: filtros Prompt Guard para bloqueo de Jailbreaks / Inyecciones y Llama Guard 3 para auditoría de contenido y moderación.</p>
  </div>
+ </a>
  </div>
+
+ <!-- CIERRE PRÁCTICO MÓDULO 2: CHALLENGES & HACKATHON -->
+ <div style="margin-top: 1.5rem; padding-top: 1.2rem; border-top: 1px dashed var(--border-subtle);">
+   <div style="display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 0.8rem;">
+     <span style="font-size: 0.8rem; font-weight: 800; color: var(--accent-success); text-transform: uppercase; letter-spacing: 0.5px;">Fase Práctica y Proyecto de Cierre · Módulo 2</span>
+     <span style="font-size: 0.74rem; background: rgba(5, 150, 105, 0.15); color: var(--accent-success); padding: 0.15rem 0.5rem; border-radius: 4px; font-weight: 700;">WhatsApp Cloud API &amp; Llama Guard</span>
+   </div>
+   <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0.8rem;">
+     <a href="modulo2-challenge1.html" class="step-flow-item" style="border-left: 3px solid var(--meta-blue); text-decoration: none; padding: 0.8rem;" title="Abrir Challenge 1 (Mód. 2)">
+       <div class="step-flow-content">
+         <b style="font-size: 0.88rem; color: var(--text-primary);">Challenge 1 · WhatsApp Cloud API</b>
+         <p style="font-size: 0.78rem; margin: 0.2rem 0 0; color: var(--text-secondary);">Webhooks FastAPI, HMAC SHA256 y ngrok.</p>
+       </div>
+     </a>
+     <a href="modulo2-challenge2.html" class="step-flow-item" style="border-left: 3px solid var(--accent-success); text-decoration: none; padding: 0.8rem;" title="Abrir Challenge 2 (Mód. 2)">
+       <div class="step-flow-content">
+         <b style="font-size: 0.88rem; color: var(--text-primary);">Challenge 2 · Memoria &amp; Escalamiento</b>
+         <p style="font-size: 0.78rem; margin: 0.2rem 0 0; color: var(--text-secondary);">Estado multi-turno con ventana deslizante y reglas.</p>
+       </div>
+     </a>
+     <a href="modulo2-challenge3.html" class="step-flow-item" style="border-left: 3px solid var(--accent-easy); text-decoration: none; padding: 0.8rem;" title="Abrir Challenge 3 (Mód. 2)">
+       <div class="step-flow-content">
+         <b style="font-size: 0.88rem; color: var(--text-primary);">Challenge 3 · Function Calling</b>
+         <p style="font-size: 0.78rem; margin: 0.2rem 0 0; color: var(--text-secondary);">Inferencia en 2 pasos con JSON Schema tipados.</p>
+       </div>
+     </a>
+     <a href="modulo2-hackathon.html" class="step-flow-item" style="border-left: 3px solid #a855f7; text-decoration: none; padding: 0.8rem; background: rgba(168, 85, 247, 0.05);" title="Ingresar al Hackathon 2">
+       <div class="step-flow-content">
+         <b style="font-size: 0.88rem; color: #a855f7;">Hackathon 2 · Proyecto Integrador Final</b>
+         <p style="font-size: 0.78rem; margin: 0.2rem 0 0; color: var(--text-secondary);">Bot empresarial WhatsApp + Llama Guard + Docker.</p>
+       </div>
+     </a>
+   </div>
  </div>
  </article>
  </section>
 
  <!-- ======================================================================
- SECCIÓN 4: HOJA DE RUTA UNIFICADA (ROADMAP DE 8 HITOS CONSECUTIVOS)
+ SECCIÓN 4: HOJA DE RUTA UNIFICADA (ROADMAP DE 11 HITOS CONSECUTIVOS)
  ====================================================================== -->
  <section class="tema-card" id="roadmap" style="margin-bottom: 5.5rem;">
  <div class="tema-header">
@@ -430,7 +498,7 @@
  </div>
  
  <p class="prose-p">
- Un itinerario secuencial y continuo de 8 hitos técnicos que te guía desde los tensores y matrices de atención hasta la orquestación en producción de agentes autónomos conectados a WhatsApp:
+ Un itinerario secuencial y continuo de 11 hitos técnicos que te guía desde los tensores y matrices de atención hasta la resolución de los Challenges en Google Colab y la entrega de los Hackathons de certificación industrial:
  </p>
 
  <div class="step-flow-list" style="grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));">
@@ -485,16 +553,40 @@
  <a href="modulo2-tema2.html" class="step-flow-item" style="border-left: 3px solid var(--accent-success);" title="Ir a Tema 2.2">
  <div class="step-num-badge" style="background: var(--accent-success);">7</div>
  <div class="step-flow-content">
- <b>Llama Stack & Function Calling</b>
- <p>Gestión de memoria persistente por usuario y ejecución estructurada de funciones Python para consultar bases de datos.</p>
+ <b>Memoria & Llama Stack</b>
+ <p>Gestión de memoria conversacional persistente fuera del modelo por número telefónico y ventanas deslizantes.</p>
+ </div>
+ </a>
+
+ <a href="modulo2-tema3.html" class="step-flow-item" style="border-left: 3px solid var(--accent-success);" title="Ir a Tema 2.3">
+ <div class="step-num-badge" style="background: var(--accent-success);">8</div>
+ <div class="step-flow-content">
+ <b>Function Calling & Tools</b>
+ <p>Invocación estructurada de herramientas en Python con contratos JSON Schema para bases de datos y APIs externas.</p>
  </div>
  </a>
 
  <a href="modulo2-tema4.html" class="step-flow-item" style="border-left: 3px solid var(--accent-success);" title="Ir a Tema 2.4">
- <div class="step-num-badge" style="background: var(--accent-success);">8</div>
+ <div class="step-num-badge" style="background: var(--accent-success);">9</div>
  <div class="step-flow-content">
  <b>Seguridad con Llama Guard</b>
  <p>Defensa en profundidad contra inyecciones con Prompt Guard y clasificación de contenido con Llama Guard en producción.</p>
+ </div>
+ </a>
+
+ <a href="#entregables" class="step-flow-item" style="border-left: 3px solid var(--accent-info); background: rgba(2, 132, 199, 0.04);" title="Ver Challenges Prácticos">
+ <div class="step-num-badge" style="background: var(--accent-info);">10</div>
+ <div class="step-flow-content">
+ <b style="color: var(--accent-info);">Challenges Prácticos (Colab)</b>
+ <p>Resolución de los 6 desafíos oficiales en Google Colab con Groq LPU, embeddings vectoriales y webhooks en vivo.</p>
+ </div>
+ </a>
+
+ <a href="#entregables" class="step-flow-item" style="border-left: 3px solid #a855f7; background: rgba(168, 85, 247, 0.05);" title="Ver Hackathons Oficiales">
+ <div class="step-num-badge" style="background: #a855f7;">11</div>
+ <div class="step-flow-content">
+ <b style="color: #a855f7;">Hackathons de Certificación</b>
+ <p>Construcción de los 2 proyectos integradores: Asistente RAG+LoRA (Hackathon 1) y Agente WhatsApp con Docker (Hackathon 2).</p>
  </div>
  </a>
  </div>
